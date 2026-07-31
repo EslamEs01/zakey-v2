@@ -3,17 +3,19 @@
 **Feature Branch**: `001-premium-storefront-experience`
 **Feature Number**: `001`
 **Created**: 2026-07-31
-**Status**: Draft — 3 clarifications outstanding
-**Constitution**: ZAKEY Premium Smart Lock Storefront Constitution v1.0.0 (ratified 2026-07-31)
+**Last clarified**: 2026-07-31
+**Status**: Clarified — 0 clarifications outstanding
+**Constitution**: ZAKEY Premium Smart Lock Storefront Constitution v1.1.0 (ratified 2026-07-31, amended 2026-07-31)
 **Input**: User description: "Create the first complete feature specification for the new ZAKEY platform — the complete, coherent public storefront frontend covering the shared visual system, public product-discovery experience, public informational pages, responsive behavior, interactions, accessibility, content integrity, and the boundaries between this frontend specification and future commerce/backend specifications."
 
 ---
 
 ## 1. Purpose and Product Outcome
 
-ZAKEY needs one coherent public storefront that presents its smart-lock range with the premium,
-modern, minimal, elegant, trustworthy, technical, product-focused character established by the
-approved visual reference — and that tells the truth about every product it shows.
+ZAKEY is a **premium retailer** of smart door locks and smart-home access products. It needs one
+coherent public storefront that presents the range it sells with the premium, modern, minimal,
+elegant, trustworthy, technical character established by the approved visual reference — and that
+tells the truth about every product it shows, including who made it.
 
 **Product outcome.** A visitor arriving with no prior knowledge of ZAKEY can, within a single
 session and without an account:
@@ -22,36 +24,53 @@ session and without an account:
 2. browse the complete verified product range,
 3. narrow that range by category, series, and access method,
 4. search for a specific model,
-5. inspect an individual product's verified imagery and verified attributes,
-6. save products of interest for the duration of their visit,
-7. start a genuine commercial conversation about those products,
-8. read ZAKEY's public informational content,
+5. inspect an individual product's verified imagery, verified attributes, and true supplier
+   attribution,
+6. save products of interest to a wishlist that survives their whole visit,
+7. add products to a cart that survives their whole visit,
+8. supply their contact and delivery information through checkout,
+9. reach a validated order-review state that truthfully shows what they selected and what ZAKEY
+   can and cannot yet confirm,
+10. start a genuine commercial conversation from that state,
+11. read ZAKEY's public informational content,
 
 on a phone, a tablet, or a desktop, using a mouse, a keyboard, or a screen reader, without ever
 encountering a control that does nothing, a claim ZAKEY cannot substantiate, or a success message
 for something that did not happen.
 
-**What this feature is not.** It is not the commerce engine. It does not persist a catalog in a
-database, does not create accounts, does not take payment, and does not create orders. Those are
-named and deferred in [§19 Explicit Out of Scope](#19-explicit-out-of-scope). This specification
-defines the public experience and the seam at which the future commerce work attaches.
+**Where this feature stops.** Checkout ends at a **validated order-review state**. Feature 001 does
+not create a production order, does not claim an order was submitted, does not show an order-success
+state, does not collect card details, does not simulate payment, does not integrate a payment
+gateway, and does not persist customer accounts. Those belong to Feature 002 and Feature 003, named
+in [§19 Explicit Out of Scope](#19-explicit-out-of-scope).
 
-**Why the boundary sits here.** The only verified ZAKEY product data available to this project is
-governed as *quote-only* and explicitly creates no price, stock, warranty, delivery, certification,
-or popularity fact (see [§2.3](#23-legacy-repository-evidence)). Constitution Principle VI.8
-requires commerce prices to originate from authoritative data, and Principle V.4 requires any
-untraceable claim to be removed. A priced cart-and-checkout storefront therefore cannot be built
-truthfully today. The storefront specified here is complete and independently valuable without
-one, and is shaped so that one can be added later without rewriting its public templates.
+**Why the boundary sits exactly there.** The cart, the wishlist, checkout information collection,
+and order review are all genuinely buildable and genuinely useful today — they hold real state for
+the visitor's session and every control in them does a real thing. Order *creation* is not: it
+requires persistent catalog, inventory, customer, and order records that Feature 002 owns, and
+payment requires a gateway that Feature 002 integrates. Constitution VI.4 forbids showing a success
+state for an operation that did not occur, so Feature 001 renders no control that claims to place an
+order.
+
+**Why prices behave the way they do.** Every product in the authoritative catalog currently carries
+`retail_price: null` (see [§2.3](#23-legacy-repository-evidence)). Constitution VI.8 requires
+commerce totals to originate from authoritative data and V.4 requires untraceable claims to be
+removed, so this storefront never invents a price. A product with a verified sellable price shows it
+and contributes to totals; a product without one is shown honestly as priced on request and produces
+no monetary total. The storefront is built so that supplying verified prices later turns the
+existing surfaces on without redesigning them.
 
 ---
 
 ## 2. Authoritative Sources and Evidence
 
-Constitution Principle I makes the visual reference the primary **visual** authority. Principle V
-makes verified legacy content the primary **content** authority. Where the two conflict on a matter
-of fact, Principle V wins; where they conflict on a matter of appearance, Principle I wins. Every
-such conflict found during inspection is recorded below and resolved explicitly.
+Constitution Principle I makes the visual reference the primary **visual** authority — for visual
+direction, composition, hierarchy, spacing, and interaction character. It is **not** an authority on
+product facts, business claims, routing, or application architecture. Principle V makes verified
+legacy content the primary **content** authority. Where the two conflict on a matter of fact,
+Principle V wins; where they conflict on a matter of appearance, Principle I wins, except where the
+reference is itself defective. Every such conflict found during inspection is recorded below and
+resolved explicitly.
 
 ### 2.1 Inspection method
 
@@ -78,10 +97,10 @@ routing, no distinct page URLs, no server rendering, and no persistence. Its "pa
 client-side view states. The following view states were observed: `home`, `shop`, `product`,
 `cart`, `checkout`, `account`, `orders`, `wishlist`, `about`, `contact`, `faq`, `search`.
 
-**Consequence.** The reference cannot be treated as evidence for URL structure, navigation
-addressing, or page-level behavior. It is evidence for *composition, hierarchy, density, rhythm,
-component language, and section order*. This specification supplies the routing and page-level
-behavior the reference lacks.
+**Consequence.** This tells us what the reference *contains*, not how ZAKEY must be addressed. The
+reference is evidence for *composition, hierarchy, density, rhythm, component language, and section
+order*. It carries **no authority over routing or application architecture**: ZAKEY defines its own
+stable public destinations (FR-091, FR-092).
 
 **Observed section order (homepage), in reference source order:**
 
@@ -123,22 +142,108 @@ Your Order" — ending at "Place Order".
 **Observed typography and color evidence.** The reference applies the accent value `#C9A227` — the
 ratified ZAKEY accent gold — as a **text** color for the hero eyebrow on a light background.
 
-**Reference defects recorded under Constitution Principle I.4** (these MUST NOT be reproduced):
+**Verified reference palette (extracted 2026-07-31, corrected and completed 2026-07-31).** Every
+colour literal in the reference's published bundle was extracted with the utility role it is
+applied through and its occurrence count, then contrast-tested. This is the observable palette, not
+an interpretation of it. It is ratified in full by Constitution v1.1.0 and is the binding colour
+authority for this feature (§11.1). **Zero colour decisions remain open.**
+
+**Provenance rule applied.** The designed palette is every colour the reference author chose
+explicitly — every arbitrary-value literal (`text-[#...]`, `border-[rgba(...)]`, and so on).
+Colours inherited from unprefixed framework utility classes are not designed choices and are not
+ratified, with the single exception of `#FFFFFF`, which is unambiguous and independently ratified.
+
+**Core brand tokens (5)**
+
+| Value | Occurrences | Observable roles |
+| --- | --- | --- |
+| `#0D1B3D` | 173 | text 125, background 40, gradient from 3 / via 2 / to 2, border 1 |
+| `#C9A227` | 136 | text 54, background 40, border 28, icon fill 10, form accent 3, gradient from 1 |
+| `#F8F9FB` | 55 | background 55 |
+| `#FFFFFF` | 117 | text 68, background 39, border 9, placeholder 1 (named utility) |
+| `#1F2937` | 22 | text 22 |
+
+**Reference-derived support tokens (13)**
+
+| Value | Occurrences | Observable roles |
+| --- | --- | --- |
+| `#6B7280` | 64 | text 63, placeholder 1 |
+| `#EEF0F5` | 13 | background 12, text 1 |
+| `#E0B62E` | 6 | background 6 (gold hover) |
+| `#9CA3AF` | 1 | placeholder text 1 |
+| `#1A3060` | 3 | background 2, gradient from 1 |
+| `#1A2F5A` | 3 | background 2, gradient from 1 |
+| `#2A4070` | 1 | background 1 |
+| `#162D5E` | 1 | background 1 |
+| `rgba(13,27,61,0.06)` | 30 | border 29, divide 1 |
+| `rgba(13,27,61,0.08)` | 13 | border 13 |
+| `rgba(13,27,61,0.10)` | 18 | border 18, including form fields |
+| `rgba(13,27,61,0.15)` | 11 | border 10, background 1 |
+| `rgba(13,27,61,0.20)` | 1 | border 1 |
+
+**Total governed palette: 18 values — 5 core brand tokens, 13 reference-derived support tokens.**
+Both classifications are binding. Support tokens are official parts of the approved visual system,
+not optional suggestions.
+
+**Correction of the earlier seven-versus-eight discrepancy.** An earlier revision of this
+specification tabulated twelve values but then enumerated only seven as non-ratified, silently
+omitting `#9CA3AF`. That was an enumeration error, not a judgement that the colour was invalid.
+`#9CA3AF` is genuinely used — the bundle applies it as `placeholder-[#9CA3AF]` on a form input,
+alongside `text-[#1F2937]`, `border-[rgba(13,27,61,0.1)]` and `focus:border-[#C9A227]`. It is
+retained and ratified. With `#FFFFFF` and the five navy-alpha values now also captured, the correct
+non-core count is **13**, not seven or eight.
+
+**Colours found in the bundle but deliberately NOT ratified.** Each was checked against its
+observable role; none is a designed brand colour, and each belongs to content this specification
+removes or defers:
+
+| Value / class | Observed use | Why excluded |
+| --- | --- | --- |
+| `gray-200` | empty-star fill in the rating component, paired with `fill-[#C9A227]` | Ratings are fabricated and removed (RD-4). Framework default, not a designed choice |
+| `gray-900`, `blue-600`, `blue-900`, `green-700`, `red-600` | brand chips for "Apple HomeKit", "Google Home", "Amazon Alexa", "Z-Wave", "IFTTT" | Third-party brand colours carrying unverified compatibility claims, removed (RD-7) |
+| `green-500`, `green-600`, `green-100/700` | stock indicator dots, "✓ Verified Purchase", "FREE" shipping, order-status badges | Stock claims (FR-036), fabricated reviews (RD-4), delivery promises (RD-7), and deferred order history (Feature 003) |
+| `blue-100`, `blue-700` | order-status badges | Deferred to Feature 003 |
+| `red-500` | "Sale" badge; also the hover state of the cart-line remove control | The Sale badge is a fabricated discount (RD-7). The remove-control hover is in scope, but the value is an unprefixed framework default whose rendered hex cannot be verified from the bundle. No destructive colour is invented — the error and destructive roles are served from the ratified palette, or by the CID-8 last-resort procedure with recorded contrast evidence |
+| `transparent`, `current`, `inherit` | gradient terminators and resets | Not colours |
+
+Three findings bind the implementation:
+
+1. **All five ratified core tokens are confirmed present at their exact ratified values.** Four
+   appear as hex literals; `#FFFFFF` appears 117 times through named utilities. The ratified
+   palette and the reference do not conflict.
+2. **The thirteen support values are now ratified in Constitution v1.1.0**, each with its
+   observable role, permitted semantic uses, and measured contrast limitation. Nothing is left for
+   `/speckit-plan` to approve — the plan documents implementation mapping and token naming only.
+3. **Dark navy sections and gradients are authorized because they are observed.** `#0D1B3D` is a
+   full background 40 times and navy gradient stops appear. These are the brand primary, not black
+   and not an accidental dark theme. Constitution II.5 forbids *black or near-black* full-bleed
+   sections and *excessive* gradients; it does not forbid the reference's own navy sections or its
+   restrained gradients. Anything beyond those observed remains prohibited (FR-115).
+
+**Reference defects recorded under Constitution Principle I.4** (these MUST NOT be reproduced, and
+MUST NOT be preserved for the sake of pixel similarity):
 
 | # | Defect | Evidence | Required correction |
 | --- | --- | --- | --- |
 | RD-1 | Accent gold used as text on a light background | hero eyebrow rendered in `#C9A227` | Constitution II.7 measures this at ≈2.4:1, failing the 4.5:1 text threshold. Reproduce the eyebrow's *placement, size, weight, and letter-spacing*; render it in a token colour meeting 4.5:1. |
-| RD-2 | Fabricated product identities | "ZAKEY Apex Pro", "ZAKEY Nexus Elite", "ZAKEY Vault Pro", "ZAKEY Guardian", "ZAKEY Slim Touch", "ZAKEY Entry Plus", "ZAKEY Connect X", "ZAKEY Luxe Series" | No such products exist in verified evidence. Replace with the 21 verified catalog products (§2.3). |
-| RD-3 | Fabricated prices | "$389", "$629" | The verified catalog sets `retail_price: null` and `currency: null` for every product. Remove price display; see FR-034. |
+| RD-2 | Fabricated product identities | "ZAKEY Apex Pro", "ZAKEY Nexus Elite", "ZAKEY Vault Pro", "ZAKEY Guardian", "ZAKEY Slim Touch", "ZAKEY Entry Plus", "ZAKEY Connect X", "ZAKEY Luxe Series" | No such products exist in verified evidence. Replace with the 21 verified catalog products under their real supplier names (§2.3, FR-111, FR-112). |
+| RD-3 | Fabricated prices | "$389", "$629" | The verified catalog sets `retail_price: null` and `currency: null` for every product. A price may be shown only when it is a verified sellable price (FR-034). |
 | RD-4 | Fabricated ratings and reviews | "4.9", "(2,847 reviews)", "✓ Verified Purchase", named reviewers | Constitution V.3 forbids invented review counts, ratings, and customer reviews. Remove the ratings, review list, "Read all", and "Minimum Rating" filter. |
 | RD-5 | Fabricated awards and press | "Red Dot Design Award 2025", "As Seen In & Trusted By", named publications | Constitution V.3 forbids invented awards and media coverage. Remove the section and the badge. |
 | RD-6 | Fabricated scale and trust claims | "trusted by over 500,000 homes worldwide", "Homes Protected", "Countries Served", "Uptime Guarantee", "Industry Awards" | Constitution V.3 forbids invented customer numbers. Remove. |
-| RD-7 | Fabricated specifications and guarantees | "Stores up to 100 fingerprints with 0.3-second recognition speed and 99.9% accuracy", "IP65 Weather Resistant", "UL, CE, FCC, RoHS", "All ZAKEY products include a full 5-year warranty.", "Free Shipping", "Tax (8%)" | Constitution V.3 forbids invented specifications, certifications, warranties, and delivery promises. Display only the verified specification fields named in §2.3. |
+| RD-7 | Fabricated specifications and guarantees | "Stores up to 100 fingerprints with 0.3-second recognition speed and 99.9% accuracy", "IP65 Weather Resistant", "UL, CE, FCC, RoHS", "All ZAKEY products include a full 5-year warranty.", "Free Shipping", "Tax (8%)" | Constitution V.3 forbids invented specifications, certifications, warranties, delivery promises, and tax values. Display only the verified specification fields named in §2.3. |
 | RD-8 | Fabricated people | named executives, named testimonial authors, "The Team Behind ZAKEY" | Constitution V.3. Remove the leadership and testimonial sections unless verified biographies are supplied. |
-| RD-9 | Card-data collection | "Cardholder Name", "Card Number", "Expiry Date", "CVV" | Constitution VI.9 forbids frontend payment simulations from requesting card details. These fields MUST NOT exist in this feature under any circumstances. |
+| RD-9 | Card-data collection | "Cardholder Name", "Card Number", "Expiry Date", "CVV" | Constitution VI.9 forbids frontend payment simulations from requesting card details. These fields MUST NOT exist in this feature under any circumstances (FR-051, FR-105). |
 | RD-10 | Unsuitable hero image | reference hero image does not clearly depict a smart door lock | Constitution I.5 — preserve the hero *composition*; replace the image with a verified ZAKEY smart-lock image (FR-030). |
 | RD-11 | Popularity-derived merchandising | "Best Sellers" / "Top Picks" rail, "Top Rated" sort option | The verified catalog explicitly creates no popularity fact. Merge the two homepage product rails into one verified "Featured Products" rail (FR-011); remove the "Top Rated" sort. |
 | RD-12 | Unverified promotional announcement | announcement bar carrying a coupon code | No verified ZAKEY promotion exists. See FR-002 — the bar renders only when verified announcement content exists. |
+| RD-13 | Placeholder text below contrast threshold | `placeholder-[#9CA3AF]` on a form input | Measures 2.54:1 on white and 2.41:1 on `#F8F9FB`, failing WCAG 2.2 AA. The reference is internally inconsistent here — it applies `placeholder-[#6B7280]` elsewhere, which measures 4.83:1 and passes. Placeholder text MUST use `#6B7280`; `#9CA3AF` stays ratified but is restricted to non-text roles (FR-120). The correction comes from the reference's own palette; no colour is invented. |
+
+**Accessible substitution rule.** Where correcting a defect requires departing from the reference —
+most directly RD-1's colour correction — the substitution is permitted and required, and MUST
+preserve the approved premium visual identity: same placement, same proportion, same typographic
+character, same restraint. Accessibility corrections take precedence over reference similarity
+(RF-12).
 
 ### 2.3 Legacy repository evidence
 
@@ -148,9 +253,9 @@ was `/media/mekky/work/backend/zakey`. Verified on 2026-07-31: `/media/mekky/wor
 **does not exist**; `/media/mekky/work/backend/zakey.v1` **exists** and is the genuine legacy ZAKEY
 Django project (Django apps `products`, `commerce`, `core`, `pages`, `solutions`, `partners`,
 `projects`, `leads`, `blog`; `config/`, `static/`, `media/`, `locale/`, `specs/`,
-`reference-imports/`). Only one candidate exists, so no clarification marker is spent on it; the
-constitution's TODO nonetheless requires the user's explicit confirmation and is recorded as
-[RRP-1](#18-repository-readiness-preconditions).
+`reference-imports/`). It is confirmed as the authoritative initial product-content source for this
+feature. The constitution's own TODO still requires the user's explicit confirmation as a governance
+act, recorded as [RRP-1](#18-repository-readiness-preconditions).
 
 **Read-only compliance.** Inspection used read-only operations only. `db.sqlite3` was deliberately
 **not opened**, because opening a SQLite database can create `-wal`/`-shm`/journal files inside the
@@ -181,7 +286,12 @@ verbatim:
 
 **Verified product names** (public display names): Lezn A06, R01, R02, R03, R05, R06, R09, R15,
 M15, M15 max, M17, M18 max, M20, M30, MR6, MR8, K11, W06, W08, W12, Tuya-02 — each suffixed
-"Smart Lock".
+"Smart Lock". These names are used exactly as recorded; renaming or rebranding is forbidden
+(FR-112).
+
+**ZAKEY's role.** ZAKEY is the retailer and the storefront experience. The products it lists are
+supplier-branded and explicitly **not ZAKEY-manufactured**. The storefront presents them under
+their real supplier attribution and never implies ZAKEY manufactured them (FR-111).
 
 **Verified taxonomy:**
 
@@ -203,7 +313,7 @@ for example it labels scenario content "An illustrative scenario, not a delivere
 carries the FAQ entry "Are the products Zakey-manufactured?". This voice is the model for
 storefront copy (FR-064).
 
-**Legacy content gaps found (these are why RRP-2 and CL-3 exist):**
+**Legacy content gaps found (these are why RRP-10 exists):**
 
 - Contact details in legacy templates are placeholders (`+1 (000) 000-0000`, `+201234567890`). No
   verified ZAKEY phone number, email address, or postal address was found.
@@ -214,58 +324,30 @@ storefront copy (FR-064).
 
 | # | Reference says | Verified evidence says | Resolution |
 | --- | --- | --- | --- |
-| CF-1 | Priced D2C storefront with cart, checkout, payment, tax | `commerce_mode: quote_only`, `retail_price: null`, permitted actions are request price / request quote / contact | Storefront is quote-led. Cart, checkout, payment, and orders deferred. **See [CL-1](#3-clarifications).** |
-| CF-2 | ZAKEY-branded invented products | 21 Lezn supplier-branded products, explicitly not ZAKEY-manufactured | Use verified names (FR-029). Supplier relationship stated honestly where relevant (FR-067). |
+| CF-1 | Priced D2C storefront with cart, checkout, payment, tax, and order placement | `commerce_mode: quote_only`, `retail_price: null`, permitted actions are request price / request quote / contact | Cart, wishlist, checkout information collection, and order review are in scope and genuinely session-backed. Prices and monetary totals appear only where verified (FR-034, FR-098). Order creation, payment, and order confirmation are deferred to Feature 002. |
+| CF-2 | ZAKEY-branded invented products | 21 Lezn supplier-branded products, explicitly not ZAKEY-manufactured | Use verified names and real supplier attribution (FR-029, FR-111, FR-112). ZAKEY is presented as the retailer. |
 | CF-3 | Ratings, reviews, awards, press, scale claims | Catalog creates no popularity fact; no verified reviews or awards exist | Removed (RD-4, RD-5, RD-6). |
 | CF-4 | Rich specification claims | Five approved specification fields only | Display approved fields only, per product, only where populated (FR-035). |
 | CF-5 | Persistent account area, saved cards, addresses, order history | No verified accounts; authentication out of scope | Deferred to Feature 003 (§19). |
-| CF-6 | Product comparison implied in reference metadata copy | No comparison view, control, or state exists anywhere in the reference bundle; no legacy comparison feature | **Excluded.** Not built on metadata prose alone. |
-| CF-7 | Newsletter subscription with "Subscribe" success | No subscription storage or email delivery in scope | Newsletter deferred; Constitution VI.4 forbids a fake success state. Section replaced (FR-012). |
+| CF-6 | Product comparison implied in reference metadata copy | No comparison view, control, or state exists anywhere in the reference bundle; no legacy comparison feature | **Deferred** to Feature 010 — Product Comparison. No comparison control is added on unverified evidence, and none of the approved user stories requires one. |
+| CF-7 | Newsletter subscription with "Subscribe" success | No subscription storage or email delivery in scope | Newsletter deferred to Feature 004; Constitution VI.4 forbids a fake success state. Section replaced (FR-012). |
+| CF-8 | Single client-side route for the whole experience | — | The reference is not a routing authority. ZAKEY defines stable, meaningful, shareable public destinations (FR-091, FR-092). |
 
 ---
 
 ## 3. Clarifications
 
-Exactly three material ambiguities remain. Each would change scope, data behavior, or user
-experience depending on how it is answered. Each records the default this specification currently
-assumes, so the specification is actionable as written.
+### Session 2026-07-31
 
-> **[NEEDS CLARIFICATION: CL-1 — Commerce model]** The visual reference is a fully priced
-> cart-and-checkout storefront; the only verified ZAKEY product data is governed `quote_only` with
-> `retail_price: null` and permitted public actions `request_price` / `request_quote` / `contact`.
-> Should Feature 001 deliver **(A)** the quote-led storefront the verified data supports — product
-> discovery plus quote and enquiry actions, with cart, checkout, payment, and orders deferred to
-> Feature 002 — or **(B)** a priced cart-and-checkout storefront, which would require the user to
-> supply verified retail prices, currency, tax treatment, and shipping terms before implementation
-> can begin? *Assumed default: **(A)**.* Answering (B) adds three pages, five component families,
-> and a dependency on verified pricing; it does not change the visual direction.
+- **Q: CL-1 — Commerce model: is Feature 001 a quote-led storefront with cart and checkout deferred, or a priced cart-and-checkout storefront?** → **A:** Neither extreme. Feature 001 delivers the complete public storefront experience **including** a genuinely functional session-backed cart, a genuinely functional session-backed wishlist, checkout-information collection, and a validated order-review state. Cart and wishlist survive normal navigation for the active session. Checkout stops at the order-review state: Feature 001 creates no production order, claims no order submission, shows no order-success state, collects no card information, simulates no payment, integrates no payment gateway, and persists no customer account. Prices are never invented — a product without a verified sellable price is shown as priced on request and produces no monetary total. Persistent catalog, inventory, customers, production orders, payment, fulfilment, and administration are deferred to Feature 002.
+- **Q: CL-2 — Quote and enquiry submission: validated summary only, persist to a real store, or persist and notify?** → **A:** Persist to a real store. Every state-changing submission in this feature — the enquiry/quote request reachable from the order-review state, from a product page, and from the Contact page — performs a real underlying operation and confirms success only after that operation reports success. No confirmation may describe an order as placed, paid, reserved, or shipped. Notification delivery (email, messaging) remains out of scope.
+- **Q: CL-3 — Verified contact details and legal text: supply them, or remove the affected surfaces?** → **A:** Unavailable business facts are never invented. The Contact page ships with the working enquiry form; a contact-details block renders only where the details are verified. The Privacy and Terms pages render verified ZAKEY legal text or are removed together with every link that points at them. No surface is left as a dead link and none is filled with drafted text.
+- **Q: Decision 3 — Are wishlist and product comparison in scope?** → **A:** Wishlist is in scope with real session-backed behavior. Product comparison is deferred to Feature 010 — Product Comparison; no approved user story requires it, and no comparison control is added merely because an unverified source contained one.
+- **Q: Decisions 4 and 5 — Does the reference govern routing, and how are its defects treated?** → **A:** The reference is the visual authority only — its single client-side route places no constraint on ZAKEY's architecture, and Feature 001 defines stable, meaningful public destinations. All documented reference defects (thirteen as of the readiness correction) MUST NOT be reproduced, and MUST NOT be preserved for pixel similarity. Accessible substitutions may depart slightly from the reference while preserving the approved premium visual identity.
 
-> **[NEEDS CLARIFICATION: CL-2 — Quote and enquiry submission]** For the quote request, product
-> enquiry, and contact forms, does Feature 001 **(A)** end at a validated, reviewable summary that
-> hands the visitor a verified way to reach ZAKEY, storing nothing and promising no reply;
-> **(B)** persist submissions to a real store and confirm success only after that store confirms
-> the write; or **(C)** persist and notify ZAKEY by email or messaging? Constitution VI.4 forbids
-> showing success unless the operation actually succeeded, so this choice determines what the
-> confirmation may say. *Assumed default: **(B)** — persist to a real store; success is shown only
-> on a confirmed write; no delivery, reply-time, or follow-up promise is made.* Notification
-> delivery is out of scope in all three answers.
-
-> **[NEEDS CLARIFICATION: CL-3 — Verified contact details and legal text]** No verified ZAKEY phone
-> number, email address, postal address, privacy policy text, or terms text was found; legacy
-> contact values are placeholders. Will the user supply verified contact details and verified legal
-> text for this feature, or should the Contact page render only the enquiry form (no contact
-> details block) and the Privacy and Terms pages plus their footer links be removed entirely?
-> *Assumed default: the storefront ships with the enquiry form only, and any surface with no
-> verified content is removed together with every link that points at it — never rendered as a dead
-> link and never filled with drafted text.*
-
-Resolved without spending a marker, on evidence:
-
-- **Legacy path** — `/media/mekky/work/backend/zakey` does not exist; `zakey.v1` is the only
-  candidate. User confirmation is still required by the constitution's own TODO ([RRP-1](#18-repository-readiness-preconditions)).
-- **Product comparison** — excluded; no supporting evidence in reference or legacy (CF-6).
-- **Wishlist** — included as visit-scoped "Saved products"; present in the reference and compatible
-  with a quote-led model (US4, FR-042).
+**Resolved on evidence, without a marker:** the legacy repository path (only `zakey.v1` exists, now
+confirmed as the authoritative product-content source) and the absence of any comparison capability
+in either authoritative source.
 
 ---
 
@@ -298,10 +380,10 @@ introduction with no dead control and no unverifiable claim.
    order: category showcase, featured products, value proposition, series showcase, enquiry call to
    action, footer.
 3. **Given** the homepage, **When** every link and button is activated in turn, **Then** each
-   resolves to a real page or performs a defined action; none is inert and none targets `#`.
+   resolves to a real destination or performs a defined action; none is inert and none targets `#`.
 4. **Given** the homepage, **When** its copy is audited against §2.3, **Then** no rating, review
-   count, award, press mention, certification, warranty, delivery promise, customer count, price,
-   or stock figure appears.
+   count, award, press mention, certification, warranty, delivery promise, customer count, tax
+   value, stock figure, or unverified price appears.
 5. **Given** the homepage at 390px, **When** it is measured, **Then** document scroll width does not
    exceed viewport width, and the mobile navigation is reachable and operable.
 
@@ -325,75 +407,88 @@ product-discovery value on its own.
 1. **Given** the listing page, **When** it loads unfiltered, **Then** every verified product is
    reachable through pagination, and the result count is stated.
 2. **Given** the listing page, **When** a category filter is applied, **Then** only products in that
-   category are shown, the count updates, the applied filter is visibly indicated, and the URL
-   reflects the filtered state so it can be shared and reloaded.
+   category are shown, the count updates, the applied filter is visibly indicated, and the
+   destination address reflects the filtered state so it can be shared and reloaded.
 3. **Given** two filter families applied together, **When** results are shown, **Then** products
    satisfy both, and each applied filter can be removed individually.
 4. **Given** a filter combination with no matches, **When** results are shown, **Then** a no-results
    state explains that no products match and offers a control that clears the filters.
 5. **Given** filters applied, **When** "clear all" is activated, **Then** every filter resets, the
-   full range returns, and the URL returns to the unfiltered address.
+   full range returns, and the address returns to the unfiltered destination.
 6. **Given** a visitor at 390px, **When** they open filters, **Then** filters appear in a surface
    designed for that width, focus is trapped inside it, Escape closes it, and closing returns focus
    to the control that opened it.
 7. **Given** any sort option, **When** it is selected, **Then** ordering changes accordingly, the
-   selection persists across pagination, and the sort is expressed in the URL.
+   selection persists across pagination, and the sort is expressed in the destination address.
 
 ---
 
 ### User Story 3 - Inspect one product in depth (Priority: P1)
 
 A visitor opens a product, studies its imagery from several angles, reads its verified attributes,
-understands honestly what ZAKEY can and cannot tell them about it, and sees related products.
+sees who actually makes it, understands honestly what ZAKEY can and cannot yet tell them about
+price, and sees related products.
 
 **Why this priority**: The product page is where a discovery journey converts into intent. It is
 also where content-integrity failures do the most damage.
 
 **Independent Test**: Open each verified product; exercise the gallery; audit displayed attributes
-against the approved specification fields. Delivers complete product-inspection value on its own.
+and attribution against the approved catalog. Delivers complete product-inspection value on its own.
 
 **Acceptance Scenarios**:
 
 1. **Given** a product page, **When** it loads, **Then** it shows the verified display name, its
-   verified imagery, its category, its series where one is assigned, and its access methods.
+   verified imagery, its real supplier attribution, its category, its series where one is assigned,
+   and its access methods.
 2. **Given** a product with multiple images, **When** the gallery is operated by pointer, keyboard,
    and touch, **Then** the main image changes, the active thumbnail is indicated, and the image
    region does not change size between images.
 3. **Given** a product page, **When** its attribute table is audited, **Then** it contains only
    approved specification fields, and a field with no verified value is omitted rather than shown
    empty or filled with a placeholder.
-4. **Given** a product page, **When** the availability and pricing area is inspected, **Then** it
-   states honestly that pricing is provided on request and offers the quote action — with no
-   figure, no "from" price, no stock count, and no urgency claim.
-5. **Given** a product page, **When** related products are shown, **Then** each shares that
+4. **Given** a product with no verified sellable price, **When** the pricing area is inspected,
+   **Then** it states honestly that pricing is provided on request and offers the enquiry action —
+   with no figure, no "from" price, no stock count, and no urgency claim.
+5. **Given** a product page, **When** the visitor reads how the product is described, **Then**
+   ZAKEY is presented as the retailer and the product's real manufacturer or supplier is named; the
+   page never implies ZAKEY manufactured it.
+6. **Given** a product page, **When** related products are shown, **Then** each shares that
    product's category or series, and the product being viewed is not among them.
 
 ---
 
-### User Story 4 - Save products across the visit (Priority: P2)
+### User Story 4 - Collect products across the visit (Priority: P1)
 
-A visitor collecting candidates saves products as they browse, sees a running count in the header,
-reviews the saved set on its own page, removes items, and carries the set into a quote request.
+A visitor collecting candidates saves products to a wishlist and adds products to a cart as they
+browse, sees running counts in the header, reviews and edits both collections on their own pages,
+and finds both intact after moving around the site and reloading.
 
-**Why this priority**: It makes a multi-product enquiry practical, which is the natural shape of a
-quote-led smart-lock purchase. It is not required for the storefront to be useful.
+**Why this priority**: Cart and wishlist are the storefront's state-holding surfaces. They are what
+turn browsing into an intent that survives the visit, and they feed checkout.
 
-**Independent Test**: Save and unsave from listing, product, and saved-products surfaces; reload;
-empty the list. Delivers a working shortlist on its own.
+**Independent Test**: Add, change, and remove from both collections across listing, product, cart,
+and wishlist surfaces; navigate widely; reload; empty both. Delivers a working shortlist and a
+working cart on its own.
 
 **Acceptance Scenarios**:
 
-1. **Given** any product card or product page, **When** the save control is activated, **Then** the
-   control reflects the saved state, the header count increases, and the change survives navigation
-   and reload within the visit.
-2. **Given** a saved product, **When** the control is activated again, **Then** the product is
-   removed and the count decreases.
-3. **Given** no saved products, **When** the saved-products page is opened, **Then** an empty state
-   explains what saving does and links into the range.
-4. **Given** saved products, **When** a quote request is started from that page, **Then** the
-   request begins pre-populated with exactly those products.
-5. **Given** the saved-products page, **When** a visitor reads it, **Then** nothing describes the
-   set as an order, a cart, a reservation, or a held item.
+1. **Given** any product card or product page, **When** the wishlist control is activated, **Then**
+   the control reflects the saved state, the header wishlist count increases, and the change
+   survives navigation and reload within the session.
+2. **Given** a product page, **When** a quantity is chosen and the product is added to the cart,
+   **Then** the header cart count increases, a confirmation appears, and the cart contains that
+   product at that quantity.
+3. **Given** items in the cart, **When** the visitor navigates across several pages and reloads,
+   **Then** the cart still contains exactly the same lines and quantities.
+4. **Given** the cart page, **When** a line quantity is changed or a line is removed, **Then** the
+   cart, the header count, and any computable totals update immediately and consistently.
+5. **Given** a cart containing only products with no verified sellable price, **When** the cart is
+   viewed, **Then** no overall monetary total is presented, the cart states that pricing for those
+   items is provided on request, and the enquiry action is offered.
+6. **Given** an empty cart or an empty wishlist, **When** the page is opened, **Then** an empty
+   state explains what it does and links into the range.
+7. **Given** either collection, **When** a visitor reads it, **Then** nothing describes it as an
+   order, a reservation, a held item, or a completed purchase.
 
 ---
 
@@ -422,33 +517,45 @@ name, and a term with no matches.
 
 ---
 
-### User Story 6 - Start a commercial conversation (Priority: P2)
+### User Story 6 - Supply details and reach a truthful order review (Priority: P2)
 
-A visitor requests a quote for one or several products, or sends a general enquiry, supplying their
-details and being told plainly what will happen next.
+A visitor with a cart proceeds to checkout, supplies their contact and delivery information, is
+corrected when they get something wrong, and arrives at an order-review state that shows exactly
+what they selected, exactly what they entered, and states plainly that no order has been placed and
+no payment has been taken. From there they can send a real enquiry.
 
-**Why this priority**: This is the storefront's conversion point under a quote-led model, and it
-completes US4. It depends on CL-2.
+**Why this priority**: This completes the storefront's conversion path and is the surface where a
+dishonest success state would do the most damage.
 
-**Independent Test**: Submit each form empty, with invalid values, and with valid values, by
-keyboard and at 390px.
+**Independent Test**: Run checkout from a populated cart — empty submission, invalid submission,
+valid submission, backward navigation, and the terminal enquiry — by keyboard and at 390px.
 
 **Acceptance Scenarios**:
 
-1. **Given** a quote request form, **When** it is submitted empty, **Then** submission is refused,
-   each invalid field is individually described, the message is programmatically associated with
-   its field, and focus moves to the first invalid field.
-2. **Given** a form with an invalid email address, **When** it is submitted, **Then** the email
-   field is identified specifically rather than the form being rejected as a whole.
-3. **Given** a valid submission, **When** it is sent, **Then** the control enters a busy state, the
-   form cannot be double-submitted, and a confirmation appears **only after** the underlying
-   operation reports success.
-4. **Given** the underlying operation fails, **When** the response returns, **Then** an honest
+1. **Given** a populated cart, **When** checkout is started, **Then** the visitor is asked for
+   contact and delivery information across clearly indicated steps, with progress visible.
+2. **Given** a checkout step submitted empty, **When** it is submitted, **Then** submission is
+   refused server-side, each invalid field is individually described, the message is
+   programmatically associated with its field, and focus moves to the first invalid field.
+3. **Given** a checkout step with an invalid email address, **When** it is submitted, **Then** the
+   email field is identified specifically rather than the step being rejected as a whole.
+4. **Given** a completed step, **When** the visitor navigates backwards, **Then** their previously
+   entered values are intact and editable.
+5. **Given** all information validated, **When** the order-review state is reached, **Then** it
+   shows the cart lines with quantities, the entered contact and delivery information, any
+   computable monetary totals, and a plain statement that no order has been placed and no payment
+   has been taken.
+6. **Given** the order-review state, **When** its controls are enumerated, **Then** none claims to
+   place an order, complete a purchase, or take a payment; the available actions are correcting the
+   information, editing the cart, and sending an enquiry.
+7. **Given** checkout in any state, **When** its fields are enumerated, **Then** none collects a
+   card number, expiry date, security code, PIN, or any payment credential, and no payment step or
+   payment-method selector exists.
+8. **Given** a valid enquiry submission, **When** it is sent, **Then** the control enters a busy
+   state, the form cannot be double-submitted, and a confirmation appears **only after** the
+   underlying operation reports success — worded as an enquiry received, never as an order placed.
+9. **Given** the underlying operation fails, **When** the response returns, **Then** an honest
    failure state is shown, the visitor's entered values are preserved, and no confirmation appears.
-5. **Given** any form in this feature, **When** its fields are enumerated, **Then** none collects a
-   card number, expiry date, security code, PIN, or any payment credential.
-6. **Given** a confirmation, **When** its wording is audited, **Then** it makes no promise about
-   reply time, delivery, price, or availability that is not verified.
 
 ---
 
@@ -467,7 +574,8 @@ journey depends on it.
 1. **Given** any storefront page, **When** the footer is used, **Then** every informational page in
    scope is reachable, and no footer link points at a page that does not exist.
 2. **Given** the About page, **When** its claims are audited, **Then** each traces to verified
-   evidence, including how ZAKEY describes its relationship to the products it supplies.
+   evidence, including ZAKEY's role as retailer and its relationship to the supplier-branded
+   products it offers.
 3. **Given** the FAQ, **When** a question is activated by keyboard, **Then** its answer expands, the
    control's expanded state is exposed assistively, and activating it again collapses it.
 4. **Given** an informational page at 768px, **When** it is read, **Then** line length stays
@@ -486,18 +594,31 @@ journey depends on it.
   individually removable.
 - **Pagination beyond the last page** — the storefront returns a defined response rather than an
   unhandled error; the visitor is returned to a valid page.
-- **Unknown category, series, or product address** — the custom 404 page, with working navigation.
+- **Unknown category, series, or product destination** — the custom 404 page, with working
+  navigation.
 - **Search query containing markup or script syntax** — echoed escaped; never rendered as markup.
 - **Very long search query or filter value** — handled without layout overflow at any width.
 - **A verified image missing at build or request time** — a reserved, correctly proportioned
   placeholder region with meaningful alternative text; never a broken-image icon, never a stretched
   image, and never a file whose visible name reveals internal terminology.
-- **Saved-products set containing a product later removed from the catalog** — the entry is dropped
-  silently and the count corrects itself; no error and no reference to a missing product.
+- **Cart or wishlist entry whose product is later removed from the catalog** — the entry is dropped
+  silently, the count corrects itself, and any totals recompute; no error and no reference to a
+  missing product.
+- **Cart mixing priced and unpriced products** — line totals appear only for priced lines; no
+  overall monetary total is presented; the cart states that pricing for the remaining items is
+  provided on request.
+- **Quantity set to zero or a non-numeric value** — rejected with a field-level message; the line is
+  not silently removed and no total is computed from an invalid quantity.
+- **Checkout started from an empty cart** — the visitor is returned to the cart's empty state rather
+  than into a checkout that cannot be completed.
+- **Cart emptied in another tab during checkout** — the order-review state refuses to present stale
+  contents and returns the visitor to the cart with an explanation.
+- **Session expiry mid-checkout** — the visitor is told plainly that their session ended and is
+  returned to a valid state; no partial order artifact is created.
 - **Form submitted twice rapidly** — exactly one operation occurs.
-- **JavaScript unavailable or failed** — navigation, product discovery, product pages, and
-  informational content remain usable; controls that genuinely require scripting are not rendered
-  as inert.
+- **JavaScript unavailable or failed** — navigation, product discovery, product pages, cart,
+  checkout, and informational content remain usable; controls that genuinely require scripting are
+  not rendered as inert.
 - **Reduced-motion preference set** — transitions and any autoplaying movement are suppressed.
 - **Very large text scaling (200%)** — no clipped text and no lost control at any width.
 - **Server error during a request** — the custom 500 page, with no stack trace and no internal
@@ -507,9 +628,9 @@ journey depends on it.
 
 ## 5. Page Inventory
 
-All 25 candidate surfaces were evaluated. **In scope: 17. Deferred: 7. Excluded: 1.** One
-evidence-backed surface (Quote request) is added because the verified catalog names
-`request_quote` as a permitted public action.
+All 25 candidate surfaces were evaluated, plus one evidence-backed addition (the enquiry/quote
+request, named in the verified catalog's `public_actions`). **In scope: 21. Deferred: 5.
+Excluded: 0.**
 
 | # | Surface | Decision | Basis / owning future specification |
 | --- | --- | --- | --- |
@@ -520,25 +641,25 @@ evidence-backed surface (Quote request) is added because the verified catalog na
 | 5 | Search and search results | **In scope** | Reference search; US5 |
 | 6 | Product detail | **In scope** | 21 verified products |
 | 7 | Product gallery and media states | **In scope** | 25 verified media assets with declared roles |
-| 8 | Cart | **Deferred** | Feature 002 — Commerce Foundation. No verified price; CF-1, CL-1 |
-| 9 | Checkout / order review | **Deferred** | Feature 002. Constitution VI.9 forbids the reference's card fields (RD-9) |
-| 10 | Order success / confirmation | **Deferred** | Feature 002. Constitution VI.4 forbids a success state with no underlying order |
-| 11 | Saved products (wishlist) | **In scope** | Reference wishlist; visit-scoped; US4 |
-| 12 | Product comparison | **Excluded** | No reference or legacy evidence (CF-6) |
+| 8 | Cart | **In scope** | Session-backed and genuinely functional; survives navigation and reload (US4, FR-093–FR-102) |
+| 9 | Checkout information and order review | **In scope** | Information collection plus a validated order-review state. No payment step, no card fields, no order creation (US6, FR-103–FR-110) |
+| 10 | Order success / confirmation | **Deferred** | Feature 002 — Commerce Foundation. Constitution VI.4 forbids a success state with no underlying order |
+| 11 | Wishlist (saved products) | **In scope** | Session-backed and genuinely functional (US4) |
+| 12 | Product comparison | **Deferred** | Feature 010 — Product Comparison. No approved user story requires it; no verified evidence supports one (CF-6) |
 | 13 | About ZAKEY | **In scope** | Reference About; verified legacy copy |
-| 14 | Contact | **In scope** | Reference Contact; `contact` is a permitted public action. Contact-details block subject to CL-3 |
+| 14 | Contact | **In scope** | Reference Contact; `contact` is a permitted public action. Contact-details block renders only where verified |
 | 15 | FAQ | **In scope** | Reference FAQ; verified legacy FAQ content |
 | 16 | Shipping information | **Deferred** | Feature 002. Catalog creates no delivery fact |
 | 17 | Returns information | **Deferred** | Feature 002. Catalog creates no returns fact |
 | 18 | Warranty information | **Deferred** | Feature 002. Catalog creates no warranty fact |
-| 19 | Privacy policy | **In scope, conditional** | Required where enquiry data is collected. Content must be verified ZAKEY legal text; if unavailable, page **and** its links are removed (CL-3) |
-| 20 | Terms and conditions | **In scope, conditional** | Same condition as #19 (CL-3) |
-| 21 | Empty states | **In scope** | Cross-cutting; §10 |
-| 22 | Loading states | **In scope** | Cross-cutting; §10 |
-| 23 | Validation and error states | **In scope** | Cross-cutting; §10 |
+| 19 | Privacy policy | **In scope, conditional** | Required where enquiry and checkout data is collected. Content must be verified ZAKEY legal text; if unavailable, page **and** its links are removed |
+| 20 | Terms and conditions | **In scope, conditional** | Same condition as #19 |
+| 21 | Empty states | **In scope** | Cross-cutting; §9 |
+| 22 | Loading states | **In scope** | Cross-cutting; §9 |
+| 23 | Validation and error states | **In scope** | Cross-cutting; §9 |
 | 24 | Custom 404 | **In scope** | Constitution VI.7 |
 | 25 | Custom 500 | **In scope** | Constitution VI.7 |
-| + | Quote request | **In scope** | Verified `public_actions: request_price, request_quote`; legacy "Request a quote". Subject to CL-2 |
+| + | Enquiry / quote request | **In scope** | Verified `public_actions: request_price, request_quote, contact`; reachable from product page, cart, order review, and Contact |
 
 Deferred account surfaces observed in the reference — account overview, order history, saved
 addresses, saved payment methods, sign-in and registration — are deferred to **Feature 003 —
@@ -549,13 +670,13 @@ Notifications** (CF-7).
 
 ## 6. Shared Component Inventory
 
-**34 component families.** Each is defined once and reused; Constitution IV.4 forbids duplicating a
+**38 component families.** Each is defined once and reused; Constitution IV.4 forbids duplicating a
 shared component between pages.
 
 | # | Family | Purpose | States |
 | --- | --- | --- | --- |
-| C-01 | Announcement bar | Site-wide verified message | present (verified content) / absent; dismissed persists for the visit |
-| C-02 | Desktop header | Wordmark, primary navigation, search entry, saved-products entry, primary action | default, scrolled/condensed, current-section, focus-within |
+| C-01 | Announcement bar | Site-wide verified message | present (verified content) / absent; dismissed persists for the session |
+| C-02 | Desktop header | Wordmark, primary navigation, search entry, wishlist entry, cart entry | default, scrolled/condensed, current-section, focus-within |
 | C-03 | Mobile navigation | Full navigation at narrow widths | closed, opening, open, closing; focus trapped; Escape closes |
 | C-04 | Search interface | Query entry and submission from any page | closed, open, empty, typing, submitting, submitted |
 | C-05 | Breadcrumbs | Ancestry on listing, category, series, product, informational pages | default, current (non-link), truncated at narrow widths |
@@ -563,10 +684,10 @@ shared component between pages.
 | C-07 | Section heading | Eyebrow + heading + optional supporting copy + optional action | with/without eyebrow, with/without action |
 | C-08 | Category card | Entry to a category | default, hover, focus-visible, pressed |
 | C-09 | Collection card | Entry to a series | default, hover, focus-visible, pressed |
-| C-10 | Product card | Product in any grid or rail | default, hover, focus-visible, saved, image-loading, image-unavailable |
-| C-11 | Price presentation | Honest pricing statement | quote-only (the only state in this feature) |
+| C-10 | Product card | Product in any grid or rail | default, hover, focus-visible, wishlisted, in-cart, image-loading, image-unavailable |
+| C-11 | Price presentation | Honest pricing statement | **verified price** (figure + currency) / **price on request** (no figure) |
 | C-12 | Availability presentation | Honest availability statement | enquiry-based (the only state in this feature) |
-| C-13 | Product badge | Verified attribute marker only | category, series, access method. **No** popularity, discount, award, or certification badge |
+| C-13 | Product badge | Verified attribute marker only | category, series, access method, supplier attribution. **No** popularity, discount, award, or certification badge |
 | C-14 | Button | Primary, secondary, tertiary, icon-only | default, hover, focus-visible, active, disabled, busy |
 | C-15 | Link | Inline and standalone | default, hover, focus-visible, visited, current |
 | C-16 | Form field | Text, email, telephone, textarea, select, checkbox | default, focus, filled, invalid, disabled, read-only |
@@ -576,23 +697,28 @@ shared component between pages.
 | C-20 | Sort control | Result ordering | closed, open, selected |
 | C-21 | Pagination | Movement through results | first, middle, last, single page, disabled edges |
 | C-22 | Gallery controls | Product media navigation | single image, multiple images, active thumbnail, keyboard-operated |
-| C-23 | Quantity control | Quantity for a quote line | minimum, typical, maximum, invalid input |
-| C-24 | Save (wishlist) control | Save/unsave a product | unsaved, saved, busy, unavailable |
-| C-25 | Quote request surface | Review and submit a multi-product request | empty, populated, validating, submitting, submitted, failed |
+| C-23 | Quantity control | Quantity on a product page and on a cart line | minimum, typical, maximum, invalid input, busy |
+| C-24 | Wishlist control | Save/unsave a product | unsaved, saved, busy, unavailable |
+| C-25 | Enquiry / quote request surface | Review and submit a real enquiry covering one or more products | empty, populated, validating, submitting, submitted, failed |
 | C-26 | Dialog | Modal interaction | closed, open, focus-trapped, Escape-dismissed |
-| C-27 | Drawer | Off-canvas surface (mobile nav, filters) | closed, open, focus-trapped, Escape-dismissed |
+| C-27 | Drawer | Off-canvas surface (mobile nav, filters, cart drawer) | closed, open, focus-trapped, Escape-dismissed |
 | C-28 | Toast notification | Transient confirmation of a completed action | enter, visible, dismissed, reduced-motion, assistively announced |
 | C-29 | Enquiry call-to-action band | Homepage conversion band replacing the newsletter (CF-7) | default |
 | C-30 | Informational content section | Prose, question-and-answer, contact blocks | default, expanded/collapsed (FAQ) |
 | C-31 | Footer | Site-wide navigation and legal links | default; links render only for pages that exist |
 | C-32 | Loading state | Deferred content and in-flight actions | skeleton (reserved dimensions), busy control |
-| C-33 | Empty state | No content to show | listing, search, saved products |
+| C-33 | Empty state | No content to show | listing, search, cart, wishlist |
 | C-34 | Error state | Something failed | field, form, page-level, 404, 500 |
+| C-35 | Cart line | One product line in the cart | priced, price-on-request, quantity-editing, removing, unavailable |
+| C-36 | Cart summary | Line count and any computable totals | fully priced, partially priced, unpriced (no monetary total), empty |
+| C-37 | Checkout step indicator | Progress through checkout | current step, completed step, upcoming step; backward navigation available |
+| C-38 | Order-review summary | Final truthful review of lines and entered information | complete, correctable, stale-cart, submitting enquiry |
 
 Removed relative to the reference, with cause: rating presentation and review list (RD-4); press
-and award badges (RD-5); testimonial card (RD-4/RD-8); newsletter subscription form (CF-7); cart
-drawer, coupon field, order summary, shipping-method selector, and every payment field (CF-1,
-RD-9).
+and award badges (RD-5); testimonial card (RD-4/RD-8); newsletter subscription form (CF-7); coupon
+field (no verified promotion, RD-12); tax line (RD-7); shipping-method selector (no verified
+delivery fact, RD-7); every payment field, payment step, and payment-method selector (RD-9); and the
+"Place Order" control (CF-1 — no underlying order operation exists in Feature 001).
 
 ---
 
@@ -614,26 +740,34 @@ Constitution VI.1–VI.3: every control below has defined behavior, and no contr
 | Hero secondary action | click / Enter | Navigates to the About page |
 | Category / collection card | click / Enter | Navigates to that listing |
 | Product card body | click / Enter | Navigates to that product |
-| Product card save control | click / Enter / Space | Toggles saved state; count updates; state announced |
-| Filter option | click / Space | Applies or removes that filter; results and URL update |
+| Product card wishlist control | click / Enter / Space | Toggles wishlist state; count updates; state announced |
+| Filter option | click / Space | Applies or removes that filter; results and address update |
 | Filter chip remove | click / Enter | Removes that one filter |
-| Clear all filters | click / Enter | Removes every filter; returns to unfiltered address |
+| Clear all filters | click / Enter | Removes every filter; returns to unfiltered destination |
 | Mobile filter open / close | click / Escape | Opens or closes the filter drawer with focus management |
-| Sort option | selection | Reorders results; persists across pagination; reflected in URL |
+| Sort option | selection | Reorders results; persists across pagination; reflected in the address |
 | Pagination page / prev / next | click / Enter | Moves to that page; edge controls disabled at edges |
 | Gallery thumbnail | click / Enter / arrow keys | Changes main image; marks active thumbnail |
 | Gallery prev / next | click / Enter / arrow keys | Steps through images |
-| Quantity increase / decrease / entry | click / Enter / typing | Adjusts within bounds; rejects invalid input with a message |
-| Add to quote request | click / Enter | Adds the product to the request; confirms via toast |
-| Remove from quote request | click / Enter | Removes the line; totals of line count update |
-| Quote request submit | click / Enter | Validates, submits, enters busy state, confirms only on success |
-| Contact form submit | click / Enter | As above |
+| Product quantity increase / decrease / entry | click / Enter / typing | Adjusts within bounds; rejects invalid input with a message |
+| Add to cart | click / Enter | Adds the product at the chosen quantity to the session cart; header count updates; confirms via toast |
+| Open cart | click / Enter | Opens the cart surface |
+| Cart line quantity change | click / Enter / typing | Updates that line; cart, header count, and computable totals update |
+| Cart line remove | click / Enter | Removes that line; counts and computable totals update |
+| Continue shopping | click / Enter | Returns to the range |
+| Proceed to checkout | click / Enter | Starts checkout from the current cart; refused with an explanation if the cart is empty |
+| Checkout continue | click / Enter | Validates the current step server-side; advances only when valid |
+| Checkout back | click / Enter | Returns to the previous step with entered values intact |
+| Edit cart from review | click / Enter | Returns to the cart with entered information preserved |
+| Edit information from review | click / Enter | Returns to the relevant checkout step |
+| Send enquiry (from order review, product page, or Contact) | click / Enter | Validates, submits, enters busy state, and confirms **only** on a confirmed successful underlying operation; never claims an order |
 | FAQ question | click / Enter / Space | Expands or collapses its answer; expanded state exposed |
 | Toast dismiss | click / Escape / timeout | Removes the toast |
 | Skip to content | Tab from page start, Enter | Moves focus to the main landmark |
 | Footer link | click / Enter | Navigates to an existing page |
 
-No control in this feature targets `#`. No control renders without one of the behaviors above.
+No control in this feature targets `#`. No control renders without one of the behaviors above. No
+control claims to place an order, complete a purchase, or take a payment.
 
 ---
 
@@ -644,24 +778,26 @@ Constitution VII.2 forbids treating narrow layouts as stacked desktop columns.
 
 | Surface | 1440px (desktop) | 1024px (tablet) | 768px (transition) | 390px (mobile) |
 | --- | --- | --- | --- | --- |
-| Header | Full horizontal navigation, inline search | Full navigation, condensed spacing, search as icon | Navigation collapses to menu control; search icon retained | Menu control, wordmark, saved-products count; search opens full-width |
+| Header | Full horizontal navigation, inline search | Full navigation, condensed spacing, search as icon | Navigation collapses to menu control; search icon retained | Menu control, wordmark, wishlist and cart counts; search opens full-width |
 | Hero | Two columns, text left, image right | Two columns, reduced image share | Single column, image below text, retained aspect ratio | Single column, shortened headline treatment, full-width stacked actions |
 | Category showcase | 3 across | 3 across, tighter gutters | 2 across | 1 across, or horizontal scroll rail with visible affordance |
 | Product grid | 4 across | 3 across | 2 across | 1 across |
 | Product rail | 4 visible, paged | 3 visible, paged | 2 visible, scroll-snap | 1.2 visible, scroll-snap with edge peek |
 | Listing + filters | Persistent filter sidebar beside results | Persistent sidebar, narrowed | Filters collapse to a top control opening a drawer | Filter and sort as a sticky bar opening a full-height drawer |
-| Product detail | Gallery left, information right, sticky action area | Gallery left, information right, non-sticky | Gallery above information | Gallery full-bleed with swipe; action area pinned to the bottom |
+| Product detail | Gallery left, information right, sticky action area | Gallery left, information right, non-sticky | Gallery above information | Gallery full-bleed with swipe; add-to-cart pinned to the bottom |
 | Gallery | Thumbnail column beside main image | Thumbnail column, narrowed | Thumbnail row below main image | Swipeable main image with position indicator |
-| Saved products | Grid, 3 across | Grid, 3 across | Grid, 2 across | List rows, 1 across |
-| Quote request | Two columns: lines and summary | Two columns, narrowed summary | Single column, summary above submit | Single column, submit pinned to the bottom |
+| Wishlist | Grid, 3 across | Grid, 3 across | Grid, 2 across | List rows, 1 across |
+| Cart | Lines left, summary sticky right | Lines left, summary right, non-sticky | Single column, summary below lines | Single-column line cards with inline quantity; summary and primary action pinned to the bottom |
+| Checkout | Form left, cart summary sticky right | Form left, summary right | Single column, collapsible summary above form | Single column, one step per screen, step indicator condensed, primary action pinned to the bottom |
+| Order review | Two columns: lines and entered information | Two columns, narrowed | Single column, grouped sections | Single column, collapsible sections, action pinned to the bottom |
 | Forms | Multi-column field groups | Multi-column where pairs fit | Single column | Single column, full-width fields and controls |
 | Informational pages | Constrained measure with side navigation where present | Constrained measure | Single column | Single column, reduced section padding |
 | Footer | 4 columns | 3 columns | 2 columns | 1 column, groups collapsible |
 
 At every width and on every in-scope surface: no horizontal overflow, no clipped text, no header
 collision, no overlapping floating controls, no tablet dead zone, no oversized empty region, stable
-image dimensions, readable cards, usable filters, usable gallery, usable forms, reachable
-navigation, and touch targets meeting §13.
+image dimensions, readable cards, usable filters, usable gallery, usable forms, usable cart and
+checkout surfaces, reachable navigation, and touch targets meeting §12.
 
 ---
 
@@ -671,11 +807,14 @@ navigation, and touch targets meeting §13.
 | --- | --- | --- | --- | --- | --- |
 | Product listing | Skeleton cards at final card dimensions | "No products match these filters" + clear-filters control | Retrievable failure message; filters preserved | Pagination edges at first/last page | n/a |
 | Search results | Skeleton results; query echoed | "No results for <query>" + route into full range | Failure message; query preserved | n/a | n/a |
-| Product detail | Reserved gallery and content regions | n/a (missing product → 404) | Failure message with a route back to the listing | Gallery controls absent for single-image products | n/a |
+| Product detail | Reserved gallery and content regions | n/a (missing product → 404) | Failure message with a route back to the listing | Gallery controls absent for single-image products | Toast on add to cart / wishlist |
 | Gallery | Reserved image box at the declared ratio | n/a | Proportioned placeholder + meaningful alternative text | Prev/next absent for single image | n/a |
-| Saved products | Skeleton rows | "You have not saved any products yet" + route into range | Failure message; existing set preserved | n/a | Toast on save/remove |
-| Quote request | Busy submit control; form locked | "No products in this request yet" + route into range | Field-level and form-level errors; entered values preserved | Submit disabled while busy | Confirmation only after the operation succeeds (CL-2) |
-| Contact form | Busy submit control | n/a | Field-level and form-level errors; values preserved | Submit disabled while busy | Confirmation only after the operation succeeds (CL-2) |
+| Wishlist | Skeleton rows | "You have not saved any products yet" + route into range | Failure message; existing set preserved | n/a | Toast on save/remove |
+| Cart | Skeleton lines at final dimensions | "Your cart is empty" + route into range | Failure message; cart contents preserved | Checkout control disabled while the cart is empty, with the reason stated | Toast on quantity change and removal |
+| Cart summary | Reserved totals region | n/a | Failure message | n/a | n/a — where any line lacks a verified price, no monetary total is shown and the price-on-request statement appears instead |
+| Checkout step | Busy continue control; step locked | n/a — checkout is refused from an empty cart | Field-level and form-level errors; entered values preserved | Continue disabled while busy | Advance to the next step only after server-side validation passes |
+| Order review | Reserved summary regions | n/a | Stale-cart state returns the visitor to the cart with an explanation | Enquiry control disabled while busy | Enquiry confirmation only after the operation succeeds — worded as an enquiry received, never as an order placed |
+| Enquiry / contact form | Busy submit control | n/a | Field-level and form-level errors; values preserved | Submit disabled while busy | Confirmation only after the operation succeeds |
 | FAQ | n/a | n/a | n/a | n/a | n/a |
 | Any page | n/a | n/a | Custom 404 and custom 500, both with working navigation and no internal detail | n/a | n/a |
 
@@ -692,13 +831,15 @@ is not obvious; a success state appears only after the underlying operation repo
 - **CI-2** Product names are the verified public display names. Invented names (RD-2) are forbidden.
 - **CI-3** Product imagery comes from the 25 verified media assets, used in their declared roles.
 - **CI-4** Only the five approved specification fields may be displayed, and only where populated.
-- **CI-5** No price, currency, discount, stock figure, tax rate, or delivery term appears.
+- **CI-5** No **invented** price, currency, discount, stock figure, tax rate, or delivery term
+  appears anywhere. A monetary figure may appear only when it is a verified sellable price for that
+  product, or a total computed solely from such prices.
 - **CI-6** No rating, review, review count, award, certification, press mention, partnership,
   customer count, sales figure, or trust badge appears.
 - **CI-7** No warranty, guarantee, installation promise, or reply-time promise appears unless
   verified and supplied.
-- **CI-8** ZAKEY's relationship to supplier-branded products is stated honestly wherever product
-  origin could otherwise be misread.
+- **CI-8** ZAKEY is presented as the **retailer**. Every product's real manufacturer or supplier
+  attribution is retained and shown; no product is presented as ZAKEY-manufactured.
 - **CI-9** No visible text, alternative text, title, ARIA label, filename, or metadata contains
   "demo", "placeholder", "sample", "lorem", "Figma", "Jazzmin", "Spec Kit", "fixture", "agent", or
   any other internal development term.
@@ -711,20 +852,25 @@ is not obvious; a success state appears only after the underlying operation repo
   produced during planning, including the supplier-branded status of product photography.
 - **CI-14** Legacy content is reused where it is verified and relevant, copied out under the
   read-only constraint of Constitution IV.2.
-- **CI-15** Where verified content for an in-scope surface does not exist, that surface and every
-  link to it are removed together — never left as a dead link, and never filled with drafted text.
+- **CI-15** Where verified content for a surface does not exist, that surface and every link to it
+  are removed together — never left as a dead link, and never filled with drafted text.
+- **CI-16** Synthetic or example prices may exist **only** inside isolated automated tests. They
+  MUST NOT appear in accepted production-facing content, in screenshots used as evidence, in
+  fixtures, or in seeded storefront data.
+- **CI-17** No surface may describe the cart, the wishlist, or the order-review state as an order, a
+  reservation, a held item, a payment, or a completed purchase.
 
 ---
 
 ## 11. Reference-Fidelity Requirements
 
 **Method.** Fidelity is reviewed by side-by-side comparison of the implementation against the
-reference at 1440px, 1024px, 768px, and 390px, on the homepage, the listing page, and the product
-page, plus one informational page for design-system consistency. Screenshots are captured at each
-width and **inspected**, with observations recorded in the verification artifact — Constitution
+reference at 1440px, 1024px, 768px, and 390px, on the homepage, the listing page, the product page,
+and the cart, plus one informational page for design-system consistency. Screenshots are captured at
+each width and **inspected**, with observations recorded in the verification artifact — Constitution
 XIII.6 states that capturing screenshots without inspecting them is not visual QA.
 
-**Acceptance is structural, not pixel-level.** The reference is a prototype containing twelve
+**Acceptance is structural, not pixel-level.** The reference is a prototype containing thirteen
 recorded defects (§2.2) that must not be reproduced. A comparison passes when all of the following
 hold at every compared width:
 
@@ -751,8 +897,84 @@ hold at every compared width:
 - **RF-10 Documented deviations** — every deviation from the reference is either listed in the
   §2.2 defect table or recorded, with justification, in the plan. An undocumented deviation is a
   defect (Constitution XIII.7).
-- **RF-11 Removed sections leave no scar** — where a fabricated section was removed (RD-4, RD-5,
-  RD-6, RD-8, CF-7), the surrounding rhythm is re-closed; no oversized empty region remains.
+- **RF-11 Removed sections leave no scar** — where a fabricated section or control was removed
+  (RD-4, RD-5, RD-6, RD-8, RD-9, RD-12, CF-7), the surrounding rhythm is re-closed; no oversized
+  empty region remains.
+- **RF-12 Accessibility overrides similarity** — where a reference defect conflicts with §12, the
+  accessible substitution wins. The substitution preserves placement, proportion, typographic
+  character, and restraint, so the approved premium identity survives the correction. A reference
+  defect is never reproduced to improve similarity scores.
+
+### 11.1 Color Identity — binding authoritative decision
+
+**Status: authoritative user decision, recorded 2026-07-31. This is not a clarification and is
+not open to reinterpretation during planning or implementation.**
+
+The visual reference is the **binding authority for the storefront's color palette and visual
+identity**, not merely an inspiration for it. The accepted implementation MUST preserve the same
+observable reference colors, the same premium gold character, the same light-background character,
+the same neutral and dark support colors, the same intended visual hierarchy, and the same
+restrained, luxurious color usage across **every included page and component** — not the homepage
+alone.
+
+"Similar to", "inspired by", and an independently redesigned palette are **not acceptable
+outcomes**. A palette that merely evokes the reference is a failed implementation, not a variant.
+
+- **CID-1 Exact values, extracted and approved.** The exact observable color values have been
+  extracted, classified, contrast-tested, and **ratified in full** by Constitution v1.1.0 — 18
+  values: 5 core brand tokens and 13 reference-derived support tokens, each with its observable
+  role, permitted semantic uses, and measured contrast limitation (§2.2). Both classifications are
+  binding; support tokens are not optional suggestions. **No palette decision remains open.**
+  `/speckit-plan` MUST NOT reconsider, substitute, re-approve, or extend the approved colors — its
+  remaining color work is implementation mapping and CSS token naming only.
+- **CID-2 One token authority.** Every documented value MUST be implemented through exactly one
+  centralized set of shared design tokens. No template, component, stylesheet, or script may carry
+  a literal color value. A color that cannot be resolved to a token is a defect.
+- **CID-3 Complete role coverage.** The same approved tokens MUST govern the announcement bar,
+  header, navigation, mobile navigation, hero, section headings, cards, category and collection
+  surfaces, product surfaces, prices, badges, buttons, links, form fields, validation messages,
+  filters, sorting, pagination, gallery controls, quantity controls, wishlist controls, cart
+  surfaces, checkout surfaces, order review, dialogs, drawers, toasts, informational pages, loading
+  states, empty states, error states, 404, 500, and the footer.
+- **CID-4 No palette drift.** The palette on an internal public page MUST be identical to the
+  palette on the homepage. Page-specific color systems are forbidden. A gold shade that differs
+  between two surfaces, a card background that differs between two grids, or a button color that
+  differs between two pages is a defect, not a variation.
+- **CID-5 Nothing added.** The interface MUST NOT introduce a brand color, gradient, dark section,
+  card color, or button color that is not present in the extracted reference palette and its
+  documented roles. The navy sections and restrained gradients observed in the reference are
+  authorized precisely because they are observed; anything beyond them is not. Black or near-black
+  full-bleed sections that read as an unintended dark theme remain forbidden by Constitution II.5.
+
+#### Accessibility reconciliation
+
+Exact visual identity does **not** authorize inaccessible text. These two requirements are
+reconciled by changing a color's **semantic role**, never by redesigning the palette.
+
+- **CID-6 Gold is restricted by role, not replaced.** `#C9A227` measures approximately 2.4:1 on
+  `#FFFFFF` and on `#F8F9FB`, failing both the 4.5:1 text threshold and the 3:1 non-text threshold.
+  It MUST NOT be used for normal-sized text on a light background. It remains fully available, at
+  its exact value, for decorative accents, borders, icon fills on compliant backgrounds, large text
+  that measures compliant, and as a background with a compliant foreground. On primary navy
+  `#0D1B3D` it measures approximately 6.9:1 and is compliant.
+- **CID-7 Substitute from the existing palette first.** Where the reference uses gold for normal
+  text on a light background (RD-1, the hero eyebrow), the correction MUST use an existing
+  reference neutral — `#1F2937` or `#0D1B3D` — while preserving the element's placement, size,
+  weight, letter-spacing, and prominence. Inventing a replacement gold is forbidden.
+- **CID-8 A new shade is a last resort with a paper trail.** If an accessibility role genuinely
+  cannot be satisfied by any documented reference value, the additional shade MUST: state why the
+  existing palette cannot satisfy the role; be derived from the approved visual family; record its
+  exact value; record measured contrast evidence for every pairing it is used in; be restricted to
+  that one accessibility role; and preserve the overall reference identity. Accessibility
+  correction MUST NOT become a route to redesigning the palette.
+
+#### How color fidelity is verified
+
+Color comparison against the reference is performed at **1440px, 1024px, 768px, and 390px**, on
+every included page, and is a required element of **both** visual critique passes (Constitution
+XIII.3). Each pass records, per page and per width, whether any rendered color deviates from its
+documented token and whether any surface has drifted from the homepage palette. Contrast is
+verified for every token pairing actually in use.
 
 ---
 
@@ -776,20 +998,21 @@ Target: **WCAG 2.2 Level AA**. Every item is measurable.
   meaningful icons, or any element with a non-text contrast requirement on `#FFFFFF` or `#F8F9FB`
   (Constitution II.7).
 - **A-10** Meaningful non-text elements, including control boundaries and focus indicators, meet 3:1.
-- **A-11** Interactive targets are at least 24×24 CSS pixels; primary mobile actions are at least
-  44×44.
+- **A-11** Interactive targets are at least 24×24 CSS pixels; primary mobile actions — add to cart,
+  proceed to checkout, continue, and send enquiry — are at least 44×44.
 - **A-12** Menus and disclosure controls expose expanded/collapsed state assistively.
-- **A-13** Drawers and dialogs trap focus while open, close on Escape, and return focus to the
-  control that opened them.
-- **A-14** Content changes that occur without navigation — save toggles, filter results, toasts —
-  are announced assistively without stealing focus.
+- **A-13** Drawers and dialogs, including the cart drawer, trap focus while open, close on Escape,
+  and return focus to the control that opened them.
+- **A-14** Content changes that occur without navigation — wishlist toggles, cart updates, filter
+  results, toasts — are announced assistively without stealing focus.
 - **A-15** Reduced-motion preference suppresses transitions, parallax, and any autoplaying movement.
 - **A-16** Every meaningful image has alternative text describing what it shows; decorative images
   are hidden from assistive technology.
 - **A-17** Each page declares its language and text direction on the root element.
 - **A-18** Page titles are unique and describe the page.
 - **A-19** Content remains usable and unclipped at 200% text scaling at every verification width.
-- **A-20** Verification requires **both** an automated axe run with zero violations at the
+- **A-20** Checkout step progress is exposed assistively, not by visual styling alone.
+- **A-21** Verification requires **both** an automated axe run with zero violations at the
   documented conformance level **and** a manual keyboard pass covering tab order, focus visibility,
   focus trapping, and dismissal. Constitution VIII.6: an automated pass alone is not verification.
 
@@ -798,8 +1021,7 @@ Target: **WCAG 2.2 Level AA**. Every item is measurable.
 ## 13. Performance Budgets
 
 Budgets are set before implementation (Constitution IX.7) and are measured on a production-mode
-build. "Page weight" means total transferred bytes for an uncached first load, excluding
-video.
+build. "Page weight" means total transferred bytes for an uncached first load, excluding video.
 
 | Budget | Target | Measured how |
 | --- | --- | --- |
@@ -820,6 +1042,8 @@ video.
 | PB-15 Below-the-fold images lazily loaded | 100%; above-the-fold hero image eagerly loaded | Automated DOM audit |
 | PB-16 Fonts | Self-hosted, subset, with a font-display strategy that never hides text | Network trace + computed style check |
 | PB-17 Production asset build | Succeeds with no error and no unresolved asset reference | Build command exit status |
+| PB-18 Page weight — cart, checkout, order review | ≤ 900 KB each | Production build, uncached load |
+| PB-19 Cart and wishlist state update | Reflected in the interface within 200 ms of a confirmed update | Production-like local run |
 
 No budget may be met by weakening accessibility, removing required content, or degrading visual
 quality (Constitution IX.8).
@@ -830,15 +1054,15 @@ quality (Constitution IX.8).
 
 ### Functional Requirements
 
-#### Navigation and information architecture (FR-001 to FR-012)
+#### Navigation, destinations, and information architecture (FR-001 to FR-012, FR-091 to FR-092)
 
 - **FR-001**: The storefront MUST present one navigation architecture, identical in structure and
   behavior on every in-scope page.
 - **FR-002**: The announcement bar MUST render only when verified announcement content exists in the
   centralized content source; when absent, every page MUST lay out correctly without it.
 - **FR-003**: The header MUST provide the wordmark linking to the homepage, primary navigation to
-  the product range and informational pages, a search entry point, and a saved-products entry point
-  showing the current count.
+  the product range and informational pages, a search entry point, a wishlist entry point showing
+  the current count, and a cart entry point showing the current line count.
 - **FR-004**: At widths where the full navigation does not fit, the storefront MUST provide a
   dedicated mobile navigation surface — not a horizontally scrolling or truncated desktop bar.
 - **FR-005**: The mobile navigation MUST open and close by pointer and keyboard, trap focus while
@@ -850,14 +1074,19 @@ quality (Constitution IX.8).
   programmatically exposed as current.
 - **FR-009**: Every navigation control MUST be operable by keyboard, in an order matching its visual
   order.
-- **FR-010**: Every internal link MUST resolve to an existing page. No control may target `#` and no
-  control may render without defined behavior.
+- **FR-010**: Every internal link MUST resolve to an existing destination. No control may target `#`
+  and no control may render without defined behavior.
 - **FR-011**: The homepage MUST present, in order: hero, category showcase, featured products,
   value proposition, series showcase, enquiry call to action, footer — a single featured-products
   rail sourced from the verified `featured_products_slider` role (RD-11).
 - **FR-012**: The footer MUST group links by purpose, MUST render a link only for a page that
   exists in this feature, and MUST NOT reproduce reference footer entries for surfaces that are
-  deferred or excluded.
+  deferred.
+- **FR-091**: Every in-scope surface MUST have a stable, meaningful public destination. The
+  reference's single client-side route places no constraint on ZAKEY's destinations or architecture;
+  the reference is the visual authority, not the routing authority.
+- **FR-092**: Every destination MUST be shareable and MUST reload to the same content, including
+  filtered, sorted, and paginated listing states and search results.
 
 #### Product discovery (FR-013 to FR-028)
 
@@ -867,44 +1096,48 @@ quality (Constitution IX.8).
 - **FR-015**: Collection listing pages MUST exist for each of the six verified collections.
 - **FR-016**: Filtering MUST be offered by category, by collection, and by access method — the three
   facets for which verified data exists.
-- **FR-017**: Price-range and minimum-rating filters MUST NOT be offered, because no verified price
-  or rating data exists (RD-3, RD-4).
+- **FR-017**: A price-range filter MUST NOT be offered while the catalog carries no verified prices,
+  and a minimum-rating filter MUST NOT be offered at all, because no verified rating data exists and
+  none may be invented (RD-3, RD-4). A price filter becomes available only once verified prices
+  exist for the catalog.
 - **FR-018**: Filters MUST be combinable; results MUST satisfy every applied filter.
 - **FR-019**: Every applied filter MUST be individually visible and individually removable.
 - **FR-020**: A control MUST clear all filters at once and return the listing to its unfiltered
-  state and address.
-- **FR-021**: Filter, sort, and pagination state MUST be expressed in the page address so a result
-  set can be shared and reloaded to the same state.
+  state and destination.
+- **FR-021**: Filter, sort, and pagination state MUST be expressed in the destination address so a
+  result set can be shared and reloaded to the same state.
 - **FR-022**: Sorting MUST offer only orderings derivable from verified data — featured order, name
-  ascending, name descending. Popularity- and price-based sorts MUST NOT be offered (RD-3, RD-11).
+  ascending, name descending. Popularity-based sorts MUST NOT be offered at all (RD-11); price-based
+  sorts MUST NOT be offered while the catalog carries no verified prices (RD-3).
 - **FR-023**: Results MUST be paginated, with page controls disabled at the first and last page and
   the current page indicated.
 - **FR-024**: When no products match, the storefront MUST show a no-results state that explains the
   outcome and offers a control that clears the filters.
 - **FR-025**: At narrow widths, filters MUST be presented in a dedicated surface with focus
   management and Escape dismissal — not as a long list pushing results off-screen.
-- **FR-026**: Search MUST match against verified product display names, model codes, categories, and
-  collections; results MUST echo the query and state the result count.
+- **FR-026**: Search MUST match against verified product display names, model codes, supplier
+  attribution, categories, and collections; results MUST echo the query and state the result count.
 - **FR-027**: A search with no matches MUST show a no-results state offering a route into the full
   range; an empty or whitespace-only query MUST NOT produce an error or a results page implying a
   search occurred.
 - **FR-028**: Product cards MUST present identical structure and proportions wherever they appear —
-  listing, category, collection, search results, related products, and homepage rails.
+  listing, category, collection, search results, related products, wishlist, and homepage rails.
 
-#### Product presentation (FR-029 to FR-041)
+#### Product presentation and product truth (FR-029 to FR-041, FR-111 to FR-113)
 
 - **FR-029**: Products MUST be presented under their verified public display names only.
 - **FR-030**: Product imagery MUST come from the verified media assets, used in their declared roles;
   the homepage hero image MUST be a verified ZAKEY smart-lock image (Constitution I.5, RD-10).
-- **FR-031**: A product page MUST present name, imagery, category, collection where assigned, and
-  access methods.
+- **FR-031**: A product page MUST present name, imagery, supplier attribution, category, collection
+  where assigned, and access methods.
 - **FR-032**: Product galleries MUST support multiple images with pointer, keyboard, and touch
   operation, MUST indicate the active image, and MUST NOT change the media region's dimensions
   between images.
 - **FR-033**: A product with a single image MUST render without gallery navigation, rather than with
   disabled controls.
-- **FR-034**: Pricing MUST be presented as a single consistent quote-only statement on every surface
-  that references price, with no figure, no "from" price, and no currency (CI-5, CL-1).
+- **FR-034**: A monetary price MUST be shown for a product only when that product carries a verified
+  sellable price. A product without one MUST show a consistent price-on-request statement on every
+  surface that references its price, with no figure, no "from" price, and no currency.
 - **FR-035**: Technical information MUST be limited to the five approved specification fields, and a
   field with no verified value MUST be omitted rather than shown empty.
 - **FR-036**: Availability MUST be presented honestly as enquiry-based, with no stock count, no
@@ -912,38 +1145,86 @@ quality (Constitution IX.8).
 - **FR-037**: Related products MUST share the viewed product's category or collection and MUST NOT
   include the viewed product.
 - **FR-038**: Product badges MUST convey verified attributes only — category, collection, access
-  method. Popularity, discount, award, and certification badges MUST NOT exist.
-- **FR-039**: Product information MUST follow one hierarchy on every product page: identity, media,
-  key attributes, action, detailed attributes, related products.
-- **FR-040**: Where product origin could be misread, the storefront MUST state ZAKEY's relationship
-  to supplier-branded products honestly (CI-8).
+  method, supplier attribution. Popularity, discount, award, and certification badges MUST NOT exist.
+- **FR-039**: Product information MUST follow one hierarchy on every product page: identity,
+  attribution, media, key attributes, action, detailed attributes, related products.
+- **FR-040**: Wherever product origin could be misread, the storefront MUST state ZAKEY's role as
+  retailer and the product's real supplier explicitly (CI-8).
 - **FR-041**: An unavailable product image MUST render a correctly proportioned placeholder region
   with meaningful alternative text — never a broken-image icon and never a distorted image.
+- **FR-111**: Every product MUST retain and display its real manufacturer or supplier attribution.
+  ZAKEY MUST be presented as the retailer and MUST NOT be presented, implied, or styled as the
+  manufacturer of a supplier-branded product.
+- **FR-112**: Verified product names, images, specifications, categories, and collections MUST be
+  preserved exactly as recorded in the authoritative catalog. Renaming, rebranding, paraphrasing a
+  specification, or reassigning a product's taxonomy is forbidden.
+- **FR-113**: Synthetic or example prices MAY exist only inside isolated automated tests. They MUST
+  NOT appear in accepted production-facing content, in evidence screenshots, in fixtures, or in
+  seeded storefront data.
 
-#### Saved products and quote-led interactions (FR-042 to FR-053)
+#### Color identity and design tokens (FR-114 to FR-120)
 
-- **FR-042**: Visitors MUST be able to save and unsave products from product cards and product pages,
-  with the control reflecting current state.
-- **FR-043**: The saved-products count MUST be shown in the header and MUST stay accurate across
-  navigation and reload within the visit.
-- **FR-044**: The saved-products page MUST list saved products, allow removal, and offer a route into
-  a quote request.
-- **FR-045**: Saved products MUST persist for the duration of the visit without requiring an account.
-- **FR-046**: No saved-products surface may describe the set as an order, a cart, a reservation, a
-  held item, or anything implying a commercial commitment.
-- **FR-047**: A saved entry whose product no longer exists MUST be dropped silently, with the count
-  corrected and no error shown.
-- **FR-048**: Visitors MUST be able to request a quote for one product from its product page and for
-  several products from the saved-products page.
-- **FR-049**: The quote request MUST show which products it covers and allow lines to be removed
+- **FR-114**: The accepted interface MUST use only colors from the 18-value palette ratified in
+  Constitution v1.1.0 and documented in §2.2, each in its permitted semantic role. All 13
+  reference-derived support tokens — `#6B7280`, `#EEF0F5`, `#E0B62E`, `#9CA3AF`, the four navy
+  tints, and the five navy-alpha values — are binding and MUST be carried into the token source
+  rather than dropped, approximated, or substituted. Not every token must appear on every page;
+  every color that does appear MUST come from this palette and retain its defined semantic role
+  (CID-1).
+- **FR-115**: The interface MUST NOT introduce any additional brand color, gradient, dark-section
+  treatment, card color, or button color beyond those observed in the reference. Black or
+  near-black full-bleed sections that read as an unintended dark theme are forbidden (CID-5).
+- **FR-116**: Every rendered color MUST resolve to exactly one centralized set of shared design
+  tokens. No template, component, stylesheet, or script may contain a literal color value (CID-2).
+- **FR-117**: The same approved token set MUST govern every surface listed in CID-3. Page-specific
+  color systems, divergent gold shades, divergent card colors, and divergent button colors between
+  pages are defects, not variations (CID-3, CID-4).
+- **FR-118**: Accent gold `#C9A227` MUST NOT be used for normal-sized text on a light background.
+  Its exact value MUST be preserved and its role changed — decorative accents, borders, icon fills
+  on compliant backgrounds, compliant large text, or as a background with a compliant foreground.
+  Where the reference uses gold for normal text, the correction MUST use an existing reference
+  neutral (`#1F2937` or `#0D1B3D`), preserving placement, size, weight, letter-spacing, and
+  prominence. A replacement gold MUST NOT be invented (CID-6, CID-7, RD-1).
+- **FR-119**: Any additional accessibility-specific shade MUST be a documented last resort — with a
+  stated reason the existing palette cannot satisfy the role, derivation from the approved visual
+  family, its exact value, measured contrast evidence for every pairing, and restriction to that
+  one accessibility role. Accessibility correction MUST NOT be used to redesign the palette
+  (CID-8).
+- **FR-120**: Placeholder text MUST use `#6B7280` (4.83:1 on white, 4.59:1 on `#F8F9FB`).
+  `#9CA3AF` MUST NOT be used as text of any size, including placeholder text, because it measures
+  2.54:1 on white and 2.41:1 on `#F8F9FB`; it remains available for non-text roles only. This
+  correction is taken from the reference's own alternate placeholder usage, not invented (RD-13).
+
+#### Wishlist (FR-042 to FR-047)
+
+- **FR-042**: Visitors MUST be able to add and remove products from the wishlist from product cards
+  and product pages, with the control reflecting current state.
+- **FR-043**: The wishlist count MUST be shown in the header and MUST stay accurate across
+  navigation and reload within the session.
+- **FR-044**: The wishlist page MUST list saved products, allow removal, allow moving a product to
+  the cart, and offer a route into an enquiry.
+- **FR-045**: The wishlist MUST be genuinely session-backed: its contents MUST survive normal
+  navigation and reload for the duration of the active session, without requiring an account.
+- **FR-046**: No wishlist surface may describe the set as an order, a cart, a reservation, a held
+  item, or anything implying a commercial commitment.
+- **FR-047**: A wishlist entry whose product no longer exists MUST be dropped silently, with the
+  count corrected and no error shown.
+
+#### Enquiry and quote request (FR-048 to FR-053)
+
+- **FR-048**: Visitors MUST be able to send an enquiry covering one product from its product page,
+  and an enquiry covering the current cart from the cart and from the order-review state.
+- **FR-049**: The enquiry surface MUST show which products it covers and allow lines to be removed
   before submission.
-- **FR-050**: The quote request MUST NOT display or compute a monetary total, subtotal, tax, or
-  shipping amount.
+- **FR-050**: The enquiry surface MUST present monetary totals only where every covered line carries
+  a verified price; otherwise it MUST present no monetary total and MUST state that pricing for the
+  affected items is provided on request.
 - **FR-051**: No surface in this feature may request, transmit, log, or store a card number, expiry
   date, security code, PIN, or any payment credential (Constitution VI.9, RD-9).
-- **FR-052**: A quote-request confirmation MUST appear only after the underlying operation reports
-  success, and MUST NOT promise a reply time, price, availability, or delivery unless verified
-  (Constitution VI.4; CL-2).
+- **FR-052**: An enquiry confirmation MUST appear only after the underlying operation reports
+  success, MUST be worded as an enquiry received, and MUST NOT promise a reply time, price,
+  availability, or delivery unless verified, nor describe an order as placed, paid, reserved, or
+  shipped.
 - **FR-053**: Every rendered commerce-facing control MUST have real defined behavior; any control
   whose behavior belongs to a deferred feature MUST NOT be rendered.
 
@@ -975,14 +1256,14 @@ quality (Constitution IX.8).
 - **FR-065**: Verified legacy content MUST be reused where it is relevant and accurate.
 - **FR-066**: Any claim not traceable to verified evidence MUST be removed or rewritten
   conservatively.
-- **FR-067**: The About page MUST describe ZAKEY truthfully, including its relationship to the
-  supplier-branded products it offers.
+- **FR-067**: The About page MUST describe ZAKEY truthfully as a premium retailer, including its
+  relationship to the supplier-branded products it offers.
 - **FR-068**: The Contact page MUST offer a working enquiry form; it MUST show contact details only
-  where those details are verified (CL-3).
+  where those details are verified.
 - **FR-069**: The FAQ MUST present question-and-answer content that is individually expandable,
   keyboard-operable, and assistively labelled with its expanded state.
 - **FR-070**: Privacy and Terms pages MUST render verified ZAKEY legal text or MUST be removed
-  together with every link that points at them (CI-15, CL-3).
+  together with every link that points at them (CI-15).
 
 #### Content source and architecture (FR-071 to FR-078)
 
@@ -1026,23 +1307,72 @@ quality (Constitution IX.8).
   markup (Constitution X.6).
 - **FR-088**: Pagination beyond the last page MUST return a defined response and return the visitor
   to a valid page.
-- **FR-089**: Core navigation, product discovery, product detail, and informational content MUST
-  remain usable when JavaScript is unavailable; controls that genuinely require scripting MUST NOT
-  render as inert.
+- **FR-089**: Core navigation, product discovery, product detail, cart, checkout, and informational
+  content MUST remain usable when JavaScript is unavailable; controls that genuinely require
+  scripting MUST NOT render as inert.
 - **FR-090**: Every page MUST render correctly with the announcement bar both present and absent,
-  and with the saved-products set both empty and populated.
+  and with the cart and wishlist both empty and populated.
+
+#### Cart (FR-093 to FR-102)
+
+- **FR-093**: Visitors MUST be able to add a product to the cart at a chosen quantity from the
+  product page.
+- **FR-094**: The cart MUST be genuinely session-backed: its lines and quantities MUST survive
+  normal navigation and reload for the duration of the active session, without requiring an account.
+- **FR-095**: Each cart line MUST show the product, its supplier attribution, its verified price
+  where one exists, its quantity, and its line total where one is computable.
+- **FR-096**: Visitors MUST be able to change a line's quantity and remove a line, with the cart,
+  the header count, and any computable totals updating consistently and immediately.
+- **FR-097**: The header MUST show the current cart line count, accurate across navigation and
+  reload.
+- **FR-098**: Monetary totals MUST be computed only from verified prices. Where any line in the cart
+  lacks a verified price, the cart MUST NOT present an overall monetary total, MUST state that
+  pricing for those items is provided on request, and MUST offer the enquiry action.
+- **FR-099**: Every monetary total in this feature MUST be produced by one shared calculation
+  routine; two surfaces MUST NOT compute the same total differently (Constitution VI.8).
+- **FR-100**: An empty cart MUST show an empty state that explains it and offers a route into the
+  range, and the proceed-to-checkout control MUST be disabled with its reason stated.
+- **FR-101**: A cart line whose product no longer exists MUST be removed silently, with counts and
+  any totals corrected and no error shown.
+- **FR-102**: No cart surface may describe its contents as an order, a reservation, a held item, a
+  payment, or a completed purchase.
+
+#### Checkout and order review (FR-103 to FR-110)
+
+- **FR-103**: Checkout MUST collect the visitor's contact and delivery information across clearly
+  indicated steps, MUST show progress, and MUST allow backward navigation without losing entered
+  values.
+- **FR-104**: Every checkout step MUST be validated server-side, and the order-review state MUST be
+  reachable only after all collected information has passed that validation.
+- **FR-105**: Checkout MUST NOT present a payment step, a payment-method selector, a card-entry
+  field, a saved-card option, or any simulated payment outcome.
+- **FR-106**: The order-review state MUST show the cart lines with quantities, the entered contact
+  and delivery information, and any computable monetary totals, and MUST allow the visitor to return
+  and correct the cart and every entered value.
+- **FR-107**: The order-review state MUST state plainly that no order has been placed and no payment
+  has been taken.
+- **FR-108**: The only submitting action available from the order-review state MUST be an enquiry
+  that performs a real underlying operation. Feature 001 MUST NOT render any control that claims to
+  place an order, complete a purchase, or take a payment.
+- **FR-109**: Feature 001 MUST NOT create a production order record, MUST NOT issue an identifier
+  presented to the visitor as an order number, and MUST NOT produce any artifact a visitor would
+  reasonably read as a completed purchase.
+- **FR-110**: If the cart changes or empties between entering checkout and reaching order review,
+  the order-review state MUST refuse to present stale contents and MUST return the visitor to the
+  cart with an explanation.
 
 ### Non-Functional Requirements
 
 #### Visual fidelity and design system (NFR-001 to NFR-006)
 
-- **NFR-001**: The storefront MUST satisfy RF-1 through RF-11 at 1440px, 1024px, 768px, and 390px.
+- **NFR-001**: The storefront MUST satisfy RF-1 through RF-12 at 1440px, 1024px, 768px, and 390px.
 - **NFR-002**: Every page MUST belong to one ZAKEY design system; page-specific visual identities are
   forbidden (Constitution I.7).
-- **NFR-003**: Implemented token values MUST match the ratified table exactly: primary navy
-  `#0D1B3D`, accent gold `#C9A227`, background `#F8F9FB`, white `#FFFFFF`, primary text `#1F2937`,
-  Poppins self-hosted, 8px base spacing unit, 12px primary radius, 1440px desktop reference,
-  12-column desktop grid, restrained shadows.
+- **NFR-003**: Implemented token values MUST match the ratified tables in Constitution v1.1.0
+  exactly — the 5 core brand tokens (primary navy `#0D1B3D`, accent gold `#C9A227`, background
+  `#F8F9FB`, white `#FFFFFF`, primary text `#1F2937`), all 13 reference-derived support tokens, and
+  the non-colour tokens (Poppins self-hosted, 8px base spacing unit, 12px primary radius, 1440px
+  desktop reference, 12-column desktop grid, restrained shadows built from the navy-alpha tokens).
 - **NFR-004**: Spacing MUST be a multiple of 8px unless a deliberate optical correction is recorded
   in the plan (Constitution II.6).
 - **NFR-005**: The storefront MUST NOT introduce dark mode, accidental dark-theme sections, excessive
@@ -1062,17 +1392,18 @@ quality (Constitution IX.8).
 - **NFR-010**: No clipped text, header collision, floating-control overlap, tablet dead zone, or
   oversized empty region at any of the four widths.
 - **NFR-011**: Image dimensions MUST be stable across breakpoints; declared ratios MUST NOT change.
-- **NFR-012**: Mobile navigation, filters, gallery, forms, and the quote-request surface MUST each
-  have dedicated responsive behavior.
+- **NFR-012**: Mobile navigation, filters, gallery, forms, cart, and checkout MUST each have
+  dedicated responsive behavior.
 - **NFR-013**: Content MUST remain usable and unclipped at 200% text scaling at every width.
 
 #### Accessibility (NFR-014 to NFR-024)
 
-- **NFR-014**: A-1 through A-19 MUST hold on every in-scope page.
+- **NFR-014**: A-1 through A-20 MUST hold on every in-scope page.
 - **NFR-015**: An automated axe run MUST report zero violations at the documented conformance level
-  on every in-scope page and on each interactive surface in its open state.
+  on every in-scope page and on each interactive surface in its open state, including the cart
+  drawer and every checkout step.
 - **NFR-016**: A manual keyboard inspection MUST cover tab order, focus visibility, focus trapping,
-  and dismissal on every interactive surface, with observations recorded.
+  and dismissal on every interactive surface, including the full cart-to-order-review journey.
 - **NFR-017**: Accent gold MUST NOT be used for text, meaningful icons, or elements bearing a
   non-text contrast requirement on `#FFFFFF` or `#F8F9FB`.
 - **NFR-018**: Interactive targets MUST meet 24×24 CSS pixels minimum; primary mobile actions 44×44.
@@ -1086,9 +1417,10 @@ quality (Constitution IX.8).
 
 #### Performance (NFR-025 to NFR-033)
 
-- **NFR-025**: PB-1 through PB-4 page-weight budgets MUST be met.
+- **NFR-025**: PB-1 through PB-4 and PB-18 page-weight budgets MUST be met.
 - **NFR-026**: PB-5 through PB-7 asset budgets MUST be met.
-- **NFR-027**: PB-8 through PB-10 Core Web Vitals targets MUST be met on a production-like run.
+- **NFR-027**: PB-8 through PB-10 Core Web Vitals targets MUST be met on a production-like run, and
+  PB-19 state-update responsiveness MUST be met for cart and wishlist.
 - **NFR-028**: Zero unexpected console errors on every in-scope page, captured automatically.
 - **NFR-029**: Zero broken internal links, verified by an automated crawl.
 - **NFR-030**: Every image MUST declare intrinsic dimensions or an aspect-ratio reservation.
@@ -1110,7 +1442,7 @@ quality (Constitution IX.8).
 - **NFR-038**: The legacy repository MUST remain unmodified throughout implementation and
   verification (Constitution IV.2).
 
-#### Security and privacy (NFR-039 to NFR-042)
+#### Security and privacy (NFR-039 to NFR-043)
 
 - **NFR-039**: Every state-changing request MUST carry active cross-site request forgery protection
   (Constitution X.4).
@@ -1119,13 +1451,27 @@ quality (Constitution IX.8).
   (Constitution VI.9).
 - **NFR-042**: Logs MUST NOT contain personal information beyond what the feature requires, and
   never a credential (Constitution X.9).
+- **NFR-043**: Contact and delivery information collected at checkout MUST be held only for the
+  purpose of the enquiry the visitor submits, MUST NOT be exposed to another session, and MUST NOT
+  be used to create a persistent customer account in this feature.
+
+#### Color identity (NFR-044 to NFR-046)
+
+- **NFR-044**: The exact reference color values and their role assignments MUST be documented
+  before implementation begins, re-verified against the live reference during planning, and
+  recorded as the palette of record (CID-1).
+- **NFR-045**: Exactly one centralized token authority MUST define every color used by the
+  storefront; zero literal color values may appear outside it (CID-2).
+- **NFR-046**: Cross-page palette consistency MUST be inspected at 1440px, 1024px, 768px, and
+  390px on every included page, and color comparison MUST be performed in both required visual
+  critique passes, with per-page and per-width observations recorded (CID-4, Constitution XIII.3).
 
 ### Key Entities
 
-- **Product** — a verified item ZAKEY offers. Attributes: public display name, summary, product
-  type, supplier brand, supplier relationship, category, collections, access methods, media
-  assignments with roles and order, approved specification fields, commerce mode, permitted public
-  actions. Carries no price, stock, rating, or warranty value.
+- **Product** — a verified item ZAKEY sells. Attributes: public display name, summary, product type,
+  supplier brand, supplier relationship, category, collections, access methods, media assignments
+  with roles and order, approved specification fields, commerce mode, permitted public actions,
+  verified sellable price where one exists. Carries no stock, rating, or warranty value.
 - **Category** — a verified grouping by lock technology. Attributes: name, slug. Relationship: one
   category has many products; a product has exactly one category.
 - **Collection (series)** — a verified product family. Attributes: name, slug. Relationship: many to
@@ -1135,12 +1481,20 @@ quality (Constitution IX.8).
 - **Media asset** — a verified image. Attributes: identifier, roles, sort order, intrinsic
   dimensions, alternative text. Relationship: many to many with products through role-carrying
   assignments.
-- **Saved-products set** — the visitor's visit-scoped shortlist. Attributes: product references,
-  time added. Not an order and not a commitment.
-- **Quote request** — a visitor's expression of interest. Attributes: contact details, message,
-  requested product lines with quantities, submission state. Carries no monetary value.
-- **Enquiry** — a general contact submission. Attributes: contact details, subject, message,
-  submission state.
+- **Wishlist** — the visitor's session-scoped shortlist. Attributes: product references, time added.
+  Not an order and not a commitment.
+- **Cart** — the visitor's session-scoped selection. Attributes: lines, each with a product
+  reference and a quantity; derived line totals and overall total, computable only where every
+  referenced product carries a verified price. Not an order, not a reservation, not a payment.
+- **Checkout information** — contact and delivery details supplied by the visitor during checkout.
+  Attributes: name, contact details, delivery address fields, validation state. Session-scoped;
+  never a persistent customer account. Contains no payment credential.
+- **Order review** — the terminal validated state of checkout. Attributes: a snapshot of the cart
+  lines, the validated checkout information, computable totals, and an explicit statement that no
+  order has been placed and no payment taken. Produces no order record.
+- **Enquiry** — a visitor's submitted request. Attributes: contact details, message, covered product
+  lines with quantities, submission state. Carries no monetary commitment and is never presented as
+  an order.
 - **Announcement** — optional verified site-wide message. Attributes: message text, optional link.
 
 ---
@@ -1149,7 +1503,7 @@ quality (Constitution IX.8).
 
 ### Measurable Outcomes
 
-- **SC-001**: All 17 in-scope surfaces render at all four verification widths with no unhandled
+- **SC-001**: All 21 in-scope surfaces render at all four verification widths with no unhandled
   error.
 - **SC-002**: 100% of the 21 verified products are reachable from the listing page by browsing
   alone.
@@ -1161,8 +1515,8 @@ quality (Constitution IX.8).
   implementations, verified by inspection during code review.
 - **SC-006**: Repeated components render identically across pages on the compared attributes; zero
   divergences recorded at the second visual critique pass.
-- **SC-007**: Reference-fidelity comparison passes RF-1 through RF-11 on the homepage, listing page,
-  product page, and one informational page at all four widths, with inspected-screenshot
+- **SC-007**: Reference-fidelity comparison passes RF-1 through RF-12 on the homepage, listing page,
+  product page, cart, and one informational page at all four widths, with inspected-screenshot
   observations recorded for each.
 - **SC-008**: Document scroll width does not exceed viewport width on any in-scope page at 1440px,
   1024px, 768px, or 390px — zero failures across the programmatic check.
@@ -1171,8 +1525,8 @@ quality (Constitution IX.8).
 - **SC-010**: Every in-scope page passes an automated axe run with zero violations at the documented
   conformance level.
 - **SC-011**: A manual keyboard pass completes every in-scope journey — browse, filter, search,
-  inspect a product, save, request a quote, submit contact — using the keyboard alone, with
-  observations recorded.
+  inspect a product, wishlist, add to cart, edit the cart, complete checkout to order review, and
+  send an enquiry — using the keyboard alone, with observations recorded.
 - **SC-012**: 100% of focusable controls show a visible focus indicator meeting 3:1 contrast.
 - **SC-013**: 100% of interactive targets meet 24×24 CSS pixels; 100% of primary mobile actions meet
   44×44.
@@ -1180,31 +1534,32 @@ quality (Constitution IX.8).
   non-text contrast requirement over `#FFFFFF` or `#F8F9FB`.
 - **SC-015**: Filtering by any single facet returns only products carrying that facet — 100%
   precision across all 15 verified facet values.
-- **SC-016**: Filter, sort, and pagination state reloads to an identical result set from its address
-  in 100% of tested combinations.
+- **SC-016**: Filter, sort, and pagination state reloads to an identical result set from its
+  destination address in 100% of tested combinations.
 - **SC-017**: A search for each verified model code returns that product within the first page of
   results in 100% of cases.
 - **SC-018**: No-results states appear for zero-match filter combinations and zero-match searches in
   100% of tested cases, each offering a working recovery control.
-- **SC-019**: A content audit of every visible string finds zero prices, currencies, discounts,
-  stock figures, ratings, review counts, awards, certifications, press mentions, customer counts,
-  warranty claims, or delivery promises.
+- **SC-019**: A content audit of every visible string finds zero **unverified** prices and zero
+  currencies, discounts, stock figures, ratings, review counts, awards, certifications, press
+  mentions, customer counts, tax values, warranty claims, or delivery promises.
 - **SC-020**: A content audit finds zero occurrences of internal terminology in visible copy,
   alternative text, titles, ARIA labels, visible filenames, or metadata.
 - **SC-021**: 100% of displayed product names, images, and specification fields match the verified
-  catalog; zero invented product identities.
+  catalog exactly; zero invented, renamed, or rebranded product identities.
 - **SC-022**: Zero fields anywhere in the feature collect a card number, expiry date, security code,
   or PIN.
 - **SC-023**: Every success state in the feature is preceded by a confirmed successful underlying
   operation; zero success states appear on a failed or absent operation, verified by fault
   injection.
-- **SC-024**: Every form rejects an invalid submission server-side with field-level messages
-  programmatically associated with their fields — 100% of tested invalid cases.
+- **SC-024**: Every form and every checkout step rejects an invalid submission server-side with
+  field-level messages programmatically associated with their fields — 100% of tested invalid cases.
 - **SC-025**: Zero unexpected console errors on any in-scope page, captured automatically during
   end-to-end verification.
-- **SC-026**: Page-weight budgets PB-1 through PB-4 and asset budgets PB-5 through PB-7 are met on a
-  production build.
-- **SC-027**: Core Web Vitals targets PB-8 through PB-10 are met on a production-like run.
+- **SC-026**: Page-weight budgets PB-1 through PB-4 and PB-18, and asset budgets PB-5 through PB-7,
+  are met on a production build.
+- **SC-027**: Core Web Vitals targets PB-8 through PB-10 and the state-update target PB-19 are met on
+  a production-like run.
 - **SC-028**: 100% of images declare intrinsic dimensions or an aspect-ratio reservation; 100% of
   below-the-fold images are lazily loaded.
 - **SC-029**: A production-mode network trace shows zero third-party origins.
@@ -1217,45 +1572,93 @@ quality (Constitution IX.8).
   verified by the §7 control audit.
 - **SC-034**: Every requirement in §14 maps to at least one success criterion or acceptance scenario
   in §21, with zero unmapped requirements.
+- **SC-035**: Cart contents survive at least 5 page transitions and a full reload within a session
+  with identical lines and quantities — 100% of tested cases.
+- **SC-036**: Wishlist contents survive the same navigation and reload sequence unchanged — 100% of
+  tested cases.
+- **SC-037**: The order-review state is reachable only after every collected checkout field has
+  passed server-side validation; 100% of invalid checkout submissions are rejected server-side.
+- **SC-038**: Zero controls anywhere in the accepted interface claim to place an order, complete a
+  purchase, confirm a payment, or issue an order number, verified by the §7 control audit and a
+  visible-copy audit.
+- **SC-039**: Zero payment steps, payment-method selectors, saved-card options, and simulated
+  payment outcomes exist anywhere in the feature.
+- **SC-040**: 100% of displayed monetary totals derive solely from verified prices and are produced
+  by one shared calculation routine; zero monetary totals are presented for a cart or enquiry
+  containing a line without a verified price.
+- **SC-041**: 100% of products display their real supplier attribution; zero products are presented,
+  implied, or styled as ZAKEY-manufactured.
+- **SC-042**: Zero synthetic or example prices appear in production-facing content, evidence
+  screenshots, fixtures, or seeded storefront data.
+- **SC-043**: 100% of in-scope surfaces have a stable destination that can be shared and reloaded to
+  the same content.
+- **SC-044**: Zero order records, order identifiers presented as orders, or purchase-completion
+  artifacts are created by Feature 001, verified by inspecting stored state after a complete
+  checkout-to-enquiry journey.
+- **SC-045**: The exact reference color values and their role assignments are documented before
+  implementation begins — 100% of palette roles covered, with zero roles left to implementer
+  discretion.
+- **SC-046**: 100% of rendered colors across every included page resolve to the centralized token
+  authority; zero literal color values exist in templates, components, stylesheets, or scripts,
+  verified by an automated source audit.
+- **SC-047**: Zero colors, gradients, dark-section treatments, card colors, or button colors appear
+  that are not present in the documented reference palette; zero black or near-black full-bleed
+  sections that read as an unintended dark theme.
+- **SC-048**: The palette is identical across every included page — zero divergent gold shades,
+  card colors, or button colors between the homepage and any internal public page, verified at
+  1440px, 1024px, 768px, and 390px.
+- **SC-049**: Color comparison against the reference is performed and recorded in both required
+  visual critique passes, with per-page and per-width observations.
+- **SC-050**: Every token pairing actually in use passes its WCAG 2.2 AA contrast threshold — zero
+  failures; zero uses of `#C9A227` as normal-sized text on a light background; and zero uses of
+  `#9CA3AF` as text of any size, including placeholder text, which uses `#6B7280` instead.
 
 ---
 
 ## 16. Assumptions
 
-1. `/media/mekky/work/backend/zakey.v1` is the genuine legacy ZAKEY project; the originally
-   requested `/media/mekky/work/backend/zakey` does not exist. User confirmation is still required
-   by the constitution's own TODO (RRP-1).
+1. `/media/mekky/work/backend/zakey.v1` is the genuine legacy ZAKEY project and the authoritative
+   initial product-content source; the originally requested `/media/mekky/work/backend/zakey` does
+   not exist. Governance confirmation of this substitution is still recorded as RRP-1.
 2. The verified launch catalog (21 products, 3 categories, 6 collections, 6 access methods, 25 media
    assets) is the complete approved product set for this feature. No other product or media asset is
    approved.
-3. The quote-led model (CL-1 default A) governs this specification. If the user answers (B), cart,
-   checkout, and confirmation return to scope and verified pricing becomes a hard dependency.
-4. Quote and enquiry submissions persist to a real store and confirm only on a confirmed write
-   (CL-2 default B). Email and messaging delivery are out of scope regardless.
-5. Product comparison is excluded — no reference or legacy evidence supports it (CF-6).
-6. Saved products are visit-scoped and require no account; they are not an order or a reservation.
-7. Where verified content for a surface does not exist, the surface and its links are removed
+3. ZAKEY is the retailer, not the manufacturer, of the products in this catalog. All 21 are
+   supplier-branded (Lezn) and are presented as such.
+4. No product in the current catalog carries a verified sellable price, so no monetary total will be
+   presented at launch. The storefront's pricing and totalling surfaces are nonetheless built and
+   tested so that supplying verified prices later activates them without redesign.
+5. Cart, wishlist, and checkout information are session-scoped and require no account. They are
+   never an order, a reservation, or a payment.
+6. Checkout terminates at the validated order-review state. The only submitting action from there is
+   a real enquiry; Feature 001 creates no order.
+7. Product comparison is deferred to Feature 010 and renders no control in this feature.
+8. Where verified content for a surface does not exist, the surface and its links are removed
    together rather than filled with drafted text (CI-15).
-8. Currency, tax, and shipping are absent from this feature entirely, because no verified values
-   exist.
-9. Visitors are anonymous. No account, sign-in, or persistent profile exists in this feature.
-10. Storefront content is presented in English in this feature; the architecture stays ready for
+9. Currency, tax, shipping charges, and delivery terms are absent from this feature entirely,
+   because no verified values exist.
+10. Visitors are anonymous. No account, sign-in, or persistent profile exists in this feature.
+11. Storefront content is presented in English in this feature; the architecture stays ready for
     later localization and right-to-left layout, with no language selector exposed
     (Constitution IV.9).
-11. The reference's single-route prototype nature means it supplies no URL structure; this feature
-    defines its own addressing.
-12. Reference defects RD-1 through RD-12 are defects, not requirements, and are corrected as
-    recorded.
-13. The reference is a stable artifact for the duration of this feature; if it changes materially,
+12. The visual reference governs appearance only. Its single client-side route, its routing model,
+    and its architecture place no constraint on ZAKEY's destinations or implementation.
+13. Reference defects RD-1 through RD-13 are defects, not requirements, and are corrected as
+    recorded; accessibility corrections take precedence over reference similarity.
+14. The reference is a stable artifact for the duration of this feature; if it changes materially,
     §2.2 must be re-inspected and this specification amended.
 
 ---
 
 ## 17. Dependencies
 
-1. **Ratified constitution v1.0.0** — governs every requirement here.
+1. **Ratified constitution v1.1.0** — governs every requirement here. v1.0.1 closed the legacy-path
+   TODO, confirming `/media/mekky/work/backend/zakey.v1` as the authoritative initial
+   product-content source. v1.1.0 ratified the complete 18-value colour system, so no palette
+   dependency remains open.
 2. **Verified legacy catalog** — `specs/012-smart-storefront-commerce/data/curated-launch-catalog.v2.json`
-   in the legacy repository, read-only.
+   in the legacy repository, read-only. Confirmed as the authoritative initial product-content
+   source.
 3. **Verified brand assets** — ZAKEY logo files in the legacy repository's `static/brand/` and
    `static/icons/`, read-only.
 4. **Verified product imagery** — legacy `reference-imports/spec-012/`, read-only. Images must be
@@ -1263,35 +1666,58 @@ quality (Constitution IX.8).
 5. **Verified hero image** — a high-quality ZAKEY smart-lock image satisfying Constitution I.5. If
    none of the verified imagery is suitable at hero scale, this becomes an implementation blocker to
    raise, not a reason to ship the reference's unsuitable image.
-6. **Verified contact details** — required before the Contact page renders a contact block (CL-3).
-7. **Verified legal text** — required before Privacy and Terms pages ship (CL-3, FR-070).
-8. **Verified announcement content** — required before the announcement bar renders (FR-002).
-9. **Approved stack** — as recorded in the constitution's Canonical Project Facts. Selection and
-   configuration belong to `/speckit-plan`, not to this specification.
-10. **Repository readiness** — the blockers in §18 must be resolved before implementation.
+6. **Verified sellable prices** — required before any monetary figure or total is displayed. Absent
+   today; owned by Feature 002. Their absence does not block this feature, because the
+   price-on-request behavior is fully specified.
+7. **Verified contact details** — required before the Contact page renders a contact-details block.
+8. **Verified legal text** — required before Privacy and Terms pages ship (FR-070).
+9. **Verified announcement content** — required before the announcement bar renders (FR-002).
+10. **Approved stack** — as recorded in the constitution's Canonical Project Facts. Selection and
+    configuration belong to `/speckit-plan`, not to this specification.
+11. **Repository readiness** — the blockers in §18 must be resolved before implementation.
 
 ---
 
 ## 18. Repository Readiness Preconditions
 
 These are verified repository-hygiene and governance findings, **not** storefront product
-requirements. Each was independently confirmed locally on 2026-07-31 on branch `main` at HEAD
-`0bff29e`. None was fixed during this invocation, as instructed.
+requirements. Each was independently confirmed locally on 2026-07-31 during `/speckit-specify`,
+then remediated or re-verified during the pre-planning readiness pass of the same day. The
+historical finding is preserved alongside its outcome so the record stays auditable.
 
-| # | Finding | Verified | Severity | Must be resolved before |
-| --- | --- | --- | --- | --- |
-| RRP-1 | The constitution carries an open TODO requiring the user to confirm that `zakey.v1` is the authoritative legacy repository. Confirmed locally: `/media/mekky/work/backend/zakey` does not exist; `zakey.v1` exists and is the genuine Django project (HEAD `5fdd81d`) | Yes | **Blocker** | Any asset or content extraction |
-| RRP-2 | No `.gitignore` exists at the repository root | Yes — `ls` reports no such file | **Blocker** | First implementation commit. Constitution XV.6 requires ignore coverage for secrets, databases, media, test recordings, screenshots, dependency caches, and build artifacts |
-| RRP-3 | `node_modules/` is tracked in Git — 4,571 files | Yes — `git ls-files node_modules \| wc -l` → 4571 | **Blocker** | First implementation commit. Compounds RRP-2 |
-| RRP-4 | `.specify/init-options.json` and `.specify/integration.json` both declare Kimi as the integration and default integration, while Claude Spec Kit skills are installed and in use | Yes — both files read | **Blocker** | `/speckit-plan`. Constitution XVI.1 makes Claude Code the project owner; the recorded configuration contradicts the governing principle |
-| RRP-5 | `spec-template.md` lacks the out-of-scope section, UI inventory, performance budgets, and reference-fidelity method the constitution requires — this specification supplied all four manually | Yes — template read in full | High | Next specification, so the gap is not re-created |
-| RRP-6 | `plan-template.md`'s Constitution Check is a bare placeholder with no per-principle gate table | Yes — recorded in the constitution's sync-impact report and confirmed by file listing | **Blocker** | `/speckit-plan`. Constitution XI.4 requires an explicit per-principle check |
-| RRP-7 | `tasks-template.md` states tests are optional unless requested, contradicting Constitution XII, and lacks visual-QA and accessibility task categories | Yes — recorded in the sync-impact report | **Blocker** | `/speckit-tasks` |
-| RRP-8 | `checklist-template.md` is not aligned with the fifteen conditions of Constitution XVIII | Yes — template read in full | High | `/speckit-checklist` |
-| RRP-9 | `README.md` is empty (0 bytes) and `main.py` is a generated Hello World entry point; no Django project exists | Yes — `wc -c` → 0; file read | Medium | Acceptance. Constitution XVIII.12 requires current documentation |
-| RRP-10 | No verified ZAKEY contact details or legal text exist in either repository; legacy contact values are placeholders (`+1 (000) 000-0000`, `+201234567890`) | Yes — text search of legacy templates and configuration | **Blocker for the affected surfaces only** | Contact-details block, Privacy page, Terms page (CL-3) |
+**Status summary: 9 of 10 CLOSED. 1 OPEN (scoped, non-blocking for planning and task generation).
+Zero planning blockers remain. Zero task-generation blockers remain.**
 
-Ten findings recorded; seven are blockers, one is a scoped blocker, two are lower severity.
+| # | Original finding | Remediation / current status | Verification evidence | Status | Remaining owner |
+| --- | --- | --- | --- | --- | --- |
+| RRP-1 | Constitution carried an open `TODO(LEGACY_REPO_PATH_CONFIRMATION)`; the instruction named `/media/mekky/work/backend/zakey`, which does not exist | User confirmed `/media/mekky/work/backend/zakey.v1` as the verified legacy project and authoritative initial product-content source. Constitution amended to v1.0.1: the TODO moved to a "Resolved items" record, the Canonical Project Facts note now states the confirmation inline, and the sync-impact report records the PATCH rationale | `.specify/memory/constitution.md` — "Deferred items / TODOs: (none open)"; version footer reads 1.1.0 (v1.0.1 made this change, v1.1.0 superseded it); legacy HEAD `5fdd81d`, `git status --porcelain` → 0 lines | **CLOSED** | — |
+| RRP-2 | No `.gitignore` at the repository root | Created a stack-specific ignore policy covering Python bytecode and caches, virtual environments, environment files and secrets, SQLite databases with their journal/WAL sidecars, `staticfiles/`, `node_modules/` and package caches, pytest/ruff/mypy caches, coverage output, Playwright results and reports, temporary screenshots and recordings, logs, and editor/OS artifacts. Lockfiles, manifests, migrations, fixtures, `specs/**`, and `static/**` are explicitly NOT ignored | `.gitignore` present at repository root; `git check-ignore -v node_modules/` → `.gitignore:80:node_modules/` | **CLOSED** | — |
+| RRP-3 | `node_modules/` tracked in Git — 4,571 files | Removed from the Git index only, after `.gitignore` was in place. The local directory was not touched: `git rm -r --cached node_modules` | `git ls-files node_modules \| wc -l` → `0`; staged deletions → `4571`; local directory still present with 36 top-level entries; lockfiles and manifests unmodified | **CLOSED** — staged, awaiting the user's commit | User (commit) |
+| RRP-4 | `.specify/init-options.json` and `.specify/integration.json` declared Kimi as integration and default integration while Claude Spec Kit skills were installed and in use, contradicting Constitution XVI.1 | Both files corrected to declare Claude Code as the integration and workflow owner, using the repository's existing schema and the installed `claude.manifest.json` conventions. `installed_integrations` now accurately lists the three integrations with manifests on disk (claude, codex, kimi). Kimi and Codex assets were left on disk but hold no authority | `.specify/integration.json` → `"integration": "claude"`, `"default_integration": "claude"`; `.specify/init-options.json` → `"ai": "claude"`, `"integration": "claude"`, `"context_file": "CLAUDE.md"`; both parse as valid JSON | **CLOSED** | — |
+| RRP-5 | `spec-template.md` lacked out-of-scope, UI inventory, performance budgets, and reference-fidelity method | Template rebuilt around all 21 constitution-required sections with applicability rules, so a future specification cannot silently omit a mandatory gate. Kept generic — no Feature 001 product content was hardcoded | `.specify/templates/spec-template.md`; sync-impact report marks it `✅ aligned` | **CLOSED** | — |
+| RRP-6 | `plan-template.md` Constitution Check was a bare placeholder | Replaced with a per-principle gate table for I–XVIII requiring cited evidence per principle, an initial gate and a post-design re-check, a blocking-violations register that must be empty before Phase 0, and a per-dependency assessment table satisfying Principle III.4 | `.specify/templates/plan-template.md`; sync-impact report marks it `✅ aligned` | **CLOSED** | — |
+| RRP-7 | `tasks-template.md` declared tests optional, contradicting Principle XII, and lacked visual-QA and accessibility categories | The "Tests are OPTIONAL" instruction was removed and replaced with an applicability rule requiring explicit justification for any exclusion. Added "Phase V: Verification" covering Django system checks, unit/integration/model/service/form/view/permission/template-rendering tests, JavaScript behavior tests, Playwright, axe, manual keyboard inspection, broken-link and console-error checks, responsive-overflow checks, production asset build, screenshot capture **and** inspection, two visual critique passes, guard skills, documentation verification, and exact final verification commands and results | `.specify/templates/tasks-template.md`; zero occurrences of "OPTIONAL" or "if requested" remain; sync-impact report marks it `✅ aligned` | **CLOSED** | — |
+| RRP-8 | `checklist-template.md` not aligned with the fifteen conditions of Principle XVIII | Added a required "Definition of Done" section carrying all fifteen conditions as DOD01–DOD15, with an instruction that they must not be deleted and that a non-applicable condition must state its reason | `.specify/templates/checklist-template.md`; sync-impact report marks it `✅ aligned` | **CLOSED** | — |
+| RRP-9 | `README.md` empty (0 bytes); `main.py` a generated Hello World; no Django project exists | Unchanged and correct for this stage — no application implementation is authorized before planning. Documentation currency is a Definition-of-Done condition (XVIII.12) enforced at acceptance, not a planning prerequisite. `main.py` will be superseded when the Django project is created under `/speckit-plan` and `/speckit-implement` | `README.md` → 0 bytes; `main.py` unchanged; repository contains no Django project | **OPEN — non-blocking** | Implementation phase (XVIII.12) |
+| RRP-10 | No verified ZAKEY contact details or legal text in either repository; legacy contact values are placeholders | Unchanged as a finding, but no longer a blocker: the specification resolves it by rule rather than by data. CI-15 and FR-070 require that any surface without verified content is removed together with every link to it, so the storefront can ship truthfully without these facts. If the user supplies verified details and legal text, the Contact details block, Privacy page, and Terms page activate without redesign | `specs/001-premium-storefront-experience/spec.md` CI-15, FR-068, FR-070; legacy placeholders `+1 (000) 000-0000`, `+201234567890` unchanged | **CLOSED as a blocker** — content dependency remains open by design | User (optional content supply) |
+
+**Blocker reconciliation by original severity.**
+
+- **Full blockers (6): RRP-1, RRP-2, RRP-3, RRP-4, RRP-6, RRP-7 — all CLOSED by remediation.**
+  These included every blocker for `/speckit-plan` (RRP-1, RRP-4, RRP-6), every blocker for
+  `/speckit-tasks` (RRP-7), and both first-commit blockers (RRP-2, RRP-3).
+- **Scoped blocker (1): RRP-10 — blocking aspect CLOSED.** The specification resolves it by rule
+  (CI-15) rather than by data, so no surface can ship as a dead link or with drafted text.
+- **High (2): RRP-5, RRP-8 — both CLOSED by template alignment.**
+- **Medium (1): RRP-9 — OPEN, non-blocking.** Documentation currency is an acceptance-stage
+  Definition-of-Done condition (XVIII.12), not a planning prerequisite.
+
+Nine of ten closed. **Zero blockers remain for `/speckit-plan` or `/speckit-tasks`, and zero
+colour-governance decisions remain open** — Constitution v1.1.0 ratifies the complete 18-value
+palette, so the plan performs implementation mapping and token naming only. The
+specification's earlier summary line described this set as "seven blockers"; the accurate
+original classification was six full blockers plus one scoped blocker, and that count is
+corrected here.
 
 ---
 
@@ -1303,15 +1729,16 @@ means none of these may render a control in the accepted interface.
 | Capability | Owning future specification |
 | --- | --- |
 | Production product database and catalog management | Feature 002 — Commerce Foundation |
-| Cart, checkout, order review, order confirmation | Feature 002 — Commerce Foundation |
+| Production order creation, order records, and order numbers | Feature 002 — Commerce Foundation |
+| Order success / order confirmation state | Feature 002 — Commerce Foundation |
 | Production inventory management | Feature 002 — Commerce Foundation |
-| Retail pricing, currency, tax, discounts | Feature 002 — Commerce Foundation |
-| Shipping, returns, and warranty information pages | Feature 002 — Commerce Foundation |
+| Retail pricing, currency, tax, and discounts | Feature 002 — Commerce Foundation |
+| Shipping charges, delivery terms, returns, and warranty information pages | Feature 002 — Commerce Foundation |
 | Shipping-provider integration | Feature 002 — Commerce Foundation |
 | Tax integration | Feature 002 — Commerce Foundation |
-| Payment gateway integration and any card collection | Feature 002 — Commerce Foundation |
-| Production order management | Feature 002 — Commerce Foundation |
-| Persistent customer accounts, authentication, order history, saved addresses | Feature 003 — Customer Accounts |
+| Payment gateway integration, payment steps, and any card collection | Feature 002 — Commerce Foundation |
+| Fulfilment | Feature 002 — Commerce Foundation |
+| Persistent customer accounts, authentication, order history, saved addresses, saved payment methods | Feature 003 — Customer Accounts |
 | Email and messaging notification delivery | Feature 004 — Marketing and Notifications |
 | Newsletter subscription | Feature 004 — Marketing and Notifications |
 | Django Admin customization | Feature 005 — Merchant Administration |
@@ -1322,10 +1749,17 @@ means none of these may render a control in the accepted interface.
 | Deployment and production infrastructure | Feature 007 — Deployment and Operations |
 | Multilingual content population, visible language switcher, visible right-to-left interface | Feature 008 — Localization |
 | Affiliate features | Feature 009 — Partner and Affiliate Programme |
-| Product comparison | Excluded — no supporting evidence (CF-6) |
+| Product comparison | Feature 010 — Product Comparison |
 
 **Explicitly retained, not deferred**: architecture readiness for later localization and
 right-to-left layout (FR-078). The capability is deferred; the readiness is required now.
+
+**Feature 001 / Feature 002 boundary, stated plainly.** Feature 001 owns everything a visitor can do
+without a persistent commercial record: browsing, discovery, product inspection, a session cart, a
+session wishlist, checkout information collection, a validated order review, and a real enquiry.
+Feature 002 owns everything that requires one: the persistent catalog, prices, inventory, orders,
+payment, and fulfilment. The seam is the order-review state — Feature 001 renders it truthfully and
+stops; Feature 002 later attaches order creation and payment behind it.
 
 ---
 
@@ -1333,24 +1767,24 @@ right-to-left layout (FR-078). The capability is deferred; the readiness is requ
 
 | Principle | How this specification complies |
 | --- | --- |
-| I. Reference-Led Visual Fidelity | §2.2 records reference evidence and twelve defects; §11 defines RF-1–RF-11 with named pages, widths, and acceptance method; RD-10 preserves the hero composition and replaces its image |
-| II. Permanent ZAKEY Brand System | NFR-003 fixes the ratified tokens; NFR-004 the 8px rhythm; FR-076 the single token source; NFR-017 and A-9 enforce the accent-gold restriction, correcting reference defect RD-1 |
+| I. Reference-Led Visual Fidelity | §2.2 records reference evidence, the fully ratified 18-value palette, and thirteen defects; §11 defines RF-1–RF-12 with named pages, widths, and acceptance method; §11.1 makes the reference the binding color authority; RD-10 preserves the hero composition and replaces its image; RF-12 makes accessibility outrank similarity |
+| II. Permanent ZAKEY Brand System | NFR-003 fixes the ratified tokens; Constitution v1.1.0 ratifies the complete 18-value system — 5 core brand tokens and 13 reference-derived support tokens, each with observable role, permitted uses, and measured contrast; NFR-004 the 8px rhythm; FR-076, FR-116, and NFR-045 mandate one token authority with zero literal colours; FR-114 makes every support token binding; FR-115 forbids unauthorized colours, gradients, and dark sections; FR-117 forbids palette drift; FR-118, NFR-017, and A-9 enforce the accent-gold role restriction, correcting RD-1 without inventing a replacement gold; FR-120 corrects RD-13 using the reference's own `#6B7280`; FR-119 bounds any last-resort accessibility shade. **Zero palette decisions remain open for `/speckit-plan`** |
 | III. Approved Technical Foundation | NFR-032 forbids runtime third-party origins; PB-13 measures it; NFR-037 forbids copied Figma runtime code; stack selection is deferred to `/speckit-plan` |
 | IV. Clean-Room Architecture | NFR-036 forbids copying legacy frontend code; NFR-038 and SC-032 hold the legacy repository read-only; FR-071–FR-075 mandate one data adapter and one implementation per component; FR-078 preserves localization readiness |
-| V. Content and Asset Integrity | §10 CI-1–CI-15; RD-2–RD-8 remove every fabricated claim in the reference; SC-019–SC-021 measure it |
-| VI. Functional Completeness | §7 gives every control defined behavior; FR-010 forbids dead controls and `#`; FR-052 and FR-059 forbid fake success; FR-051 forbids card data; FR-053 removes controls belonging to deferred features; FR-077 requires named route lookups |
-| VII. Responsive Design | §8 gives every surface a deliberate layout at all four widths; NFR-007–NFR-013; SC-008 and SC-009 measure it |
-| VIII. Accessibility | §12 A-1–A-20; NFR-014–NFR-024; SC-010–SC-014; A-20 requires both automated axe and a manual keyboard pass |
-| IX. Performance and Frontend Quality | §13 PB-1–PB-17 set before implementation; NFR-025–NFR-033; SC-025–SC-030 |
-| X. Security, Privacy, and Data Safety | NFR-039–NFR-042; FR-055 server-side validation; FR-087 escaping; FR-051 no payment credentials |
-| XI. Specification-First Development | This document precedes planning; §19 states what is out of scope; §3 records three material ambiguities for `/speckit-clarify`; §21 gives traceability |
-| XII. Test-First Acceptance | §15 defines 34 measurable criteria before implementation; SC-023 requires fault injection; verification methods are named per budget and per criterion |
-| XIII. Visual QA and Consistency | §5–§9 supply the page, component, interaction, responsive, and state inventories; §11 requires inspected screenshots at three widths minimum and two critique passes; NFR-006 and SC-006 make cross-page divergence a defect |
+| V. Content and Asset Integrity | §10 CI-1–CI-17; RD-2–RD-8 remove every fabricated claim in the reference; FR-111–FR-113 protect product truth, supplier attribution, and price honesty; SC-019–SC-021, SC-041, SC-042 measure it |
+| VI. Functional Completeness | §7 gives every control defined behavior; FR-010 forbids dead controls and `#`; FR-052, FR-059, FR-108, FR-109 forbid fake success and any order claim; FR-051 and FR-105 forbid card data and payment steps; FR-099 requires one shared totalling routine; FR-053 removes controls belonging to deferred features; FR-077 requires named route lookups |
+| VII. Responsive Design | §8 gives every surface, including cart and checkout, a deliberate layout at all four widths; NFR-007–NFR-013; SC-008 and SC-009 measure it |
+| VIII. Accessibility | §12 A-1–A-21; NFR-014–NFR-024; SC-010–SC-014; A-21 requires both automated axe and a manual keyboard pass across the full cart-to-review journey |
+| IX. Performance and Frontend Quality | §13 PB-1–PB-19 set before implementation; NFR-025–NFR-033; SC-025–SC-030 |
+| X. Security, Privacy, and Data Safety | NFR-039–NFR-043; FR-055 and FR-104 server-side validation; FR-087 escaping; FR-051 no payment credentials; NFR-043 bounds the use of checkout information |
+| XI. Specification-First Development | This document precedes planning; §19 states what is out of scope and draws the 001/002 boundary explicitly; §3 records the resolved clarifications; §21 gives traceability |
+| XII. Test-First Acceptance | §15 defines 44 measurable criteria before implementation; SC-023 requires fault injection and SC-044 requires stored-state inspection; verification methods are named per budget and per criterion |
+| XIII. Visual QA and Consistency | §5–§9 supply the page, component, interaction, responsive, and state inventories; §11 requires inspected screenshots and two critique passes; NFR-006 and SC-006 make cross-page divergence a defect |
 | XIV. Code Quality | Deferred to `/speckit-plan` and `/speckit-tasks` by nature; NFR-035 constrains the JavaScript architecture at the specification level |
-| XV. Git and Repository Safety | A separate local numeric branch was created; no commit, push, pull request, merge, remote change, or history rewrite occurred; §18 records ignore-policy blockers RRP-2 and RRP-3 without fixing them |
+| XV. Git and Repository Safety | A separate local numeric branch is in use; no commit, push, pull request, merge, remote change, or history rewrite was performed by this workflow; §18 records ignore-policy blockers RRP-2 and RRP-3 without fixing them |
 | XVI. Claude Code Governance | Specification authored and owned by Claude Opus; no delegation occurred; RRP-4 records the contradicting integration configuration |
 | XVII. LeanCtx and Context Discipline | Inspection was targeted and evidence-driven; all evidence, decisions, and blockers are written into this artifact rather than left in conversation |
-| XVIII. Definition of Done | §15 plus §21 make every requirement traceable to a criterion; §21 records known blockers truthfully; the fifteen conditions govern acceptance of the implementation, not of this specification |
+| XVIII. Definition of Done | §15 plus §21 make every requirement traceable to a criterion; §18 records known blockers truthfully; the fifteen conditions govern acceptance of the implementation, not of this specification |
 
 ---
 
@@ -1369,11 +1803,12 @@ acceptance scenario (US*n*.*m*). Zero requirements are unmapped.
 | FR-009 | SC-011, SC-012 |
 | FR-010, FR-012 | SC-003, SC-004, US1.3, US7.1 |
 | FR-011 | SC-007, US1.2 |
+| FR-091, FR-092 | SC-043, SC-016, US2.2, US5.5 |
 | FR-013, FR-014, FR-015 | SC-001, SC-002, US2.1 |
 | FR-016, FR-018 | SC-015, US2.2, US2.3 |
 | FR-017, FR-022 | SC-019, SC-003 |
 | FR-019, FR-020 | SC-018, US2.3, US2.5 |
-| FR-021 | SC-016, US2.2, US2.7, US5.5 |
+| FR-021 | SC-016, SC-043, US2.2, US2.7 |
 | FR-023, FR-088 | SC-001, SC-016 |
 | FR-024, FR-027 | SC-018, US2.4, US5.3, US5.4 |
 | FR-025 | SC-009, SC-011, US2.6 |
@@ -1382,26 +1817,31 @@ acceptance scenario (US*n*.*m*). Zero requirements are unmapped.
 | FR-029, FR-030, FR-035, FR-038 | SC-021, SC-019, US3.1, US3.3 |
 | FR-031, FR-039 | SC-001, US3.1 |
 | FR-032, FR-033 | SC-011, US3.2 |
-| FR-034, FR-036 | SC-019, US3.4 |
-| FR-037 | SC-001, US3.5 |
-| FR-040 | SC-019, US7.2 |
+| FR-034 | SC-019, SC-040, US3.4 |
+| FR-036 | SC-019, US3.4 |
+| FR-037 | SC-001, US3.6 |
+| FR-040 | SC-041, US3.5, US7.2 |
 | FR-041 | SC-028, SC-020 |
-| FR-042, FR-043, FR-045 | SC-003, US4.1, US4.2 |
-| FR-044 | SC-001, US4.3, US4.4 |
-| FR-046, FR-050 | SC-019, US4.5 |
-| FR-047 | SC-003, US4.* (edge case) |
-| FR-048, FR-049 | SC-001, US4.4, US6.* |
-| FR-051 | SC-022, US6.5 |
-| FR-052, FR-059 | SC-023, US6.3, US6.6 |
+| FR-111, FR-112 | SC-021, SC-041, US3.5 |
+| FR-113 | SC-042 |
+| FR-042, FR-043 | SC-003, US4.1 |
+| FR-044 | SC-001, US4.6 |
+| FR-045 | SC-036, US4.1 |
+| FR-046, FR-102 | SC-038, US4.7 |
+| FR-047, FR-101 | SC-003, edge cases |
+| FR-048, FR-049 | SC-001, US4.5, US6.8 |
+| FR-050 | SC-040, US4.5 |
+| FR-051 | SC-022, SC-039, US6.7 |
+| FR-052, FR-059 | SC-023, SC-038, US6.8, US6.9 |
 | FR-053 | SC-003, SC-033 |
-| FR-054 | SC-010, SC-024, US6.1 |
-| FR-055, FR-056 | SC-024, US6.1, US6.2 |
-| FR-057, FR-060 | SC-024, US6.4 |
-| FR-058 | SC-023, US6.3 |
+| FR-054 | SC-010, SC-024, US6.2 |
+| FR-055, FR-056 | SC-024, US6.2, US6.3 |
+| FR-057, FR-060 | SC-024, US6.9 |
+| FR-058 | SC-023, US6.8 |
 | FR-061 | SC-011 |
 | FR-062 | SC-008, SC-013 |
 | FR-063, FR-064, FR-065, FR-066 | SC-019, SC-020 |
-| FR-067 | SC-019, US7.2 |
+| FR-067 | SC-041, US7.2 |
 | FR-068, FR-070 | SC-004, SC-019, US7.1 |
 | FR-069 | SC-010, SC-011, US7.3 |
 | FR-071, FR-072, FR-073, FR-074 | SC-031 |
@@ -1409,13 +1849,29 @@ acceptance scenario (US*n*.*m*). Zero requirements are unmapped.
 | FR-076 | SC-007, SC-014 |
 | FR-077 | SC-004 |
 | FR-078 | SC-001 (architecture readiness reviewed at plan gate) |
-| FR-079 | SC-027 (layout stability), SC-028 |
+| FR-079 | SC-027, SC-028 |
 | FR-080, FR-081 | SC-018, SC-001 |
 | FR-082 | SC-003, SC-010 |
 | FR-083 | SC-010, SC-011 |
 | FR-084, FR-085, FR-086 | SC-001, SC-004 |
-| FR-087 | SC-019 (content audit), edge case |
+| FR-087 | SC-019, edge cases |
 | FR-089 | SC-003, SC-025 |
+| FR-093 | SC-035, US4.2 |
+| FR-094 | SC-035, US4.3 |
+| FR-095 | SC-040, US4.2 |
+| FR-096 | SC-035, US4.4 |
+| FR-097 | SC-035, US4.2 |
+| FR-098 | SC-040, US4.5 |
+| FR-099 | SC-040 |
+| FR-100 | SC-018, US4.6 |
+| FR-103 | SC-011, US6.1, US6.4 |
+| FR-104 | SC-037, SC-024, US6.2 |
+| FR-105 | SC-039, SC-022, US6.7 |
+| FR-106 | SC-011, US6.5 |
+| FR-107 | SC-038, US6.5 |
+| FR-108 | SC-038, SC-044, US6.6, US6.8 |
+| FR-109 | SC-044, SC-038 |
+| FR-110 | SC-035, edge cases |
 | NFR-001, NFR-002 | SC-007 |
 | NFR-003, NFR-004, NFR-005 | SC-007, SC-014 |
 | NFR-006 | SC-006 |
@@ -1444,9 +1900,19 @@ acceptance scenario (US*n*.*m*). Zero requirements are unmapped.
 | NFR-035 | SC-026, SC-031 |
 | NFR-036, NFR-037 | SC-031, SC-032 |
 | NFR-038 | SC-032 |
-| NFR-039, NFR-040 | SC-024 |
-| NFR-041 | SC-022 |
-| NFR-042 | SC-022 |
+| NFR-039, NFR-040 | SC-024, SC-037 |
+| NFR-041 | SC-022, SC-039 |
+| NFR-042, NFR-043 | SC-022, SC-044 |
+| FR-114 | SC-045, SC-046, SC-047 |
+| FR-115 | SC-047, SC-049 |
+| FR-116 | SC-046 |
+| FR-117 | SC-048, SC-049 |
+| FR-118 | SC-050, SC-014 |
+| FR-119 | SC-050, SC-045 |
+| FR-120 | SC-050, SC-010 |
+| NFR-044 | SC-045 |
+| NFR-045 | SC-046 |
+| NFR-046 | SC-048, SC-049 |
 
-**Coverage**: 90 functional requirements and 42 non-functional requirements — 132 total — all mapped.
-34 success criteria, all reachable from at least one requirement.
+**Coverage**: 120 functional requirements and 46 non-functional requirements — 166 total — all
+mapped. 50 success criteria, all reachable from at least one requirement.

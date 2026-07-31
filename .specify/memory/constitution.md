@@ -1,7 +1,34 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: (uninitialized template) → 1.0.0
+Version change: 1.0.1 → 1.1.0
+Amendment date: 2026-07-31
+Bump rationale (1.0.1 → 1.1.0, MINOR): Materially expanded rules within an existing principle.
+Principle II's ratified design-token table grew from five colour values to eighteen, after every
+designer-chosen colour literal in the approved visual reference was extracted, classified, and
+contrast-tested. The table now governs five core brand tokens and thirteen reference-derived
+support tokens, each with its observable reference role, its permitted semantic uses, and its
+measured contrast limitation. Also added: a provenance rule distinguishing designed colours from
+inherited framework defaults, a gradient rule, and a ratified defect note restricting `#9CA3AF`
+to non-text roles.
+
+This is backward compatible — no principle was removed or redefined, no prior compliance is
+invalidated, and every previously ratified value keeps its exact hexadecimal value and meaning.
+Under the Versioning Policy, "materially expanded rules within an existing principle" is MINOR,
+so a PATCH would be insufficient.
+
+Colour-governance impact: zero palette decisions remain open. Support tokens are binding, not
+advisory, and `/speckit-plan` MUST NOT reconsider, substitute, or re-approve any ratified colour.
+The plan's remaining colour work is implementation mapping and token naming only.
+
+Prior entry — Version change: 1.0.0 → 1.0.1
+Bump rationale (1.0.0 → 1.0.1, PATCH): Resolution of a recorded placeholder only. The
+deferred TODO(LEGACY_REPO_PATH_CONFIRMATION) is closed — the user has explicitly confirmed
+`/media/mekky/work/backend/zakey.v1` as the verified legacy repository and the authoritative
+initial product-content source. No principle was added, removed, or redefined; no governance
+intent changed; no prior compliance is invalidated. Under the Versioning Policy this is a
+clarification, therefore PATCH.
+Prior entry — Version change: (uninitialized template) → 1.0.0
 Bump rationale: Initial ratified adoption. The file previously contained only unfilled
 template placeholders; this is the first governance document in force for this project.
 
@@ -37,33 +64,44 @@ Added sections:
 
 Removed sections: all bracketed template placeholders and their example comments.
 
-Templates requiring updates (NOT modified in this invocation — see note below):
-  ⚠ pending  .specify/templates/spec-template.md
-       Principle XI requires an explicit "Out of Scope" section; Principle XIII requires a
-       UI inventory (pages, components, responsive states, empty states, error states,
-       interactions); Principle IX requires performance budgets; Principle I requires a
-       stated reference-fidelity verification method. None exist in the template today.
-  ⚠ pending  .specify/templates/tasks-template.md
-       The template states "Tests are OPTIONAL - only include them if explicitly requested",
-       which conflicts with Principle XII. The template also lacks visual-QA and
-       accessibility task categories.
-  ⚠ pending  .specify/templates/plan-template.md
-       The "Constitution Check" section is a bare placeholder. It should become an explicit
-       per-principle gate table for Principles I–XVIII.
-  ⚠ pending  .specify/templates/checklist-template.md
-       Not yet aligned with the fifteen conditions of Principle XVIII.
-  Note: the ratifying instruction restricted this invocation to constitution files only, so
-  no template was edited. These four items require a follow-up invocation and user approval.
+Templates requiring updates:
+  ✅ aligned  .specify/templates/spec-template.md          (2026-07-31)
+       Now requires Purpose and Product Outcome, Authoritative Sources and Evidence, page /
+       component / interaction / responsive / state inventories (XIII.1), Content and Asset
+       Integrity (V), Reference-Fidelity Requirements with a stated verification method (I.6),
+       Accessibility (VIII), Performance Budgets (IX.7), Repository Readiness Preconditions,
+       Explicit Out of Scope (XI.9), Constitution Compliance, and requirement traceability.
+  ✅ aligned  .specify/templates/plan-template.md          (2026-07-31)
+       "Constitution Check" is now an explicit per-principle gate table for I–XVIII requiring
+       cited evidence per principle, plus an initial and a post-design re-check, and a
+       blocking-violations register that must be empty before Phase 0 research proceeds.
+  ✅ aligned  .specify/templates/tasks-template.md         (2026-07-31)
+       The "Tests are OPTIONAL" instruction is removed. Verification tasks are now required
+       wherever the owning specification or Principle XII makes them applicable, with explicit
+       categories for Django system checks, Python and JavaScript tests, Playwright, axe,
+       manual keyboard inspection, broken-link and console-error checks, responsive-overflow
+       checks, production asset build, screenshot capture AND inspection, two visual critique
+       passes, guard skills, and exact final verification commands and results.
+  ✅ aligned  .specify/templates/checklist-template.md     (2026-07-31)
+       Now carries the fifteen conditions of Principle XVIII as a required section.
+  Note: the ratifying invocation was restricted to constitution files, so no template was
+  edited then. All four were aligned in the 2026-07-31 pre-planning readiness pass. Template
+  alignment does not itself change governance and therefore carries no version bump beyond the
+  PATCH recorded above.
 
 Deferred items / TODOs:
-  - TODO(LEGACY_REPO_PATH_CONFIRMATION): The ratifying instruction named the legacy
-    repository as `/media/mekky/work/backend/zakey`. That path does not exist on disk
-    (verified 2026-07-31). The verified ZAKEY legacy repository is
+  (none open)
+
+Resolved items:
+  ✅ TODO(LEGACY_REPO_PATH_CONFIRMATION) — CLOSED 2026-07-31, constitution v1.0.1.
+    The ratifying instruction named the legacy repository as
+    `/media/mekky/work/backend/zakey`. That path does not exist on disk (verified 2026-07-31,
+    and re-verified during the readiness pass). The verified ZAKEY legacy repository is
     `/media/mekky/work/backend/zakey.v1` — a Django project containing apps/, config/,
-    static/, media/, locale/, specs/, and reference-imports/, HEAD 5fdd81d. This
-    constitution records `/media/mekky/work/backend/zakey.v1` as the authoritative
-    read-only legacy source. The user MUST confirm this substitution; if a different
-    repository is intended, a PATCH amendment is required before any asset extraction.
+    static/, media/, locale/, specs/, and reference-imports/, HEAD 5fdd81d, working tree
+    clean. The user explicitly confirmed this repository as the verified legacy project and
+    as the authoritative initial product-content source for Feature 001. No substitution
+    ambiguity remains; asset extraction under Principle V is authorized.
 -->
 
 # ZAKEY Premium Smart Lock Storefront Constitution
@@ -551,24 +589,74 @@ Changing any value here requires a constitutional amendment.
 
 The legacy repository MAY be inspected only to obtain verified ZAKEY logos, brand assets,
 product images, product information, categories, collections, and truthful business content.
-It MUST NOT be modified in any way. See the deferred item in the sync impact report
-regarding confirmation of this path.
+It MUST NOT be modified in any way. This path is confirmed: `/media/mekky/work/backend/zakey`
+does not exist, `/media/mekky/work/backend/zakey.v1` is the verified legacy ZAKEY Django
+project (HEAD 5fdd81d), and the user has confirmed it as the authoritative initial
+product-content source. No path confirmation remains outstanding as of v1.0.1.
 
 ### Ratified Design Tokens
 
+This is the complete ratified ZAKEY colour system. It was expanded from five to eighteen values
+in v1.1.0 after every designer-chosen colour literal in the approved reference was extracted and
+classified. **Core brand tokens** carry the brand identity; **reference-derived support tokens**
+are equally binding parts of the approved visual system, not optional suggestions. No colour
+outside this table may appear in an accepted interface, and every value here MUST be implemented
+through one centralized token source (Principle II.2).
+
+Provenance rule: the designed palette is every colour the reference author chose explicitly — that
+is, every arbitrary-value colour literal in the published reference. Colours inherited from
+framework defaults (unprefixed utility classes) are **not** part of the ratified system, except
+`#FFFFFF`, which is unambiguous and independently ratified. A colour whose only observed use is in
+content this project removes as fabricated, or defers to a later feature, is not ratified.
+
+#### Core brand tokens
+
+| Token | Value | Observable reference role | Permitted semantic uses | Contrast limitation |
+| --- | --- | --- | --- | --- |
+| Primary navy | `#0D1B3D` | text, backgrounds, borders, gradient stops (173 uses) | body and heading text on light surfaces, full-bleed section backgrounds, borders, gradient stops | 16.92:1 on white, 16.06:1 on `#F8F9FB` — passes everywhere |
+| Accent gold | `#C9A227` | text, backgrounds, borders, icon fills, form accent (136 uses) | decorative accents, borders, icon fills on compliant surfaces, backgrounds with compliant foreground, form control accent, large text only where measured compliant | **2.42:1 on white and 2.30:1 on `#F8F9FB` — MUST NOT be normal-sized text on either.** 6.99:1 on primary navy — compliant there |
+| Main background | `#F8F9FB` | page background (55 uses) | page and section backgrounds | background role only |
+| White | `#FFFFFF` | text, backgrounds, borders, placeholder (117 uses via named utility) | surfaces, cards, text on navy, borders on navy | 16.92:1 against primary navy |
+| Primary text | `#1F2937` | text (22 uses) | body text on light surfaces | 14.68:1 on white, 13.93:1 on `#F8F9FB` |
+
+#### Reference-derived support tokens
+
+| Token | Value | Observable reference role | Permitted semantic uses | Contrast limitation |
+| --- | --- | --- | --- | --- |
+| Secondary text | `#6B7280` | text (63), placeholder (1) | secondary and muted text, placeholder text, resting state of destructive controls | 4.83:1 on white, 4.59:1 on `#F8F9FB` — passes AA text on both |
+| Subtle surface | `#EEF0F5` | background (12), text (1) | subtle surfaces, dividers, inactive chips; text only on primary navy (14.84:1) | not a text colour on light surfaces |
+| Gold hover | `#E0B62E` | background (6) | hover state of gold surfaces only | 8.78:1 against primary navy; same light-surface text prohibition as `#C9A227` |
+| Muted placeholder | `#9CA3AF` | placeholder text (1) | **non-text roles only** — see the defect note below | **2.54:1 on white, 2.41:1 on `#F8F9FB` — MUST NOT be used as text, including placeholder text** |
+| Navy tint 1 | `#1A3060` | background (2), gradient stop (1) | elevated navy surfaces, gradient stops | carries white and gold text compliantly |
+| Navy tint 2 | `#1A2F5A` | background (2), gradient stop (1) | elevated navy surfaces, gradient stops | 13.14:1 with white text |
+| Navy tint 3 | `#2A4070` | background (1) | elevated navy surfaces | verify per pairing |
+| Navy tint 4 | `#162D5E` | background (1) | elevated navy surfaces | verify per pairing |
+| Navy alpha 06 | `rgba(13,27,61,0.06)` | borders (29), divide (1) | hairline borders and dividers on light surfaces | non-text |
+| Navy alpha 08 | `rgba(13,27,61,0.08)` | borders (13) | borders on light surfaces | non-text |
+| Navy alpha 10 | `rgba(13,27,61,0.10)` | borders (18), incl. form fields | form-field and card borders | non-text; must meet 3:1 where it bounds a control |
+| Navy alpha 15 | `rgba(13,27,61,0.15)` | borders (10), background (1) | stronger borders, subtle overlays | non-text |
+| Navy alpha 20 | `rgba(13,27,61,0.20)` | border (1) | strongest hairline border | non-text |
+
+**Ratified defect note — muted placeholder.** The reference applies `#9CA3AF` as placeholder text
+at 2.54:1, which fails WCAG 2.2 AA. The reference is internally inconsistent here: it also applies
+`#6B7280` as placeholder text elsewhere, at 4.83:1. Placeholder text MUST therefore use `#6B7280`.
+`#9CA3AF` remains ratified as a verified observable value but is restricted to non-text roles. This
+correction is drawn from the reference's own palette; no replacement colour may be invented.
+
+**Gradient rule.** Only gradients composed of ratified values and observed in the reference are
+permitted — the navy gradient stops and the single gold gradient stop. No other gradient may be
+introduced (Principle II.5).
+
+### Ratified Non-Colour Tokens
+
 | Token | Approved value |
 | --- | --- |
-| Primary navy | `#0D1B3D` |
-| Accent gold | `#C9A227` |
-| Main background | `#F8F9FB` |
-| White | `#FFFFFF` |
-| Primary text | `#1F2937` |
 | Typography | Poppins, self-hosted |
 | Base spacing unit | 8px |
 | Primary corner radius | 12px |
 | Desktop reference width | 1440px |
 | Desktop grid | 12 columns |
-| Shadows | Soft, restrained, premium |
+| Shadows | Soft, restrained, premium — built from the navy alpha tokens above |
 
 ### Mandatory Verification Widths
 
@@ -677,4 +765,4 @@ This constitution applies to the public storefront and to every future backend, 
 commerce, integration, deployment, and maintenance specification produced for the ZAKEY
 platform in this repository.
 
-**Version**: 1.0.0 | **Ratified**: 2026-07-31 | **Last Amended**: 2026-07-31
+**Version**: 1.1.0 | **Ratified**: 2026-07-31 | **Last Amended**: 2026-07-31

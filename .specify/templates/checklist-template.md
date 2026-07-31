@@ -32,6 +32,31 @@
 - [ ] CHK005 Item with specific criteria
 - [ ] CHK006 Final item in this category
 
+## Definition of Done (Constitution Principle XVIII — REQUIRED on any acceptance checklist)
+
+<!--
+  These fifteen conditions are not samples and MUST NOT be deleted from an acceptance
+  checklist. A condition that genuinely does not apply is marked "Not applicable" WITH its
+  reason. Passing a subset does not satisfy the Definition of Done: work meeting fourteen of
+  fifteen is not done.
+-->
+
+- [ ] DOD01 All in-scope requirements are implemented
+- [ ] DOD02 Every requirement is traceable to an acceptance criterion
+- [ ] DOD03 All required tests pass
+- [ ] DOD04 All required manual checks are completed
+- [ ] DOD05 All required visual checks are completed
+- [ ] DOD06 All captured screenshots have been inspected, and the observations are recorded
+- [ ] DOD07 Responsive behavior is verified at all four approved widths
+- [ ] DOD08 Accessibility is verified by both automated and manual means
+- [ ] DOD09 Production assets build successfully
+- [ ] DOD10 No dead controls remain
+- [ ] DOD11 No unexpected console errors remain
+- [ ] DOD12 Documentation is current
+- [ ] DOD13 Known limitations are truthfully recorded
+- [ ] DOD14 Unrelated user work remains untouched
+- [ ] DOD15 The final report includes the exact commands executed and their exact results
+
 ## Notes
 
 - Check items off as completed: `[x]`
