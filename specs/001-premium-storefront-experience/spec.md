@@ -420,6 +420,10 @@ product-discovery value on its own.
    to the control that opened it.
 7. **Given** any sort option, **When** it is selected, **Then** ordering changes accordingly, the
    selection persists across pagination, and the sort is expressed in the destination address.
+8. **Given** the listing page at 1440px, 1024px, 768px, and 390px in turn, **When** results are
+   shown, **Then** product cards render 4, 4, 2, and 2 across respectively, the document never
+   scrolls horizontally, product media keeps its 1:1 ratio, and each card's supplier attribution and
+   price-or-price-on-request statement remain fully visible at every width.
 
 ---
 
@@ -781,7 +785,7 @@ Constitution VII.2 forbids treating narrow layouts as stacked desktop columns.
 | Header | Full horizontal navigation, inline search | Full navigation, condensed spacing, search as icon | Navigation collapses to menu control; search icon retained | Menu control, wordmark, wishlist and cart counts; search opens full-width |
 | Hero | Two columns, text left, image right | Two columns, reduced image share | Single column, image below text, retained aspect ratio | Single column, shortened headline treatment, full-width stacked actions |
 | Category showcase | 3 across | 3 across, tighter gutters | 2 across | 1 across, or horizontal scroll rail with visible affordance |
-| Product grid | 4 across | 3 across | 2 across | 1 across |
+| Product grid | **4 across** | **4 across** | **2 across** | **2 across** (see §8.1) |
 | Product rail | 4 visible, paged | 3 visible, paged | 2 visible, scroll-snap | 1.2 visible, scroll-snap with edge peek |
 | Listing + filters | Persistent filter sidebar beside results | Persistent sidebar, narrowed | Filters collapse to a top control opening a drawer | Filter and sort as a sticky bar opening a full-height drawer |
 | Product detail | Gallery left, information right, sticky action area | Gallery left, information right, non-sticky | Gallery above information | Gallery full-bleed with swipe; add-to-cart pinned to the bottom |
@@ -798,6 +802,60 @@ At every width and on every in-scope surface: no horizontal overflow, no clipped
 collision, no overlapping floating controls, no tablet dead zone, no oversized empty region, stable
 image dimensions, readable cards, usable filters, usable gallery, usable forms, usable cart and
 checkout surfaces, reachable navigation, and touch targets meeting §12.
+
+### 8.1 Product-card grid responsive matrix — authoritative decision
+
+**Status: authoritative decision, recorded 2026-08-01, superseding the earlier 4/3/2/1 values in the
+row above and closing DEV-1.** The approved reference is authoritative for responsive storefront
+behavior **at every acceptance width, not only at 390px**. The reference renders product-card grids
+`grid grid-cols-2 lg:grid-cols-4`, whose `lg:` breakpoint is 1024px — that is **4 across at both
+1440px and 1024px, and 2 across at both 768px and 390px**.
+
+**Governed acceptance matrix for product-card listing grids:**
+
+| Width | Columns |
+| --- | --- |
+| 1440px | **4** |
+| 1024px | **4** |
+| 768px | **2** |
+| 390px | **2** |
+| below 390px | may degrade safely to **1** where required to prevent overflow |
+
+**Scope — what this applies to.** Only **product-card listing grids**: the all-products listing,
+category listings, collection listings, search results, and the related-products grid.
+
+**Scope — what this explicitly does NOT apply to.** Two columns are **not** required, and MUST NOT be
+imposed, for: forms and form-field groups; checkout fields; the checkout information and order-review
+layouts; informational pages; dialogs; drawers; the filter panel; the cart line list; the wishlist
+list-row presentation; product rails (which remain scroll-snap with edge peek); or the category
+showcase, whose tiles keep their distinct `4:5` ratio.
+
+Mandatory conditions — these apply at **every** width in the matrix, not only at 390px:
+
+- **CG-1 No horizontal overflow.** Document scroll width MUST NOT exceed viewport width at 1440px,
+  1024px, 768px, or 390px. Verified programmatically (NFR-009, SC-008).
+- **CG-2 Preserved media ratio.** Product media remains **1:1 square** on the subtle surface token,
+  contained and never cropped, stretched, or upscaled. The category tile's `4:5` ratio is unchanged
+  (NFR-011, CI-11).
+- **CG-3 Compliant touch targets.** Every interactive element inside the card — card link, wishlist
+  control, add-to-cart — meets at least 24×24 CSS pixels, and the primary commerce action meets
+  44×44. Reducing column width MUST NOT be achieved by shrinking targets below these thresholds
+  (A-11, NFR-018, SC-013).
+- **CG-4 Controlled wrapping and truncation.** The product name wraps to a maximum of two lines and
+  truncates with an ellipsis beyond that, with the full name remaining available to assistive
+  technology. The supplier attribution line and the price-or-price-on-request statement MUST remain
+  fully visible and MUST NOT be truncated, hidden, or dropped to fit — attribution and price honesty
+  outrank density (FR-111, FR-034).
+- **CG-5 Readable minimums.** Card body text remains at the ratified type scale with no reduction
+  below 12px, and gutters remain on the spacing scale so the two columns stay visually separated.
+- **CG-6 No clipped content.** No text, badge, or control may be clipped, overlapped, or rendered
+  outside its card at any width in the matrix.
+- **CG-7 Graceful narrow behavior.** Below 390px the grid MAY degrade to one column where required
+  to prevent overflow; 390px is the ratified verification width, not the minimum supported width.
+
+**Acceptance.** The product-card grid MUST be inspected at **all four required widths — 1440px,
+1024px, 768px, and 390px** — in **both** required visual critique passes (Constitution XIII.3),
+against the reference, checking the column count for that width plus CG-1 through CG-7 (SC-051).
 
 ---
 
@@ -879,7 +937,8 @@ hold at every compared width:
 - **RF-2 Section order and rhythm** — retained sections appear in reference order; vertical rhythm
   between sections follows one spacing scale in multiples of 8px, matching the reference's density
   impression rather than an arbitrary value.
-- **RF-3 Layout density** — the number of products per row at each width matches §8, and content
+- **RF-3 Layout density** — the number of products per row at each width matches §8 and the §8.1
+  matrix exactly (4 / 4 / 2 / 2 at 1440 / 1024 / 768 / 390, as the reference does), and content
   measure stays within the reference's range rather than becoming noticeably sparser or denser.
 - **RF-4 Product-card proportions** — every product card shares one media aspect ratio and one
   internal spacing pattern across every surface that renders one.
@@ -1088,7 +1147,7 @@ quality (Constitution IX.8).
 - **FR-092**: Every destination MUST be shareable and MUST reload to the same content, including
   filtered, sorted, and paginated listing states and search results.
 
-#### Product discovery (FR-013 to FR-028)
+#### Product discovery (FR-013 to FR-028, FR-121)
 
 - **FR-013**: The listing page MUST make every verified product reachable and MUST state the number
   of results.
@@ -1122,6 +1181,18 @@ quality (Constitution IX.8).
   search occurred.
 - **FR-028**: Product cards MUST present identical structure and proportions wherever they appear —
   listing, category, collection, search results, related products, wishlist, and homepage rails.
+- **FR-121**: Product-card listing grids — all-products, category, collection, search results, and
+  related products — MUST follow the §8.1 responsive matrix, preserving the approved reference's
+  grid behavior at every acceptance width: **4 columns at 1440px, 4 at 1024px, 2 at 768px, 2 at
+  390px**, degrading to 1 below 390px only where required to prevent overflow. They MUST satisfy
+  conditions CG-1 through CG-7 of §8.1 at every one of those widths: no horizontal overflow; 1:1
+  product media contained and never cropped or stretched; touch targets ≥24×24 with the primary
+  commerce action ≥44×44; product name wrapping to at most two lines with accessible full text;
+  supplier attribution and the price-or-price-on-request statement never truncated or hidden; body
+  text no smaller than 12px; no clipped or overlapping content; and degradation to one column below
+  390px rather than overflow. Two columns MUST NOT be imposed on forms, checkout fields,
+  informational layouts, dialogs, drawers, filter panels, cart lines, the wishlist list-row
+  presentation, product rails, or category tiles.
 
 #### Product presentation and product truth (FR-029 to FR-041, FR-111 to FR-113)
 
@@ -1385,8 +1456,9 @@ quality (Constitution IX.8).
 
 - **NFR-007**: Every in-scope page and shared component MUST be designed and verified at all four
   widths.
-- **NFR-008**: Each width MUST receive a deliberate layout decision per §8; stacking desktop columns
-  is not sufficient.
+- **NFR-008**: Each width MUST receive a deliberate layout decision per §8 and the §8.1 matrix;
+  stacking desktop columns is not sufficient, and neither is collapsing every grid to one column at
+  mobile — the product-card grid is deliberately 4 / 4 / 2 / 2 across the four acceptance widths.
 - **NFR-009**: Document scroll width MUST NOT exceed viewport width at any of the four widths,
   verified programmatically (Constitution VII.4).
 - **NFR-010**: No clipped text, header collision, floating-control overlap, tablet dead zone, or
@@ -1612,6 +1684,12 @@ quality (Constitution IX.8).
 - **SC-050**: Every token pairing actually in use passes its WCAG 2.2 AA contrast threshold — zero
   failures; zero uses of `#C9A227` as normal-sized text on a light background; and zero uses of
   `#9CA3AF` as text of any size, including placeholder text, which uses `#6B7280` instead.
+- **SC-051**: Every product-card listing grid renders the §8.1 column count at each acceptance width
+  — **4 at 1440px, 4 at 1024px, 2 at 768px, 2 at 390px** — with zero horizontal overflow, zero
+  clipped or overlapping content, 100% of product media at the 1:1 ratio, 100% of interactive targets
+  meeting 24×24 (44×44 for the primary commerce action), and supplier attribution and the
+  price-or-price-on-request statement fully visible on every card at every width — inspected and
+  recorded at **all four widths** in **both** required visual critique passes.
 
 ---
 
@@ -1814,6 +1892,7 @@ acceptance scenario (US*n*.*m*). Zero requirements are unmapped.
 | FR-025 | SC-009, SC-011, US2.6 |
 | FR-026 | SC-017, US5.2 |
 | FR-028 | SC-006, SC-007 |
+| FR-121 | SC-051, SC-008, SC-013, US2.8 |
 | FR-029, FR-030, FR-035, FR-038 | SC-021, SC-019, US3.1, US3.3 |
 | FR-031, FR-039 | SC-001, US3.1 |
 | FR-032, FR-033 | SC-011, US3.2 |
@@ -1914,5 +1993,5 @@ acceptance scenario (US*n*.*m*). Zero requirements are unmapped.
 | NFR-045 | SC-046 |
 | NFR-046 | SC-048, SC-049 |
 
-**Coverage**: 120 functional requirements and 46 non-functional requirements — 166 total — all
-mapped. 50 success criteria, all reachable from at least one requirement.
+**Coverage**: 121 functional requirements and 46 non-functional requirements — 167 total — all
+mapped. 51 success criteria, all reachable from at least one requirement.

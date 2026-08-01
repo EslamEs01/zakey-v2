@@ -96,6 +96,27 @@
 - [x] **RD-13 recorded** — `placeholder-[#9CA3AF]` measures 2.54:1 and fails AA; corrected to `#6B7280` (4.83:1), taken from the reference's own alternate placeholder usage (FR-120, SC-050)
 - [x] Contrast measured, not asserted — `#C9A227` 2.42:1 on white / 2.30:1 on `#F8F9FB` / 6.99:1 on navy; `#6B7280` 4.83:1 / 4.59:1; `#9CA3AF` 2.54:1 / 2.41:1; `#1F2937` 14.68:1; `#0D1B3D` 16.92:1
 
+## Responsive Grid Gate (authoritative decision, 2026-08-01)
+
+- [x] **DEV-1 DECISION CLOSED — specification corrected.** Product-card listing grids follow the reference matrix at **every** acceptance width: **4 @1440px, 4 @1024px, 2 @768px, 2 @390px**, degrading to 1 below 390px only to prevent overflow
+- [x] The conflict existed at **two** widths (1024px and 390px), not one; both are now corrected
+- [x] Conflicting 4/3/2/1 values amended in spec §8; spec §8.1 records the matrix and its conditions
+- [x] CG-1…CG-7 apply at **all four widths**, not only at 390px
+- [x] Both visual critique passes inspect **all four widths**
+- [x] Resolved without a second deviation identifier — the same product-grid conflict is not recorded twice
+- [x] Scope bounded — applies to listing, category, collection, search-results, and related-products grids **only**
+- [x] Explicitly excluded — forms, checkout fields, informational layouts, dialogs, drawers, filter panels, cart lines, wishlist rows, product rails, category tiles
+- [x] CG-1 no horizontal overflow at any of the four widths
+- [x] CG-2 verified 1:1 square product media preserved; category tiles keep `4:5`
+- [x] CG-3 touch targets ≥24×24, primary commerce action ≥44×44
+- [x] CG-4 controlled wrapping — name max 2 lines with accessible full text; **attribution and price statement never truncated**
+- [x] CG-5 body text ≥12px; gutters on the spacing scale
+- [x] CG-6 no clipped or overlapping content
+- [x] CG-7 degrades to one column below 390px rather than overflowing
+- [x] FR-121 added and mapped; SC-051 added and mapped; US2.8 acceptance scenario added; NFR-008 and RF-3 updated
+- [x] Inspection at 390px required in **both** visual critique passes
+- [x] No clarification marker created — recorded as an authoritative decision
+
 ## Repository Readiness Gate (pre-planning pass, 2026-07-31)
 
 - [x] RRP-1 CLOSED — constitution amended to v1.0.1; legacy-path TODO resolved
@@ -111,12 +132,41 @@
 - [x] Zero `/speckit-plan` blockers remain
 - [x] Zero `/speckit-tasks` blockers remain
 
+## Price-Authority Gate (2026-08-01)
+
+- [x] **No launch product has a verified sellable price — none has any price value at all.** All 21 carry `retail_price: null`, `currency: null`, `source_price_raw/_min/_max/_currency: null`
+- [x] The only non-null price field on launch records is the label `source_price_kind: "supplier_reference"` — a classification, not a price
+- [x] 88 of 209 source records carry USD amounts, all `supplier_reference`, **none on a launch product**; `source_price_*` is not on the publish allowlist in any case
+- [x] **The Feature 001 launch catalogue is enquiry-only** — stated explicitly, not implied
+- [x] **Governed source artifacts: exactly THREE.** No verified-price artifact exists
+- [x] The verified-price register is described only as a **controlled future extension**, never as something that already exists
+- [x] Verified prices are allowed and must not fail the loader; unverified prices fail closed (FC-3)
+- [x] Enquiry-only products create no fabricated line, cart, or review totals
+- [x] Mixed carts show priced line totals but no misleading overall total
+- [x] Prices and totals are never accepted from the browser; session is never price authority
+- [x] Server-side totals resolve solely through the catalog provider (`resolve_lines`)
+- [x] Templates remain isolated from the temporary register schema
+
+## Palette-Audit Gate (2026-08-01)
+
+- [x] Tailwind v4.3.3 `--color-*: initial` mechanism preserved and empirically proven
+- [x] Probe proved arbitrary utilities (`bg-[#ff0000]`, `text-[#123456]`) **still compile** — name-only checking is insufficient
+- [x] **Layer 1 source audit** required: arbitrary colour utilities, raw hex, `rgb()`, `rgba()`, `hsl()`, `oklch()`, inline colour styles, unauthorised gradients, page-specific colour declarations
+- [x] **Layer 2 compiled-CSS audit** required: extracts and **normalises** every colour value, asserting membership of the ratified 18, permitted keywords, verified gradients, or recorded alpha derivatives
+- [x] Compiled audit must fail on `#ff0000`, `#123456`, default palette values, unauthorised alpha, and unauthorised gradients **even when Tailwind compiles them**
+- [x] Layer 2 runs after the production build, so a stale artifact cannot satisfy it
+- [x] Script contract documented (exit codes, violation output); no production CSS or script created during planning
+- [x] Exactly 18 governed values preserved — 5 core + 13 support
+- [x] `#C9A227` remains the only brand gold with its normal-text contrast restriction
+- [x] `#9CA3AF` remains non-text only; `#6B7280` for compliant placeholder text
+- [x] No page-specific palettes; no unintended dark-mode-like sections
+
 ## Clarification Validation Gate (2026-07-31 session)
 
 - [x] Zero `[NEEDS CLARIFICATION]` markers remain — verified by search
 - [x] All three original clarifications resolved (CL-1, CL-2, CL-3)
 - [x] Specification internally consistent — no stale quote-led framing, no "Excluded" comparison verdict, no obsolete counts
-- [x] Traceability has zero unmapped requirements — 120 FR + 46 NFR, all mapped; verified programmatically
+- [x] Traceability has zero unmapped requirements — 121 FR + 46 NFR, all mapped; verified programmatically
 - [x] Feature 001 / Feature 002 boundary stated explicitly (§19 closing paragraph)
 - [x] ZAKEY presented as retailer; supplier attribution retained (FR-111, FR-112, CI-8, SC-041)
 - [x] Unverified prices and claims prohibited (FR-034, FR-113, CI-5, CI-16, SC-019, SC-042)
