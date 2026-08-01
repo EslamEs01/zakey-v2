@@ -8,7 +8,7 @@ description: "Task list template for feature implementation"
 **Input**: Design documents from `/specs/[###-feature-name]/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**Tests and verification**: Verification tasks are REQUIRED wherever the owning specification or Constitution Principle XII makes them applicable — they are not optional. The specification states which verification categories apply and MUST justify every exclusion. Generate a task for each applicable category (see "Phase V: Verification" below). Where a category genuinely does not apply, record it as not applicable **with its reason** rather than omitting it silently. Constitution XII.5: "implemented" and "verified" are two separate facts, and XII.4 forbids reporting a feature complete when required tests were not run, are failing, were hidden, or were estimated rather than observed.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -79,7 +79,7 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 1 (required where the specification makes them applicable) ⚠️
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
@@ -105,7 +105,7 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 2 (required where the specification makes them applicable) ⚠️
 
 - [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
 - [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
@@ -127,7 +127,7 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 3 (required where the specification makes them applicable) ⚠️
 
 - [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test_[name].py
 - [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test_[name].py
@@ -153,9 +153,73 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] TXXX [P] Documentation updates in docs/
 - [ ] TXXX Code cleanup and refactoring
 - [ ] TXXX Performance optimization across all stories
-- [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
+- [ ] TXXX [P] Additional unit tests in tests/unit/ where the specification requires them
 - [ ] TXXX Security hardening
 - [ ] TXXX Run quickstart.md validation
+
+---
+
+## Phase V: Verification (REQUIRED — Constitution Principle XII)
+
+**Purpose**: Prove the feature works. This phase is not optional and is not a formality.
+
+**⚠️ CRITICAL**: A feature MUST NOT be reported complete when required checks were not run, are
+failing, were hidden or ignored, were estimated rather than observed, produced visual evidence
+that was captured but never inspected, or have known limitations omitted from the report
+(Principle XII.4). Report "implemented" and "verified" as two separate facts (XII.5), and record
+the **exact commands executed and their exact outcomes** — paraphrased or reconstructed results
+are forbidden (XII.6).
+
+<!--
+  ACTION REQUIRED: Generate one task per category the owning specification marks applicable.
+  Delete a category ONLY by replacing it with an explicit "Not applicable — <reason>" line.
+  Never delete a category silently.
+-->
+
+### Automated checks
+
+- [ ] TXXX Django system checks (`manage.py check`, and `check --deploy` where applicable)
+- [ ] TXXX [P] Unit tests
+- [ ] TXXX [P] Integration tests
+- [ ] TXXX [P] Model tests
+- [ ] TXXX [P] Service tests
+- [ ] TXXX [P] Form tests
+- [ ] TXXX [P] View tests
+- [ ] TXXX [P] Permission tests
+- [ ] TXXX [P] Template-rendering tests
+- [ ] TXXX [P] JavaScript behavior tests
+- [ ] TXXX Playwright end-to-end tests covering each user story's Independent Test
+- [ ] TXXX [P] axe accessibility checks on every in-scope page and on each interactive surface in its open state
+- [ ] TXXX [P] Broken-link check across all in-scope pages
+- [ ] TXXX [P] Console-error capture — count MUST be zero, or each error individually justified in the specification
+- [ ] TXXX [P] Responsive-overflow assertion at every ratified verification width
+- [ ] TXXX Production asset build — MUST succeed with no error and no unresolved asset reference
+
+### Manual checks (automated checks alone are insufficient — Principle VIII.6)
+
+- [ ] TXXX Manual keyboard inspection: tab order, focus visibility, focus trapping in dialogs and drawers, and escape/dismiss behavior
+- [ ] TXXX Capture screenshots at the approved desktop, tablet, and mobile widths
+- [ ] TXXX **Inspect** every captured screenshot and record what was observed in each — capturing without inspecting does not count as visual QA (Principle XIII.6)
+- [ ] TXXX Visual critique and correction pass 1 (all affected pages, not only the entry page)
+- [ ] TXXX Visual critique and correction pass 2 — re-inspect for consistency defects introduced by pass 1 (Principle XIII.3)
+- [ ] TXXX Cross-page component comparison: dimensions, spacing, colours, typography, focus states, responsive behavior, interaction behavior — divergence between two instances of the same component is a defect (XIII.5)
+
+### Guard skills (Principle XIV.10 — run where their scopes apply)
+
+- [ ] TXXX Run `clean-code-guard`; resolve or explicitly justify every finding
+- [ ] TXXX Run `test-guard`; resolve or explicitly justify every finding
+- [ ] TXXX Run `docs-guard`; resolve or explicitly justify every finding
+
+### Documentation and final report
+
+- [ ] TXXX Verify documentation is current (Principle XVIII.12)
+- [ ] TXXX Record known limitations truthfully (XVIII.13)
+- [ ] TXXX Confirm unrelated user work remains untouched (XVIII.14)
+- [ ] TXXX Produce the final report with the exact commands executed and their exact results (XVIII.15)
+
+### Definition of Done gate (Principle XVIII — all fifteen conditions)
+
+- [ ] TXXX Confirm every one of the fifteen Definition-of-Done conditions holds. Passing a subset does not satisfy it; work meeting fourteen of fifteen is not done.
 
 ---
 
@@ -178,7 +242,7 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Within Each User Story
 
-- Tests (if included) MUST be written and FAIL before implementation
+- Tests MUST be written and MUST FAIL before implementation, wherever they are applicable
 - Models before services
 - Services before endpoints
 - Core implementation before integration
@@ -198,7 +262,7 @@ Examples of foundational tasks (adjust based on your project):
 ## Parallel Example: User Story 1
 
 ```bash
-# Launch all tests for User Story 1 together (if tests requested):
+# Launch all applicable tests for User Story 1 together:
 Task: "Contract test for [endpoint] in tests/contract/test_[name].py"
 Task: "Integration test for [user journey] in tests/integration/test_[name].py"
 

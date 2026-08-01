@@ -29,9 +29,76 @@
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+*GATE: This check MUST pass before Phase 0 research begins, and MUST be re-run and re-recorded
+after Phase 1 design. A principle is never marked Pass without cited evidence — name the plan
+section, artifact, or decision that carries the compliance. "Will comply" is not evidence.*
 
-[Gates determined based on constitution file]
+<!--
+  ACTION REQUIRED: Complete BOTH columns for every principle. Replace the Status placeholder
+  with Pass / Violation / Not applicable. A "Not applicable" entry MUST state why.
+  Any Violation is a blocker: record it in Blocking Violations below and either resolve it or
+  obtain a documented, user-approved exception before proceeding. Complexity that conflicts
+  with a principle MUST be justified in Complexity Tracking.
+-->
+
+### Initial gate (before Phase 0)
+
+| # | Principle / gate area | Status | Evidence (section, artifact, or decision) |
+| --- | --- | --- | --- |
+| I | Reference-led visual fidelity — named pages, widths, acceptance threshold, verification method; reference defects corrected not reproduced | | |
+| II | Design-token authority — one centralized token source; ratified values matched exactly; no competing colours, scales, spacing, radii, shadows, or breakpoints | | |
+| III | Approved technical foundation — every dependency assessed for maintenance cost, security exposure, runtime performance, and bundle size; no prohibited technology; no runtime third-party origin | | |
+| IV | Architecture boundaries — clean-room; reusable components with no cross-page duplication; focused modules; no single oversized CSS/JS file | | |
+| IV.7–IV.8 | Shared data authority — exactly one documented fixture/service/repository/adapter for temporary data; no template hardcodes a duplicated record | | |
+| IV.9 | Localization and RTL readiness — externalized strings, direction-aware layout primitives, no LTR-only geometry | | |
+| V | Content and asset truth — sources documented; no invented claims; asset manifest with ownership and licensing | | |
+| VI | Functional completeness — every control has behavior; no dead controls; no `href="#"`; no fake success; named route lookups; one shared totalling routine; no prohibited payment data | | |
+| VII | Responsive behavior — a deliberate layout decision per surface at every ratified width; programmatic overflow assertion planned | | |
+| VIII | Accessibility — WCAG 2.2 AA targets; BOTH automated checks and a manual keyboard pass planned | | |
+| IX | Performance budgets — page weight, JavaScript payload, and layout stability set before implementation, each with a measurement method | | |
+| X | Security and data safety — secrets handling, env validation, CSRF, server-side validation, escaping, least privilege, log hygiene | | |
+| XI | Specification-first — no requirement silently redefined; material ambiguity resolved; out-of-scope boundary respected | | |
+| XII | Test strategy — the applicable verification set named, with each exclusion justified | | |
+| XIII | Visual QA — screenshot capture AND inspection planned at the approved widths; two critique passes for major UI work; cross-page component comparison | | |
+| XIV | Code quality — naming, cohesion, no duplicated business logic, narrow exception handling, no debug residue, reviewed migrations; guard skills scheduled | | |
+| XV | Git safety — branch strategy; no unauthorized Git operation; ignore policy covers generated artifacts; unrelated user work untouched | | |
+| XVI | Claude governance — ownership named; delegation bounded with explicit owners; no concurrent edits to shared surfaces | | |
+| XVII | LeanCtx and context discipline — targeted exploration; decisions and evidence written into artifacts, not left in conversation | | |
+| — | Implementation boundaries — what this feature will NOT build, and which future feature owns it | | |
+| XVIII | Definition of Done — all fifteen conditions reachable by the planned work | | |
+
+### Post-design re-check (after Phase 1)
+
+<!--
+  Re-run the same table after data model, contracts, and design decisions exist. Design work
+  frequently introduces violations that the initial gate could not see.
+-->
+
+| # | Principle / gate area | Status | Evidence |
+| --- | --- | --- | --- |
+| | | | |
+
+### Blocking Violations
+
+<!--
+  MUST be empty before Phase 0 research proceeds. Any entry here stops planning until it is
+  resolved or an explicit, user-approved, documented exception exists (Governance > Exceptions).
+-->
+
+| Violation | Principle | Why it blocks | Resolution or approved exception |
+| --- | --- | --- | --- |
+| | | | |
+
+### Dependency Assessment
+
+<!--
+  Principle III.4 — every NEW dependency requires this record. A dependency added without it
+  MUST be removed or retroactively documented before acceptance.
+-->
+
+| Dependency | Purpose | Maintenance cost | Security exposure | Runtime performance | Bundle-size impact |
+| --- | --- | --- | --- | --- | --- |
+| | | | | | |
 
 ## Project Structure
 
