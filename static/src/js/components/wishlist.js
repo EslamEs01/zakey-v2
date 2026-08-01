@@ -9,11 +9,11 @@ export function initializeWishlistControls(store) {
       button.classList.toggle("is-active", active);
     });
   };
-  document.querySelectorAll("[data-wishlist-toggle]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const added = store.toggleWishlist(button.dataset.wishlistToggle);
-      announce(added ? "تمت الإضافة إلى المفضلة" : "تمت الإزالة من المفضلة");
-    });
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-wishlist-toggle]");
+    if (!button) return;
+    const added = store.toggleWishlist(button.dataset.wishlistToggle);
+    announce(added ? "تمت الإضافة إلى المفضلة" : "تمت الإزالة من المفضلة");
   });
   document.addEventListener("zakey:wishlist-change", sync);
   sync();

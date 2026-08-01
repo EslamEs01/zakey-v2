@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}عن ZAKEY | قصة العلامة وفريق العرض{% endblock %}
+{% block title %}عن ZAKEY | رؤيتنا وخبراتنا{% endblock %}
 
 {% block content %}
 {% with about=fixture.site.about %}
@@ -24,7 +24,7 @@
 
   <section class="section section--compact about-stats-band" aria-labelledby="about-stats-title">
     <div class="container">
-      <h2 class="sr-only" id="about-stats-title">أرقام هذا النموذج التجريبي</h2>
+      <h2 class="sr-only" id="about-stats-title">ZAKEY في أرقام</h2>
       <div class="about-stats">
         {% for stat in about.stats %}
           <div class="surface-card about-stat">
@@ -44,7 +44,7 @@
         <p class="section-copy">{{ about.mission.body }}</p>
         <p class="prototype-note">{{ about.prototypeNotice }}</p>
         <div class="about-split__actions">
-          <a class="btn btn--primary" href="{% url 'storefront:shop' %}">شاهد المجموعة التجريبية</a>
+          <a class="btn btn--primary" href="{% url 'storefront:shop' %}">استكشف مجموعة ZAKEY</a>
         </div>
       </div>
       <figure class="about-split__media">
@@ -61,9 +61,9 @@
     <div class="container">
       <div class="section-head about-section-head">
         <div>
-          <p class="eyebrow">فريق العرض</p>
+          <p class="eyebrow">خبرات ZAKEY</p>
           <h2 class="section-heading" id="about-team-title">{{ about.teamHeading }}</h2>
-          <p class="section-copy">شخصيات توضيحية تشرح زوايا العمل داخل الواجهة، وليست سِيَرًا وظيفية موثقة.</p>
+          <p class="section-copy">تخصصات متكاملة تعمل معًا لتقديم منتج مفهوم وخدمة يمكن الاعتماد عليها.</p>
         </div>
       </div>
       <div class="about-team">
@@ -76,6 +76,32 @@
             </div>
           </article>
         {% endif %}{% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="policies-title">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">الوضوح أولًا</p>
+          <h2 class="section-heading" id="policies-title">سياسات الاستخدام والخصوصية</h2>
+          <p class="section-copy">ملخص واضح لنسخة العرض الحالية إلى حين اعتماد النصوص القانونية النهائية قبل الإطلاق.</p>
+        </div>
+      </div>
+      <div class="grid grid--3">
+        <article class="surface-card feature-card" id="privacy">
+          <h3>سياسة الخصوصية</h3>
+          <p>لا ترسل نسخة العرض بيانات النماذج إلى خادم، ولا تنشئ حسابات عملاء أو طلبات فعلية. تحفظ السلة والمفضلة محليًا في متصفحك فقط.</p>
+        </article>
+        <article class="surface-card feature-card" id="terms">
+          <h3>شروط الاستخدام</h3>
+          <p>الأسعار والتوافر وخيارات الشحن والتركيب المعروضة محتوى ما قبل الإطلاق، وتخضع للمراجعة قبل بدء التشغيل التجاري.</p>
+        </article>
+        <article class="surface-card feature-card" id="cookies">
+          <h3>ملفات الارتباط والتخزين</h3>
+          <p>لا تستخدم نسخة العرض ملفات تتبع إعلانية. يُستخدم تخزين المتصفح فقط لتجربة السلة والمفضلة وحالة الحساب المعروضة.</p>
+        </article>
       </div>
     </div>
   </section>
