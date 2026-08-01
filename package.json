@@ -1,0 +1,38 @@
+{
+  "name": "zakey-frontend-reference-build",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.22.0 <23",
+    "npm": ">=10.9.0 <11"
+  },
+  "scripts": {
+    "build": "npm run build:assets && npm run build:css",
+    "build:assets": "node ./scripts/copy-assets.js",
+    "build:css": "tailwindcss -i ./static/src/css/app.css -o ./static/dist/css/app.css --minify",
+    "dev:css": "tailwindcss -i ./static/src/css/app.css -o ./static/dist/css/app.css --watch",
+    "check": "npm run build && npm run check:js && npm run check:matrix && npm run check:html",
+    "check:js": "node ./scripts/check-js.js",
+    "check:matrix": "node ./scripts/validate-qa-matrix.js",
+    "check:evidence": "node ./scripts/validate-qa-matrix.js --evidence",
+    "check:html": "node ./scripts/validate-rendered-html.js",
+    "export:pages": "uv run python ./scripts/export_static_site.py --output ./_site --base-path /zakey-v2/",
+    "test": "playwright test",
+    "test:e2e": "playwright test ./tests/e2e",
+    "test:a11y": "playwright test ./tests/accessibility",
+    "test:no-js": "playwright test ./tests/e2e/no-js.spec.js --project=no-js-1440 --project=no-js-1024 --project=no-js-768 --project=no-js-390",
+    "screenshots": "playwright test ./tests/e2e/site-integrity.spec.js",
+    "qa": "npm run build && npm run check:js && npm run check:matrix && npm test && npm run check:html && npm run check:evidence"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
+    "@fontsource/cairo": "5.3.0",
+    "@fontsource/poppins": "5.3.0",
+    "@playwright/test": "1.62.1",
+    "@tailwindcss/cli": "4.3.3",
+    "html-validate": "11.6.0",
+    "lucide-static": "1.28.0",
+    "tailwindcss": "4.3.3"
+  }
+}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}عن ZAKEY | قصة العلامة وفريق العرض{% endblock %}
+
+{% block content %}
+{% with about=fixture.site.about %}
+
+<article class="about-page">
+  <section class="about-hero" aria-labelledby="about-title">
+    <img class="about-hero__media"
+         src="{{ about.hero.image.path }}"
+         width="{{ about.hero.image.width }}"
+         height="{{ about.hero.image.height }}"
+         alt="">
+    <div class="container about-hero__inner">
+      <p class="eyebrow">{{ about.hero.eyebrow }}</p>
+      <h1 id="about-title">{{ about.hero.heading }}</h1>
+      <p class="about-hero__lede">{{ about.hero.description }}</p>
+      <div class="about-hero__actions">
+        <a class="btn btn--gold" href="{% url 'storefront:shop' %}">تصفّح الأقفال</a>
+        <a class="btn btn--outline" href="{% url 'storefront:contact' %}">تواصل مع الفريق</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--compact about-stats-band" aria-labelledby="about-stats-title">
+    <div class="container">
+      <h2 class="sr-only" id="about-stats-title">أرقام هذا النموذج التجريبي</h2>
+      <div class="about-stats">
+        {% for stat in about.stats %}
+          <div class="surface-card about-stat">
+            <strong class="about-stat__value"><bdi>{{ stat.value }}</bdi></strong>
+            <span class="about-stat__label">{{ stat.label }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--white" aria-labelledby="about-mission-title">
+    <div class="container about-split">
+      <div class="about-split__copy">
+        <p class="eyebrow">{{ about.mission.eyebrow }}</p>
+        <h2 class="section-heading" id="about-mission-title">{{ about.mission.heading }}</h2>
+        <p class="section-copy">{{ about.mission.body }}</p>
+        <p class="prototype-note">{{ about.prototypeNotice }}</p>
+        <div class="about-split__actions">
+          <a class="btn btn--primary" href="{% url 'storefront:shop' %}">شاهد المجموعة التجريبية</a>
+        </div>
+      </div>
+      <figure class="about-split__media">
+        <img src="{{ about.mission.image.path }}"
+             width="{{ about.mission.image.width }}"
+             height="{{ about.mission.image.height }}"
+             loading="lazy"
+             alt="{{ about.mission.image.alt }}">
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section--white" aria-labelledby="about-team-title">
+    <div class="container">
+      <div class="section-head about-section-head">
+        <div>
+          <p class="eyebrow">فريق العرض</p>
+          <h2 class="section-heading" id="about-team-title">{{ about.teamHeading }}</h2>
+          <p class="section-copy">شخصيات توضيحية تشرح زوايا العمل داخل الواجهة، وليست سِيَرًا وظيفية موثقة.</p>
+        </div>
+      </div>
+      <div class="about-team">
+        {% for member in fixture.team %}{% if member.id in about.teamMemberIds %}
+          <article class="about-member">
+            <div class="about-member__monogram" aria-hidden="true">{{ member.name|slice:":1" }}</div>
+            <div class="about-member__body">
+              <h3 class="about-member__name">{{ member.name }}</h3>
+              <p class="about-member__role">{{ member.role }}</p>
+            </div>
+          </article>
+        {% endif %}{% endfor %}
+      </div>
+    </div>
+  </section>
+
+</article>
+{% endwith %}
+{% endblock %}

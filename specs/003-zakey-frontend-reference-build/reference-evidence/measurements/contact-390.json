@@ -1,0 +1,459 @@
+{
+  "pageName": "contact",
+  "title": "Premium E-commerce Website UI",
+  "url": "https://remote-fried-86528699.figma.site/",
+  "viewport": {
+    "width": 390,
+    "height": 1200
+  },
+  "document": {
+    "width": 390,
+    "height": 4028
+  },
+  "headings": [
+    {
+      "tag": "h1",
+      "text": "We'd Love to Hear From You",
+      "box": {
+        "x": 24,
+        "y": 249,
+        "width": 342,
+        "height": 144
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Call Us",
+      "box": {
+        "x": 57,
+        "y": 734,
+        "width": 276,
+        "height": 27
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Email Us",
+      "box": {
+        "x": 57,
+        "y": 991,
+        "width": 276,
+        "height": 27
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Visit Us",
+      "box": {
+        "x": 57,
+        "y": 1248,
+        "width": 276,
+        "height": 27
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Send a Message",
+      "box": {
+        "x": 57,
+        "y": 1469,
+        "width": 276,
+        "height": 32
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Frequently Asked",
+      "box": {
+        "x": 56,
+        "y": 2163,
+        "width": 278,
+        "height": 28
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Live Chat Available",
+      "box": {
+        "x": 52,
+        "y": 2575,
+        "width": 286,
+        "height": 28
+      }
+    }
+  ],
+  "controls": [
+    {
+      "tag": "a",
+      "text": "Remix",
+      "box": {
+        "x": 220,
+        "y": 1148,
+        "width": 49,
+        "height": 24
+      }
+    },
+    {
+      "tag": "button",
+      "text": "More options",
+      "box": {
+        "x": 278,
+        "y": 1140,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Close",
+      "box": {
+        "x": 319,
+        "y": 1140,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "ZAKEY",
+      "box": {
+        "x": 24,
+        "y": 78,
+        "width": 121,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 230,
+        "y": 76,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 278,
+        "y": 76,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 326,
+        "y": 76,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "input",
+      "text": "Alex",
+      "box": {
+        "x": 57,
+        "y": 1557,
+        "width": 128,
+        "height": 46
+      }
+    },
+    {
+      "tag": "input",
+      "text": "Johnson",
+      "box": {
+        "x": 205,
+        "y": 1557,
+        "width": 128,
+        "height": 46
+      }
+    },
+    {
+      "tag": "input",
+      "text": "alex@example.com",
+      "box": {
+        "x": 57,
+        "y": 1651,
+        "width": 276,
+        "height": 46
+      }
+    },
+    {
+      "tag": "select",
+      "text": "Product Inquiry Technical Support Order Status Warranty Claim Partnership",
+      "box": {
+        "x": 57,
+        "y": 1745,
+        "width": 276,
+        "height": 48
+      }
+    },
+    {
+      "tag": "textarea",
+      "text": "How can we help you?",
+      "box": {
+        "x": 57,
+        "y": 1841,
+        "width": 276,
+        "height": 126
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Send Message",
+      "box": {
+        "x": 57,
+        "y": 1994,
+        "width": 276,
+        "height": 56
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Start Live Chat",
+      "box": {
+        "x": 52,
+        "y": 2671,
+        "width": 175,
+        "height": 44
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 24,
+        "y": 3035,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 72,
+        "y": 3035,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 120,
+        "y": 3035,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 168,
+        "y": 3035,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Smart Locks",
+      "box": {
+        "x": 24,
+        "y": 3161,
+        "width": 86,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Deadbolts",
+      "box": {
+        "x": 24,
+        "y": 3197,
+        "width": 72,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Padlocks",
+      "box": {
+        "x": 24,
+        "y": 3233,
+        "width": 64,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Accessories",
+      "box": {
+        "x": 24,
+        "y": 3269,
+        "width": 84,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Smart Home Kits",
+      "box": {
+        "x": 24,
+        "y": 3305,
+        "width": 118,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "About Us",
+      "box": {
+        "x": 24,
+        "y": 3417,
+        "width": 63,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Careers",
+      "box": {
+        "x": 24,
+        "y": 3453,
+        "width": 56,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Press",
+      "box": {
+        "x": 24,
+        "y": 3489,
+        "width": 37,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Partners",
+      "box": {
+        "x": 24,
+        "y": 3525,
+        "width": 59,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Blog",
+      "box": {
+        "x": 24,
+        "y": 3561,
+        "width": 31,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Help Center",
+      "box": {
+        "x": 24,
+        "y": 3673,
+        "width": 83,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Installation",
+      "box": {
+        "x": 24,
+        "y": 3709,
+        "width": 79,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Warranty",
+      "box": {
+        "x": 24,
+        "y": 3745,
+        "width": 66,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Returns",
+      "box": {
+        "x": 24,
+        "y": 3781,
+        "width": 54,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Contact Us",
+      "box": {
+        "x": 24,
+        "y": 3817,
+        "width": 78,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Privacy Policy",
+      "box": {
+        "x": 24,
+        "y": 3956,
+        "width": 93,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Terms of Service",
+      "box": {
+        "x": 141,
+        "y": 3956,
+        "width": 112,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Cookie Policy",
+      "box": {
+        "x": 276,
+        "y": 3956,
+        "width": 90,
+        "height": 40
+      }
+    }
+  ],
+  "mainChildren": [
+    {
+      "tag": "div",
+      "text": "GET IN TOUCH We'd Love to Hear From You Our team typically responds within 2 hours during business hours. Call Us +1 (800) 929-5390 Mon–Fri, 8am–8pm EST Email U",
+      "box": {
+        "x": 0,
+        "y": 133,
+        "width": 390,
+        "height": 2690
+      }
+    }
+  ]
+}

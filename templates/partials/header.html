@@ -1,0 +1,75 @@
+<div class="announcement" role="note">
+  <span>شحن مجاني للطلبات فوق <strong>١٬٥٠٠ ج.م</strong> — واجهة تجريبية غير متصلة بخدمات دفع أو شحن</span>
+</div>
+<header class="site-header">
+  <div class="container header-row">
+    <a class="brand" href="{% url 'storefront:home' %}" aria-label="ZAKEY — الرئيسية">
+      <span class="brand-mark">{% include "components/icon.html" with name="lock" %}</span>
+      <bdi lang="en">ZAKEY</bdi>
+    </a>
+    <nav class="main-nav" aria-label="التنقل الرئيسي">
+      <a class="nav-link" href="{% url 'storefront:home' %}" {% if page_id == 'home' %}aria-current="page"{% endif %}>الرئيسية</a>
+      <a class="nav-link" href="{% url 'storefront:shop' %}" {% if page_id == 'shop' or page_id == 'collection' or page_id == 'search' %}aria-current="page"{% endif %}>المتجر</a>
+      <a class="nav-link" href="{% url 'storefront:about' %}" {% if page_id == 'about' %}aria-current="page"{% endif %}>عن ZAKEY</a>
+      <a class="nav-link" href="{% url 'storefront:contact' %}" {% if page_id == 'contact' %}aria-current="page"{% endif %}>تواصل معنا</a>
+      <div class="nav-menu-wrap">
+        <button class="nav-link btn--ghost" type="button" data-products-menu-trigger aria-expanded="false" aria-controls="products-menu">
+          المنتجات {% include "components/icon.html" with name="chevron" %}
+        </button>
+        <div class="products-menu" id="products-menu" hidden>
+          {% for category in categories %}
+            <a href="{% url 'storefront:shop' %}?category={{ category.slug }}">{{ category.name }}</a>
+          {% endfor %}
+        </div>
+      </div>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn header-search" type="button" data-search-trigger aria-expanded="false" aria-controls="header-search" aria-label="فتح البحث">
+        {% include "components/icon.html" with name="search" %}
+      </button>
+      <a class="icon-btn header-account" href="{% url 'storefront:account' %}" aria-label="حسابي">
+        {% include "components/icon.html" with name="user" %}
+      </a>
+      <a class="icon-btn header-wishlist" href="{% url 'storefront:wishlist' %}" aria-label="المفضلة، 0 عناصر" data-wishlist-link>
+        {% include "components/icon.html" with name="heart" %}<span class="badge-count" data-wishlist-count hidden>0</span>
+      </a>
+      <a class="icon-btn header-cart" href="{% url 'storefront:cart' %}" aria-label="سلة التسوق، 0 عناصر" data-cart-link>
+        {% include "components/icon.html" with name="cart" %}<span class="badge-count" data-cart-count hidden>0</span>
+      </a>
+      <a class="btn btn--primary header-cta" href="{% url 'storefront:shop' %}">تسوق الآن</a>
+      <button class="icon-btn menu-toggle" type="button" data-mobile-menu-trigger aria-haspopup="dialog" aria-label="فتح القائمة">
+        {% include "components/icon.html" with name="menu" %}
+      </button>
+    </div>
+  </div>
+</header>
+<div class="search-panel" id="header-search" hidden>
+  <form class="container search-form" action="{% url 'storefront:search' %}" method="get" role="search">
+    <div class="search-field">
+      {% include "components/icon.html" with name="search" %}
+      <label class="sr-only" for="global-search">ابحث عن قفل أو ميزة</label>
+      <input id="global-search" name="q" type="search" placeholder="ابحث عن الأقفال والميزات..." autocomplete="off">
+    </div>
+    <button class="btn btn--primary" type="submit">بحث</button>
+    <button class="icon-btn" type="button" data-search-close aria-label="إغلاق البحث">{% include "components/icon.html" with name="x" %}</button>
+  </form>
+</div>
+<dialog class="mobile-dialog" id="mobile-menu" aria-labelledby="mobile-menu-title">
+  <div class="dialog-head">
+    <strong id="mobile-menu-title">القائمة</strong>
+    <button class="icon-btn" type="button" data-dialog-close aria-label="إغلاق القائمة">{% include "components/icon.html" with name="x" %}</button>
+  </div>
+  <nav class="mobile-nav" aria-label="تنقل الهاتف">
+    <a href="{% url 'storefront:home' %}">الرئيسية {% include "components/icon.html" with name="chevron" %}</a>
+    <a href="{% url 'storefront:shop' %}">المتجر {% include "components/icon.html" with name="chevron" %}</a>
+    <details>
+      <summary>المنتجات</summary>
+      {% for category in categories %}<a href="{% url 'storefront:shop' %}?category={{ category.slug }}">{{ category.name }}</a>{% endfor %}
+    </details>
+    <a href="{% url 'storefront:about' %}">عن ZAKEY {% include "components/icon.html" with name="chevron" %}</a>
+    <a href="{% url 'storefront:contact' %}">تواصل معنا {% include "components/icon.html" with name="chevron" %}</a>
+    <a href="{% url 'storefront:wishlist' %}">المفضلة {% include "components/icon.html" with name="chevron" %}</a>
+    <a href="{% url 'storefront:cart' %}">سلة التسوق {% include "components/icon.html" with name="chevron" %}</a>
+    <a href="{% url 'storefront:account' %}">حسابي {% include "components/icon.html" with name="chevron" %}</a>
+  </nav>
+</dialog>

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}{% if page_id == 'search' %}نتائج البحث{% elif page_id == 'collection' %}مجموعة ZAKEY{% else %}متجر ZAKEY{% endif %} | أقفال ذكية{% endblock %}
+
+{% block content %}
+<section class="page-hero catalogue-hero">
+  <div class="container">
+    <nav class="breadcrumb breadcrumb--light" aria-label="مسار التنقل"><a href="{% url 'storefront:home' %}">الرئيسية</a>{% include "components/icon.html" with name="chevron" %}<span aria-current="page">{% if page_id == 'search' %}البحث{% elif page_id == 'collection' %}المجموعة{% else %}المتجر{% endif %}</span></nav>
+    <h1>{% if page_id == 'search' %}نتائج البحث{% elif page_id == 'collection' %}مجموعة مختارة{% else %}أقفال ZAKEY الذكية{% endif %}</h1>
+    <p>{% if catalogue.criteria.q %}نتائج البحث عن “{{ catalogue.criteria.q }}”{% else %}قارن وسائل الدخول والتصميم والسعر في بيانات عرض محلية واضحة.{% endif %}</p>
+  </div>
+</section>
+
+<section class="section catalogue-section">
+  <div class="container">
+    <div class="catalogue-toolbar">
+      <div><strong><span data-result-count>{{ catalogue.totalCount }}</span> منتج</strong><span class="prototype-note">بيانات تجريبية قابلة للاستبدال لاحقًا.</span></div>
+      <div class="toolbar-actions">
+        <button class="btn btn--outline filter-open" type="button" data-filter-open aria-haspopup="dialog">{% include "components/icon.html" with name="filter" %} الفلاتر</button>
+        <form method="get" data-sort-form>
+          {% if catalogue.criteria.q %}<input type="hidden" name="q" value="{{ catalogue.criteria.q }}">{% endif %}
+          {% if catalogue.criteria.category %}<input type="hidden" name="category" value="{{ catalogue.criteria.category }}">{% endif %}
+          <label for="catalogue-sort">الترتيب</label>
+          <select id="catalogue-sort" name="sort">
+            <option value="featured" {% if catalogue.criteria.sort == 'featured' %}selected{% endif %}>المميزة</option>
+            <option value="price-asc" {% if catalogue.criteria.sort == 'price-asc' %}selected{% endif %}>السعر: الأقل أولًا</option>
+            <option value="price-desc" {% if catalogue.criteria.sort == 'price-desc' %}selected{% endif %}>السعر: الأعلى أولًا</option>
+            <option value="name" {% if catalogue.criteria.sort == 'name' %}selected{% endif %}>الاسم</option>
+          </select>
+          <button class="sr-only" type="submit">تطبيق الترتيب</button>
+        </form>
+      </div>
+    </div>
+
+    {% if catalogue.activeChips %}
+      <div class="active-filters" role="group" aria-label="الفلاتر النشطة"><span>محدد:</span>{% for chip in catalogue.activeChips %}<button type="button" class="filter-chip" data-filter-remove="{{ chip.key }}" data-filter-value="{{ chip.value }}">{{ chip.label }} {% include "components/icon.html" with name="x" %}</button>{% endfor %}<a href="{% url 'storefront:shop' %}">مسح الكل</a></div>
+    {% endif %}
+
+    <div class="catalogue-layout">
+      <aside class="filter-sidebar" aria-label="فلاتر المنتجات">{% include "components/catalogue_filters.html" %}</aside>
+      <div class="catalogue-results" aria-live="polite" aria-busy="{% if page_state == 'loading' %}true{% else %}false{% endif %}">
+        {% if page_state == 'loading' %}
+      <div class="catalogue-grid" role="status" aria-label="جار تحميل المنتجات">{% for i in "123456" %}<div class="product-skeleton" aria-hidden="true"></div>{% endfor %}</div>
+        {% elif page_state == 'recoverable-error' or page_state == 'error' %}
+          <div class="state-panel"><div><span class="state-panel__icon">{% include "components/icon.html" with name="box" %}</span><h2>تعذّر عرض النتائج التجريبية</h2><p>يمكنك إعادة المحاولة من دون فقد اختياراتك.</p><button class="btn btn--primary" type="button" data-retry-catalogue>إعادة المحاولة</button></div></div>
+        {% elif catalogue.products %}
+          <div class="catalogue-grid">{% for product in catalogue.products %}{% include "components/product_card.html" %}{% endfor %}</div>
+          {% if catalogue.pageCount > 1 %}
+            <nav class="pagination" aria-label="صفحات النتائج">
+              {% for number in "12" %}{% if forloop.counter <= catalogue.pageCount %}<a href="?{% if catalogue.criteria.q %}q={{ catalogue.criteria.q|urlencode }}&amp;{% endif %}{% if catalogue.criteria.category %}category={{ catalogue.criteria.category }}&amp;{% endif %}sort={{ catalogue.criteria.sort }}&amp;page={{ forloop.counter }}" {% if catalogue.page == forloop.counter %}aria-current="page"{% endif %}>{{ forloop.counter }}</a>{% endif %}{% endfor %}
+            </nav>
+          {% endif %}
+        {% else %}
+          <div class="state-panel"><div><span class="state-panel__icon">{% include "components/icon.html" with name="search" %}</span><h2>{% if catalogue.state == 'no-search-results' %}لا توجد نتائج لهذا البحث{% else %}لا توجد منتجات بهذه الفلاتر{% endif %}</h2><p>جرّب عبارة أقصر أو امسح بعض الاختيارات.</p><a class="btn btn--primary" href="{% url 'storefront:shop' %}">عرض كل المنتجات</a></div></div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<dialog class="filter-dialog" id="filter-dialog" aria-labelledby="filter-dialog-title">
+  <div class="dialog-head"><strong id="filter-dialog-title">تصفية المنتجات</strong><button class="icon-btn" type="button" data-dialog-close aria-label="إغلاق الفلاتر">{% include "components/icon.html" with name="x" %}</button></div>
+  <div class="filter-dialog__body">{% include "components/catalogue_filters.html" %}</div>
+</dialog>
+{% endblock %}

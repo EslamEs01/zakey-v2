@@ -1,0 +1,26 @@
+<form class="filter-form" action="{% if page_id == 'search' %}{% url 'storefront:search' %}{% elif page_id == 'collection' %}{{ request.path }}{% else %}{% url 'storefront:shop' %}{% endif %}" method="get" data-catalogue-form>
+  {% if catalogue.criteria.q %}<input type="hidden" name="q" value="{{ catalogue.criteria.q }}">{% endif %}
+  <div class="filter-heading"><h2>تصفية النتائج</h2><a href="{% if page_id == 'search' %}{% url 'storefront:search' %}{% elif page_id == 'collection' %}{{ request.path }}{% else %}{% url 'storefront:shop' %}{% endif %}{% if catalogue.criteria.q %}?q={{ catalogue.criteria.q|urlencode }}{% endif %}">مسح الكل</a></div>
+  <fieldset class="filter-group">
+    <legend>الفئة</legend>
+    {% for category in fixture.categories %}
+      <label class="check-row"><input type="radio" name="category" value="{{ category.slug }}" {% if catalogue.criteria.category == category.slug %}checked{% endif %}><span>{{ category.name }}</span></label>
+    {% endfor %}
+  </fieldset>
+  <fieldset class="filter-group">
+    <legend>السعر</legend>
+    <div class="price-fields"><label>من<input type="number" name="priceMin" min="0" step="100" value="{{ catalogue.criteria.price_min|default_if_none:'' }}" inputmode="numeric"></label><label>إلى<input type="number" name="priceMax" min="0" step="100" value="{{ catalogue.criteria.price_max|default_if_none:'' }}" inputmode="numeric"></label></div>
+  </fieldset>
+  <fieldset class="filter-group">
+    <legend>المزايا</legend>
+    {% for feature in catalogue.filterFeatures %}
+      <label class="check-row"><input type="checkbox" name="feature" value="{{ feature.key }}" {% if feature.key in catalogue.criteria.features %}checked{% endif %}><span>{{ feature.label }}</span></label>
+    {% endfor %}
+  </fieldset>
+  <fieldset class="filter-group">
+    <legend>التوافر</legend>
+    <label class="check-row"><input type="radio" name="availability" value="available" {% if catalogue.criteria.availability == 'available' %}checked{% endif %}><span>متاح الآن</span></label>
+    <label class="check-row"><input type="radio" name="availability" value="unavailable" {% if catalogue.criteria.availability == 'unavailable' %}checked{% endif %}><span>غير متاح</span></label>
+  </fieldset>
+  <button class="btn btn--primary filter-submit" type="submit">تطبيق الفلاتر</button>
+</form>

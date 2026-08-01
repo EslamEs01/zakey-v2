@@ -1,0 +1,12 @@
+{
+  "$schema": "https://html-validate.org/schemas/config.json",
+  "root": true,
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "attribute-empty-style": "off",
+    "attribute-boolean-style": "off",
+    "form-dup-name": "off",
+    "no-inline-style": "off",
+    "no-trailing-whitespace": "off"
+  }
+}

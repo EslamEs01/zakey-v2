@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}سلة التسوق | ZAKEY{% endblock %}
+
+{% block content %}
+<div class="cart-page">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="مسار التنقل">
+      <a href="{% url 'storefront:home' %}">الرئيسية</a>
+      {% include "components/icon.html" with name="chevron" %}
+      <span aria-current="page">سلة التسوق</span>
+    </nav>
+  </div>
+
+  <section class="commerce-heading" aria-labelledby="cart-heading">
+    <div class="container">
+      <p class="eyebrow">مراجعة اختياراتك</p>
+      <h1 id="cart-heading" tabindex="-1">سلة التسوق</h1>
+      <p>عدّل الكميات وراجع ملخص الأسعار قبل الانتقال إلى واجهة الدفع التجريبية.</p>
+    </div>
+  </section>
+
+  <section class="section cart-content" aria-label="محتوى سلة التسوق">
+    <div class="container" data-cart-root aria-live="polite" aria-busy="true">
+      <div class="commerce-loading" data-cart-loading>
+        <span aria-hidden="true"></span>
+        <p>جارٍ تحميل السلة المحلية…</p>
+      </div>
+
+      <div class="cart-layout" data-cart-populated hidden>
+        <div>
+          <div class="cart-lines" data-cart-lines></div>
+          <form class="coupon-card" data-coupon-form novalidate>
+            <div>
+              <label for="coupon-code">كود الخصم التجريبي</label>
+              <p>استخدم <bdi lang="en">ZAKEYDEMO</bdi> لمعاينة الحالة المقبولة.</p>
+            </div>
+            <div class="coupon-control">
+              <input id="coupon-code" name="coupon" type="text" autocomplete="off" maxlength="24" aria-describedby="coupon-status" placeholder="أدخل الكود">
+              <button class="btn btn--outline" type="submit" data-coupon-submit>تطبيق</button>
+            </div>
+            <p class="coupon-status" id="coupon-status" data-coupon-status>لم يتم تطبيق كود.</p>
+          </form>
+        </div>
+
+        <aside class="cart-summary" aria-labelledby="cart-summary-heading">
+          <h2 id="cart-summary-heading">ملخص السلة</h2>
+          <dl>
+            <div><dt>المجموع الفرعي</dt><dd data-cart-subtotal>—</dd></div>
+            <div data-cart-discount-row hidden><dt>خصم تجريبي</dt><dd data-cart-discount>—</dd></div>
+            <div><dt>الشحن</dt><dd data-cart-shipping>—</dd></div>
+            <div><dt>منها ضريبة قيمة مضافة 14%</dt><dd data-cart-vat>—</dd></div>
+            <div class="cart-summary__total"><dt>الإجمالي</dt><dd data-cart-total>—</dd></div>
+          </dl>
+          <p class="shipping-progress" data-shipping-message></p>
+          <a class="btn btn--gold" href="{% url 'storefront:checkout' %}">متابعة إلى الدفع التجريبي</a>
+          <a class="btn btn--outline" href="{% url 'storefront:shop' %}">متابعة التسوق</a>
+          <small>{{ site.prototypeNotice }}</small>
+        </aside>
+      </div>
+
+      <div class="commerce-empty" data-cart-empty hidden>
+        <span class="commerce-empty__icon">{% include "components/icon.html" with name="cart" %}</span>
+        <h2>سلتك فارغة حاليًا</h2>
+        <p>استكشف الأقفال الذكية وأضف المنتج المناسب لتظهر تفاصيله هنا.</p>
+        <a class="btn btn--primary" href="{% url 'storefront:shop' %}">تسوّق الآن</a>
+      </div>
+
+      <noscript>
+        <div class="commerce-empty commerce-empty--noscript">
+          <h2>تحتاج إدارة السلة إلى JavaScript</h2>
+          <p>يمكنك تصفح المنتجات والتفاصيل من دون JavaScript، ثم تفعيلها لمعاينة السلة المحلية.</p>
+          <a class="btn btn--primary" href="{% url 'storefront:shop' %}">عرض المنتجات</a>
+        </div>
+      </noscript>
+    </div>
+  </section>
+</div>
+
+<template id="cart-line-template">
+  <article class="cart-line" data-cart-line>
+    <a class="cart-line__media" href="{% url 'storefront:shop' %}" data-cart-product-link aria-label="عرض المنتج">
+<img src="/static/dist/assets/images/generated/apex-black-v2.webp" width="144" height="144" alt="صورة منتج ZAKEY" data-cart-image>
+    </a>
+    <div class="cart-line__details">
+      <p class="cart-line__category" data-cart-category></p>
+      <h2><a href="{% url 'storefront:shop' %}" data-cart-product-link data-cart-name>منتج ZAKEY</a></h2>
+      <p data-cart-finish>الخيار المحدد</p>
+      <button class="cart-remove" type="button" data-cart-remove>إزالة من السلة</button>
+    </div>
+<div class="cart-quantity" role="group" aria-label="تعديل الكمية">
+      <button type="button" data-cart-decrease aria-label="تقليل الكمية">−</button>
+      <output data-cart-quantity aria-live="off">1</output>
+      <button type="button" data-cart-increase aria-label="زيادة الكمية">+</button>
+    </div>
+    <p class="cart-line__price" data-cart-line-price>— ج.م</p>
+  </article>
+</template>
+{% endblock %}

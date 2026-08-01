@@ -1,0 +1,20 @@
+<article class="product-card" data-product-card data-product-id="{{ product.id }}">
+  <a class="product-card__media" href="{% url 'storefront:product' product.slug %}">
+    {% if product.badge %}<span class="product-card__badge">{{ product.badge }}</span>{% endif %}
+    <img src="{{ product.images.0.path }}" width="640" height="640" loading="lazy" alt="{{ product.images.0.alt }}">
+  </a>
+  <div class="product-card__body">
+    <p class="product-card__type">{{ product.typeLabel|default:"قفل ذكي" }}</p>
+    <h3 class="product-card__title"><a href="{% url 'storefront:product' product.slug %}">{{ product.name }}</a></h3>
+    <div class="rating" role="img" aria-label="تقييم {{ product.rating }} من 5">
+      {% include "components/icon.html" with name="star" %}<span>{{ product.rating }}</span><span style="color:var(--muted)">({{ product.reviewCount }})</span>
+    </div>
+    <div class="product-card__footer">
+      <span class="price">{{ product.price }} <small>ج.م</small>{% if product.compareAtPrice %}<span class="old-price">{{ product.compareAtPrice }}</span>{% endif %}</span>
+      <a class="btn btn--primary card-action" href="{% url 'storefront:product' product.slug %}">عرض</a>
+    </div>
+    <button class="icon-btn" type="button" data-wishlist-toggle="{{ product.id }}" aria-pressed="false" aria-label="إضافة {{ product.name }} إلى المفضلة" style="position:absolute;inset-block-start:12px;inset-inline-end:12px;background:#fff">
+      {% include "components/icon.html" with name="heart" %}
+    </button>
+  </div>
+</article>

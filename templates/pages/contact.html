@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% block title %}تواصل مع ZAKEY | نموذج رسالة تجريبي{% endblock %}
+
+{% block content %}
+{% with contact=fixture.site.contact %}
+<svg class="zk-icon-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="zk-phone" viewBox="0 0 24 24">
+    <rect x="6.5" y="2.5" width="11" height="19" rx="2.5"></rect><path d="M10.8 18.4h2.4"></path>
+  </symbol>
+  <symbol id="zk-mail" viewBox="0 0 24 24">
+    <rect x="3" y="5" width="18" height="14" rx="2.5"></rect><path d="m3.8 7.2 8.2 5.9 8.2-5.9"></path>
+  </symbol>
+  <symbol id="zk-clock" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="9"></circle><path d="M12 7v5.3l3.2 1.9"></path>
+  </symbol>
+  <symbol id="zk-chat" viewBox="0 0 24 24">
+    <path d="M20 14.5a2.5 2.5 0 0 1-2.5 2.5H8.4L4 20.5V6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5Z"></path>
+    <path d="M8.5 9.5h7"></path><path d="M8.5 12.8h4.5"></path>
+  </symbol>
+</svg>
+
+<article class="contact-page">
+  <section class="page-hero contact-hero" aria-labelledby="contact-title">
+    <div class="container">
+      <p class="eyebrow">{{ contact.eyebrow }}</p>
+      <h1 id="contact-title">{{ contact.heading }}</h1>
+      <p>{{ contact.description }}</p>
+    </div>
+  </section>
+
+  <section class="section section--compact" aria-labelledby="contact-methods-title">
+    <div class="container">
+      <h2 class="sr-only" id="contact-methods-title">طرق التواصل التجريبية</h2>
+      <div class="contact-methods">
+        {% for card in contact.methodCards %}
+          <article class="surface-card contact-method">
+            <span class="contact-method__icon">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="#zk-{{ card.icon }}"></use></svg>
+            </span>
+            <h3 class="contact-method__title">{{ card.title }}</h3>
+            <p class="contact-method__detail"><bdi>{{ card.detail }}</bdi></p>
+            {% if card.action == "prototype-notice" %}
+              <button class="btn btn--outline contact-method__action" type="button" data-prototype-action="{{ card.title }}">
+                اعرض التنبيه التجريبي
+              </button>
+            {% else %}
+              <p class="prototype-note">للعرض فقط — لا يوجد خط خدمة عملاء مفعّل.</p>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--white" aria-labelledby="contact-form-title">
+    <div class="container contact-grid">
+      <div class="surface-card contact-form-card" id="contact-form">
+        <h2 class="section-heading" id="contact-form-title">{{ contact.form.heading }}</h2>
+        <p class="section-copy">{{ contact.description }}</p>
+
+        <form class="contact-form"
+              method="get"
+              action="{% url 'storefront:contact' %}"
+              data-contact-form
+              aria-describedby="contact-form-note">
+          <input type="hidden" name="qa" value="unsent">
+
+          <div class="contact-form__row">
+            <div class="field">
+              <label for="contact-name">{{ contact.form.fields.name }}</label>
+              <input id="contact-name" name="name" type="text" autocomplete="name" required
+                     aria-describedby="contact-name-error">
+              <p class="field-error" id="contact-name-error" hidden></p>
+            </div>
+            <div class="field">
+              <label for="contact-phone">{{ contact.form.fields.phone }}</label>
+              <input id="contact-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required
+                     aria-describedby="contact-phone-hint contact-phone-error">
+              <p class="field-hint" id="contact-phone-hint"><bdi>01000000000</bdi> أو <bdi>+201000000000</bdi></p>
+              <p class="field-error" id="contact-phone-error" hidden></p>
+            </div>
+          </div>
+
+          <div class="contact-form__row">
+            <div class="field">
+              <label for="contact-email">{{ contact.form.fields.email }}</label>
+              <input id="contact-email" name="email" type="email" autocomplete="email" required
+                     aria-describedby="contact-email-error">
+              <p class="field-error" id="contact-email-error" hidden></p>
+            </div>
+            <div class="field">
+              <label for="contact-subject">{{ contact.form.fields.subject }}</label>
+              <select id="contact-subject" name="subject" required aria-describedby="contact-subject-error">
+                <option value="">اختر موضوعًا</option>
+                <option value="product">استفسار عن منتج</option>
+                <option value="installation">خدمة التركيب</option>
+                <option value="order">متابعة عرض تجريبي</option>
+                <option value="other">موضوع آخر</option>
+              </select>
+              <p class="field-error" id="contact-subject-error" hidden></p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="contact-message">{{ contact.form.fields.message }}</label>
+            <textarea id="contact-message" name="message" rows="6" required
+                      aria-describedby="contact-message-hint contact-message-error"></textarea>
+            <p class="field-hint" id="contact-message-hint">اكتب 20 حرفًا على الأقل حتى يظهر التحقق الناجح.</p>
+            <p class="field-error" id="contact-message-error" hidden></p>
+          </div>
+
+          <div class="contact-form__actions">
+            <button class="btn btn--primary" type="submit" data-contact-submit
+                    {% if page_state == "loading" %}disabled aria-busy="true"{% endif %}>
+              {% if page_state == "loading" %}جارٍ التحقق...{% else %}{{ contact.form.submitLabel }}{% endif %}
+            </button>
+            <button class="btn btn--outline" type="reset">مسح الحقول</button>
+          </div>
+
+          <p class="prototype-note" id="contact-form-note">{{ contact.prototypeNotice }}</p>
+        </form>
+
+        <div class="contact-status" data-form-status="contact" role="status">
+          {% if page_state == "loading" %}
+            <p class="status-message">جارٍ التحقق من الرسالة داخل الواجهة، ولن تُرسل إلى أي خدمة.</p>
+          {% elif page_state == "unsent" %}
+            <p class="status-message status-message--success">{{ contact.form.successMessage }}</p>
+          {% elif page_state == "error" %}
+            <p class="status-message status-message--error">
+              تعذّر إكمال العرض التجريبي للتحقق. بياناتك ما زالت في الحقول ويمكنك المحاولة مجددًا.
+              <button class="btn btn--outline contact-status__retry" type="button" data-contact-retry>أعد المحاولة</button>
+            </p>
+          {% endif %}
+        </div>
+      </div>
+
+      <aside class="contact-aside" aria-label="مساعدة سريعة">
+        <div class="surface-card contact-faq" id="faq">
+          <h3 id="contact-faq-title">الأسئلة الشائعة</h3>
+          <p class="contact-faq__intro">إجابات مختصرة عن الشحن والدفع داخل هذا النموذج.</p>
+          {% for faq in fixture.faqs %}{% if faq.id in contact.faqIds %}
+            <details class="contact-faq__item">
+              <summary>{{ faq.question }}</summary>
+              <p>{{ faq.answer }}</p>
+            </details>
+          {% endif %}{% endfor %}
+          <a class="contact-faq__more" href="{% url 'storefront:shop' %}">تصفّح المنتجات لمعرفة التفاصيل الكاملة</a>
+        </div>
+
+        <div class="surface-card contact-chat">
+          <span class="contact-chat__icon">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#zk-chat"></use></svg>
+          </span>
+          <h3>{{ contact.chatCard.heading }}</h3>
+          <p>{{ contact.chatCard.description }}</p>
+          <button class="btn btn--gold" type="button" data-prototype-action="{{ contact.chatCard.heading }}">
+            {{ contact.chatCard.actionLabel }}
+          </button>
+          <p class="prototype-note"><bdi>{{ contact.hours }}</bdi></p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</article>
+{% endwith %}
+{% endblock %}

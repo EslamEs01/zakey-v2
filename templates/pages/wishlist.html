@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}المفضلة | ZAKEY{% endblock %}
+
+{% block content %}
+<div class="wishlist-page">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="مسار التنقل">
+      <a href="{% url 'storefront:home' %}">الرئيسية</a>
+      {% include "components/icon.html" with name="chevron" %}
+      <span aria-current="page">المفضلة</span>
+    </nav>
+  </div>
+
+  <section class="commerce-heading" aria-labelledby="wishlist-heading">
+    <div class="container">
+      <p class="eyebrow">اختيارات محفوظة محليًا</p>
+      <h1 id="wishlist-heading" tabindex="-1">قائمة المفضلة</h1>
+      <p>قارن المنتجات التي حفظتها وانقل المتاح منها إلى السلة التجريبية.</p>
+    </div>
+  </section>
+
+  <section class="section wishlist-content" aria-label="منتجات المفضلة">
+    <div class="container" data-wishlist-root aria-live="polite" aria-busy="true">
+      <div class="commerce-loading" data-wishlist-loading>
+        <span aria-hidden="true"></span>
+        <p>جارٍ تحميل المفضلة المحلية…</p>
+      </div>
+
+      <div data-wishlist-populated hidden>
+        <div class="wishlist-toolbar">
+          <p><strong data-wishlist-total>0</strong> منتجات محفوظة</p>
+          <a class="btn btn--outline" href="{% url 'storefront:shop' %}">استكشف المزيد</a>
+        </div>
+        <div class="wishlist-grid" data-wishlist-grid></div>
+        <p class="prototype-note wishlist-note">{{ site.prototypeNotice }}</p>
+      </div>
+
+      <div class="commerce-empty" data-wishlist-empty hidden>
+        <span class="commerce-empty__icon">{% include "components/icon.html" with name="heart" %}</span>
+        <h2>لم تحفظ أي منتج بعد</h2>
+        <p>استخدم زر المفضلة في بطاقات المنتجات لتكوين قائمة المقارنة الخاصة بالعرض.</p>
+        <a class="btn btn--primary" href="{% url 'storefront:shop' %}">استكشف المنتجات</a>
+      </div>
+
+      <noscript>
+        <div class="commerce-empty commerce-empty--noscript">
+          <h2>تحتاج المفضلة إلى JavaScript</h2>
+          <p>يبقى المتجر متاحًا للتصفح، ويمكنك تفعيل JavaScript لمعاينة الحفظ المحلي.</p>
+          <a class="btn btn--primary" href="{% url 'storefront:shop' %}">عرض المنتجات</a>
+        </div>
+      </noscript>
+    </div>
+  </section>
+</div>
+
+<template id="wishlist-card-template">
+  <article class="wishlist-card" data-wishlist-card>
+    <a class="wishlist-card__media" href="{% url 'storefront:shop' %}" data-wishlist-product-link aria-label="عرض المنتج">
+<img src="/static/dist/assets/images/generated/apex-black-v2.webp" width="640" height="640" alt="صورة منتج ZAKEY" data-wishlist-image>
+      <span class="wishlist-card__availability" data-wishlist-availability>حالة التوفر</span>
+    </a>
+    <div class="wishlist-card__body">
+      <p class="wishlist-card__category" data-wishlist-category>منتج ZAKEY</p>
+      <h2><a href="{% url 'storefront:shop' %}" data-wishlist-product-link data-wishlist-name>قفل ZAKEY ذكي</a></h2>
+      <p class="wishlist-card__description" data-wishlist-description>تفاصيل المنتج المحفوظ.</p>
+      <p class="wishlist-card__price" data-wishlist-price>— ج.م</p>
+      <div class="wishlist-card__actions">
+        <button class="btn btn--primary" type="button" data-wishlist-add-cart>إضافة إلى السلة</button>
+        <button class="btn btn--outline" type="button" data-wishlist-remove>إزالة</button>
+      </div>
+    </div>
+  </article>
+</template>
+{% endblock %}

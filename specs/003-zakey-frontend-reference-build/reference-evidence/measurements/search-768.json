@@ -1,0 +1,899 @@
+{
+  "pageName": "search",
+  "title": "Premium E-commerce Website UI",
+  "url": "https://remote-fried-86528699.figma.site/",
+  "viewport": {
+    "width": 768,
+    "height": 1200
+  },
+  "document": {
+    "width": 753,
+    "height": 11061
+  },
+  "headings": [
+    {
+      "tag": "h1",
+      "text": "Security Reimagined.",
+      "box": {
+        "x": 24,
+        "y": 325,
+        "width": 705,
+        "height": 106
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Shop by Category",
+      "box": {
+        "x": 24,
+        "y": 1596,
+        "width": 705,
+        "height": 40
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Smart Locks",
+      "box": {
+        "x": 48,
+        "y": 2015,
+        "width": 293,
+        "height": 23
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Deadbolts",
+      "box": {
+        "x": 413,
+        "y": 2015,
+        "width": 293,
+        "height": 23
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Padlocks",
+      "box": {
+        "x": 48,
+        "y": 2465,
+        "width": 293,
+        "height": 23
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Accessories",
+      "box": {
+        "x": 413,
+        "y": 2465,
+        "width": 293,
+        "height": 23
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Best Sellers",
+      "box": {
+        "x": 24,
+        "y": 2760,
+        "width": 211,
+        "height": 40
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Apex Pro",
+      "box": {
+        "x": 45,
+        "y": 3235,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Luxe Series",
+      "box": {
+        "x": 410,
+        "y": 3235,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Slim Touch",
+      "box": {
+        "x": 45,
+        "y": 3752,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Connect X",
+      "box": {
+        "x": 410,
+        "y": 3752,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "The ZAKEY Nexus Elite",
+      "box": {
+        "x": 24,
+        "y": 4095,
+        "width": 705,
+        "height": 120
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Featured Products",
+      "box": {
+        "x": 24,
+        "y": 5057,
+        "width": 341,
+        "height": 40
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Guardian",
+      "box": {
+        "x": 45,
+        "y": 5533,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Nexus Elite",
+      "box": {
+        "x": 410,
+        "y": 5533,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Entry Plus",
+      "box": {
+        "x": 45,
+        "y": 6049,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Vault Pro",
+      "box": {
+        "x": 410,
+        "y": 6049,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Why Choose ZAKEY?",
+      "box": {
+        "x": 24,
+        "y": 6354,
+        "width": 705,
+        "height": 40
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Military-Grade Security",
+      "box": {
+        "x": 57,
+        "y": 6643,
+        "width": 271,
+        "height": 28
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Full Smart Home Integration",
+      "box": {
+        "x": 426,
+        "y": 6643,
+        "width": 271,
+        "height": 28
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Always Connected",
+      "box": {
+        "x": 57,
+        "y": 6929,
+        "width": 271,
+        "height": 28
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Multiple Access Methods",
+      "box": {
+        "x": 426,
+        "y": 6929,
+        "width": 271,
+        "height": 28
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Award-Winning Design",
+      "box": {
+        "x": 57,
+        "y": 7216,
+        "width": 271,
+        "height": 28
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Auto-Lock Technology",
+      "box": {
+        "x": 426,
+        "y": 7216,
+        "width": 271,
+        "height": 28
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Works With Your Smart Home",
+      "box": {
+        "x": 24,
+        "y": 7549,
+        "width": 705,
+        "height": 90
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Trusted by Homeowners",
+      "box": {
+        "x": 24,
+        "y": 8992,
+        "width": 705,
+        "height": 40
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Get Exclusive Updates",
+      "box": {
+        "x": 72,
+        "y": 10054,
+        "width": 609,
+        "height": 40
+      }
+    }
+  ],
+  "controls": [
+    {
+      "tag": "a",
+      "text": "Remix",
+      "box": {
+        "x": 574,
+        "y": 1148,
+        "width": 49,
+        "height": 24
+      }
+    },
+    {
+      "tag": "button",
+      "text": "More options",
+      "box": {
+        "x": 632,
+        "y": 1140,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Close",
+      "box": {
+        "x": 673,
+        "y": 1140,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "ZAKEY",
+      "box": {
+        "x": 24,
+        "y": 58,
+        "width": 121,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 497,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 545,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 593,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 641,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 689,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "input",
+      "text": "Search products, categories...",
+      "box": {
+        "x": 24,
+        "y": 112,
+        "width": 705,
+        "height": 46
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Shop Collection",
+      "box": {
+        "x": 24,
+        "y": 582,
+        "width": 219,
+        "height": 58
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Learn More",
+      "box": {
+        "x": 259,
+        "y": 582,
+        "width": 156,
+        "height": 58
+      }
+    },
+    {
+      "tag": "button",
+      "text": "12 Products Smart Locks App & fingerprint enabled Explore",
+      "box": {
+        "x": 24,
+        "y": 1692,
+        "width": 341,
+        "height": 426
+      }
+    },
+    {
+      "tag": "button",
+      "text": "8 Products Deadbolts Maximum security deadbolts Explore",
+      "box": {
+        "x": 389,
+        "y": 1692,
+        "width": 341,
+        "height": 426
+      }
+    },
+    {
+      "tag": "button",
+      "text": "6 Products Padlocks Portable smart security Explore",
+      "box": {
+        "x": 24,
+        "y": 2142,
+        "width": 341,
+        "height": 426
+      }
+    },
+    {
+      "tag": "button",
+      "text": "14 Products Accessories Hub, sensors & more Explore",
+      "box": {
+        "x": 389,
+        "y": 2142,
+        "width": 341,
+        "height": 426
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View All",
+      "box": {
+        "x": 650,
+        "y": 2780,
+        "width": 79,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 316,
+        "y": 2869,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "box": {
+        "x": 277,
+        "y": 3291,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 680,
+        "y": 2869,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "box": {
+        "x": 642,
+        "y": 3291,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 316,
+        "y": 3385,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "box": {
+        "x": 277,
+        "y": 3808,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 680,
+        "y": 3385,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "box": {
+        "x": 642,
+        "y": 3808,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Discover Now",
+      "box": {
+        "x": 24,
+        "y": 4425,
+        "width": 201,
+        "height": 56
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View All",
+      "box": {
+        "x": 650,
+        "y": 5077,
+        "width": 79,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 316,
+        "y": 5166,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "box": {
+        "x": 277,
+        "y": 5589,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 680,
+        "y": 5166,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "box": {
+        "x": 642,
+        "y": 5589,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 316,
+        "y": 5683,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "box": {
+        "x": 277,
+        "y": 6105,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 680,
+        "y": 5683,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "box": {
+        "x": 642,
+        "y": 6105,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Explore the Ecosystem",
+      "box": {
+        "x": 24,
+        "y": 7979,
+        "width": 238,
+        "height": 52
+      }
+    },
+    {
+      "tag": "input",
+      "text": "Enter your email address",
+      "box": {
+        "x": 153,
+        "y": 10190,
+        "width": 317,
+        "height": 50
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Subscribe",
+      "box": {
+        "x": 481,
+        "y": 10190,
+        "width": 119,
+        "height": 50
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 24,
+        "y": 10612,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 72,
+        "y": 10612,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 120,
+        "y": 10612,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 168,
+        "y": 10612,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Smart Locks",
+      "box": {
+        "x": 401,
+        "y": 10506,
+        "width": 86,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Deadbolts",
+      "box": {
+        "x": 401,
+        "y": 10542,
+        "width": 72,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Padlocks",
+      "box": {
+        "x": 401,
+        "y": 10578,
+        "width": 64,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Accessories",
+      "box": {
+        "x": 401,
+        "y": 10614,
+        "width": 84,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Smart Home Kits",
+      "box": {
+        "x": 401,
+        "y": 10650,
+        "width": 118,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "About Us",
+      "box": {
+        "x": 24,
+        "y": 10762,
+        "width": 63,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Careers",
+      "box": {
+        "x": 24,
+        "y": 10798,
+        "width": 56,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Press",
+      "box": {
+        "x": 24,
+        "y": 10834,
+        "width": 37,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Partners",
+      "box": {
+        "x": 24,
+        "y": 10870,
+        "width": 59,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Blog",
+      "box": {
+        "x": 24,
+        "y": 10906,
+        "width": 31,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Help Center",
+      "box": {
+        "x": 401,
+        "y": 10762,
+        "width": 83,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Installation",
+      "box": {
+        "x": 401,
+        "y": 10798,
+        "width": 79,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Warranty",
+      "box": {
+        "x": 401,
+        "y": 10834,
+        "width": 66,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Returns",
+      "box": {
+        "x": 401,
+        "y": 10870,
+        "width": 54,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Contact Us",
+      "box": {
+        "x": 401,
+        "y": 10906,
+        "width": 78,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Privacy Policy",
+      "box": {
+        "x": 375,
+        "y": 11009,
+        "width": 96,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Terms of Service",
+      "box": {
+        "x": 495,
+        "y": 11009,
+        "width": 116,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Cookie Policy",
+      "box": {
+        "x": 635,
+        "y": 11009,
+        "width": 94,
+        "height": 20
+      }
+    }
+  ],
+  "mainChildren": [
+    {
+      "tag": "div",
+      "text": "Introducing ZAKEY Apex Pro 2025 Security Reimagined. Experience the future of home security with ZAKEY smart locks — fingerprint, PIN, app, and key access in on",
+      "box": {
+        "x": 0,
+        "y": 175,
+        "width": 753,
+        "height": 10225
+      }
+    }
+  ]
+}

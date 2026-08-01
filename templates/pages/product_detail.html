@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} | ZAKEY{% endblock %}
+
+{% block content %}
+<div class="container"><nav class="breadcrumb" aria-label="مسار التنقل"><a href="{% url 'storefront:home' %}">الرئيسية</a>{% include "components/icon.html" with name="chevron" %}<a href="{% url 'storefront:shop' %}">المتجر</a>{% include "components/icon.html" with name="chevron" %}<span aria-current="page">{{ product.name }}</span></nav></div>
+<section class="product-main section--compact" aria-labelledby="product-heading" data-product-id="{{ product.id }}">
+  <div class="container product-layout">
+    <div class="product-gallery" data-product-gallery>
+      <div class="product-main-image"><img src="{{ product.images.0.path }}" width="{{ product.images.0.width }}" height="{{ product.images.0.height }}" alt="{{ product.images.0.alt }}" data-gallery-main></div>
+      <div class="product-thumbnails" role="group" aria-label="صور المنتج">
+        {% for image in product.images %}<button type="button" aria-label="عرض: {{ image.alt }}" data-gallery-image="{{ image.path }}" data-gallery-alt="{{ image.alt }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"><img src="{{ image.path }}" width="120" height="120" alt=""></button>{% endfor %}
+      </div>
+    </div>
+    <div class="product-summary">
+      {% if product.badge %}<span class="product-badge">{{ product.badge }}</span>{% endif %}
+      <h1 id="product-heading">{{ product.name }}</h1>
+      <div class="rating" role="group" aria-label="تقييم {{ product.rating }} من 5">{% include "components/icon.html" with name="star" %}<span>{{ product.rating }}</span><a href="#product-reviews">({{ product.reviewCount }} مراجعة توضيحية)</a></div>
+      <p class="product-lead">{{ product.shortDescription }}</p>
+      <p class="product-price">{{ product.price }} <small>ج.م</small>{% if product.compareAtPrice %}<del>{{ product.compareAtPrice }} ج.م</del>{% endif %}</p>
+      <p class="tax-note">السعر المعروض يشمل تقديم ضريبة قيمة مضافة 14% في ملخص الواجهة.</p>
+      <div class="instalment-note">{% include "components/icon.html" with name="cart" %}<span>{{ product.instalmentMessage }}</span></div>
+      <p class="availability {% if product.availability == 'unavailable' %}availability--off{% endif %}">{% include "components/icon.html" with name="check" %}{% if product.availability == 'available' %}متاح في العرض التجريبي{% else %}غير متاح حاليًا{% endif %}</p>
+      <fieldset class="finish-options"><legend>اللون</legend>{% for finish in product.finishes %}<label><input type="radio" name="finish" value="{{ finish.id }}" {% if forloop.first %}checked{% endif %}><span class="finish-swatch" style="--swatch:{{ finish.swatch }}"></span>{{ finish.label }}</label>{% endfor %}</fieldset>
+      <div class="product-buy-row">
+        <div class="quantity-control" role="group" aria-label="الكمية"><button type="button" data-quantity-minus aria-label="تقليل الكمية">{% include "components/icon.html" with name="minus" %}</button><input type="number" value="1" min="1" max="9" aria-label="كمية المنتج" data-quantity><button type="button" data-quantity-plus aria-label="زيادة الكمية">{% include "components/icon.html" with name="plus" %}</button></div>
+        <button class="btn btn--primary" type="button" data-add-product {% if product.availability == 'unavailable' %}disabled{% endif %}>إضافة إلى السلة</button>
+        <button class="btn btn--gold" type="button" data-buy-product {% if product.availability == 'unavailable' %}disabled{% endif %}>اشترِ الآن</button>
+      </div>
+      <div class="product-secondary-actions"><button class="btn btn--outline" type="button" data-wishlist-toggle="{{ product.id }}" aria-pressed="false">{% include "components/icon.html" with name="heart" %} المفضلة</button><button class="btn btn--outline" type="button" data-share-product>{% include "components/icon.html" with name="share" %} مشاركة</button></div>
+      <ul class="product-service-list"><li>{% include "components/icon.html" with name="truck" %} شحن مجاني فوق ١٬٥٠٠ ج.م</li>{% if product.serviceFlags.installationSupported %}<li>{% include "components/icon.html" with name="shield" %} واجهة تركيب تجريبية للقاهرة والجيزة والإسكندرية</li>{% endif %}</ul>
+    </div>
+  </div>
+</section>
+
+<section class="section product-information" aria-labelledby="details-heading">
+  <div class="container">
+    <h2 class="sr-only" id="details-heading">تفاصيل المنتج</h2>
+    <div class="product-tabs" role="tablist" aria-label="تفاصيل المنتج">
+      <button type="button" role="tab" id="tab-features" aria-controls="panel-features" aria-selected="true" tabindex="0">المزايا</button>
+      <button type="button" role="tab" id="tab-specifications" aria-controls="panel-specifications" aria-selected="false" tabindex="-1">المواصفات</button>
+      <button type="button" role="tab" id="tab-downloads" aria-controls="panel-downloads" aria-selected="false" tabindex="-1">التنزيلات</button>
+      <button type="button" role="tab" id="tab-reviews" aria-controls="panel-reviews" aria-selected="false" tabindex="-1">المراجعات</button>
+      <button type="button" role="tab" id="tab-faq" aria-controls="panel-faq" aria-selected="false" tabindex="-1">الأسئلة الشائعة</button>
+    </div>
+    <div class="tab-panel" id="panel-features" role="tabpanel" aria-labelledby="tab-features"><div class="grid grid--4">{% for feature in product.features %}<article class="feature-card"><span class="feature-card__icon">{% include "components/icon.html" with name="check" %}</span><h3>{{ feature.label }}</h3><p>{{ feature.description }}</p></article>{% endfor %}</div></div>
+    <div class="tab-panel" id="panel-specifications" role="tabpanel" aria-labelledby="tab-specifications" hidden>{% for group in product.specificationGroups %}<h3>{{ group.label }}</h3><dl class="specification-list">{% for item in group.items %}<div><dt>{{ item.label }}</dt><dd>{{ item.value }}</dd></div>{% endfor %}</dl>{% endfor %}</div>
+    <div class="tab-panel" id="panel-downloads" role="tabpanel" aria-labelledby="tab-downloads" hidden>{% for download in product.downloads %}<article class="download-row"><div>{% include "components/icon.html" with name="box" %}<span><strong>{{ download.label }}</strong><small>{{ download.prototypeNotice }}</small></span></div><a class="btn btn--outline" href="{{ download.path }}" download>{{ download.format }} — تنزيل</a></article>{% empty %}<p>لا توجد مستندات توضيحية لهذا المنتج.</p>{% endfor %}</div>
+    <div class="tab-panel" id="panel-reviews" role="tabpanel" aria-labelledby="tab-reviews" hidden><div id="product-reviews" class="grid grid--3">{% for review in reviews %}<article class="review-card"><div class="rating">{% include "components/icon.html" with name="star" %} {{ review.rating }} / 5</div><blockquote>“{{ review.quote }}”</blockquote><strong>{{ review.customerName }}</strong><small>{{ review.prototypeAttribution }}</small></article>{% empty %}<p>لا توجد مراجعات توضيحية.</p>{% endfor %}</div></div>
+    <div class="tab-panel" id="panel-faq" role="tabpanel" aria-labelledby="tab-faq" hidden><div class="faq-list">{% for faq in faqs %}<details><summary>{{ faq.question }}</summary><p>{{ faq.answer }}</p></details>{% endfor %}</div></div>
+  </div>
+</section>
+
+<section class="section section--white" aria-labelledby="related-heading"><div class="container"><div class="section-head"><h2 class="section-heading" id="related-heading">قد يعجبك أيضًا</h2><a class="btn btn--outline" href="{% url 'storefront:shop' %}">كل المنتجات</a></div><div class="grid grid--3 related-grid">{% for product in relatedProducts %}{% include "components/product_card.html" %}{% endfor %}</div></div></section>
+{% endblock %}

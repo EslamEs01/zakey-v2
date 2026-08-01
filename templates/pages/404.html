@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}الصفحة غير موجودة | ZAKEY{% endblock %}
+
+{% block content %}
+<svg class="zk-icon-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="zk-compass" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="9"></circle>
+    <path d="m15.4 8.6-1.9 4.9-4.9 1.9 1.9-4.9Z"></path>
+  </symbol>
+</svg>
+
+<section class="section errorpage errorpage--404" aria-labelledby="error-404-title">
+  <div class="container errorpage__inner">
+    <div class="surface-card errorpage__panel">
+      <span class="errorpage__icon">
+        <svg class="icon" aria-hidden="true" focusable="false"><use href="#zk-compass"></use></svg>
+      </span>
+      <p class="errorpage__code"><bdi>404</bdi></p>
+      <h1 class="errorpage__title" id="error-404-title">لم نجد هذه الصفحة</h1>
+      <p class="errorpage__lede">
+        الرابط الذي فتحته غير موجود في هذه الواجهة، أو تغيّر عنوانه. كل صفحات ZAKEY الأخرى تعمل بشكل طبيعي.
+      </p>
+
+      <div class="errorpage__actions">
+        <a class="btn btn--primary" href="{% url 'storefront:home' %}">العودة إلى الرئيسية</a>
+        <a class="btn btn--outline" href="{% url 'storefront:shop' %}">تصفّح المتجر</a>
+      </div>
+
+      <div class="errorpage__search">
+        <h2 class="errorpage__subtitle" id="error-404-search-title">ابحث عمّا كنت تريده</h2>
+        <form class="errorpage-search-form" action="{% url 'storefront:search' %}" method="get" role="search"
+              aria-labelledby="error-404-search-title">
+          <div class="field">
+            <label class="sr-only" for="error-404-search">ابحث عن قفل أو ميزة</label>
+            <input id="error-404-search" name="q" type="search" autocomplete="off" placeholder="ابحث عن الأقفال والميزات...">
+          </div>
+          <button class="btn btn--primary" type="submit">بحث</button>
+        </form>
+      </div>
+
+      <nav class="errorpage__links" aria-label="روابط مساعدة">
+        <a href="{% url 'storefront:contact' %}">تواصل معنا</a>
+        <a href="{% url 'storefront:about' %}">عن ZAKEY</a>
+        <a href="{% url 'storefront:wishlist' %}">المفضلة</a>
+        <a href="{% url 'storefront:cart' %}">سلة التسوق</a>
+      </nav>
+
+      <p class="prototype-note">{{ site.prototypeNotice }}</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

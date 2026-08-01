@@ -1,0 +1,509 @@
+{
+  "pageName": "checkout",
+  "title": "Premium E-commerce Website UI",
+  "url": "https://remote-fried-86528699.figma.site/",
+  "viewport": {
+    "width": 390,
+    "height": 1200
+  },
+  "document": {
+    "width": 390,
+    "height": 3003
+  },
+  "headings": [
+    {
+      "tag": "h2",
+      "text": "Shipping Information",
+      "box": {
+        "x": 57,
+        "y": 326,
+        "width": 276,
+        "height": 28
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Order Summary",
+      "box": {
+        "x": 53,
+        "y": 1504,
+        "width": 284,
+        "height": 27
+      }
+    }
+  ],
+  "controls": [
+    {
+      "tag": "a",
+      "text": "Remix",
+      "box": {
+        "x": 220,
+        "y": 1148,
+        "width": 49,
+        "height": 24
+      }
+    },
+    {
+      "tag": "button",
+      "text": "More options",
+      "box": {
+        "x": 278,
+        "y": 1140,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Close",
+      "box": {
+        "x": 319,
+        "y": 1140,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "ZAKEY",
+      "box": {
+        "x": 24,
+        "y": 78,
+        "width": 121,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 230,
+        "y": 76,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "1",
+      "box": {
+        "x": 278,
+        "y": 76,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 326,
+        "y": 76,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "1 Shipping",
+      "box": {
+        "x": 24,
+        "y": 181,
+        "width": 54,
+        "height": 64
+      }
+    },
+    {
+      "tag": "button",
+      "text": "2 Payment",
+      "box": {
+        "x": 173,
+        "y": 181,
+        "width": 54,
+        "height": 64
+      }
+    },
+    {
+      "tag": "button",
+      "text": "3 Review",
+      "box": {
+        "x": 324,
+        "y": 181,
+        "width": 42,
+        "height": 64
+      }
+    },
+    {
+      "tag": "input",
+      "text": "John",
+      "box": {
+        "x": 57,
+        "y": 410,
+        "width": 128,
+        "height": 46
+      }
+    },
+    {
+      "tag": "input",
+      "text": "Smith",
+      "box": {
+        "x": 205,
+        "y": 410,
+        "width": 128,
+        "height": 46
+      }
+    },
+    {
+      "tag": "input",
+      "text": "john@example.com",
+      "box": {
+        "x": 57,
+        "y": 504,
+        "width": 276,
+        "height": 46
+      }
+    },
+    {
+      "tag": "input",
+      "text": "+1 (555) 000-0000",
+      "box": {
+        "x": 57,
+        "y": 598,
+        "width": 128,
+        "height": 46
+      }
+    },
+    {
+      "tag": "input",
+      "text": "123 Oak Avenue",
+      "box": {
+        "x": 57,
+        "y": 692,
+        "width": 276,
+        "height": 46
+      }
+    },
+    {
+      "tag": "input",
+      "text": "Unit 4B",
+      "box": {
+        "x": 57,
+        "y": 786,
+        "width": 128,
+        "height": 46
+      }
+    },
+    {
+      "tag": "input",
+      "text": "San Francisco",
+      "box": {
+        "x": 205,
+        "y": 786,
+        "width": 128,
+        "height": 46
+      }
+    },
+    {
+      "tag": "input",
+      "text": "94102",
+      "box": {
+        "x": 57,
+        "y": 880,
+        "width": 128,
+        "height": 46
+      }
+    },
+    {
+      "tag": "select",
+      "text": "California New York Texas",
+      "box": {
+        "x": 205,
+        "y": 880,
+        "width": 128,
+        "height": 48
+      }
+    },
+    {
+      "tag": "select",
+      "text": "United States Canada United Kingdom",
+      "box": {
+        "x": 57,
+        "y": 976,
+        "width": 128,
+        "height": 48
+      }
+    },
+    {
+      "tag": "input",
+      "text": "",
+      "box": {
+        "x": 86,
+        "y": 1123,
+        "width": 13,
+        "height": 13
+      }
+    },
+    {
+      "tag": "input",
+      "text": "",
+      "box": {
+        "x": 86,
+        "y": 1197,
+        "width": 13,
+        "height": 13
+      }
+    },
+    {
+      "tag": "input",
+      "text": "",
+      "box": {
+        "x": 86,
+        "y": 1271,
+        "width": 13,
+        "height": 13
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Continue to Payment",
+      "box": {
+        "x": 57,
+        "y": 1354,
+        "width": 276,
+        "height": 56
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 24,
+        "y": 2010,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 72,
+        "y": 2010,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 120,
+        "y": 2010,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 168,
+        "y": 2010,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Smart Locks",
+      "box": {
+        "x": 24,
+        "y": 2136,
+        "width": 86,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Deadbolts",
+      "box": {
+        "x": 24,
+        "y": 2172,
+        "width": 72,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Padlocks",
+      "box": {
+        "x": 24,
+        "y": 2208,
+        "width": 64,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Accessories",
+      "box": {
+        "x": 24,
+        "y": 2244,
+        "width": 84,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Smart Home Kits",
+      "box": {
+        "x": 24,
+        "y": 2280,
+        "width": 118,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "About Us",
+      "box": {
+        "x": 24,
+        "y": 2392,
+        "width": 63,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Careers",
+      "box": {
+        "x": 24,
+        "y": 2428,
+        "width": 56,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Press",
+      "box": {
+        "x": 24,
+        "y": 2464,
+        "width": 37,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Partners",
+      "box": {
+        "x": 24,
+        "y": 2500,
+        "width": 59,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Blog",
+      "box": {
+        "x": 24,
+        "y": 2536,
+        "width": 31,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Help Center",
+      "box": {
+        "x": 24,
+        "y": 2648,
+        "width": 83,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Installation",
+      "box": {
+        "x": 24,
+        "y": 2684,
+        "width": 79,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Warranty",
+      "box": {
+        "x": 24,
+        "y": 2720,
+        "width": 66,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Returns",
+      "box": {
+        "x": 24,
+        "y": 2756,
+        "width": 54,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Contact Us",
+      "box": {
+        "x": 24,
+        "y": 2792,
+        "width": 78,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Privacy Policy",
+      "box": {
+        "x": 24,
+        "y": 2931,
+        "width": 93,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Terms of Service",
+      "box": {
+        "x": 141,
+        "y": 2931,
+        "width": 112,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Cookie Policy",
+      "box": {
+        "x": 276,
+        "y": 2931,
+        "width": 90,
+        "height": 40
+      }
+    }
+  ],
+  "mainChildren": [
+    {
+      "tag": "div",
+      "text": "1 Shipping 2 Payment 3 Review Shipping Information First Name Last Name Email Address Phone Number Street Address Apt / Suite City ZIP Code State California New",
+      "box": {
+        "x": 0,
+        "y": 133,
+        "width": 390,
+        "height": 1665
+      }
+    }
+  ]
+}
