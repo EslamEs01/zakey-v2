@@ -1,0 +1,343 @@
+{
+  "url": "https://remote-fried-86528699.figma.site/",
+  "scrollY": 0,
+  "bodyText": "Created with Figma Make Remix ★ Free shipping on orders over $299 — Use code ZAKEY10 for 10% off ZAKEY Home Shop About Contact Products Shop Now Home Shop All Products Explore our complete collection of smart security solutions Filters Category Smart Lock (5) Deadbolt (2) Padlock (1) Accessories (0) Price Range $0 $600 Minimum Rating & up & up & up Clear All Filters 8 products Featured Price: Low to High Price: High to Low Top Rated Best Seller SMART LOCK ZAKEY Apex Pro (312) $389 $459 View New SMART LOCK ZAKEY Luxe Series (218) $299 View DEADBOLT ZAKEY Slim Touch (156) $249 $289 View Premium SMART LOCK ZAKEY Connect X (445) $469 View PADLOCK ZAKEY Guardian (89) $199 View Limited SMART LOCK ZAKEY Nexus Elite (67) $549 $629 View DEADBOLT ZAKEY Entry Plus (203) $179 View Sale SMART LOCK ZAKEY Vault Pro (178) $329 View 1 2 3 ... 8 ZAKEY Redefining home security through intelligent design. Premium smart locks trusted by over 500,000 homes worldwide. PRODUCTS Smart Locks Deadbolts Padlocks Accessories Smart Home Kits COMPANY About Us Careers Press Partners Blog SUPPORT Help Center Installation Warranty Returns Contact Us © 2025 ZAKEY Technologies. All rights reserved. Privacy Policy Terms of Service Cookie Policy",
+  "controls": [
+    {
+      "tag": "a",
+      "text": "Remix",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 1246,
+        "y": 848,
+        "width": 49,
+        "height": 24
+      }
+    },
+    {
+      "tag": "button",
+      "text": "More options",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 1304,
+        "y": 840,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Close",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 1345,
+        "y": 840,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "ZAKEY",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 48,
+        "y": 58,
+        "width": 121,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Home",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 420,
+        "y": 66,
+        "width": 43,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Shop",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 495,
+        "y": 66,
+        "width": 37,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "About",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 565,
+        "y": 66,
+        "width": 44,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Contact",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 641,
+        "y": 66,
+        "width": 60,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Products",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 732,
+        "y": 66,
+        "width": 83,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 1066,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 1114,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 1162,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 1210,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Shop Now",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 1266,
+        "y": 56,
+        "width": 111,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Home",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 48,
+        "y": 177,
+        "width": 48,
+        "height": 24
+      }
+    },
+    {
+      "tag": "input",
+      "text": "",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 73,
+        "y": 720,
+        "width": 238,
+        "height": 16
+      }
+    },
+    {
+      "tag": "input",
+      "text": "",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 73,
+        "y": 811,
+        "width": 13,
+        "height": 13
+      }
+    },
+    {
+      "tag": "input",
+      "text": "",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 73,
+        "y": 839,
+        "width": 13,
+        "height": 13
+      }
+    },
+    {
+      "tag": "input",
+      "text": "",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 73,
+        "y": 867,
+        "width": 13,
+        "height": 13
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Clear All Filters",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 73,
+        "y": 911,
+        "width": 238,
+        "height": 42
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 1288,
+        "y": 416,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 1324,
+        "y": 416,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 639,
+        "y": 504,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 601,
+        "y": 906,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 984,
+        "y": 504,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 945,
+        "y": 906,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 1328,
+        "y": 504,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 1290,
+        "y": 906,
+        "width": 66,
+        "height": 36
+      }
+    }
+  ]
+}

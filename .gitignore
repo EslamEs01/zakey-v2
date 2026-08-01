@@ -12,9 +12,17 @@ staticfiles/
 
 # Frontend dependencies and generated output
 node_modules/
-static_src/dist/
+static/dist/
+public/
+_site/
 test-results/
 playwright-report/
+
+# Large reproducible browser evidence kept locally
+specs/003-zakey-frontend-reference-build/reference-evidence/screenshots/
+specs/003-zakey-frontend-reference-build/qa/implementation-screenshots/
+specs/003-zakey-frontend-reference-build/qa/rendered-html/
+specs/003-zakey-frontend-reference-build/qa/playwright-results/
 
 # Local acceptance artifacts
 .artifacts/

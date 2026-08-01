@@ -1,0 +1,459 @@
+{
+  "pageName": "about",
+  "title": "Premium E-commerce Website UI",
+  "url": "https://remote-fried-86528699.figma.site/",
+  "viewport": {
+    "width": 1440,
+    "height": 1200
+  },
+  "document": {
+    "width": 1425,
+    "height": 2200
+  },
+  "headings": [
+    {
+      "tag": "h1",
+      "text": "Built on Trust, Driven by Innovation",
+      "box": {
+        "x": 48,
+        "y": 245,
+        "width": 1329,
+        "height": 120
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Security Shouldn't Mean Compromise",
+      "box": {
+        "x": 48,
+        "y": 960,
+        "width": 633,
+        "height": 80
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "The Team Behind ZAKEY",
+      "box": {
+        "x": 48,
+        "y": 1459,
+        "width": 1329,
+        "height": 40
+      }
+    }
+  ],
+  "controls": [
+    {
+      "tag": "a",
+      "text": "Remix",
+      "box": {
+        "x": 1246,
+        "y": 1148,
+        "width": 49,
+        "height": 24
+      }
+    },
+    {
+      "tag": "button",
+      "text": "More options",
+      "box": {
+        "x": 1304,
+        "y": 1140,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Close",
+      "box": {
+        "x": 1345,
+        "y": 1140,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "ZAKEY",
+      "box": {
+        "x": 48,
+        "y": 58,
+        "width": 121,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Home",
+      "box": {
+        "x": 420,
+        "y": 66,
+        "width": 43,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Shop",
+      "box": {
+        "x": 495,
+        "y": 66,
+        "width": 37,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "About",
+      "box": {
+        "x": 565,
+        "y": 66,
+        "width": 44,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Contact",
+      "box": {
+        "x": 641,
+        "y": 66,
+        "width": 60,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Products",
+      "box": {
+        "x": 732,
+        "y": 66,
+        "width": 83,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 733,
+        "y": 103,
+        "width": 190,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 733,
+        "y": 143,
+        "width": 190,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 733,
+        "y": 183,
+        "width": 190,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 733,
+        "y": 223,
+        "width": 190,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 1066,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 1114,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 1162,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 1210,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Shop Now",
+      "box": {
+        "x": 1266,
+        "y": 56,
+        "width": 111,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 48,
+        "y": 2007,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 96,
+        "y": 2007,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 144,
+        "y": 2007,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 192,
+        "y": 2007,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Smart Locks",
+      "box": {
+        "x": 599,
+        "y": 1901,
+        "width": 86,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Deadbolts",
+      "box": {
+        "x": 599,
+        "y": 1937,
+        "width": 72,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Padlocks",
+      "box": {
+        "x": 599,
+        "y": 1973,
+        "width": 64,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Accessories",
+      "box": {
+        "x": 599,
+        "y": 2009,
+        "width": 84,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Smart Home Kits",
+      "box": {
+        "x": 599,
+        "y": 2045,
+        "width": 118,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "About Us",
+      "box": {
+        "x": 874,
+        "y": 1901,
+        "width": 63,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Careers",
+      "box": {
+        "x": 874,
+        "y": 1937,
+        "width": 56,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Press",
+      "box": {
+        "x": 874,
+        "y": 1973,
+        "width": 37,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Partners",
+      "box": {
+        "x": 874,
+        "y": 2009,
+        "width": 59,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Blog",
+      "box": {
+        "x": 874,
+        "y": 2045,
+        "width": 31,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Help Center",
+      "box": {
+        "x": 1150,
+        "y": 1901,
+        "width": 83,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Installation",
+      "box": {
+        "x": 1150,
+        "y": 1937,
+        "width": 79,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Warranty",
+      "box": {
+        "x": 1150,
+        "y": 1973,
+        "width": 66,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Returns",
+      "box": {
+        "x": 1150,
+        "y": 2009,
+        "width": 54,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Contact Us",
+      "box": {
+        "x": 1150,
+        "y": 2045,
+        "width": 78,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Privacy Policy",
+      "box": {
+        "x": 1023,
+        "y": 2148,
+        "width": 96,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Terms of Service",
+      "box": {
+        "x": 1143,
+        "y": 2148,
+        "width": 116,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Cookie Policy",
+      "box": {
+        "x": 1283,
+        "y": 2148,
+        "width": 94,
+        "height": 20
+      }
+    }
+  ],
+  "mainChildren": [
+    {
+      "tag": "div",
+      "text": "OUR STORY Built on Trust, Driven by Innovation Since 2018, ZAKEY has been at the forefront of intelligent home security — combining aerospace engineering with a",
+      "box": {
+        "x": 0,
+        "y": 113,
+        "width": 1425,
+        "height": 1682
+      }
+    }
+  ]
+}

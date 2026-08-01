@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+
+{% block title %}الدفع التجريبي | ZAKEY{% endblock %}
+
+{% block content %}
+<div class="checkout-page" data-checkout-root data-initial-step="{{ checkout_step }}" data-qa-state="{{ page_state }}" aria-busy="true">
+  <div class="container checkout-stepper-wrap">
+    <h1 class="sr-only" id="checkout-heading" tabindex="-1">الدفع التجريبي</h1>
+    <ol class="checkout-stepper" aria-label="خطوات الدفع التجريبي">
+      <li data-checkout-step-item="shipping">
+        <button type="button" data-checkout-step="shipping" aria-controls="checkout-panel-shipping">
+          <span aria-hidden="true">١</span>
+          <b>الشحن</b>
+        </button>
+      </li>
+      <li data-checkout-step-item="payment">
+        <button type="button" data-checkout-step="payment" aria-controls="checkout-panel-payment">
+          <span aria-hidden="true">٢</span>
+          <b>الدفع</b>
+        </button>
+      </li>
+      <li data-checkout-step-item="review">
+        <button type="button" data-checkout-step="review" aria-controls="checkout-panel-review">
+          <span aria-hidden="true">٣</span>
+          <b>المراجعة</b>
+        </button>
+      </li>
+    </ol>
+  </div>
+
+  <section class="checkout-main section--compact" aria-labelledby="checkout-heading">
+    <div class="container">
+      <div class="checkout-loading" data-checkout-loading>
+        <span aria-hidden="true"></span>
+        <p>جارٍ تجهيز بيانات السلة المحلية…</p>
+      </div>
+
+      <section class="state-panel checkout-empty" data-checkout-empty hidden aria-labelledby="checkout-empty-heading">
+        <span class="state-panel__icon" aria-hidden="true">{% include "components/icon.html" with name="cart" %}</span>
+        <h2 id="checkout-empty-heading">لا توجد منتجات لمراجعتها</h2>
+        <p>أضف منتجًا إلى السلة أولًا، ثم ارجع إلى واجهة الدفع التجريبية.</p>
+        <div class="checkout-empty__actions">
+          <a class="btn btn--primary" href="{% url 'storefront:shop' %}">استكشف المنتجات</a>
+          <a class="btn btn--outline" href="{% url 'storefront:cart' %}">عرض السلة</a>
+        </div>
+      </section>
+
+      <div class="checkout-layout" data-checkout-layout hidden>
+        <div class="checkout-workspace">
+          <section class="checkout-panel" id="checkout-panel-shipping" data-checkout-panel="shipping" aria-labelledby="shipping-heading">
+            <div class="checkout-panel__heading">
+              <div>
+                <p class="eyebrow">الخطوة الأولى</p>
+                <h2 id="shipping-heading" tabindex="-1">بيانات الشحن</h2>
+              </div>
+              <span>الحقول المعلّمة مطلوبة</span>
+            </div>
+
+            <form id="checkout-shipping-form" data-shipping-form novalidate>
+              <div class="checkout-error-summary" data-error-summary role="alert" tabindex="-1" hidden>
+                <h3>راجع البيانات التالية</h3>
+                <ul data-error-summary-list></ul>
+              </div>
+
+              <fieldset class="checkout-fieldset">
+                <legend>بيانات العميل</legend>
+                <div class="checkout-form-grid">
+                  <div class="field checkout-field--wide">
+                    <label for="checkout-name">الاسم بالكامل <span aria-hidden="true">*</span></label>
+                    <input id="checkout-name" name="fullName" type="text" autocomplete="name" maxlength="80" aria-describedby="checkout-name-help checkout-name-error" required>
+                    <small id="checkout-name-help">اكتب الاسم بالعربية كما سيظهر في بيانات المراجعة.</small>
+                    <p class="field-error" id="checkout-name-error" hidden></p>
+                  </div>
+                  <div class="field">
+                    <label for="checkout-email">البريد الإلكتروني <span aria-hidden="true">*</span></label>
+                    <input id="checkout-email" name="email" type="email" inputmode="email" autocomplete="email" dir="ltr" maxlength="120" aria-describedby="checkout-email-error" required>
+                    <p class="field-error" id="checkout-email-error" hidden></p>
+                  </div>
+                  <div class="field">
+                    <label for="checkout-mobile">رقم الموبايل المصري <span aria-hidden="true">*</span></label>
+                    <input id="checkout-mobile" name="mobile" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" maxlength="18" placeholder="0100 000 0000" aria-describedby="checkout-mobile-help checkout-mobile-error" required>
+                    <small id="checkout-mobile-help">يبدأ بـ010 أو 011 أو 012 أو 015.</small>
+                    <p class="field-error" id="checkout-mobile-error" hidden></p>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="checkout-fieldset">
+                <legend>عنوان التوصيل</legend>
+                <div class="checkout-form-grid">
+                  <div class="field">
+                    <label for="checkout-governorate">المحافظة <span aria-hidden="true">*</span></label>
+                    <select id="checkout-governorate" name="governorate" autocomplete="address-level1" aria-describedby="checkout-governorate-error" required>
+                      <option value="">اختر المحافظة</option>
+                      {% for governorate in fixture.governorates %}
+                        <option value="{{ governorate.key }}">{{ governorate.label }}</option>
+                      {% endfor %}
+                    </select>
+                    <p class="field-error" id="checkout-governorate-error" hidden></p>
+                  </div>
+                  <div class="field">
+                    <label for="checkout-city">المدينة أو المركز <span aria-hidden="true">*</span></label>
+                    <input id="checkout-city" name="city" type="text" autocomplete="address-level2" maxlength="80" placeholder="مثال: المنصورة" aria-describedby="checkout-city-error" required>
+                    <p class="field-error" id="checkout-city-error" hidden></p>
+                  </div>
+                  <div class="field checkout-field--wide" data-area-field hidden>
+                    <label for="checkout-area">المنطقة المؤهلة للخدمات</label>
+                    <select id="checkout-area" name="areaKey" aria-describedby="checkout-area-help">
+                      <option value="">اختر المنطقة إن كانت مدرجة</option>
+                    </select>
+                    <small id="checkout-area-help">يحدد هذا الاختيار ظهور التوصيل في اليوم نفسه فقط وفق بيانات العرض.</small>
+                  </div>
+                  <div class="field checkout-field--wide">
+                    <label for="checkout-street">اسم الشارع والعنوان التفصيلي <span aria-hidden="true">*</span></label>
+                    <textarea id="checkout-street" name="street" autocomplete="street-address" maxlength="140" rows="3" aria-describedby="checkout-street-error" required></textarea>
+                    <p class="field-error" id="checkout-street-error" hidden></p>
+                  </div>
+                  <div class="field">
+                    <label for="checkout-building">رقم المبنى <span aria-hidden="true">*</span></label>
+                    <input id="checkout-building" name="building" type="text" autocomplete="address-line2" maxlength="24" aria-describedby="checkout-building-error" required>
+                    <p class="field-error" id="checkout-building-error" hidden></p>
+                  </div>
+                  <div class="field">
+                    <label for="checkout-landmark">علامة مميزة</label>
+                    <input id="checkout-landmark" name="landmark" type="text" maxlength="100" placeholder="اختياري">
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="checkout-fieldset checkout-choice-fieldset" data-shipping-options>
+                <legend>طريقة الشحن <span aria-hidden="true">*</span></legend>
+                <div class="checkout-choice-grid checkout-choice-grid--shipping">
+                  {% for option in fixture.shippingOptions %}
+                    <label class="checkout-choice" data-shipping-option="{{ option.id }}">
+                      <input id="checkout-shipping-{{ forloop.counter }}" type="radio" name="shippingMethod" value="{{ option.id }}" aria-describedby="{{ option.id }}-notice checkout-shippingMethod-error">
+                      <img src="{{ option.icon.path }}" width="{{ option.icon.width }}" height="{{ option.icon.height }}" alt="">
+                      <span>
+                        <strong>{{ option.label }}</strong>
+                        <small>{{ option.description }}</small>
+                        <small class="prototype-note" id="{{ option.id }}-notice">{{ option.prototypeNotice }}</small>
+                      </span>
+                    </label>
+                  {% endfor %}
+                </div>
+                <p class="field-error" id="checkout-shippingMethod-error" data-shipping-error hidden></p>
+              </fieldset>
+
+              <fieldset class="checkout-fieldset checkout-installation" data-installation-fieldset hidden disabled>
+                <legend>خدمة التركيب التجريبية</legend>
+                <label class="checkout-check-row">
+                  <input type="checkbox" name="installation" value="requested">
+                  <span><strong>أرغب في معاينة طلب تركيب</strong><small>تظهر هذه الواجهة فقط لعناوين القاهرة والجيزة والإسكندرية، ولا تحجز موعدًا.</small></span>
+                </label>
+              </fieldset>
+
+              <label class="checkout-check-row checkout-acknowledgement">
+                <input type="checkbox" id="checkout-acknowledgement" name="acknowledgement" aria-describedby="checkout-acknowledgement-error" required>
+                <span><strong>أفهم أن هذه واجهة تجريبية فقط <span aria-hidden="true">*</span></strong><small>لن يُنشأ طلب، ولن تُرسل بيانات أو تُنفذ معاملة.</small></span>
+              </label>
+              <p class="field-error" id="checkout-acknowledgement-error" hidden></p>
+
+              <button class="btn btn--primary checkout-next" type="submit" data-to-payment data-checkout-next>متابعة إلى الدفع</button>
+            </form>
+          </section>
+
+          <section class="checkout-panel" id="checkout-panel-payment" data-checkout-panel="payment" aria-labelledby="payment-heading" hidden>
+            <div class="checkout-panel__heading">
+              <div>
+                <p class="eyebrow">الخطوة الثانية</p>
+                <h2 id="payment-heading" tabindex="-1">طريقة الدفع</h2>
+              </div>
+              <button class="checkout-edit" type="button" data-go-step="shipping">تعديل العنوان</button>
+            </div>
+
+            <form data-payment-form novalidate>
+              <fieldset class="checkout-fieldset checkout-choice-fieldset">
+                <legend>اختر طريقة للعرض <span aria-hidden="true">*</span></legend>
+                <div class="checkout-choice-grid checkout-choice-grid--payment">
+                  {% for option in fixture.paymentOptions %}
+                    <label class="checkout-choice checkout-choice--payment">
+                      <input id="checkout-payment-{{ forloop.counter }}" type="radio" name="paymentMethod" value="{{ option.id }}" aria-describedby="{{ option.id }}-notice checkout-paymentMethod-error">
+                      <img src="{{ option.icon.path }}" width="{{ option.icon.width }}" height="{{ option.icon.height }}" alt="">
+                      <span>
+                        <strong {% if option.id != 'payment-cod' %}dir="ltr"{% endif %}>{{ option.label }}</strong>
+                        <small>{{ option.description }}</small>
+                        <small class="prototype-note" id="{{ option.id }}-notice">{{ option.prototypeNotice }}</small>
+                      </span>
+                    </label>
+                  {% endfor %}
+                </div>
+                <p class="field-error" id="checkout-paymentMethod-error" data-payment-error hidden></p>
+              </fieldset>
+
+              <div class="checkout-prototype-banner">
+                {% include "components/icon.html" with name="info" %}
+                <p><strong>لا توجد وسيلة دفع متصلة.</strong> اختيارك يغيّر ملخص الواجهة فقط؛ لا يُطلب رقم بطاقة أو حساب محفظة.</p>
+              </div>
+
+              <div class="checkout-actions">
+                <button class="btn btn--outline" type="button" data-go-step="shipping">العودة إلى الشحن</button>
+                <button class="btn btn--primary" type="submit">مراجعة البيانات</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="checkout-panel" id="checkout-panel-review" data-checkout-panel="review" aria-labelledby="review-heading" hidden>
+            <div class="checkout-panel__heading">
+              <div>
+                <p class="eyebrow">الخطوة الثالثة</p>
+                <h2 id="review-heading" tabindex="-1">مراجعة البيانات</h2>
+              </div>
+            </div>
+
+            <div class="checkout-review-sections">
+              <article aria-labelledby="review-customer-heading">
+                <div class="checkout-review-title"><h3 id="review-customer-heading">العميل والعنوان</h3><button type="button" data-go-step="shipping">تعديل</button></div>
+                <dl data-review-customer></dl>
+              </article>
+              <article aria-labelledby="review-delivery-heading">
+                <div class="checkout-review-title"><h3 id="review-delivery-heading">الشحن والتركيب</h3><button type="button" data-go-step="shipping">تعديل</button></div>
+                <dl data-review-delivery></dl>
+              </article>
+              <article aria-labelledby="review-payment-heading">
+                <div class="checkout-review-title"><h3 id="review-payment-heading">طريقة الدفع</h3><button type="button" data-go-step="payment">تعديل</button></div>
+                <dl data-review-payment></dl>
+              </article>
+            </div>
+
+            <div class="checkout-final-state status-message" data-final-state role="status" tabindex="-1" hidden></div>
+            <div class="checkout-actions checkout-actions--review">
+              <button class="btn btn--outline" type="button" data-go-step="payment">العودة إلى الدفع</button>
+              <button class="btn btn--gold" type="button" data-checkout-final>عرض حالة الإرسال غير المتاح</button>
+            </div>
+            <p class="prototype-note">{{ site.prototypeNotice }}</p>
+          </section>
+        </div>
+
+        <aside class="checkout-summary" aria-labelledby="checkout-summary-heading">
+          <h2 id="checkout-summary-heading">ملخص الطلب التجريبي</h2>
+          <div class="checkout-summary__lines" data-checkout-lines></div>
+          <dl class="checkout-summary__totals">
+            <div><dt>المجموع الفرعي</dt><dd data-checkout-subtotal>—</dd></div>
+            <div data-checkout-discount-row hidden><dt>خصم تجريبي</dt><dd data-checkout-discount>—</dd></div>
+            <div><dt>الشحن</dt><dd data-checkout-shipping>يُحدد حسب الاختيار</dd></div>
+            <div><dt>منها ضريبة قيمة مضافة 14%</dt><dd data-checkout-vat>—</dd></div>
+            <div class="checkout-summary__total"><dt>الإجمالي</dt><dd data-checkout-total>—</dd></div>
+          </dl>
+          <p class="checkout-summary__shipping-note" data-checkout-shipping-note></p>
+          <a class="checkout-summary__cart-link" href="{% url 'storefront:cart' %}">تعديل السلة</a>
+          <small>{{ site.prototypeNotice }}</small>
+        </aside>
+      </div>
+
+      <noscript>
+        <section class="state-panel checkout-noscript">
+          <h2>تحتاج خطوات الدفع إلى JavaScript</h2>
+          <p>يمكنك مراجعة المنتجات في السلة، ثم تفعيل JavaScript لمعاينة التحقق والخطوات المحلية.</p>
+          <a class="btn btn--primary" href="{% url 'storefront:cart' %}">العودة إلى السلة</a>
+        </section>
+      </noscript>
+    </div>
+  </section>
+</div>
+
+<template id="checkout-line-template">
+  <article class="checkout-summary-line">
+<img src="/static/dist/assets/images/generated/apex-black-v2.webp" width="72" height="72" alt="" data-checkout-line-image>
+    <div><h3 data-checkout-line-name>منتج ZAKEY</h3><p data-checkout-line-meta>تفاصيل المنتج</p></div>
+    <strong data-checkout-line-price>— ج.م</strong>
+  </article>
+</template>
+{% endblock %}

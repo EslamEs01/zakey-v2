@@ -1,0 +1,1270 @@
+{
+  "title": "Premium E-commerce Website UI",
+  "url": "https://remote-fried-86528699.figma.site/",
+  "viewport": {
+    "width": 768,
+    "height": 1200
+  },
+  "document": {
+    "width": 753,
+    "height": 10999
+  },
+  "body": {
+    "direction": "ltr",
+    "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+    "background": "rgb(248, 249, 251)",
+    "color": "rgb(31, 41, 55)"
+  },
+  "headings": [
+    {
+      "tag": "h1",
+      "text": "Security Reimagined.",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 263,
+        "width": 705,
+        "height": 106
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Shop by Category",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 1534,
+        "width": 705,
+        "height": 40
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Smart Locks",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 48,
+        "y": 1953,
+        "width": 293,
+        "height": 23
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Deadbolts",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 413,
+        "y": 1953,
+        "width": 293,
+        "height": 23
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Padlocks",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 48,
+        "y": 2403,
+        "width": 293,
+        "height": 23
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Accessories",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 413,
+        "y": 2403,
+        "width": 293,
+        "height": 23
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Best Sellers",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 2698,
+        "width": 211,
+        "height": 40
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Apex Pro",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 45,
+        "y": 3173,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Luxe Series",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 410,
+        "y": 3173,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Slim Touch",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 45,
+        "y": 3690,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Connect X",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 410,
+        "y": 3690,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "The ZAKEY Nexus Elite",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 4033,
+        "width": 705,
+        "height": 120
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Featured Products",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 4995,
+        "width": 341,
+        "height": 40
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Guardian",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 45,
+        "y": 5471,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Nexus Elite",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 410,
+        "y": 5471,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Entry Plus",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 45,
+        "y": 5987,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Vault Pro",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 410,
+        "y": 5987,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Why Choose ZAKEY?",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 6292,
+        "width": 705,
+        "height": 40
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Military-Grade Security",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 57,
+        "y": 6581,
+        "width": 271,
+        "height": 28
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Full Smart Home Integration",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 426,
+        "y": 6581,
+        "width": 271,
+        "height": 28
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Always Connected",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 57,
+        "y": 6867,
+        "width": 271,
+        "height": 28
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Multiple Access Methods",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 426,
+        "y": 6867,
+        "width": 271,
+        "height": 28
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Award-Winning Design",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 57,
+        "y": 7154,
+        "width": 271,
+        "height": 28
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Auto-Lock Technology",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 426,
+        "y": 7154,
+        "width": 271,
+        "height": 28
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Works With Your Smart Home",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 7487,
+        "width": 705,
+        "height": 90
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Trusted by Homeowners",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 8930,
+        "width": 705,
+        "height": 40
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Get Exclusive Updates",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 72,
+        "y": 9992,
+        "width": 609,
+        "height": 40
+      }
+    }
+  ],
+  "controls": [
+    {
+      "tag": "a",
+      "text": "Remix",
+      "role": null,
+      "ariaLabel": null,
+      "href": "https://www.figma.com/community/file/1664451750863425844?openSignupModal=true",
+      "disabled": false,
+      "box": {
+        "x": 574,
+        "y": 1148,
+        "width": 49,
+        "height": 24
+      }
+    },
+    {
+      "tag": "button",
+      "text": "More options",
+      "role": null,
+      "ariaLabel": "More options",
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 632,
+        "y": 1140,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Close",
+      "role": null,
+      "ariaLabel": "Close",
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 673,
+        "y": 1140,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "ZAKEY",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 58,
+        "width": 121,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 497,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 545,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 593,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 641,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 689,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Shop Collection",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 520,
+        "width": 219,
+        "height": 58
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Learn More",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 259,
+        "y": 520,
+        "width": 156,
+        "height": 58
+      }
+    },
+    {
+      "tag": "button",
+      "text": "12 Products Smart Locks App & fingerprint enabled Explore",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 1630,
+        "width": 341,
+        "height": 426
+      }
+    },
+    {
+      "tag": "button",
+      "text": "8 Products Deadbolts Maximum security deadbolts Explore",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 389,
+        "y": 1630,
+        "width": 341,
+        "height": 426
+      }
+    },
+    {
+      "tag": "button",
+      "text": "6 Products Padlocks Portable smart security Explore",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 2080,
+        "width": 341,
+        "height": 426
+      }
+    },
+    {
+      "tag": "button",
+      "text": "14 Products Accessories Hub, sensors & more Explore",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 389,
+        "y": 2080,
+        "width": 341,
+        "height": 426
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View All",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 650,
+        "y": 2718,
+        "width": 79,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 316,
+        "y": 2807,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 277,
+        "y": 3229,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 680,
+        "y": 2807,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 642,
+        "y": 3229,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 316,
+        "y": 3323,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 277,
+        "y": 3746,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 680,
+        "y": 3323,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 642,
+        "y": 3746,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Discover Now",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 4363,
+        "width": 201,
+        "height": 56
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View All",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 650,
+        "y": 5015,
+        "width": 79,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 316,
+        "y": 5104,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 277,
+        "y": 5527,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 680,
+        "y": 5104,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 642,
+        "y": 5527,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 316,
+        "y": 5621,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 277,
+        "y": 6043,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 680,
+        "y": 5621,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 642,
+        "y": 6043,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Explore the Ecosystem",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 7917,
+        "width": 238,
+        "height": 52
+      }
+    },
+    {
+      "tag": "input",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 153,
+        "y": 10128,
+        "width": 317,
+        "height": 50
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Subscribe",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 481,
+        "y": 10128,
+        "width": 119,
+        "height": 50
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 10550,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 72,
+        "y": 10550,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 120,
+        "y": 10550,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 168,
+        "y": 10550,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Smart Locks",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 401,
+        "y": 10444,
+        "width": 86,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Deadbolts",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 401,
+        "y": 10480,
+        "width": 72,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Padlocks",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 401,
+        "y": 10516,
+        "width": 64,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Accessories",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 401,
+        "y": 10552,
+        "width": 84,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Smart Home Kits",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 401,
+        "y": 10588,
+        "width": 118,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "About Us",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 10700,
+        "width": 63,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Careers",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 10736,
+        "width": 56,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Press",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 10772,
+        "width": 37,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Partners",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 10808,
+        "width": 59,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Blog",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 24,
+        "y": 10844,
+        "width": 31,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Help Center",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 401,
+        "y": 10700,
+        "width": 83,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Installation",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 401,
+        "y": 10736,
+        "width": 79,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Warranty",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 401,
+        "y": 10772,
+        "width": 66,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Returns",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 401,
+        "y": 10808,
+        "width": 54,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Contact Us",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 401,
+        "y": 10844,
+        "width": 78,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Privacy Policy",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 375,
+        "y": 10947,
+        "width": 96,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Terms of Service",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 495,
+        "y": 10947,
+        "width": 116,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Cookie Policy",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 635,
+        "y": 10947,
+        "width": 94,
+        "height": 20
+      }
+    }
+  ],
+  "mainChildren": [
+    {
+      "tag": "div",
+      "text": "Introducing ZAKEY Apex Pro 2025 Security Reimagined. Experience the future of home security with ZAKEY smart locks — fingerprint, PIN, app, and key access in one elegant device. Sh",
+      "role": null,
+      "ariaLabel": null,
+      "href": null,
+      "disabled": false,
+      "box": {
+        "x": 0,
+        "y": 113,
+        "width": 753,
+        "height": 10225
+      }
+    }
+  ],
+  "header": {
+    "tag": "header",
+    "text": "ZAKEY",
+    "role": null,
+    "ariaLabel": null,
+    "href": null,
+    "disabled": false,
+    "box": {
+      "x": 0,
+      "y": 40,
+      "width": 753,
+      "height": 73
+    }
+  },
+  "footer": {
+    "tag": "footer",
+    "text": "ZAKEY Redefining home security through intelligent design. Premium smart locks trusted by over 500,000 homes worldwide. PRODUCTS Smart Locks Deadbolts Padlocks Accessories Smart Ho",
+    "role": null,
+    "ariaLabel": null,
+    "href": null,
+    "disabled": false,
+    "box": {
+      "x": 0,
+      "y": 10338,
+      "width": 753,
+      "height": 661
+    }
+  }
+}

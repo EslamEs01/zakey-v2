@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 120" role="img" aria-labelledby="title">
+  <title id="title">علامة توضيحية من ZAKEY</title>
+  <rect width="240" height="120" rx="20" fill="#F8F9FB"/>
+  <rect x="26" y="28" width="64" height="64" rx="16" fill="#0D1B3D"/>
+  <path d="M44 55v-7a14 14 0 0 1 28 0v7m-32 0h36v27H40z" fill="none" stroke="#C9A227" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="108" y="67" fill="#0D1B3D" font-family="Arial,sans-serif" font-size="24" font-weight="700">ZAKEY</text>
+  <text x="108" y="88" fill="#667085" font-family="Arial,sans-serif" font-size="12">DEMO UI</text>
+</svg>

@@ -1,0 +1,509 @@
+{
+  "pageName": "account",
+  "title": "Premium E-commerce Website UI",
+  "url": "https://remote-fried-86528699.figma.site/",
+  "viewport": {
+    "width": 1440,
+    "height": 1200
+  },
+  "document": {
+    "width": 1425,
+    "height": 1718
+  },
+  "headings": [
+    {
+      "tag": "h3",
+      "text": "John Smith",
+      "box": {
+        "x": 73,
+        "y": 282,
+        "width": 258,
+        "height": 28
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "My Orders",
+      "box": {
+        "x": 417,
+        "y": 190,
+        "width": 931,
+        "height": 28
+      }
+    }
+  ],
+  "controls": [
+    {
+      "tag": "a",
+      "text": "Remix",
+      "box": {
+        "x": 1246,
+        "y": 1148,
+        "width": 49,
+        "height": 24
+      }
+    },
+    {
+      "tag": "button",
+      "text": "More options",
+      "box": {
+        "x": 1304,
+        "y": 1140,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Close",
+      "box": {
+        "x": 1345,
+        "y": 1140,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "ZAKEY",
+      "box": {
+        "x": 48,
+        "y": 58,
+        "width": 121,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Home",
+      "box": {
+        "x": 420,
+        "y": 66,
+        "width": 43,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Shop",
+      "box": {
+        "x": 495,
+        "y": 66,
+        "width": 37,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "About",
+      "box": {
+        "x": 565,
+        "y": 66,
+        "width": 44,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Contact",
+      "box": {
+        "x": 641,
+        "y": 66,
+        "width": 60,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Products",
+      "box": {
+        "x": 732,
+        "y": 66,
+        "width": 83,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 733,
+        "y": 103,
+        "width": 190,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 733,
+        "y": 143,
+        "width": 190,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 733,
+        "y": 183,
+        "width": 190,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 733,
+        "y": 223,
+        "width": 190,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 1066,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 1114,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 1162,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 1210,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Shop Now",
+      "box": {
+        "x": 1266,
+        "y": 56,
+        "width": 111,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "My Orders",
+      "box": {
+        "x": 48,
+        "y": 411,
+        "width": 308,
+        "height": 48
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Wishlist",
+      "box": {
+        "x": 48,
+        "y": 471,
+        "width": 308,
+        "height": 50
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Addresses",
+      "box": {
+        "x": 48,
+        "y": 533,
+        "width": 308,
+        "height": 50
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Payment Methods",
+      "box": {
+        "x": 48,
+        "y": 595,
+        "width": 308,
+        "height": 50
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Account Settings",
+      "box": {
+        "x": 48,
+        "y": 657,
+        "width": 308,
+        "height": 50
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Sign Out",
+      "box": {
+        "x": 48,
+        "y": 719,
+        "width": 308,
+        "height": 50
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 48,
+        "y": 1525,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 96,
+        "y": 1525,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 144,
+        "y": 1525,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 192,
+        "y": 1525,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Smart Locks",
+      "box": {
+        "x": 599,
+        "y": 1419,
+        "width": 86,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Deadbolts",
+      "box": {
+        "x": 599,
+        "y": 1455,
+        "width": 72,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Padlocks",
+      "box": {
+        "x": 599,
+        "y": 1491,
+        "width": 64,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Accessories",
+      "box": {
+        "x": 599,
+        "y": 1527,
+        "width": 84,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Smart Home Kits",
+      "box": {
+        "x": 599,
+        "y": 1563,
+        "width": 118,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "About Us",
+      "box": {
+        "x": 874,
+        "y": 1419,
+        "width": 63,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Careers",
+      "box": {
+        "x": 874,
+        "y": 1455,
+        "width": 56,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Press",
+      "box": {
+        "x": 874,
+        "y": 1491,
+        "width": 37,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Partners",
+      "box": {
+        "x": 874,
+        "y": 1527,
+        "width": 59,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Blog",
+      "box": {
+        "x": 874,
+        "y": 1563,
+        "width": 31,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Help Center",
+      "box": {
+        "x": 1150,
+        "y": 1419,
+        "width": 83,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Installation",
+      "box": {
+        "x": 1150,
+        "y": 1455,
+        "width": 79,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Warranty",
+      "box": {
+        "x": 1150,
+        "y": 1491,
+        "width": 66,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Returns",
+      "box": {
+        "x": 1150,
+        "y": 1527,
+        "width": 54,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Contact Us",
+      "box": {
+        "x": 1150,
+        "y": 1563,
+        "width": 78,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Privacy Policy",
+      "box": {
+        "x": 1023,
+        "y": 1666,
+        "width": 96,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Terms of Service",
+      "box": {
+        "x": 1143,
+        "y": 1666,
+        "width": 116,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Cookie Policy",
+      "box": {
+        "x": 1283,
+        "y": 1666,
+        "width": 94,
+        "height": 20
+      }
+    }
+  ],
+  "mainChildren": [
+    {
+      "tag": "div",
+      "text": "JS John Smith john@example.com Premium Member My Orders Wishlist Addresses Payment Methods Account Settings Sign Out My Orders ZAKEY Apex Pro #ZK-20250112 · Jan",
+      "box": {
+        "x": 0,
+        "y": 113,
+        "width": 1425,
+        "height": 1200
+      }
+    }
+  ]
+}

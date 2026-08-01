@@ -1,0 +1,115 @@
+{
+  "url": "https://remote-fried-86528699.figma.site/",
+  "scrollY": 0,
+  "bodyText": "Created with Figma Make Remix ★ Free shipping on orders over $299 — Use code ZAKEY10 for 10% off ZAKEY Introducing ZAKEY Apex Pro 2025 Security Reimagined. Experience the future of home security with ZAKEY smart locks — fingerprint, PIN, app, and key access in one elegant device. Shop Collection Learn More 500K+ Homes Protected 99.9% Uptime Guarantee 4.9★ Average Rating $389 Free Shipping Secured Free Shipping Over $299 5-Year Warranty 30-Day Returns 24/7 Support Award-Winning Design BROWSE Shop by Category 12 Products Smart Locks App & fingerprint enabled Explore 8 Products Deadbolts Maximum security deadbolts Explore 6 Products Padlocks Portable smart security Explore 14 Products Accessories Hub, sensors & more Explore TOP PICKS Best Sellers View All Best Seller SMART LOCK ZAKEY Apex Pro (312) $389 $459 View New SMART LOCK ZAKEY Luxe Series (218) $299 View DEADBOLT ZAKEY Slim Touch (156) $249 $289 View Premium SMART LOCK ZAKEY Connect X (445) $469 View Red Dot Design Award 2025 The ZAKEY Nexus Elite Our most advanced lock ever. Titanium body, military-grade encryption, facial recognition, and seamless smart home integration. 256-bit Encryption Facial Recognition Smart Home Ready 10,000 User Capacity Discover Now $549 $629 CURATED Featured Products View All PADLOCK ZAKEY Guardian (89) $199 View Limited SMART LOCK ZAKEY Nexus Elite (67) $549 $629 View DEADBOLT ZAKEY Entry Plus (203) $179 View Sale SMART LOCK ZAKEY Vault Pro (178) $329 View OUR PROMISE Why Choose ZAKEY? Engine",
+  "controls": [
+    {
+      "tag": "a",
+      "text": "Remix",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 220,
+        "y": 848,
+        "width": 49,
+        "height": 24
+      }
+    },
+    {
+      "tag": "button",
+      "text": "More options",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 278,
+        "y": 840,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Close",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 319,
+        "y": 840,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "ZAKEY",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 24,
+        "y": 78,
+        "width": 121,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 230,
+        "y": 76,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 278,
+        "y": 76,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 326,
+        "y": 76,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Shop Collection",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 24,
+        "y": 570,
+        "width": 219,
+        "height": 56
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Learn More",
+      "expanded": null,
+      "invalid": null,
+      "box": {
+        "x": 24,
+        "y": 642,
+        "width": 156,
+        "height": 58
+      }
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}مشكلة مؤقتة | ZAKEY{% endblock %}
+
+{% block content %}
+<svg class="zk-icon-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="zk-alert" viewBox="0 0 24 24">
+    <path d="M12 3.6 3.1 18.8a1.6 1.6 0 0 0 1.4 2.4h15a1.6 1.6 0 0 0 1.4-2.4Z"></path>
+    <path d="M12 9.6v4.2"></path><path d="M12 17.4h.01"></path>
+  </symbol>
+  <symbol id="zk-refresh" viewBox="0 0 24 24">
+    <path d="M20 12a8 8 0 1 1-2.4-5.7"></path><path d="M20 4.2v4.3h-4.3"></path>
+  </symbol>
+</svg>
+
+<section class="section errorpage errorpage--500" aria-labelledby="error-500-title">
+  <div class="container errorpage__inner">
+    <div class="errorpage__panel errorpage__panel--navy">
+      <span class="errorpage__icon errorpage__icon--alert">
+        <svg class="icon" aria-hidden="true" focusable="false"><use href="#zk-alert"></use></svg>
+      </span>
+      <p class="errorpage__code errorpage__code--light"><bdi>500</bdi></p>
+      <h1 class="errorpage__title errorpage__title--light" id="error-500-title">حدثت مشكلة مؤقتة</h1>
+      <p class="errorpage__lede errorpage__lede--light">
+        تعذّر عرض هذه الصفحة الآن. هذه حالة استعادة معروضة داخل الواجهة التجريبية، ولا تعني وجود عطل في خدمة تشغيلية.
+      </p>
+
+      <div class="errorpage__actions">
+        <a class="btn btn--gold" href="{{ request.get_full_path }}">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#zk-refresh"></use></svg>
+          <span>أعد تحميل الصفحة</span>
+        </a>
+        <a class="btn btn--outline" href="{% url 'storefront:home' %}">العودة إلى الرئيسية</a>
+        <a class="btn btn--outline" href="{% url 'storefront:contact' %}">تواصل معنا</a>
+      </div>
+
+      <div class="errorpage__recovery">
+        <h2 class="errorpage__subtitle errorpage__subtitle--light">جرّب هذه الوجهات</h2>
+        <nav class="errorpage__links errorpage__links--light" aria-label="روابط استعادة">
+          <a href="{% url 'storefront:shop' %}">المتجر</a>
+          <a href="{% url 'storefront:cart' %}">سلة التسوق</a>
+          <a href="{% url 'storefront:account' %}">حسابي</a>
+          <a href="{% url 'storefront:about' %}">عن ZAKEY</a>
+        </nav>
+      </div>
+
+      <p class="prototype-note errorpage__note">{{ site.prototypeNotice }}</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

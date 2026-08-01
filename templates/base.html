@@ -1,0 +1,27 @@
+{% load static %}
+<!doctype html>
+<html lang="ar-EG" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0D1B3D">
+  <meta name="description" content="واجهة ZAKEY التجريبية لأقفال الأبواب الذكية في مصر.">
+  <title>{% block title %}ZAKEY | أقفال ذكية بثقة أكبر{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'dist/css/app.css' %}">
+  <link rel="icon" href="{% static 'dist/assets/images/brand/zakey-mark.svg' %}" type="image/svg+xml">
+  {% block head %}{% endblock %}
+</head>
+<body data-page="{{ page_id }}" data-state="{{ page_state }}">
+  <a class="skip-link" href="#main-content">تخطي إلى المحتوى</a>
+  <noscript><p class="noscript-note">يمكنك تصفح كل الصفحات والمنتجات بدون JavaScript؛ التفاعلات التجريبية مثل السلة والفلاتر المتحركة تحتاج تفعيله.</p></noscript>
+  {% include "partials/header.html" %}
+  <main id="main-content" tabindex="-1">
+    {% block content %}{% endblock %}
+  </main>
+  {% include "partials/footer.html" %}
+  <div id="zakey-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+  {{ client_fixture|json_script:"zakey-fixture" }}
+  <script type="module" src="{% static 'dist/js/app.js' %}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

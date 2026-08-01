@@ -1,0 +1,689 @@
+{
+  "pageName": "product",
+  "title": "Premium E-commerce Website UI",
+  "url": "https://remote-fried-86528699.figma.site/",
+  "viewport": {
+    "width": 768,
+    "height": 1200
+  },
+  "document": {
+    "width": 753,
+    "height": 4209
+  },
+  "headings": [
+    {
+      "tag": "h1",
+      "text": "ZAKEY Apex Pro",
+      "box": {
+        "x": 24,
+        "y": 1178,
+        "width": 705,
+        "height": 36
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "You May Also Like",
+      "box": {
+        "x": 24,
+        "y": 2447,
+        "width": 705,
+        "height": 32
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Luxe Series",
+      "box": {
+        "x": 45,
+        "y": 2887,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Slim Touch",
+      "box": {
+        "x": 410,
+        "y": 2887,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Connect X",
+      "box": {
+        "x": 45,
+        "y": 3403,
+        "width": 299,
+        "height": 20
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Guardian",
+      "box": {
+        "x": 410,
+        "y": 3403,
+        "width": 299,
+        "height": 20
+      }
+    }
+  ],
+  "controls": [
+    {
+      "tag": "a",
+      "text": "Remix",
+      "box": {
+        "x": 574,
+        "y": 1148,
+        "width": 49,
+        "height": 24
+      }
+    },
+    {
+      "tag": "button",
+      "text": "More options",
+      "box": {
+        "x": 632,
+        "y": 1140,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Close",
+      "box": {
+        "x": 673,
+        "y": 1140,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "ZAKEY",
+      "box": {
+        "x": 24,
+        "y": 58,
+        "width": 121,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 497,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 545,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 593,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 641,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 689,
+        "y": 56,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Home",
+      "box": {
+        "x": 24,
+        "y": 145,
+        "width": 48,
+        "height": 24
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Shop",
+      "box": {
+        "x": 102,
+        "y": 145,
+        "width": 41,
+        "height": 24
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 24,
+        "y": 922,
+        "width": 167,
+        "height": 167
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 203,
+        "y": 922,
+        "width": 167,
+        "height": 167
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 383,
+        "y": 922,
+        "width": 167,
+        "height": 167
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 562,
+        "y": 922,
+        "width": 167,
+        "height": 167
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Read all",
+      "box": {
+        "x": 260,
+        "y": 1226,
+        "width": 57,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Satin Black",
+      "box": {
+        "x": 24,
+        "y": 1366,
+        "width": 99,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Brushed Gold",
+      "box": {
+        "x": 131,
+        "y": 1366,
+        "width": 113,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Silver",
+      "box": {
+        "x": 252,
+        "y": 1366,
+        "width": 65,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Matte White",
+      "box": {
+        "x": 324,
+        "y": 1366,
+        "width": 105,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 107,
+        "y": 1427,
+        "width": 44,
+        "height": 44
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 199,
+        "y": 1427,
+        "width": 44,
+        "height": 44
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Buy Now",
+      "box": {
+        "x": 24,
+        "y": 1500,
+        "width": 313,
+        "height": 56
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Add to Cart",
+      "box": {
+        "x": 349,
+        "y": 1500,
+        "width": 313,
+        "height": 56
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 673,
+        "y": 1500,
+        "width": 56,
+        "height": 56
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Features",
+      "box": {
+        "x": 25,
+        "y": 1740,
+        "width": 118,
+        "height": 62
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Specifications",
+      "box": {
+        "x": 143,
+        "y": 1740,
+        "width": 157,
+        "height": 62
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Downloads",
+      "box": {
+        "x": 300,
+        "y": 1740,
+        "width": 135,
+        "height": 62
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Reviews",
+      "box": {
+        "x": 435,
+        "y": 1740,
+        "width": 114,
+        "height": 62
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Faq",
+      "box": {
+        "x": 549,
+        "y": 1740,
+        "width": 82,
+        "height": 62
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 316,
+        "y": 2520,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "box": {
+        "x": 277,
+        "y": 2943,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 680,
+        "y": 2520,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "box": {
+        "x": 642,
+        "y": 2943,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 316,
+        "y": 3037,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "box": {
+        "x": 277,
+        "y": 3459,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 680,
+        "y": 3037,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "View",
+      "box": {
+        "x": 642,
+        "y": 3459,
+        "width": 66,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 24,
+        "y": 3761,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 72,
+        "y": 3761,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 120,
+        "y": 3761,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 168,
+        "y": 3761,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Smart Locks",
+      "box": {
+        "x": 401,
+        "y": 3654,
+        "width": 86,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Deadbolts",
+      "box": {
+        "x": 401,
+        "y": 3690,
+        "width": 72,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Padlocks",
+      "box": {
+        "x": 401,
+        "y": 3726,
+        "width": 64,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Accessories",
+      "box": {
+        "x": 401,
+        "y": 3762,
+        "width": 84,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Smart Home Kits",
+      "box": {
+        "x": 401,
+        "y": 3798,
+        "width": 118,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "About Us",
+      "box": {
+        "x": 24,
+        "y": 3910,
+        "width": 63,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Careers",
+      "box": {
+        "x": 24,
+        "y": 3946,
+        "width": 56,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Press",
+      "box": {
+        "x": 24,
+        "y": 3982,
+        "width": 37,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Partners",
+      "box": {
+        "x": 24,
+        "y": 4018,
+        "width": 59,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Blog",
+      "box": {
+        "x": 24,
+        "y": 4054,
+        "width": 31,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Help Center",
+      "box": {
+        "x": 401,
+        "y": 3910,
+        "width": 83,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Installation",
+      "box": {
+        "x": 401,
+        "y": 3946,
+        "width": 79,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Warranty",
+      "box": {
+        "x": 401,
+        "y": 3982,
+        "width": 66,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Returns",
+      "box": {
+        "x": 401,
+        "y": 4018,
+        "width": 54,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Contact Us",
+      "box": {
+        "x": 401,
+        "y": 4054,
+        "width": 78,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Privacy Policy",
+      "box": {
+        "x": 375,
+        "y": 4157,
+        "width": 96,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Terms of Service",
+      "box": {
+        "x": 495,
+        "y": 4157,
+        "width": 116,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Cookie Policy",
+      "box": {
+        "x": 635,
+        "y": 4157,
+        "width": 94,
+        "height": 20
+      }
+    }
+  ],
+  "mainChildren": [
+    {
+      "tag": "div",
+      "text": "Home Shop ZAKEY Apex Pro Best Seller ZAKEY Apex Pro 4.9 (312 reviews) Read all $389 $459 Save $70 Finish: Satin Black Satin Black Brushed Gold Silver Matte Whit",
+      "box": {
+        "x": 0,
+        "y": 113,
+        "width": 753,
+        "height": 3435
+      }
+    }
+  ]
+}

@@ -1,0 +1,419 @@
+{
+  "pageName": "cartPopulated",
+  "title": "Premium E-commerce Website UI",
+  "url": "https://remote-fried-86528699.figma.site/",
+  "viewport": {
+    "width": 473,
+    "height": 1453
+  },
+  "document": {
+    "width": 473,
+    "height": 2538
+  },
+  "headings": [
+    {
+      "tag": "h1",
+      "text": "Shopping Cart (1 items)",
+      "box": {
+        "x": 24,
+        "y": 181,
+        "width": 342,
+        "height": 36
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZAKEY Apex Pro",
+      "box": {
+        "x": 161,
+        "y": 288,
+        "width": 144,
+        "height": 27
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Order Summary",
+      "box": {
+        "x": 53,
+        "y": 579,
+        "width": 390,
+        "height": 28
+      }
+    }
+  ],
+  "controls": [
+    {
+      "tag": "a",
+      "text": "Remix",
+      "box": {
+        "x": 261,
+        "y": 1401,
+        "width": 49,
+        "height": 24
+      }
+    },
+    {
+      "tag": "button",
+      "text": "More options",
+      "box": {
+        "x": 320,
+        "y": 1393,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Close",
+      "box": {
+        "x": 361,
+        "y": 1393,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "ZAKEY",
+      "box": {
+        "x": 24,
+        "y": 78,
+        "width": 121,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 230,
+        "y": 76,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "1",
+      "box": {
+        "x": 278,
+        "y": 76,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 326,
+        "y": 76,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 433,
+        "y": 270,
+        "width": 18,
+        "height": 18
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 162,
+        "y": 356,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 238,
+        "y": 356,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "input",
+      "text": "Enter coupon code (e.g. ZAKEY10)",
+      "box": {
+        "x": 45,
+        "y": 451,
+        "width": 305,
+        "height": 46
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Apply",
+      "box": {
+        "x": 362,
+        "y": 451,
+        "width": 89,
+        "height": 46
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Proceed to Checkout",
+      "box": {
+        "x": 53,
+        "y": 804,
+        "width": 390,
+        "height": 56
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Continue Shopping",
+      "box": {
+        "x": 53,
+        "y": 872,
+        "width": 390,
+        "height": 50
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 24,
+        "y": 1545,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 72,
+        "y": 1545,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 120,
+        "y": 1545,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "",
+      "box": {
+        "x": 168,
+        "y": 1545,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Smart Locks",
+      "box": {
+        "x": 24,
+        "y": 1671,
+        "width": 86,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Deadbolts",
+      "box": {
+        "x": 24,
+        "y": 1707,
+        "width": 72,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Padlocks",
+      "box": {
+        "x": 24,
+        "y": 1743,
+        "width": 64,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Accessories",
+      "box": {
+        "x": 24,
+        "y": 1779,
+        "width": 84,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Smart Home Kits",
+      "box": {
+        "x": 24,
+        "y": 1815,
+        "width": 118,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "About Us",
+      "box": {
+        "x": 24,
+        "y": 1927,
+        "width": 63,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Careers",
+      "box": {
+        "x": 24,
+        "y": 1963,
+        "width": 56,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Press",
+      "box": {
+        "x": 24,
+        "y": 1999,
+        "width": 37,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Partners",
+      "box": {
+        "x": 24,
+        "y": 2035,
+        "width": 59,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Blog",
+      "box": {
+        "x": 24,
+        "y": 2071,
+        "width": 31,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Help Center",
+      "box": {
+        "x": 24,
+        "y": 2183,
+        "width": 83,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Installation",
+      "box": {
+        "x": 24,
+        "y": 2219,
+        "width": 79,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Warranty",
+      "box": {
+        "x": 24,
+        "y": 2255,
+        "width": 66,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Returns",
+      "box": {
+        "x": 24,
+        "y": 2291,
+        "width": 54,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Contact Us",
+      "box": {
+        "x": 24,
+        "y": 2327,
+        "width": 78,
+        "height": 20
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Privacy Policy",
+      "box": {
+        "x": 24,
+        "y": 2466,
+        "width": 93,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Terms of Service",
+      "box": {
+        "x": 141,
+        "y": 2466,
+        "width": 112,
+        "height": 40
+      }
+    },
+    {
+      "tag": "button",
+      "text": "Cookie Policy",
+      "box": {
+        "x": 276,
+        "y": 2466,
+        "width": 90,
+        "height": 40
+      }
+    }
+  ],
+  "mainChildren": [
+    {
+      "tag": "div",
+      "text": "Shopping Cart (1 items) SMART LOCK ZAKEY Apex Pro Color: Satin Black 1 $389 Apply Order Summary Subtotal $389 Shipping Free Tax (8%) $31.12 Total $420.12 Procee",
+      "box": {
+        "x": 0,
+        "y": 133,
+        "width": 390,
+        "height": 1200
+      }
+    }
+  ]
+}
