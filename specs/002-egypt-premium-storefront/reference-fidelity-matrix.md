@@ -211,6 +211,27 @@ page · — = no reference equivalent exists.
 
 ---
 
+## 3.1 Responsive row classification
+
+The per-width grounding class for every surface and material state is carried in `spec.md` §9.1–§9.5
+(36 rows), each tagged **D** (DIRECT) or **A** (ADAPTATION). Those tags derive from, and must stay
+consistent with, the coverage table in §3 above. A §9 row may be **D** only where §3 shows ✅ for
+that page at that width.
+
+## 3.2 Visual-integrity acceptance (spec.md §14.1)
+
+The ten observable criteria VI-1…VI-10 are checked against **this matrix** in both required visual
+critique passes:
+
+| Criterion | Matrix dependency |
+| --- | --- |
+| VI-1 dark-theme absence | Every navy band must correspond to a band recorded in the §1 page rows |
+| VI-2 navy band is a brand surface | Band position and extent compared to the page's DIRECT evidence; no navy band may appear on a surface whose evidence shows none |
+| VI-3 no AI-style or stock imagery | Every image resolves to a `media_asset_id` in `content-asset-provenance.md` §2.2 — the reference's own Unsplash stock photography is explicitly rejected (RD-07) |
+| VI-5 gradient discipline | Only the ratified navy stops and the single gold stop recorded in the Constitution |
+| VI-7 no repetitive filler | Section layout signatures compared against `spec.md` §17.2.1 purposes |
+| VI-10 no length-padding section | Every rendered section maps to a §17.2.1 row with a non-empty verified data source |
+
 ## 4. Reference-defect corrections carried into requirements
 
 | Defect | Correction | Requirement |

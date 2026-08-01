@@ -88,6 +88,27 @@ suffixed "Smart Lock".
 **Approved specification fields only**: `source_product_family`, `material`, `finishes_colours`,
 `power_supply`, `unlock_methods`. **No other specification field may be displayed** (FR-058).
 
+**Facet sources for catalogue filters** (added 2026-08-01, COR-003). Filter options are derived
+from — and limited to — the distinct values actually present in these verified fields. Nothing is
+added, renamed, or inferred:
+
+| Filter | Verified source | Requirement |
+| --- | --- | --- |
+| Category | `approved_category.slug` — the three approved categories | FR-034 |
+| Use-case | `approved_use_cases` — the five approved facets | FR-035 |
+| **Access method** | **`unlock_methods`** (or its approved equivalent) | **FR-149** |
+| **Verified feature** | The approved specification fields above, where a field yields a discrete, evidence-backed facet | **FR-148** |
+| Availability | Verified availability data only | FR-036, BR-012 |
+| Price | Rendered **only** when at least one in-scope product carries a verified price — today none do | FR-037 |
+
+A facet whose verified source yields zero values is **omitted entirely**, never rendered empty
+(FR-150). No capability or compatibility may be invented to populate a filter.
+
+**Public identifiers** (added 2026-08-01, COR-006). `source_model_code` is the verified public
+identifier per product record. It may be displayed on product details under FR-156. Internal
+identifiers — `launch_id`, `source_record_id`, `media_asset_id`, `source_document_sha256` — are
+**never** customer-facing.
+
 ### 2.4 Verified commerce posture — the decisive finding
 
 Every one of the 21 approved products carries:
