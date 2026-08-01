@@ -35,10 +35,10 @@
 ## Definition of Done (Constitution Principle XVIII — REQUIRED on any acceptance checklist)
 
 <!--
-  These fifteen conditions are not samples and MUST NOT be deleted from an acceptance
+  These twenty conditions are not samples and MUST NOT be deleted from an acceptance
   checklist. A condition that genuinely does not apply is marked "Not applicable" WITH its
-  reason. Passing a subset does not satisfy the Definition of Done: work meeting fourteen of
-  fifteen is not done.
+  reason. Passing a subset does not satisfy the Definition of Done: work meeting nineteen of
+  twenty is not done.
 -->
 
 - [ ] DOD01 All in-scope requirements are implemented
@@ -47,15 +47,20 @@
 - [ ] DOD04 All required manual checks are completed
 - [ ] DOD05 All required visual checks are completed
 - [ ] DOD06 All captured screenshots have been inspected, and the observations are recorded
-- [ ] DOD07 Responsive behavior is verified at all four approved widths
-- [ ] DOD08 Accessibility is verified by both automated and manual means
-- [ ] DOD09 Production assets build successfully
-- [ ] DOD10 No dead controls remain
+- [ ] DOD07 Responsive behavior is verified at all four approved widths, with zero unintended horizontal overflow
+- [ ] DOD08 Accessibility is verified by both automated and manual means, with no unresolved critical or serious violation
+- [ ] DOD09 Production assets build successfully, including the production Tailwind build
+- [ ] DOD10 No dead controls remain, and every visible control has been exercised
 - [ ] DOD11 No unexpected console errors remain
 - [ ] DOD12 Documentation is current
 - [ ] DOD13 Known limitations are truthfully recorded
 - [ ] DOD14 Unrelated user work remains untouched
 - [ ] DOD15 The final report includes the exact commands executed and their exact results
+- [ ] DOD16 Every implemented page and component cites the Principle XIX grounding evidence it was built and compared against
+- [ ] DOD17 Arabic-first and RTL correctness is verified — document language and direction, reading order, focus order, and Egyptian-pound and number formatting
+- [ ] DOD18 Every visible business claim, asset, and price carries documented provenance, and nothing unverified is presented as a production fact
+- [ ] DOD19 Every external integration is either genuinely implemented and verified, or presented honestly as unavailable or integration-ready
+- [ ] DOD20 Two documented visual critique and correction passes have been completed for major storefront work
 
 ## Notes
 

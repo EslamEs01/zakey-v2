@@ -44,6 +44,20 @@ description: "Task list template for feature implementation"
   ============================================================================
 -->
 
+## Phase 0: Grounding and Governance Preconditions (BLOCKING — Constitution Principles XI and XIX)
+
+**Purpose**: Confirm the preconditions that make every later phase admissible. No task in any
+later phase may start while an item here is unmet.
+
+- [ ] T000 Confirm Principle XIX grounding evidence exists, is dated, and is recorded in the owning specification for **every** surface this task list touches — grounding one page does not ground another (XIX.9)
+- [ ] T000 Confirm cross-artifact analysis has passed and every material finding is corrected — the existence of this file is not authority to implement (Principle XI.10)
+- [ ] T000 Confirm the active lead is named, and that each delegated unit below states its exact scope, allowed files, forbidden files, acceptance evidence, and required tests (Principle XVI.6)
+- [ ] T000 Confirm no two parallel tasks below write to the same shared surface — templates, design tokens, global CSS, shared JavaScript, migrations, central configuration (Principle XVI.7)
+
+**Checkpoint**: Grounding and governance preconditions met — Setup may begin
+
+---
+
 ## Phase 1: Setup (Shared Infrastructure)
 
 **Purpose**: Project initialization and basic structure
@@ -192,16 +206,28 @@ are forbidden (XII.6).
 - [ ] TXXX [P] axe accessibility checks on every in-scope page and on each interactive surface in its open state
 - [ ] TXXX [P] Broken-link check across all in-scope pages
 - [ ] TXXX [P] Console-error capture — count MUST be zero, or each error individually justified in the specification
-- [ ] TXXX [P] Responsive-overflow assertion at every ratified verification width
+- [ ] TXXX [P] Responsive-overflow assertion at every ratified verification width — zero unintended horizontal overflow (Principle VII.4)
+- [ ] TXXX [P] Ruff — MUST pass with no unexplained suppression (Principle XIV.7)
+- [ ] TXXX [P] Prettier check — MUST pass
+- [ ] TXXX Production Tailwind build — MUST succeed with no error and no unresolved asset reference
 - [ ] TXXX Production asset build — MUST succeed with no error and no unresolved asset reference
+- [ ] TXXX [P] Egyptian commerce calculation tests — 14% VAT, the 1,500 EGP free-shipping threshold, decimal-safe rounding, and centralized `ج.م` and number formatting, all through the one shared routine (Principles VI.8, VI.11, XX.4–XX.8)
+- [ ] TXXX [P] Egyptian data-validation tests — all 27 governorates, server-side Egyptian phone validation, detailed address plus landmark fields (Principles XX.11–XX.13)
+- [ ] TXXX [P] Configuration-driven-service tests — same-day delivery, installation service, hotline, and location render only where configuration enables them (Principles XX.14–XX.16)
+- [ ] TXXX [P] Demonstration-data isolation test — demonstration fixtures cannot be published as verified production content (Principle V.11)
 
 ### Manual checks (automated checks alone are insufficient — Principle VIII.6)
 
 - [ ] TXXX Manual keyboard inspection: tab order, focus visibility, focus trapping in dialogs and drawers, and escape/dismiss behavior
-- [ ] TXXX Capture screenshots at the approved desktop, tablet, and mobile widths
+- [ ] TXXX RTL verification: `lang="ar"` and `dir="rtl"` at document level, correct reading order, correct focus order, correct Egyptian-pound and number rendering, no LTR-only geometry (Principles VIII.6, XX.1–XX.5)
+- [ ] TXXX All-visible-control verification: exercise every visible control and confirm it works or is honestly presented as unavailable — no dead controls, no `href="#"`, no fake success (Principles VI.1–VI.4, VI.12)
+- [ ] TXXX Integration-honesty verification: every external payment or delivery integration is either genuinely implemented and verified, or shown in an honest unavailable / integration-ready state; no partner or bank claim without verified authorization (Principle XXI)
+- [ ] TXXX Content-provenance verification: every visible business claim, asset, and price traces to a documented source; nothing unverified is presented as a production fact (Principles V.2–V.4)
+- [ ] TXXX Capture screenshots at all four ratified verification widths (1440px, 1024px, 768px, 390px)
 - [ ] TXXX **Inspect** every captured screenshot and record what was observed in each — capturing without inspecting does not count as visual QA (Principle XIII.6)
-- [ ] TXXX Visual critique and correction pass 1 (all affected pages, not only the entry page)
-- [ ] TXXX Visual critique and correction pass 2 — re-inspect for consistency defects introduced by pass 1 (Principle XIII.3)
+- [ ] TXXX Reference comparison: compare each implemented surface against its own Principle XIX grounding evidence for the same page, state, and width (Principle XIII.8)
+- [ ] TXXX Visual critique and correction pass 1 (all affected pages, not only the entry page) — document what changed
+- [ ] TXXX Visual critique and correction pass 2 — re-inspect for consistency defects introduced by pass 1, and document what changed (Principle XIII.3)
 - [ ] TXXX Cross-page component comparison: dimensions, spacing, colours, typography, focus states, responsive behavior, interaction behavior — divergence between two instances of the same component is a defect (XIII.5)
 
 ### Guard skills (Principle XIV.10 — run where their scopes apply)
@@ -217,9 +243,9 @@ are forbidden (XII.6).
 - [ ] TXXX Confirm unrelated user work remains untouched (XVIII.14)
 - [ ] TXXX Produce the final report with the exact commands executed and their exact results (XVIII.15)
 
-### Definition of Done gate (Principle XVIII — all fifteen conditions)
+### Definition of Done gate (Principle XVIII — all twenty conditions)
 
-- [ ] TXXX Confirm every one of the fifteen Definition-of-Done conditions holds. Passing a subset does not satisfy it; work meeting fourteen of fifteen is not done.
+- [ ] TXXX Confirm every one of the twenty Definition-of-Done conditions holds. Passing a subset does not satisfy it; work meeting nineteen of twenty is not done.
 
 ---
 

@@ -17,12 +17,13 @@
   the iteration process.
 -->
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [e.g., library/cli/web-service/mobile-app/compiler/desktop-app or NEEDS CLARIFICATION]  
+**Language/Version**: [ratified default: Python 3.12 — any other value requires a constitutional amendment]  
+**Primary Dependencies**: [ratified default: Django 5.2 LTS, Tailwind CSS compiled locally, native JavaScript ES modules, locally hosted Cairo and Poppins, locally served Lucide or project-owned SVG]  
+**Storage**: [ratified default: PostgreSQL-compatible architecture]  
+**Testing**: [ratified default: pytest, pytest-django, Playwright, axe, Ruff, Prettier; Vitest with jsdom where valuable]  
+**Target Platform**: [e.g., Linux server or NEEDS CLARIFICATION]
+**Project Type**: [e.g., server-rendered web application or NEEDS CLARIFICATION]  
+**Locale and Direction**: [ratified: `ar-EG`, RTL primary, light mode only — see Constitution Principle XX]  
 **Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
 **Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
 **Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
@@ -50,22 +51,25 @@ section, artifact, or decision that carries the compliance. "Will comply" is not
 | III | Approved technical foundation — every dependency assessed for maintenance cost, security exposure, runtime performance, and bundle size; no prohibited technology; no runtime third-party origin | | |
 | IV | Architecture boundaries — clean-room; reusable components with no cross-page duplication; focused modules; no single oversized CSS/JS file | | |
 | IV.7–IV.8 | Shared data authority — exactly one documented fixture/service/repository/adapter for temporary data; no template hardcodes a duplicated record | | |
-| IV.9 | Localization and RTL readiness — externalized strings, direction-aware layout primitives, no LTR-only geometry | | |
-| V | Content and asset truth — sources documented; no invented claims; asset manifest with ownership and licensing | | |
-| VI | Functional completeness — every control has behavior; no dead controls; no `href="#"`; no fake success; named route lookups; one shared totalling routine; no prohibited payment data | | |
-| VII | Responsive behavior — a deliberate layout decision per surface at every ratified width; programmatic overflow assertion planned | | |
-| VIII | Accessibility — WCAG 2.2 AA targets; BOTH automated checks and a manual keyboard pass planned | | |
+| IV.9 | Arabic-first, RTL-primary architecture — externalized strings, direction-aware layout primitives, logical CSS properties, no LTR-only geometry, no unapproved language selector | | |
+| V | Content and asset truth — provenance documented for every production asset and material claim; no invented claims; credibility sections data-driven; demonstration fixtures isolated and unpublishable | | |
+| VI | Functional completeness — every control has behavior; no dead controls; no `href="#"`; no fake success; named route lookups; one shared totalling routine; decimal-safe money; no prohibited payment data | | |
+| VII | Responsive behavior — a deliberate layout decision per surface at every ratified width, made during specification not as a final CSS patch; programmatic zero-overflow assertion planned | | |
+| VIII | Accessibility — WCAG 2.2 AA targets; focus trapping and return; correct RTL reading and focus order; BOTH automated checks and a manual keyboard pass planned | | |
 | IX | Performance budgets — page weight, JavaScript payload, and layout stability set before implementation, each with a measurement method | | |
-| X | Security and data safety — secrets handling, env validation, CSRF, server-side validation, escaping, least privilege, log hygiene | | |
-| XI | Specification-first — no requirement silently redefined; material ambiguity resolved; out-of-scope boundary respected | | |
-| XII | Test strategy — the applicable verification set named, with each exclusion justified | | |
-| XIII | Visual QA — screenshot capture AND inspection planned at the approved widths; two critique passes for major UI work; cross-page component comparison | | |
+| X | Security and data safety — secrets handling, env validation, CSRF, server-side validation, escaping, redirect allowlisting, file validation, least privilege, log hygiene, no production personal data in artifacts | | |
+| XI | Specification-first — no requirement silently redefined; material ambiguity resolved; out-of-scope boundary respected; stage-gate order honoured | | |
+| XII | Test strategy — the applicable verification set named (including Ruff, Prettier, production Tailwind build, RTL and all-visible-control verification), with each exclusion justified | | |
+| XIII | Visual QA — screenshot capture AND inspection planned at the approved widths; two critique passes for major UI work; cross-page component comparison; comparison against Principle XIX evidence | | |
 | XIV | Code quality — naming, cohesion, no duplicated business logic, narrow exception handling, no debug residue, reviewed migrations; guard skills scheduled | | |
-| XV | Git safety — branch strategy; no unauthorized Git operation; ignore policy covers generated artifacts; unrelated user work untouched | | |
-| XVI | Claude governance — ownership named; delegation bounded with explicit owners; no concurrent edits to shared surfaces | | |
-| XVII | LeanCtx and context discipline — targeted exploration; decisions and evidence written into artifacts, not left in conversation | | |
+| XV | Git safety — branch strategy; no unauthorized Git operation; no automatic commit hook executed; ignore policy covers generated artifacts; unrelated user work untouched | | |
+| XVI | Lead-agent governance — active lead named; strong-reasoning ownership retained for architecture, shared files, security, checkout calculations, global tokens, integration, difficult debugging, and final acceptance; every delegation states scope, allowed files, forbidden files, acceptance evidence, and required tests; no concurrent edits to shared surfaces | | |
+| XVII | LeanCTX and context discipline — targeted exploration; decisions and evidence written into artifacts, not left in conversation | | |
+| XIX | Targeted visual grounding — per-surface browser inspection at all four widths, dated and recorded; every planned page and component mapped to its own evidence; deviations and reference-defect corrections justified; no runtime reference code copied | | |
+| XX | Arabic-first Egyptian market — `ar-EG`, `lang="ar"`, `dir="rtl"`, Cairo primary; centralized `ج.م` and number formatting; 14% VAT and the 1,500 EGP threshold through one shared decimal-safe routine; data-driven prices; 27 governorates; Egyptian phone validation; detailed address plus landmark; configuration-driven same-day delivery and installation; centrally configured hotline and location | | |
+| XXI | Commerce and integration honesty — approved payment presentation only; no raw card storage; no simulated payment success; no integration presented as active without verified credentials; no hard-coded gateway credentials; no unauthorized partner claims; configuration-driven adapter boundaries; honest unavailable or integration-ready states | | |
 | — | Implementation boundaries — what this feature will NOT build, and which future feature owns it | | |
-| XVIII | Definition of Done — all fifteen conditions reachable by the planned work | | |
+| XVIII | Definition of Done — all twenty conditions reachable by the planned work | | |
 
 ### Post-design re-check (after Phase 1)
 
