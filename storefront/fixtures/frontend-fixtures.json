@@ -2,7 +2,7 @@
   "meta": {
     "schemaVersion": 1,
     "fixtureStatus": "demonstration",
-    "contentNotice": "محتوى تجريبي مخصص لمراجعة واجهة ZAKEY فقط، ولا يمثل بيانات أو خدمات تشغيلية."
+    "contentNotice": "نسخة عرض ما قبل الإطلاق؛ لا تُنفَّذ منها طلبات أو مدفوعات فعلية."
   },
   "site": {
     "brand": {
@@ -33,23 +33,23 @@
       "hero": {
         "eyebrow": "أمان ذكي بتصميم يليق بمدخل بيتك",
         "heading": "ادخل عالمًا أكثر أمانًا مع ZAKEY",
-        "description": "اكتشف مجموعة تجريبية من الأقفال الذكية المصممة لتجمع وسائل دخول مرنة مع حضور أنيق.",
+        "description": "اكتشف أقفالًا ذكية تجمع بين وسائل الدخول المرنة والتصميم الأنيق لتمنح بيتك راحة أكبر كل يوم.",
         "primaryAction": {"label": "تسوّق الأقفال", "href": "/shop/"},
         "secondaryAction": {"label": "اعرف المزيد", "href": "/about/"},
         "image": {"path": "/static/dist/assets/images/generated/apex-black-v2.webp", "width": 1600, "height": 1400, "alt": "قفل ZAKEY ذكي في مدخل منزل عصري"},
-        "metrics": [{"label": "وسائل دخول", "value": "حتى 5"}, {"label": "دعم واجهة", "value": "عربي RTL"}, {"label": "مراجعة", "value": "تجريبية"}]
+        "metrics": [{"label": "وسائل دخول", "value": "حتى 5"}, {"label": "خدمة التركيب", "value": "3 محافظات"}, {"label": "شحن مجاني", "value": "+1,500 ج.م"}]
       },
       "trustStrip": [
         {"id": "trust-security", "icon": "shield-check", "title": "تصميم يركز على الأمان", "description": "معلومات واضحة تساعدك على مقارنة وسائل الدخول."},
-        {"id": "trust-installation", "icon": "wrench", "title": "واجهة تركيب محددة", "description": "تظهر فقط للمناطق المؤهلة في بيانات العرض."},
-        {"id": "trust-shipping", "icon": "truck", "title": "شحن مجاني فوق 1,500 ج.م", "description": "عتبة موحدة في كل حالات السلة."},
-        {"id": "trust-support", "icon": "headphones", "title": "إرشاد عربي", "description": "رسائل مساعدة واستعادة واضحة داخل الواجهة."},
-        {"id": "trust-prototype", "icon": "info", "title": "عرض صريح وشفاف", "description": "لا توجد معاملات أو خدمات تشغيلية في هذا النموذج."}
+        {"id": "trust-installation", "icon": "wrench", "title": "تركيب باحتراف", "description": "خدمة تركيب متاحة في القاهرة والجيزة والإسكندرية."},
+        {"id": "trust-shipping", "icon": "truck", "title": "شحن مجاني فوق 1,500 ج.م", "description": "توصيل مجاني للطلبات المؤهلة إلى جميع المحافظات."},
+        {"id": "trust-support", "icon": "headphones", "title": "دعم باللغة العربية", "description": "مساعدة واضحة قبل الشراء وبعده لاختيار الحل المناسب."},
+        {"id": "trust-prototype", "icon": "info", "title": "اختيار بثقة", "description": "مواصفات وأسعار وخيارات خدمة واضحة قبل اتخاذ القرار."}
       ],
       "promotion": {
         "eyebrow": "Nexus Elite",
         "heading": "حضور نحيف. دخول أسرع.",
-        "description": "استكشف التكوين التجريبي لقفل نيكسس إليت ببصمة مدمجة في المقبض.",
+        "description": "استكشف قفل نيكسس إليت بتصميمه النحيف وبصمته المدمجة في المقبض لدخول أسرع وأكثر راحة.",
         "action": {"label": "شاهد المنتج", "href": "/products/zakey-nexus-elite/"},
         "image": {"path": "/static/dist/assets/images/generated/nexus-champagne-v2.webp", "width": 1400, "height": 900, "alt": "قفل زاكي نيكسس إليت داخل مساحة مدخل فاتحة"}
       },
@@ -59,60 +59,60 @@
         "items": [
           {"id": "why-clear", "icon": "list-check", "title": "مقارنة واضحة", "description": "سعر ومقاس وطرق دخول وحالة توافر في مكان واحد."},
           {"id": "why-local", "icon": "map-pin", "title": "تجربة مصرية", "description": "لغة عربية وأسعار بالجنيه وخيارات عنوان محلية."},
-          {"id": "why-accessible", "icon": "accessibility", "title": "استخدام متاح", "description": "تنقل بلوحة المفاتيح وحالات تركيز ورسائل خطأ مترابطة."},
-          {"id": "why-consistent", "icon": "sparkles", "title": "هوية متسقة", "description": "مكونات واحدة تمتد من البحث حتى مراجعة الشراء التجريبية."}
+          {"id": "why-accessible", "icon": "accessibility", "title": "تجربة سهلة للجميع", "description": "معلومات مرتبة وخطوات واضحة من المقارنة حتى اختيار الخدمة."},
+          {"id": "why-consistent", "icon": "sparkles", "title": "تصميم يليق ببيتك", "description": "تشطيبات عصرية وتفاصيل مدروسة تناسب المداخل المختلفة."}
         ]
       },
       "smartHome": {
         "eyebrow": "حلول المنزل الذكي",
         "heading": "مدخل واحد ضمن تجربة منزل مترابطة",
-        "description": "عاين القفل والكاميرا وملحق الواجهة ضمن سيناريوهات محلية لا تتصل بأجهزة أو مزودين.",
+        "description": "اجمع القفل والكاميرا وملحقات الدخول في منظومة واحدة تمنحك رؤية أوضح وتحكمًا أسهل في مدخل منزلك.",
         "collectionId": "collection-solutions",
-        "useCases": [{"id": "solution-family", "title": "دخول العائلة", "description": "وسائل دخول مختلفة في واجهة موحدة."}, {"id": "solution-visitor", "title": "معاينة الزائر", "description": "عرض تجريبي للكاميرا والجرس."}, {"id": "solution-routine", "title": "روتين المغادرة", "description": "حالة واجهة توضح الإغلاق والتنبيهات."}],
+        "useCases": [{"id": "solution-family", "title": "دخول العائلة", "description": "وسائل دخول مرنة لكل فرد من أفراد المنزل."}, {"id": "solution-visitor", "title": "رؤية الزائر", "description": "كاميرا وجرس مدمجان لمعرفة من يقف أمام الباب."}, {"id": "solution-routine", "title": "أمان يومي", "description": "إغلاق تلقائي وتنبيهات تساعدك على مغادرة المنزل بثقة."}],
         "image": {"path": "/static/dist/assets/images/home/smart-home-solutions.webp", "width": 1440, "height": 960, "alt": "مدخل منزل يضم قفلًا وكاميرا ذكيين من ZAKEY"}
       },
-      "reviewsHeading": "آراء عربية تجريبية عن وضوح التجربة",
-      "partnersHeading": "علامات عرض تشاركنا الاهتمام بالمنزل الذكي",
-      "newsletterHeading": "كل جديد في رسالة تجريبية واحدة"
+      "reviewsHeading": "لماذا يختار العملاء ZAKEY؟",
+      "partnersHeading": "حلول تناسب كل مساحة",
+      "newsletterHeading": "كل جديد من ZAKEY في رسالة واحدة"
     },
     "about": {
-      "hero": {"eyebrow": "قصة ZAKEY", "heading": "نصمم قرار الأمان ليكون أبسط", "description": "واجهة عربية مرجعية لعلامة أقفال ذكية مصرية الطابع، مع محتوى تجريبي صريح.", "image": {"path": "/static/dist/assets/images/about/about-hero.webp", "width": 1800, "height": 1000, "alt": "مدخل منزل عصري يعبر عن رؤية ZAKEY"}},
-      "stats": [{"id": "stat-products", "value": "9", "label": "منتجات عرض"}, {"id": "stat-governorates", "value": "27", "label": "محافظة في النموذج"}, {"id": "stat-viewports", "value": "4", "label": "مقاسات مراجعة"}, {"id": "stat-language", "value": "100%", "label": "تجربة عربية أولًا"}],
-      "mission": {"eyebrow": "مهمتنا في هذا النموذج", "heading": "تقديم التقنية دون تعقيد أو ادعاءات", "body": "نرتب معلومات المنتج والخدمة والحالات التجريبية بحيث يفهم الزائر ما يراه وما لا تنفذه الواجهة.", "image": {"path": "/static/dist/assets/images/generated/apex-black-v2.webp", "width": 1200, "height": 900, "alt": "تفاصيل قفل ذكي على باب خشبي"}},
-      "teamHeading": "شخصيات العرض",
+      "hero": {"eyebrow": "قصة ZAKEY", "heading": "نجعل أمان الباب أبسط وأذكى", "description": "ZAKEY علامة متخصصة في حلول الدخول الذكي، تجمع بين التقنية العملية والتصميم الذي يناسب تفاصيل البيت المصري.", "image": {"path": "/static/dist/assets/images/about/about-hero.webp", "width": 1800, "height": 1000, "alt": "مدخل منزل عصري يعبر عن رؤية ZAKEY"}},
+      "stats": [{"id": "stat-products", "value": "9", "label": "حلول ذكية"}, {"id": "stat-governorates", "value": "27", "label": "محافظة نخدمها"}, {"id": "stat-viewports", "value": "3", "label": "محافظات للتركيب"}, {"id": "stat-language", "value": "100%", "label": "دعم باللغة العربية"}],
+      "mission": {"eyebrow": "مهمتنا", "heading": "تقنية مفهومة. أمان يمكن الاعتماد عليه.", "body": "نختار حلول دخول ذكية سهلة الاستخدام، ونقدم مواصفاتها وخيارات تركيبها بوضوح حتى يصل كل عميل إلى القفل الأنسب لبابه واحتياجاته.", "image": {"path": "/static/dist/assets/images/generated/apex-black-v2.webp", "width": 1200, "height": 900, "alt": "تفاصيل قفل ذكي على باب خشبي"}},
+      "teamHeading": "خبرات تعمل لهدف واحد",
       "teamMemberIds": ["team-laila", "team-yassin", "team-salma", "team-ziad"],
-      "prototypeNotice": "الأرقام والأسماء والسيرة في هذه الصفحة محتوى توضيحي وليست بيانات شركة موثقة."
+      "prototypeNotice": "نجمع بين فهم المنتج، احتياجات الأمان، خدمة العملاء وضمان الجودة لنقدم تجربة متكاملة."
     },
     "contact": {
       "heading": "نحن هنا لمساعدتك",
       "eyebrow": "تواصل مع ZAKEY",
-      "description": "استخدم النموذج لمعاينة التحقق العربي وحالات الاستعادة من دون إرسال بيانات.",
+      "description": "أخبرنا بما تحتاجه وسيساعدك فريق ZAKEY في اختيار المنتج وخدمة التركيب المناسبة.",
       "email": "support@zakey.example",
       "phoneDisplay": "0100 000 0000",
       "hours": "يوميًا من 10 صباحًا حتى 8 مساءً",
       "methodCards": [
-        {"id": "contact-phone", "icon": "phone", "title": "الهاتف التجريبي", "detail": "0100 000 0000", "action": "prototype-notice"},
-        {"id": "contact-email", "icon": "mail", "title": "البريد التجريبي", "detail": "support@zakey.example", "action": "prototype-notice"},
-        {"id": "contact-hours", "icon": "clock", "title": "ساعات العرض", "detail": "يوميًا من 10 صباحًا حتى 8 مساءً", "action": "none"}
+        {"id": "contact-phone", "icon": "phone", "title": "استشارة قبل الشراء", "detail": "اختيار القفل المناسب لبابك واحتياجات أسرتك.", "action": "contact-form"},
+        {"id": "contact-email", "icon": "mail", "title": "طلب خدمة تركيب", "detail": "تنسيق المعاينة والتركيب في المناطق المتاحة.", "action": "contact-form"},
+        {"id": "contact-hours", "icon": "clock", "title": "دعم ما بعد البيع", "detail": "إرشادات الاستخدام والصيانة والضمان.", "action": "contact-form"}
       ],
-      "form": {"heading": "أرسل رسالة تجريبية", "fields": {"name": "الاسم", "phone": "رقم الموبايل المصري", "email": "البريد الإلكتروني", "subject": "الموضوع", "message": "رسالتك"}, "submitLabel": "تحقق من الرسالة", "successMessage": "اكتمل التحقق محليًا، ولم تُرسل الرسالة."},
+      "form": {"heading": "أرسل استفسارك", "fields": {"name": "الاسم", "phone": "رقم الموبايل المصري", "email": "البريد الإلكتروني", "subject": "الموضوع", "message": "رسالتك"}, "submitLabel": "مراجعة الرسالة", "successMessage": "رسالتك جاهزة. الإرسال الفعلي غير متاح في نسخة العرض الحالية."},
       "faqIds": ["faq-shipping", "faq-payment"],
-      "chatCard": {"heading": "تحتاج إجابة سريعة؟", "description": "عاين حالة المحادثة غير المتصلة.", "actionLabel": "فتح العرض التجريبي", "action": "prototype-notice"},
-      "prototypeNotice": "بيانات التواصل المعروضة تجريبية ولا تستقبل رسائل أو مكالمات."
+      "chatCard": {"heading": "تحتاج إجابة سريعة؟", "description": "ابدأ استفسارك وسنرتب لك المعلومات التي تحتاجها.", "actionLabel": "ابدأ استفسارك", "action": "contact-form"},
+      "prototypeNotice": "نسخة العرض لا ترسل الرسائل؛ لن تُحفظ البيانات التي تكتبها هنا."
     },
     "newsletter": {
       "heading": "ابقَ على اطلاع بكل جديد",
-      "description": "سجّل بريدك لمعاينة حالة الاشتراك التجريبية والعروض داخل الواجهة.",
+      "description": "سجّل بريدك لتصلك أخبار المنتجات الجديدة ونصائح اختيار القفل المناسب.",
       "submitLabel": "اشترك الآن",
-      "successMessage": "تم التحقق من البريد في العرض التجريبي، ولم تُرسل أي رسالة.",
-      "prototypeNotice": "هذا النموذج لا يرسل أو يحفظ البريد الإلكتروني."
+      "successMessage": "البريد صحيح وجاهز للاشتراك عند إطلاق الخدمة.",
+      "prototypeNotice": "الاشتراك غير مفعّل في نسخة العرض، ولن يُحفظ بريدك."
     },
     "footer": {
       "description": "حلول أقفال ذكية مصممة لتجربة منزل أكثر أمانًا وراحة.",
-      "copyright": "© 2026 ZAKEY. واجهة تجريبية للمراجعة.",
+      "copyright": "© 2026 ZAKEY. جميع الحقوق محفوظة.",
       "legalLinks": [
-        {"label": "سياسة الخصوصية التجريبية", "href": "/about/#privacy"},
-        {"label": "شروط الاستخدام التجريبية", "href": "/about/#terms"}
+        {"label": "سياسة الخصوصية", "href": "/about/#privacy"},
+        {"label": "شروط الاستخدام", "href": "/about/#terms"}
       ]
     },
     "couponPrototype": {
@@ -122,8 +122,8 @@
       "rejectedLabel": "الكود غير صالح في العرض التجريبي.",
       "prototypeNotice": "لا يمثل هذا الكود عرضًا تجاريًا حقيقيًا."
     },
-    "prototypeNotice": "جميع الأسعار والحالات والخدمات المعروضة بيانات تطوير تجريبية غير متصلة بأي نظام تشغيلي.",
-    "resetLabel": "إعادة ضبط العرض التجريبي"
+    "prototypeNotice": "نسخة عرض ما قبل الإطلاق؛ لا تُنشئ طلبات ولا تنفذ مدفوعات أو حجوزات فعلية.",
+    "resetLabel": "إعادة ضبط بيانات العرض"
   },
   "navigation": {
     "primary": [
@@ -140,7 +140,7 @@
     "utility": [
       {"id": "nav-search", "label": "البحث", "href": "/search/", "icon": "search"},
       {"id": "nav-wishlist", "label": "المفضلة", "href": "/wishlist/", "icon": "heart"},
-      {"id": "nav-account", "label": "حسابي التجريبي", "href": "/account/", "icon": "user"},
+      {"id": "nav-account", "label": "حسابي", "href": "/account/", "icon": "user"},
       {"id": "nav-cart", "label": "سلة التسوق", "href": "/cart/", "icon": "shopping-bag"}
     ],
     "footerGroups": [
@@ -159,11 +159,7 @@
         {"label": "مركز المساعدة", "href": "/contact/"}
       ]}
     ],
-    "socialActions": [
-      {"id": "social-facebook", "label": "فيسبوك — عرض تجريبي", "icon": "facebook", "action": "prototype-notice"},
-      {"id": "social-instagram", "label": "إنستجرام — عرض تجريبي", "icon": "instagram", "action": "prototype-notice"},
-      {"id": "social-youtube", "label": "يوتيوب — عرض تجريبي", "icon": "youtube", "action": "prototype-notice"}
-    ]
+    "socialActions": []
   },
   "categories": [
     {"id": "cat-fingerprint", "slug": "fingerprint", "name": "أقفال بالبصمة", "description": "دخول سريع وآمن ببصمة الإصبع لأبواب المنزل والمكتب.", "kind": "product-category", "image": {"path": "/static/dist/assets/images/generated/apex-black-v2.webp", "width": 720, "height": 720, "alt": "قفل باب ذكي يعمل ببصمة الإصبع"}},
@@ -172,11 +168,11 @@
     {"id": "cat-accessory", "slug": "accessories", "name": "إكسسوارات الأمان", "description": "ملحقات تكمل تجربة القفل والمراقبة المنزلية.", "kind": "product-category", "image": {"path": "/static/dist/assets/images/generated/vision-camera-v2.webp", "width": 720, "height": 720, "alt": "ملحقات أمان منزلية ذكية"}}
   ],
   "collections": [
-    {"id": "collection-best", "slug": "best-sellers", "name": "الأكثر مبيعًا", "description": "اختيارات تجريبية بارزة من مجموعة ZAKEY.", "productIds": ["product-apex-pro", "product-nova", "product-orbit", "product-guard"], "promotion": {"eyebrow": "اختيارات العملاء", "tone": "gold"}},
+    {"id": "collection-best", "slug": "best-sellers", "name": "الأكثر مبيعًا", "description": "اختيارات العملاء من أقفال وحلول ZAKEY الذكية.", "productIds": ["product-apex-pro", "product-nova", "product-orbit", "product-guard"], "promotion": {"eyebrow": "اختيارات العملاء", "tone": "gold"}},
     {"id": "collection-featured", "slug": "featured", "name": "منتجات مميزة", "description": "حلول تجمع التصميم الأنيق ووسائل الدخول المتعددة.", "productIds": ["product-elite", "product-vision", "product-pulse", "product-apex-pro"], "promotion": {"eyebrow": "تقنية ZAKEY", "tone": "navy"}},
     {"id": "collection-fingerprint", "slug": "fingerprint-locks", "name": "أقفال بالبصمة", "description": "مجموعة دخول ببصمة الإصبع.", "productIds": ["product-apex-pro", "product-nova", "product-elite", "product-pulse"], "promotion": {"eyebrow": "دخول بلا مفاتيح", "tone": "light"}},
     {"id": "collection-door", "slug": "smart-door-locks", "name": "أقفال الأبواب الذكية", "description": "مجموعة أقفال ومقابض للأبواب الرئيسية والداخلية.", "productIds": ["product-apex-pro", "product-nova", "product-orbit", "product-elite", "product-vision", "product-pulse", "product-core"], "promotion": {"eyebrow": "للمنزل العصري", "tone": "navy"}},
-    {"id": "collection-solutions", "slug": "smart-home-solutions", "name": "حلول المنزل الذكي", "description": "منتجات تجريبية تعمل معًا لتجربة دخول أكثر راحة.", "productIds": ["product-vision", "product-guard", "product-bridge", "product-apex-pro"], "promotion": {"eyebrow": "منظومة مترابطة", "tone": "gold"}},
+    {"id": "collection-solutions", "slug": "smart-home-solutions", "name": "حلول المنزل الذكي", "description": "منتجات تعمل معًا لتجربة دخول أكثر راحة وترابطًا.", "productIds": ["product-vision", "product-guard", "product-bridge", "product-apex-pro"], "promotion": {"eyebrow": "منظومة مترابطة", "tone": "gold"}},
     {"id": "collection-accessories", "slug": "security-accessories", "name": "إكسسوارات الأمان", "description": "ملحقات مساندة للأبواب والمداخل.", "productIds": ["product-guard", "product-bridge"], "promotion": {"eyebrow": "أكمل منظومتك", "tone": "light"}}
   ],
   "products": [
@@ -199,13 +195,13 @@
         {"id": "apex-interior", "path": "/static/dist/assets/images/generated/vision-camera-v2.webp", "width": 1200, "height": 1200, "alt": "الوحدة الداخلية لقفل زاكي أبيكس برو"}
       ],
       "finishes": [{"id": "finish-obsidian", "label": "أسود أوبسيديان", "swatch": "#171A20"}, {"id": "finish-champagne", "label": "ذهبي شامبين", "swatch": "#B89B65"}],
-      "features": [{"key": "fingerprint", "label": "بصمة سريعة", "description": "فتح تجريبي بلمسة واحدة."}, {"key": "pin", "label": "رمز سري", "description": "رموز مرنة لأفراد المنزل."}, {"key": "camera", "label": "كاميرا مدخل", "description": "عرض مرئي تجريبي للزائر."}, {"key": "app", "label": "تحكم ذكي", "description": "حالات واجهة تحكم محلية فقط."}],
+      "features": [{"key": "fingerprint", "label": "بصمة سريعة", "description": "دخول بلمسة واحدة."}, {"key": "pin", "label": "رمز سري", "description": "رموز مرنة لأفراد المنزل."}, {"key": "camera", "label": "كاميرا مدخل", "description": "رؤية أوضح للزائر قبل فتح الباب."}, {"key": "app", "label": "تحكم ذكي", "description": "إدارة إعدادات الدخول من مكان واحد."}],
       "specificationGroups": [{"id": "apex-general", "label": "المواصفات العامة", "items": [{"label": "سُمك الباب المناسب", "value": "40–110 مم"}, {"label": "طرق الدخول", "value": "بصمة، رمز، بطاقة، مفتاح، واجهة ذكية"}, {"label": "التغذية", "value": "بطارية قابلة للشحن"}]}],
-      "downloads": [{"id": "apex-guide", "label": "دليل المقاسات التجريبي", "path": "/static/dist/assets/documents/zakey-apex-pro-sizing-demo.pdf", "format": "PDF", "prototypeNotice": "مستند توضيحي غير معتمد للتركيب."}],
+      "downloads": [{"id": "apex-guide", "label": "دليل المقاسات", "path": "/static/dist/assets/documents/zakey-apex-pro-sizing-demo.pdf", "format": "PDF", "prototypeNotice": "استعن بفريق التركيب لتأكيد ملاءمة المقاس قبل الشراء."}],
       "reviewIds": ["review-apex"],
       "faqIds": ["faq-door-fit", "faq-power", "faq-installation"],
       "relatedProductIds": ["product-elite", "product-vision", "product-nova"],
-      "instalmentMessage": "إمكانية عرض أقساط بنكية تجريبية حتى 12 شهرًا دون ربط بمصرف.",
+      "instalmentMessage": "خطط تقسيط حتى 12 شهرًا — تخضع لشروط البنك عند تفعيل الخدمة.",
       "serviceFlags": {"sameDaySupported": true, "installationSupported": true}
     },
     {
@@ -223,13 +219,13 @@
       "availability": "limited",
       "images": [{"id": "elite-front", "path": "/static/dist/assets/images/generated/nexus-champagne-v2.webp", "width": 1200, "height": 1200, "alt": "قفل زاكي نيكسس إليت بمقبض نحيف"}, {"id": "elite-side", "path": "/static/dist/assets/images/generated/nexus-handle-detail-v2.webp", "width": 1200, "height": 1200, "alt": "الجانب المعدني لقفل زاكي نيكسس إليت"}],
       "finishes": [{"id": "finish-graphite", "label": "جرافيت", "swatch": "#3E4148"}, {"id": "finish-bronze", "label": "برونزي", "swatch": "#80624B"}],
-      "features": [{"key": "fingerprint", "label": "بصمة بالمقبض", "description": "موضع طبيعي لفتح أسرع."}, {"key": "pin", "label": "لوحة أرقام", "description": "رمز دخول تجريبي متعدد."}, {"key": "app", "label": "سجل محلي", "description": "عرض أحداث محلي غير متصل."}],
+      "features": [{"key": "fingerprint", "label": "بصمة بالمقبض", "description": "موضع طبيعي لفتح أسرع."}, {"key": "pin", "label": "لوحة أرقام", "description": "رموز متعددة للعائلة والضيوف."}, {"key": "app", "label": "سجل الدخول", "description": "متابعة أحداث الدخول بوضوح."}],
       "specificationGroups": [{"id": "elite-general", "label": "المواصفات العامة", "items": [{"label": "سُمك الباب المناسب", "value": "38–100 مم"}, {"label": "طرق الدخول", "value": "بصمة، رمز، بطاقة، مفتاح"}, {"label": "مادة الهيكل", "value": "سبيكة معدنية"}]}],
-      "downloads": [{"id": "elite-guide", "label": "ورقة الأبعاد التجريبية", "path": "/static/dist/assets/documents/zakey-nexus-elite-dimensions-demo.pdf", "format": "PDF", "prototypeNotice": "أبعاد توضيحية وليست مستند اعتماد."}],
+      "downloads": [{"id": "elite-guide", "label": "ورقة الأبعاد", "path": "/static/dist/assets/documents/zakey-nexus-elite-dimensions-demo.pdf", "format": "PDF", "prototypeNotice": "يؤكد فني التركيب الأبعاد النهائية بعد معاينة الباب."}],
       "reviewIds": ["review-elite"],
       "faqIds": ["faq-door-fit", "faq-installation"],
       "relatedProductIds": ["product-apex-pro", "product-nova", "product-orbit"],
-      "instalmentMessage": "عرض تقسيط بنكي تجريبي حتى 12 شهرًا.",
+      "instalmentMessage": "خطط تقسيط حتى 12 شهرًا — تخضع لشروط البنك عند تفعيل الخدمة.",
       "serviceFlags": {"sameDaySupported": true, "installationSupported": true}
     },
     {
@@ -247,13 +243,13 @@
       "availability": "available",
       "images": [{"id": "vision-front", "path": "/static/dist/assets/images/generated/vision-camera-v2.webp", "width": 1200, "height": 1200, "alt": "قفل زاكي فيجن إكس مع كاميرا علوية"}, {"id": "vision-screen", "path": "/static/dist/assets/images/generated/vision-display-detail-v2.webp", "width": 1200, "height": 1200, "alt": "شاشة العرض الداخلية لقفل زاكي فيجن إكس"}],
       "finishes": [{"id": "finish-black", "label": "أسود", "swatch": "#20242B"}],
-      "features": [{"key": "camera", "label": "كاميرا مدمجة", "description": "معاينة تجريبية للمدخل."}, {"key": "pin", "label": "رمز سري", "description": "دخول مرن دون مفتاح."}, {"key": "card", "label": "بطاقة قرب", "description": "خيار دخول إضافي."}],
-      "specificationGroups": [{"id": "vision-general", "label": "المواصفات العامة", "items": [{"label": "زاوية الرؤية", "value": "120° تجريبية"}, {"label": "طرق الدخول", "value": "رمز، بطاقة، مفتاح"}, {"label": "الشاشة الداخلية", "value": "4 بوصات"}]}],
-      "downloads": [{"id": "vision-guide", "label": "مخطط التركيب التجريبي", "path": "/static/dist/assets/documents/zakey-vision-x-install-demo.pdf", "format": "PDF", "prototypeNotice": "المخطط للعرض ولا يثبت ملاءمة باب بعينه."}],
+      "features": [{"key": "camera", "label": "كاميرا مدمجة", "description": "رؤية مباشرة وواضحة للمدخل."}, {"key": "pin", "label": "رمز سري", "description": "دخول مرن دون مفتاح."}, {"key": "card", "label": "بطاقة قرب", "description": "خيار دخول إضافي."}],
+      "specificationGroups": [{"id": "vision-general", "label": "المواصفات العامة", "items": [{"label": "زاوية الرؤية", "value": "120°"}, {"label": "طرق الدخول", "value": "رمز، بطاقة، مفتاح"}, {"label": "الشاشة الداخلية", "value": "4 بوصات"}]}],
+      "downloads": [{"id": "vision-guide", "label": "مخطط التركيب", "path": "/static/dist/assets/documents/zakey-vision-x-install-demo.pdf", "format": "PDF", "prototypeNotice": "يؤكد فني التركيب توافق المخطط مع بابك قبل التنفيذ."}],
       "reviewIds": ["review-vision"],
       "faqIds": ["faq-camera", "faq-power", "faq-installation"],
       "relatedProductIds": ["product-apex-pro", "product-guard", "product-bridge"],
-      "instalmentMessage": "عرض أقساط بنكية تجريبي حتى 9 أشهر.",
+      "instalmentMessage": "خطط تقسيط حتى 9 أشهر — تخضع لشروط البنك عند تفعيل الخدمة.",
       "serviceFlags": {"sameDaySupported": true, "installationSupported": true}
     },
     {
@@ -271,13 +267,13 @@
       "availability": "available",
       "images": [{"id": "pulse-front", "path": "/static/dist/assets/images/generated/apex-black-v2.webp", "width": 1200, "height": 1200, "alt": "قفل زاكي بالس F5 بلوحة بصمة"}, {"id": "pulse-keypad", "path": "/static/dist/assets/images/generated/apex-fingerprint-detail-v2.webp", "width": 1200, "height": 1200, "alt": "لوحة الأرقام في قفل زاكي بالس F5"}],
       "finishes": [{"id": "finish-black", "label": "أسود", "swatch": "#20242B"}, {"id": "finish-silver", "label": "فضي", "swatch": "#A6A8AB"}],
-      "features": [{"key": "fingerprint", "label": "بصمة", "description": "دخول سريع لأفراد المنزل."}, {"key": "pin", "label": "رمز سري", "description": "إدارة رموز تجريبية."}, {"key": "low-battery", "label": "تنبيه البطارية", "description": "مؤشر واضح قبل نفاد الطاقة."}],
+      "features": [{"key": "fingerprint", "label": "بصمة", "description": "دخول سريع لأفراد المنزل."}, {"key": "pin", "label": "رمز سري", "description": "إدارة رموز العائلة والضيوف."}, {"key": "low-battery", "label": "تنبيه البطارية", "description": "مؤشر واضح قبل نفاد الطاقة."}],
       "specificationGroups": [{"id": "pulse-general", "label": "المواصفات العامة", "items": [{"label": "سُمك الباب المناسب", "value": "35–90 مم"}, {"label": "طرق الدخول", "value": "بصمة، رمز، مفتاح"}, {"label": "طاقة طوارئ", "value": "USB-C"}]}],
-      "downloads": [{"id": "pulse-guide", "label": "دليل القياس التجريبي", "path": "/static/dist/assets/documents/zakey-pulse-f5-sizing-demo.pdf", "format": "PDF", "prototypeNotice": "دليل عرض غير معتمد."}],
+      "downloads": [{"id": "pulse-guide", "label": "دليل القياس", "path": "/static/dist/assets/documents/zakey-pulse-f5-sizing-demo.pdf", "format": "PDF", "prototypeNotice": "راجع فريق التركيب لتأكيد قياسات الباب النهائية."}],
       "reviewIds": ["review-pulse"],
       "faqIds": ["faq-door-fit", "faq-power"],
       "relatedProductIds": ["product-nova", "product-elite", "product-core"],
-      "instalmentMessage": "عرض أقساط بنكية تجريبي حتى 9 أشهر.",
+      "instalmentMessage": "خطط تقسيط حتى 9 أشهر — تخضع لشروط البنك عند تفعيل الخدمة.",
       "serviceFlags": {"sameDaySupported": true, "installationSupported": true}
     },
     {
@@ -295,13 +291,13 @@
       "availability": "limited",
       "images": [{"id": "orbit-front", "path": "/static/dist/assets/images/generated/nexus-champagne-v2.webp", "width": 1200, "height": 1200, "alt": "قفل زاكي أوربت K3 بلوحة أرقام"}, {"id": "orbit-handle", "path": "/static/dist/assets/images/generated/nexus-handle-detail-v2.webp", "width": 1200, "height": 1200, "alt": "مقبض قفل زاكي أوربت K3"}],
       "finishes": [{"id": "finish-charcoal", "label": "فحمي", "swatch": "#34363A"}],
-      "features": [{"key": "pin", "label": "لوحة أرقام", "description": "رموز دخول متعددة."}, {"key": "card", "label": "بطاقة قرب", "description": "فتح تجريبي سريع."}, {"key": "auto-lock", "label": "إغلاق تلقائي", "description": "حالة واجهة قابلة للضبط."}],
+      "features": [{"key": "pin", "label": "لوحة أرقام", "description": "رموز دخول متعددة."}, {"key": "card", "label": "بطاقة قرب", "description": "فتح سريع دون مفتاح."}, {"key": "auto-lock", "label": "إغلاق تلقائي", "description": "إغلاق الباب تلقائيًا بعد الدخول."}],
       "specificationGroups": [{"id": "orbit-general", "label": "المواصفات العامة", "items": [{"label": "سُمك الباب المناسب", "value": "32–75 مم"}, {"label": "طرق الدخول", "value": "رمز، بطاقة، مفتاح"}, {"label": "الاستخدام", "value": "داخلي"}]}],
-      "downloads": [{"id": "orbit-guide", "label": "ورقة القياس التجريبية", "path": "/static/dist/assets/documents/zakey-orbit-k3-sizing-demo.pdf", "format": "PDF", "prototypeNotice": "معلومات توضيحية فقط."}],
+      "downloads": [{"id": "orbit-guide", "label": "ورقة القياس", "path": "/static/dist/assets/documents/zakey-orbit-k3-sizing-demo.pdf", "format": "PDF", "prototypeNotice": "راجع القياسات مع فريق التركيب قبل الشراء."}],
       "reviewIds": ["review-orbit"],
       "faqIds": ["faq-door-fit", "faq-power"],
       "relatedProductIds": ["product-core", "product-pulse", "product-elite"],
-      "instalmentMessage": "عرض أقساط بنكية تجريبي حتى 6 أشهر.",
+      "instalmentMessage": "خطط تقسيط حتى 6 أشهر — تخضع لشروط البنك عند تفعيل الخدمة.",
       "serviceFlags": {"sameDaySupported": true, "installationSupported": true}
     },
     {
@@ -319,13 +315,13 @@
       "availability": "available",
       "images": [{"id": "nova-front", "path": "/static/dist/assets/images/generated/apex-black-v2.webp", "width": 1200, "height": 1200, "alt": "قفل زاكي نوفا S2 الأسود"}, {"id": "nova-fingerprint", "path": "/static/dist/assets/images/generated/apex-fingerprint-detail-v2.webp", "width": 1200, "height": 1200, "alt": "مستشعر البصمة في قفل زاكي نوفا S2"}],
       "finishes": [{"id": "finish-black", "label": "أسود", "swatch": "#20242B"}, {"id": "finish-satin", "label": "فضي ساتان", "swatch": "#B7B8B5"}],
-      "features": [{"key": "fingerprint", "label": "بصمة", "description": "دخول محلي تجريبي."}, {"key": "pin", "label": "رمز سري", "description": "رموز عائلية مؤقتة."}, {"key": "low-battery", "label": "تنبيه البطارية", "description": "تنبيه مرئي واضح."}],
+      "features": [{"key": "fingerprint", "label": "بصمة", "description": "دخول سريع وآمن لأفراد المنزل."}, {"key": "pin", "label": "رمز سري", "description": "رموز عائلية ومؤقتة للضيوف."}, {"key": "low-battery", "label": "تنبيه البطارية", "description": "تنبيه مرئي واضح."}],
       "specificationGroups": [{"id": "nova-general", "label": "المواصفات العامة", "items": [{"label": "سُمك الباب المناسب", "value": "35–85 مم"}, {"label": "طرق الدخول", "value": "بصمة، رمز، مفتاح"}, {"label": "التغذية", "value": "بطاريات جافة"}]}],
-      "downloads": [{"id": "nova-guide", "label": "دليل الأبعاد التجريبي", "path": "/static/dist/assets/documents/zakey-nova-s2-dimensions-demo.pdf", "format": "PDF", "prototypeNotice": "غير مخصص للتنفيذ الفعلي."}],
+      "downloads": [{"id": "nova-guide", "label": "دليل الأبعاد", "path": "/static/dist/assets/documents/zakey-nova-s2-dimensions-demo.pdf", "format": "PDF", "prototypeNotice": "يؤكد فني التركيب الأبعاد النهائية بعد المعاينة."}],
       "reviewIds": ["review-nova"],
       "faqIds": ["faq-door-fit", "faq-power", "faq-installation"],
       "relatedProductIds": ["product-pulse", "product-orbit", "product-apex-pro"],
-      "instalmentMessage": "عرض أقساط بنكية تجريبي حتى 6 أشهر.",
+      "instalmentMessage": "خطط تقسيط حتى 6 أشهر — تخضع لشروط البنك عند تفعيل الخدمة.",
       "serviceFlags": {"sameDaySupported": true, "installationSupported": true}
     },
     {
@@ -343,13 +339,13 @@
       "availability": "unavailable",
       "images": [{"id": "core-front", "path": "/static/dist/assets/images/generated/nexus-champagne-v2.webp", "width": 1200, "height": 1200, "alt": "مقبض زاكي كور C1 الذكي"}, {"id": "core-side", "path": "/static/dist/assets/images/generated/nexus-handle-detail-v2.webp", "width": 1200, "height": 1200, "alt": "الجانب النحيف لمقبض زاكي كور C1"}],
       "finishes": [{"id": "finish-black", "label": "أسود", "swatch": "#20242B"}],
-      "features": [{"key": "fingerprint", "label": "بصمة بالمقبض", "description": "دخول مباشر من المقبض."}, {"key": "privacy", "label": "وضع خصوصية", "description": "عرض حالة محلية للغرفة."}],
+      "features": [{"key": "fingerprint", "label": "بصمة بالمقبض", "description": "دخول مباشر من المقبض."}, {"key": "privacy", "label": "وضع خصوصية", "description": "خصوصية إضافية للغرف والمساحات الداخلية."}],
       "specificationGroups": [{"id": "core-general", "label": "المواصفات العامة", "items": [{"label": "سُمك الباب المناسب", "value": "30–60 مم"}, {"label": "طرق الدخول", "value": "بصمة، مفتاح"}, {"label": "الاستخدام", "value": "داخلي"}]}],
-      "downloads": [{"id": "core-guide", "label": "ورقة الأبعاد التجريبية", "path": "/static/dist/assets/documents/zakey-core-c1-dimensions-demo.pdf", "format": "PDF", "prototypeNotice": "بيانات توضيحية غير معتمدة."}],
+      "downloads": [{"id": "core-guide", "label": "ورقة الأبعاد", "path": "/static/dist/assets/documents/zakey-core-c1-dimensions-demo.pdf", "format": "PDF", "prototypeNotice": "راجع الأبعاد مع فريق التركيب قبل الشراء."}],
       "reviewIds": ["review-core"],
       "faqIds": ["faq-door-fit", "faq-unavailable"],
       "relatedProductIds": ["product-orbit", "product-nova", "product-pulse"],
-      "instalmentMessage": "خيارات التقسيط غير متاحة لهذا المنتج التجريبي حاليًا.",
+      "instalmentMessage": "خيارات التقسيط غير متاحة لهذا المنتج حاليًا.",
       "serviceFlags": {"sameDaySupported": false, "installationSupported": true}
     },
     {
@@ -367,20 +363,20 @@
       "availability": "available",
       "images": [{"id": "guard-screen", "path": "/static/dist/assets/images/generated/vision-camera-v2.webp", "width": 1200, "height": 1200, "alt": "شاشة عين زاكي جارد فيو الداخلية"}, {"id": "guard-camera", "path": "/static/dist/assets/images/generated/vision-display-detail-v2.webp", "width": 1200, "height": 1200, "alt": "كاميرا عين الباب زاكي جارد فيو"}],
       "finishes": [{"id": "finish-black", "label": "أسود", "swatch": "#20242B"}],
-      "features": [{"key": "camera", "label": "كاميرا مدخل", "description": "عرض مرئي تجريبي."}, {"key": "doorbell", "label": "جرس مدمج", "description": "تنبيه محلي داخل الواجهة."}, {"key": "low-battery", "label": "تنبيه البطارية", "description": "مؤشر شحن واضح."}],
+      "features": [{"key": "camera", "label": "كاميرا مدخل", "description": "رؤية واضحة للزائر أمام الباب."}, {"key": "doorbell", "label": "جرس مدمج", "description": "تنبيه مباشر عند وصول الزائر."}, {"key": "low-battery", "label": "تنبيه البطارية", "description": "مؤشر شحن واضح."}],
       "specificationGroups": [{"id": "guard-general", "label": "المواصفات العامة", "items": [{"label": "سُمك الباب المناسب", "value": "35–100 مم"}, {"label": "الشاشة", "value": "4.3 بوصة"}, {"label": "التغذية", "value": "بطارية قابلة للشحن"}]}],
-      "downloads": [{"id": "guard-guide", "label": "مخطط الفتحة التجريبي", "path": "/static/dist/assets/documents/zakey-guard-view-aperture-demo.pdf", "format": "PDF", "prototypeNotice": "المخطط للعرض ولا يضمن التوافق."}],
+      "downloads": [{"id": "guard-guide", "label": "مخطط فتحة الباب", "path": "/static/dist/assets/documents/zakey-guard-view-aperture-demo.pdf", "format": "PDF", "prototypeNotice": "يؤكد فني التركيب توافق المخطط مع بابك."}],
       "reviewIds": ["review-guard"],
       "faqIds": ["faq-camera", "faq-power"],
       "relatedProductIds": ["product-vision", "product-bridge", "product-apex-pro"],
-      "instalmentMessage": "عرض أقساط بنكية تجريبي حتى 6 أشهر.",
+      "instalmentMessage": "خطط تقسيط حتى 6 أشهر — تخضع لشروط البنك عند تفعيل الخدمة.",
       "serviceFlags": {"sameDaySupported": true, "installationSupported": false}
     },
     {
       "id": "product-bridge",
       "slug": "zakey-bridge-mini",
       "name": "جسر زاكي ميني",
-      "shortDescription": "ملحق عرض يربط حالات الأقفال الذكية بواجهة المنزل المحليّة.",
+      "shortDescription": "جسر مدمج يربط الأقفال الذكية بمنظومة المنزل لتجربة تحكم أكثر سلاسة.",
       "categoryId": "cat-accessory",
       "collectionIds": ["collection-solutions", "collection-accessories"],
       "price": 2190,
@@ -391,48 +387,48 @@
       "availability": "available",
       "images": [{"id": "bridge-front", "path": "/static/dist/assets/images/generated/vision-camera-v2.webp", "width": 1200, "height": 1200, "alt": "جسر زاكي ميني الأبيض"}, {"id": "bridge-home", "path": "/static/dist/assets/images/home/smart-home-solutions.webp", "width": 1200, "height": 1200, "alt": "جسر زاكي ميني في مساحة منزلية"}],
       "finishes": [{"id": "finish-white", "label": "أبيض", "swatch": "#F4F4F2"}],
-      "features": [{"key": "app", "label": "واجهة منزلية", "description": "حالات محلية للعرض فقط."}, {"key": "automation", "label": "مشاهد ذكية", "description": "نماذج تفاعل غير متصلة."}],
-      "specificationGroups": [{"id": "bridge-general", "label": "المواصفات العامة", "items": [{"label": "الاستخدام", "value": "داخلي"}, {"label": "التغذية", "value": "USB-C"}, {"label": "الاتصال", "value": "محاكاة واجهة فقط"}]}],
-      "downloads": [{"id": "bridge-guide", "label": "دليل الواجهة التجريبي", "path": "/static/dist/assets/documents/zakey-bridge-mini-ui-demo.pdf", "format": "PDF", "prototypeNotice": "لا يصف تكاملًا أو اتصالًا تشغيليًا."}],
+      "features": [{"key": "app", "label": "تحكم منزلي", "description": "إدارة الأقفال المتوافقة من مكان واحد."}, {"key": "automation", "label": "مشاهد ذكية", "description": "روتينات مرنة للدخول والمغادرة."}],
+      "specificationGroups": [{"id": "bridge-general", "label": "المواصفات العامة", "items": [{"label": "الاستخدام", "value": "داخلي"}, {"label": "التغذية", "value": "USB-C"}, {"label": "التوافق", "value": "أقفال ZAKEY المدعومة"}]}],
+      "downloads": [{"id": "bridge-guide", "label": "دليل الاستخدام", "path": "/static/dist/assets/documents/zakey-bridge-mini-ui-demo.pdf", "format": "PDF", "prototypeNotice": "تُفعّل خصائص الاتصال عند إطلاق الخدمة المتوافقة."}],
       "reviewIds": ["review-bridge"],
       "faqIds": ["faq-connectivity", "faq-power"],
       "relatedProductIds": ["product-guard", "product-vision", "product-apex-pro"],
-      "instalmentMessage": "لا توجد خطة تقسيط لهذا الملحق التجريبي.",
+      "instalmentMessage": "لا توجد خطة تقسيط لهذا الملحق حاليًا.",
       "serviceFlags": {"sameDaySupported": true, "installationSupported": false}
     }
   ],
   "reviews": [
-    {"id": "review-apex", "productId": "product-apex-pro", "customerName": "مريم أحمد", "rating": 5, "quote": "واجهة المنتج واضحة وساعدتني على مقارنة طرق الدخول بسهولة.", "placement": ["product", "home"], "prototypeAttribution": "رأي تجريبي غير صادر عن عميل حقيقي."},
-    {"id": "review-elite", "productId": "product-elite", "customerName": "عمر خالد", "rating": 5, "quote": "التصميم النحيف وتوزيع المعلومات يبدوان مناسبين للباب الحديث.", "placement": ["product", "home"], "prototypeAttribution": "رأي تجريبي غير صادر عن عميل حقيقي."},
-    {"id": "review-vision", "productId": "product-vision", "customerName": "سارة محمود", "rating": 4, "quote": "تفاصيل الكاميرا والشاشة معروضة بطريقة سهلة الفهم.", "placement": ["product"], "prototypeAttribution": "رأي تجريبي غير صادر عن عميل حقيقي."},
-    {"id": "review-pulse", "productId": "product-pulse", "customerName": "يوسف علي", "rating": 5, "quote": "خيار عملي والمواصفات مختصرة من دون فقد المعلومات المهمة.", "placement": ["product", "home"], "prototypeAttribution": "رأي تجريبي غير صادر عن عميل حقيقي."},
-    {"id": "review-orbit", "productId": "product-orbit", "customerName": "نورهان سامي", "rating": 4, "quote": "الفلترة والمقارنة أوصلتاني إلى هذا المقاس بسرعة.", "placement": ["product"], "prototypeAttribution": "رأي تجريبي غير صادر عن عميل حقيقي."},
-    {"id": "review-nova", "productId": "product-nova", "customerName": "كريم حسام", "rating": 5, "quote": "تفاصيل البصمة والبطارية واضحة ومباشرة.", "placement": ["product"], "prototypeAttribution": "رأي تجريبي غير صادر عن عميل حقيقي."},
-    {"id": "review-core", "productId": "product-core", "customerName": "دينا وائل", "rating": 4, "quote": "حالة عدم التوفر واضحة مع بقاء تفاصيل المنتج قابلة للمراجعة.", "placement": ["product"], "prototypeAttribution": "رأي تجريبي غير صادر عن عميل حقيقي."},
-    {"id": "review-guard", "productId": "product-guard", "customerName": "أحمد رامي", "rating": 4, "quote": "صفحة الملحق تشرح الشاشة والكاميرا دون مبالغة.", "placement": ["product"], "prototypeAttribution": "رأي تجريبي غير صادر عن عميل حقيقي."},
-    {"id": "review-bridge", "productId": "product-bridge", "customerName": "هاجر شريف", "rating": 4, "quote": "التنبيه التجريبي يوضح أن الربط ليس خدمة تشغيلية.", "placement": ["product"], "prototypeAttribution": "رأي تجريبي غير صادر عن عميل حقيقي."}
+    {"id": "review-apex", "productId": "product-apex-pro", "customerName": "للمنزل العائلي", "rating": 5, "quote": "خمس وسائل دخول تمنح كل فرد الطريقة الأنسب له، مع شاشة داخلية لرؤية أوضح.", "placement": ["product", "home"], "prototypeAttribution": "سيناريو استخدام مقترح"},
+    {"id": "review-elite", "productId": "product-elite", "customerName": "للمداخل العصرية", "rating": 5, "quote": "تصميم نحيف وبصمة مدمجة في المقبض لمن يريد تقنية لا تفرض نفسها على المكان.", "placement": ["product", "home"], "prototypeAttribution": "سيناريو استخدام مقترح"},
+    {"id": "review-vision", "productId": "product-vision", "customerName": "لرؤية الزائر", "rating": 4, "quote": "الكاميرا والجرس والشاشة الداخلية تجمع تفاصيل المدخل في حل واحد واضح.", "placement": ["product"], "prototypeAttribution": "سيناريو استخدام مقترح"},
+    {"id": "review-pulse", "productId": "product-pulse", "customerName": "للاستخدام اليومي", "rating": 5, "quote": "بصمة ورمز سري وتنبيه بطارية في قفل عملي يسهل الاعتماد عليه كل يوم.", "placement": ["product", "home"], "prototypeAttribution": "سيناريو استخدام مقترح"},
+    {"id": "review-orbit", "productId": "product-orbit", "customerName": "للمكاتب الصغيرة", "rating": 4, "quote": "لوحة أرقام مدمجة وبطاقات قرب تناسب حركة الفريق والزوار خلال اليوم.", "placement": ["product"], "prototypeAttribution": "سيناريو استخدام مقترح"},
+    {"id": "review-nova", "productId": "product-nova", "customerName": "للشقق الحديثة", "rating": 5, "quote": "حل بسيط يجمع البصمة والرمز السري مع تنبيه واضح لحالة البطارية.", "placement": ["product"], "prototypeAttribution": "سيناريو استخدام مقترح"},
+    {"id": "review-core", "productId": "product-core", "customerName": "للغرف الداخلية", "rating": 4, "quote": "مقبض ذكي مدمج يضيف الخصوصية دون تعقيد شكل الباب أو طريقة استخدامه.", "placement": ["product"], "prototypeAttribution": "سيناريو استخدام مقترح"},
+    {"id": "review-guard", "productId": "product-guard", "customerName": "لتطوير عين الباب", "rating": 4, "quote": "شاشة أكبر وكاميرا أوضح لمن يريد تحديث المدخل دون تغيير القفل بالكامل.", "placement": ["product"], "prototypeAttribution": "سيناريو استخدام مقترح"},
+    {"id": "review-bridge", "productId": "product-bridge", "customerName": "للمنزل المترابط", "rating": 4, "quote": "جسر صغير يجمع إدارة الأقفال المتوافقة وروتينات الدخول في مكان واحد.", "placement": ["product"], "prototypeAttribution": "سيناريو استخدام مقترح"}
   ],
   "faqs": [
-    {"id": "faq-door-fit", "question": "كيف أعرف أن القفل مناسب لبابي؟", "answer": "قارن سُمك الباب واتجاه الفتح بالمواصفات التجريبية، ثم اطلب معاينة متخصصة عند توفر الخدمة التشغيلية.", "page": "product", "productIds": ["product-apex-pro", "product-elite", "product-pulse", "product-orbit", "product-nova", "product-core"]},
-    {"id": "faq-power", "question": "ماذا يحدث عند انخفاض البطارية؟", "answer": "تعرض الواجهة تنبيهًا مبكرًا، وتوضح صفحة كل منتج خيار الطاقة الاحتياطية المتاح في هذا النموذج التجريبي.", "page": "product", "productIds": ["product-apex-pro", "product-vision", "product-pulse", "product-orbit", "product-nova", "product-guard", "product-bridge"]},
-    {"id": "faq-installation", "question": "أين تظهر خدمة التركيب؟", "answer": "تظهر واجهة التركيب التجريبية فقط لعناوين القاهرة والجيزة والإسكندرية المحددة في بيانات العرض.", "page": "product", "productIds": ["product-apex-pro", "product-elite", "product-vision", "product-nova"]},
-    {"id": "faq-camera", "question": "هل يتم حفظ صور الكاميرا؟", "answer": "لا. الصور والحالات في هذه الواجهة توضيحية ولا تُرفع أو تُحفظ أو تُرسل إلى أي خدمة.", "page": "product", "productIds": ["product-vision", "product-guard"]},
-    {"id": "faq-connectivity", "question": "هل جسر زاكي متصل بخدمة منزل ذكي؟", "answer": "لا. التكامل المعروض حالة واجهة محلية فقط ولا يمثل اتصالًا بمزود أو جهاز حقيقي.", "page": "product", "productIds": ["product-bridge"]},
+    {"id": "faq-door-fit", "question": "كيف أعرف أن القفل مناسب لبابي؟", "answer": "قارن سُمك الباب واتجاه الفتح بالمواصفات، ثم اطلب معاينة من فريق التركيب لتأكيد المقاس قبل الشراء.", "page": "product", "productIds": ["product-apex-pro", "product-elite", "product-pulse", "product-orbit", "product-nova", "product-core"]},
+    {"id": "faq-power", "question": "ماذا يحدث عند انخفاض البطارية؟", "answer": "ينبهك القفل مبكرًا قبل نفاد البطارية، وتوضح صفحة كل منتج خيار الطاقة الاحتياطية المتاح له.", "page": "product", "productIds": ["product-apex-pro", "product-vision", "product-pulse", "product-orbit", "product-nova", "product-guard", "product-bridge"]},
+    {"id": "faq-installation", "question": "أين تتوفر خدمة التركيب؟", "answer": "خدمة التركيب معروضة لعناوين القاهرة والجيزة والإسكندرية، ويؤكد الفريق التغطية والموعد قبل التنفيذ.", "page": "product", "productIds": ["product-apex-pro", "product-elite", "product-vision", "product-nova"]},
+    {"id": "faq-camera", "question": "هل يتم حفظ صور الكاميرا؟", "answer": "تعتمد خصائص المشاهدة والتخزين على المنتج وإعداداته. لا تحفظ نسخة الموقع الحالية أي صور أو بيانات كاميرا.", "page": "product", "productIds": ["product-vision", "product-guard"]},
+    {"id": "faq-connectivity", "question": "كيف يعمل جسر ZAKEY مع الأقفال؟", "answer": "صُمم الجسر لإدارة الأقفال المتوافقة من مكان واحد. خصائص الاتصال الفعلية تُفعّل عند إطلاق الخدمة المدعومة.", "page": "product", "productIds": ["product-bridge"]},
     {"id": "faq-unavailable", "question": "هل يمكن شراء منتج غير متاح؟", "answer": "لا. تبقى معلومات المنتج ظاهرة للمراجعة بينما تُعطّل إجراءات الشراء بوضوح.", "page": "product", "productIds": ["product-core"]},
-    {"id": "faq-shipping", "question": "متى يكون الشحن مجانيًا؟", "answer": "تعرض الواجهة شحنًا مجانيًا تجريبيًا عندما يصل المجموع الفرعي إلى 1,500 ج.م.", "page": "contact", "productIds": []},
+    {"id": "faq-shipping", "question": "متى يكون الشحن مجانيًا؟", "answer": "يصبح الشحن مجانيًا عندما يصل المجموع الفرعي إلى 1,500 ج.م وفق السياسة المعروضة.", "page": "contact", "productIds": []},
     {"id": "faq-payment", "question": "هل وسائل الدفع المعروضة مفعّلة؟", "answer": "لا. جميع وسائل الدفع خيارات واجهة تجريبية ولا تنفذ تحويلًا أو خصمًا أو طلبًا.", "page": "contact", "productIds": []}
   ],
   "partners": [
-    {"id": "partner-home-lab", "name": "هوم لاب", "mark": {"path": "/static/dist/assets/images/partners/home-lab.svg", "width": 180, "height": 64, "alt": "شعار هوم لاب التجريبي"}, "destination": {"action": "prototype-notice", "label": "شريك عرض تجريبي"}},
-    {"id": "partner-door-studio", "name": "دور ستوديو", "mark": {"path": "/static/dist/assets/images/partners/door-studio.svg", "width": 180, "height": 64, "alt": "شعار دور ستوديو التجريبي"}, "destination": {"action": "prototype-notice", "label": "شريك عرض تجريبي"}},
-    {"id": "partner-smart-living", "name": "سمارت ليفنج", "mark": {"path": "/static/dist/assets/images/partners/smart-living.svg", "width": 180, "height": 64, "alt": "شعار سمارت ليفنج التجريبي"}, "destination": {"action": "prototype-notice", "label": "شريك عرض تجريبي"}},
-    {"id": "partner-design-review", "name": "ديزاين ريفيو", "mark": {"path": "/static/dist/assets/images/partners/design-review.svg", "width": 180, "height": 64, "alt": "شعار ديزاين ريفيو التجريبي"}, "destination": {"action": "prototype-notice", "label": "ظهور صحفي تجريبي"}}
+    {"id": "partner-home-lab", "name": "المنازل الحديثة", "mark": {"path": "/static/dist/assets/images/partners/home-lab.svg", "width": 180, "height": 64, "alt": "أيقونة المنازل الحديثة"}, "destination": {"action": "none", "label": "المنازل الحديثة"}},
+    {"id": "partner-door-studio", "name": "مكاتب الأعمال", "mark": {"path": "/static/dist/assets/images/partners/door-studio.svg", "width": 180, "height": 64, "alt": "أيقونة مكاتب الأعمال"}, "destination": {"action": "none", "label": "مكاتب الأعمال"}},
+    {"id": "partner-smart-living", "name": "الوحدات الفندقية", "mark": {"path": "/static/dist/assets/images/partners/smart-living.svg", "width": 180, "height": 64, "alt": "أيقونة الوحدات الفندقية"}, "destination": {"action": "none", "label": "الوحدات الفندقية"}},
+    {"id": "partner-design-review", "name": "مشروعات التطوير", "mark": {"path": "/static/dist/assets/images/partners/design-review.svg", "width": 180, "height": 64, "alt": "أيقونة مشروعات التطوير"}, "destination": {"action": "none", "label": "مشروعات التطوير"}}
   ],
   "team": [
-    {"id": "team-laila", "name": "ليلى منصور", "role": "تصميم تجربة المنتج", "bio": "شخصية عرض تشرح اهتمام ZAKEY بالوضوح وسهولة الاستخدام دون ادعاء منصب تشغيلي.", "image": {"path": "/static/dist/assets/images/team/laila-mansour.webp", "width": 720, "height": 880, "alt": "صورة تجريبية لليلى منصور"}},
-    {"id": "team-yassin", "name": "ياسين فؤاد", "role": "تجربة الأمان المنزلي", "bio": "شخصية عرض تربط احتياجات المنزل بطريقة تقديم المعلومات في الواجهة.", "image": {"path": "/static/dist/assets/images/team/yassin-fouad.webp", "width": 720, "height": 880, "alt": "صورة تجريبية لياسين فؤاد"}},
-    {"id": "team-salma", "name": "سلمى عادل", "role": "المحتوى وخدمة المستخدم", "bio": "شخصية عرض تركز على اللغة العربية الواضحة ومسارات المساعدة.", "image": {"path": "/static/dist/assets/images/team/salma-adel.webp", "width": 720, "height": 880, "alt": "صورة تجريبية لسلمى عادل"}},
-    {"id": "team-ziad", "name": "زياد شوقي", "role": "جودة الواجهة", "bio": "شخصية عرض توضح اهتمام المشروع بالتجاوب وإتاحة الاستخدام.", "image": {"path": "/static/dist/assets/images/team/ziad-shawky.webp", "width": 720, "height": 880, "alt": "صورة تجريبية لزياد شوقي"}}
+    {"id": "team-laila", "name": "تصميم المنتج", "role": "تقنية سهلة الاستخدام", "bio": "نحوّل خصائص الأمان المعقدة إلى تجربة واضحة في كل تفصيلة.", "image": {"path": "/static/dist/assets/images/team/laila-mansour.webp", "width": 720, "height": 880, "alt": "فريق تصميم المنتج"}},
+    {"id": "team-yassin", "name": "حلول الأمان", "role": "اختيار يناسب كل باب", "bio": "نراجع احتياجات الدخول وطبيعة المكان للوصول إلى الحل الأنسب.", "image": {"path": "/static/dist/assets/images/team/yassin-fouad.webp", "width": 720, "height": 880, "alt": "فريق حلول الأمان"}},
+    {"id": "team-salma", "name": "خدمة العملاء", "role": "دعم واضح باللغة العربية", "bio": "نساعد العميل على فهم الخيارات والخطوات قبل الشراء وبعده.", "image": {"path": "/static/dist/assets/images/team/salma-adel.webp", "width": 720, "height": 880, "alt": "فريق خدمة العملاء"}},
+    {"id": "team-ziad", "name": "ضمان الجودة", "role": "تفاصيل تستحق الثقة", "bio": "نهتم بجودة التجربة والمعلومات من صفحة المنتج حتى خدمة التركيب.", "image": {"path": "/static/dist/assets/images/team/ziad-shawky.webp", "width": 720, "height": 880, "alt": "فريق ضمان الجودة"}}
   ],
   "governorates": [
     {"key": "alexandria", "label": "الإسكندرية"},

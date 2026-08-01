@@ -16,7 +16,7 @@
     <div class="container">
       <p class="eyebrow">مراجعة اختياراتك</p>
       <h1 id="cart-heading" tabindex="-1">سلة التسوق</h1>
-      <p>عدّل الكميات وراجع ملخص الأسعار قبل الانتقال إلى واجهة الدفع التجريبية.</p>
+      <p>عدّل الكميات وراجع ملخص الأسعار قبل الانتقال إلى الدفع.</p>
     </div>
   </section>
 
@@ -32,7 +32,7 @@
           <div class="cart-lines" data-cart-lines></div>
           <form class="coupon-card" data-coupon-form novalidate>
             <div>
-              <label for="coupon-code">كود الخصم التجريبي</label>
+            <label for="coupon-code">كود الخصم</label>
               <p>استخدم <bdi lang="en">ZAKEYDEMO</bdi> لمعاينة الحالة المقبولة.</p>
             </div>
             <div class="coupon-control">
@@ -47,13 +47,13 @@
           <h2 id="cart-summary-heading">ملخص السلة</h2>
           <dl>
             <div><dt>المجموع الفرعي</dt><dd data-cart-subtotal>—</dd></div>
-            <div data-cart-discount-row hidden><dt>خصم تجريبي</dt><dd data-cart-discount>—</dd></div>
+          <div data-cart-discount-row hidden><dt>الخصم</dt><dd data-cart-discount>—</dd></div>
             <div><dt>الشحن</dt><dd data-cart-shipping>—</dd></div>
             <div><dt>منها ضريبة قيمة مضافة 14%</dt><dd data-cart-vat>—</dd></div>
             <div class="cart-summary__total"><dt>الإجمالي</dt><dd data-cart-total>—</dd></div>
           </dl>
           <p class="shipping-progress" data-shipping-message></p>
-          <a class="btn btn--gold" href="{% url 'storefront:checkout' %}">متابعة إلى الدفع التجريبي</a>
+        <a class="btn btn--gold" href="{% url 'storefront:checkout' %}">متابعة إلى الدفع</a>
           <a class="btn btn--outline" href="{% url 'storefront:shop' %}">متابعة التسوق</a>
           <small>{{ site.prototypeNotice }}</small>
         </aside>

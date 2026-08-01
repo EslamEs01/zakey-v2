@@ -4,7 +4,6 @@ import { initializeHeader } from "./components/header.js";
 import { initializeWishlistControls } from "./components/wishlist.js";
 import { StorageAdapter } from "./state/storage-adapter.js";
 import { PrototypeStore } from "./state/store.js";
-import { announce } from "./utilities/dom.js";
 
 const fixtureElement = document.querySelector("#zakey-fixture");
 const fixture = fixtureElement ? JSON.parse(fixtureElement.textContent) : null;
@@ -30,19 +29,7 @@ if (fixture) {
   initializeHeader(store);
   initializePrototypeForms();
   initializeWishlistControls(store);
-  initializeUtilities(store);
   initializePage(store);
-}
-
-function initializeUtilities(store) {
-  document.querySelectorAll("[data-prototype-reset]").forEach((button) => button.addEventListener("click", () => {
-    store.reset();
-    announce("تمت إعادة ضبط بيانات النموذج المحلي فقط");
-    window.setTimeout(() => window.location.reload(), 250);
-  }));
-  document.querySelectorAll("[data-prototype-action]").forEach((button) => button.addEventListener("click", () => {
-    announce(`${button.dataset.prototypeAction} رابط توضيحي غير متصل بخدمة خارجية.`);
-  }));
 }
 
 async function initializePage(store) {

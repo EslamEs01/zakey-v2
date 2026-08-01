@@ -7,14 +7,14 @@
   <div class="container">
     <nav class="breadcrumb breadcrumb--light" aria-label="مسار التنقل"><a href="{% url 'storefront:home' %}">الرئيسية</a>{% include "components/icon.html" with name="chevron" %}<span aria-current="page">{% if page_id == 'search' %}البحث{% elif page_id == 'collection' %}المجموعة{% else %}المتجر{% endif %}</span></nav>
     <h1>{% if page_id == 'search' %}نتائج البحث{% elif page_id == 'collection' %}مجموعة مختارة{% else %}أقفال ZAKEY الذكية{% endif %}</h1>
-    <p>{% if catalogue.criteria.q %}نتائج البحث عن “{{ catalogue.criteria.q }}”{% else %}قارن وسائل الدخول والتصميم والسعر في بيانات عرض محلية واضحة.{% endif %}</p>
+    <p data-catalogue-description>{% if catalogue.criteria.q %}نتائج البحث عن “{{ catalogue.criteria.q }}”{% else %}قارن وسائل الدخول والتصميم والسعر واختر القفل الأنسب لاحتياجاتك.{% endif %}</p>
   </div>
 </section>
 
 <section class="section catalogue-section">
   <div class="container">
     <div class="catalogue-toolbar">
-      <div><strong><span data-result-count>{{ catalogue.totalCount }}</span> منتج</strong><span class="prototype-note">بيانات تجريبية قابلة للاستبدال لاحقًا.</span></div>
+      <div><strong><span data-result-count>{{ catalogue.totalCount }}</span> منتج</strong></div>
       <div class="toolbar-actions">
         <button class="btn btn--outline filter-open" type="button" data-filter-open aria-haspopup="dialog">{% include "components/icon.html" with name="filter" %} الفلاتر</button>
         <form method="get" data-sort-form>
@@ -32,9 +32,13 @@
       </div>
     </div>
 
-    {% if catalogue.activeChips %}
-      <div class="active-filters" role="group" aria-label="الفلاتر النشطة"><span>محدد:</span>{% for chip in catalogue.activeChips %}<button type="button" class="filter-chip" data-filter-remove="{{ chip.key }}" data-filter-value="{{ chip.value }}">{{ chip.label }} {% include "components/icon.html" with name="x" %}</button>{% endfor %}<a href="{% url 'storefront:shop' %}">مسح الكل</a></div>
-    {% endif %}
+    <div class="active-filters" role="group" aria-label="الفلاتر النشطة" data-active-filters {% if not catalogue.activeChips %}hidden{% endif %}><span>محدد:</span>{% for chip in catalogue.activeChips %}<button type="button" class="filter-chip" data-filter-remove="{{ chip.key }}" data-filter-value="{{ chip.value }}">{{ chip.label }} {% include "components/icon.html" with name="x" %}</button>{% endfor %}<a href="{% url 'storefront:shop' %}">مسح الكل</a></div>
+
+    <div hidden data-catalogue-product-library>
+      {% for product in fixture.products %}
+        <template data-catalogue-product-template="{{ product.id }}">{% include "components/product_card.html" %}</template>
+      {% endfor %}
+    </div>
 
     <div class="catalogue-layout">
       <aside class="filter-sidebar" aria-label="فلاتر المنتجات">{% include "components/catalogue_filters.html" %}</aside>
@@ -42,7 +46,7 @@
         {% if page_state == 'loading' %}
       <div class="catalogue-grid" role="status" aria-label="جار تحميل المنتجات">{% for i in "123456" %}<div class="product-skeleton" aria-hidden="true"></div>{% endfor %}</div>
         {% elif page_state == 'recoverable-error' or page_state == 'error' %}
-          <div class="state-panel"><div><span class="state-panel__icon">{% include "components/icon.html" with name="box" %}</span><h2>تعذّر عرض النتائج التجريبية</h2><p>يمكنك إعادة المحاولة من دون فقد اختياراتك.</p><button class="btn btn--primary" type="button" data-retry-catalogue>إعادة المحاولة</button></div></div>
+          <div class="state-panel"><div><span class="state-panel__icon">{% include "components/icon.html" with name="box" %}</span><h2>تعذّر عرض النتائج</h2><p>يمكنك إعادة المحاولة من دون فقد اختياراتك.</p><button class="btn btn--primary" type="button" data-retry-catalogue>إعادة المحاولة</button></div></div>
         {% elif catalogue.products %}
           <div class="catalogue-grid">{% for product in catalogue.products %}{% include "components/product_card.html" %}{% endfor %}</div>
           {% if catalogue.pageCount > 1 %}

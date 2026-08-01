@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}الدفع التجريبي | ZAKEY{% endblock %}
+{% block title %}إتمام الطلب | ZAKEY{% endblock %}
 
 {% block content %}
 <div class="checkout-page" data-checkout-root data-initial-step="{{ checkout_step }}" data-qa-state="{{ page_state }}" aria-busy="true">
   <div class="container checkout-stepper-wrap">
-    <h1 class="sr-only" id="checkout-heading" tabindex="-1">الدفع التجريبي</h1>
-    <ol class="checkout-stepper" aria-label="خطوات الدفع التجريبي">
+    <h1 class="sr-only" id="checkout-heading" tabindex="-1">إتمام الطلب</h1>
+    <ol class="checkout-stepper" aria-label="خطوات إتمام الطلب">
       <li data-checkout-step-item="shipping">
         <button type="button" data-checkout-step="shipping" aria-controls="checkout-panel-shipping">
           <span aria-hidden="true">١</span>
@@ -38,7 +38,7 @@
       <section class="state-panel checkout-empty" data-checkout-empty hidden aria-labelledby="checkout-empty-heading">
         <span class="state-panel__icon" aria-hidden="true">{% include "components/icon.html" with name="cart" %}</span>
         <h2 id="checkout-empty-heading">لا توجد منتجات لمراجعتها</h2>
-        <p>أضف منتجًا إلى السلة أولًا، ثم ارجع إلى واجهة الدفع التجريبية.</p>
+        <p>أضف منتجًا إلى السلة أولًا، ثم ارجع لإتمام بيانات الطلب.</p>
         <div class="checkout-empty__actions">
           <a class="btn btn--primary" href="{% url 'storefront:shop' %}">استكشف المنتجات</a>
           <a class="btn btn--outline" href="{% url 'storefront:cart' %}">عرض السلة</a>
@@ -108,7 +108,7 @@
                     <select id="checkout-area" name="areaKey" aria-describedby="checkout-area-help">
                       <option value="">اختر المنطقة إن كانت مدرجة</option>
                     </select>
-                    <small id="checkout-area-help">يحدد هذا الاختيار ظهور التوصيل في اليوم نفسه فقط وفق بيانات العرض.</small>
+                    <small id="checkout-area-help">يظهر التوصيل في اليوم نفسه للمناطق المؤهلة فقط.</small>
                   </div>
                   <div class="field checkout-field--wide">
                     <label for="checkout-street">اسم الشارع والعنوان التفصيلي <span aria-hidden="true">*</span></label>
@@ -146,16 +146,16 @@
               </fieldset>
 
               <fieldset class="checkout-fieldset checkout-installation" data-installation-fieldset hidden disabled>
-                <legend>خدمة التركيب التجريبية</legend>
+                <legend>خدمة التركيب</legend>
                 <label class="checkout-check-row">
                   <input type="checkbox" name="installation" value="requested">
-                  <span><strong>أرغب في معاينة طلب تركيب</strong><small>تظهر هذه الواجهة فقط لعناوين القاهرة والجيزة والإسكندرية، ولا تحجز موعدًا.</small></span>
+                  <span><strong>أرغب في طلب خدمة تركيب</strong><small>الخدمة متاحة لعناوين القاهرة والجيزة والإسكندرية، ولا يُحجز موعد في النسخة الحالية.</small></span>
                 </label>
               </fieldset>
 
               <label class="checkout-check-row checkout-acknowledgement">
                 <input type="checkbox" id="checkout-acknowledgement" name="acknowledgement" aria-describedby="checkout-acknowledgement-error" required>
-                <span><strong>أفهم أن هذه واجهة تجريبية فقط <span aria-hidden="true">*</span></strong><small>لن يُنشأ طلب، ولن تُرسل بيانات أو تُنفذ معاملة.</small></span>
+                <span><strong>أوافق على معاينة الخطوات فقط <span aria-hidden="true">*</span></strong><small>هذه نسخة ما قبل الإطلاق؛ لن يُنشأ طلب، ولن تُرسل بيانات أو تُنفذ معاملة.</small></span>
               </label>
               <p class="field-error" id="checkout-acknowledgement-error" hidden></p>
 
@@ -174,7 +174,7 @@
 
             <form data-payment-form novalidate>
               <fieldset class="checkout-fieldset checkout-choice-fieldset">
-                <legend>اختر طريقة للعرض <span aria-hidden="true">*</span></legend>
+                <legend>اختر طريقة الدفع <span aria-hidden="true">*</span></legend>
                 <div class="checkout-choice-grid checkout-choice-grid--payment">
                   {% for option in fixture.paymentOptions %}
                     <label class="checkout-choice checkout-choice--payment">
@@ -193,7 +193,7 @@
 
               <div class="checkout-prototype-banner">
                 {% include "components/icon.html" with name="info" %}
-                <p><strong>لا توجد وسيلة دفع متصلة.</strong> اختيارك يغيّر ملخص الواجهة فقط؛ لا يُطلب رقم بطاقة أو حساب محفظة.</p>
+                <p><strong>الدفع الإلكتروني قيد التجهيز.</strong> اختيارك يغيّر الملخص فقط؛ لن نطلب رقم بطاقة أو بيانات محفظة.</p>
               </div>
 
               <div class="checkout-actions">
@@ -229,18 +229,18 @@
             <div class="checkout-final-state status-message" data-final-state role="status" tabindex="-1" hidden></div>
             <div class="checkout-actions checkout-actions--review">
               <button class="btn btn--outline" type="button" data-go-step="payment">العودة إلى الدفع</button>
-              <button class="btn btn--gold" type="button" data-checkout-final>عرض حالة الإرسال غير المتاح</button>
+              <button class="btn btn--gold" type="button" data-checkout-final>تأكيد المعاينة</button>
             </div>
             <p class="prototype-note">{{ site.prototypeNotice }}</p>
           </section>
         </div>
 
         <aside class="checkout-summary" aria-labelledby="checkout-summary-heading">
-          <h2 id="checkout-summary-heading">ملخص الطلب التجريبي</h2>
+          <h2 id="checkout-summary-heading">ملخص الطلب</h2>
           <div class="checkout-summary__lines" data-checkout-lines></div>
           <dl class="checkout-summary__totals">
             <div><dt>المجموع الفرعي</dt><dd data-checkout-subtotal>—</dd></div>
-            <div data-checkout-discount-row hidden><dt>خصم تجريبي</dt><dd data-checkout-discount>—</dd></div>
+            <div data-checkout-discount-row hidden><dt>الخصم</dt><dd data-checkout-discount>—</dd></div>
             <div><dt>الشحن</dt><dd data-checkout-shipping>يُحدد حسب الاختيار</dd></div>
             <div><dt>منها ضريبة قيمة مضافة 14%</dt><dd data-checkout-vat>—</dd></div>
             <div class="checkout-summary__total"><dt>الإجمالي</dt><dd data-checkout-total>—</dd></div>

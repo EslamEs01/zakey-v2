@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}تواصل مع ZAKEY | نموذج رسالة تجريبي{% endblock %}
+{% block title %}تواصل مع ZAKEY | المبيعات والتركيب والدعم{% endblock %}
 
 {% block content %}
 {% with contact=fixture.site.contact %}
@@ -30,7 +30,7 @@
 
   <section class="section section--compact" aria-labelledby="contact-methods-title">
     <div class="container">
-      <h2 class="sr-only" id="contact-methods-title">طرق التواصل التجريبية</h2>
+      <h2 class="sr-only" id="contact-methods-title">كيف يمكننا مساعدتك؟</h2>
       <div class="contact-methods">
         {% for card in contact.methodCards %}
           <article class="surface-card contact-method">
@@ -39,13 +39,7 @@
             </span>
             <h3 class="contact-method__title">{{ card.title }}</h3>
             <p class="contact-method__detail"><bdi>{{ card.detail }}</bdi></p>
-            {% if card.action == "prototype-notice" %}
-              <button class="btn btn--outline contact-method__action" type="button" data-prototype-action="{{ card.title }}">
-                اعرض التنبيه التجريبي
-              </button>
-            {% else %}
-              <p class="prototype-note">للعرض فقط — لا يوجد خط خدمة عملاء مفعّل.</p>
-            {% endif %}
+            <a class="btn btn--outline contact-method__action" href="#contact-form">ابدأ استفسارك</a>
           </article>
         {% endfor %}
       </div>
@@ -94,7 +88,7 @@
                 <option value="">اختر موضوعًا</option>
                 <option value="product">استفسار عن منتج</option>
                 <option value="installation">خدمة التركيب</option>
-                <option value="order">متابعة عرض تجريبي</option>
+                <option value="support">دعم ما بعد البيع</option>
                 <option value="other">موضوع آخر</option>
               </select>
               <p class="field-error" id="contact-subject-error" hidden></p>
@@ -122,12 +116,12 @@
 
         <div class="contact-status" data-form-status="contact" role="status">
           {% if page_state == "loading" %}
-            <p class="status-message">جارٍ التحقق من الرسالة داخل الواجهة، ولن تُرسل إلى أي خدمة.</p>
+            <p class="status-message">جارٍ مراجعة البيانات في نسخة العرض. لن تُرسل الرسالة إلى أي خدمة.</p>
           {% elif page_state == "unsent" %}
             <p class="status-message status-message--success">{{ contact.form.successMessage }}</p>
           {% elif page_state == "error" %}
             <p class="status-message status-message--error">
-              تعذّر إكمال العرض التجريبي للتحقق. بياناتك ما زالت في الحقول ويمكنك المحاولة مجددًا.
+              تعذّرت مراجعة البيانات. ما كتبته ما زال في الحقول ويمكنك المحاولة مجددًا.
               <button class="btn btn--outline contact-status__retry" type="button" data-contact-retry>أعد المحاولة</button>
             </p>
           {% endif %}
@@ -137,7 +131,19 @@
       <aside class="contact-aside" aria-label="مساعدة سريعة">
         <div class="surface-card contact-faq" id="faq">
           <h3 id="contact-faq-title">الأسئلة الشائعة</h3>
-          <p class="contact-faq__intro">إجابات مختصرة عن الشحن والدفع داخل هذا النموذج.</p>
+          <p class="contact-faq__intro">إجابات مختصرة عن الشحن والتركيب والضمان والاسترجاع.</p>
+          <div class="contact-faq__item" id="installation-support">
+            <h4>الشحن والتركيب</h4>
+            <p>يتوفر الشحن إلى جميع المحافظات، وتظهر خدمة التركيب لعناوين القاهرة والجيزة والإسكندرية المؤهلة.</p>
+          </div>
+          <div class="contact-faq__item" id="warranty-support">
+            <h4>الضمان والدعم</h4>
+            <p>ستُنشر مدة الضمان وشروطه لكل منتج عند اعتماد سياسة ما بعد البيع قبل الإطلاق التجاري.</p>
+          </div>
+          <div class="contact-faq__item" id="returns-support">
+            <h4>الاسترجاع والاستبدال</h4>
+            <p>ستُنشر المدد والاستثناءات وخطوات طلب الاسترجاع عند اعتماد السياسة النهائية قبل الإطلاق.</p>
+          </div>
           {% for faq in fixture.faqs %}{% if faq.id in contact.faqIds %}
             <details class="contact-faq__item">
               <summary>{{ faq.question }}</summary>
@@ -153,9 +159,7 @@
           </span>
           <h3>{{ contact.chatCard.heading }}</h3>
           <p>{{ contact.chatCard.description }}</p>
-          <button class="btn btn--gold" type="button" data-prototype-action="{{ contact.chatCard.heading }}">
-            {{ contact.chatCard.actionLabel }}
-          </button>
+          <a class="btn btn--gold" href="#contact-form">{{ contact.chatCard.actionLabel }}</a>
           <p class="prototype-note"><bdi>{{ contact.hours }}</bdi></p>
         </div>
       </aside>

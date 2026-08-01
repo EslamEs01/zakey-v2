@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}حسابي التجريبي | ZAKEY{% endblock %}
+{% block title %}حسابي | ZAKEY{% endblock %}
 
 {% block content %}
 <svg class="zk-icon-defs" width="0" height="0" aria-hidden="true" focusable="false">
@@ -28,12 +28,12 @@
 <article class="account-page" data-account-mode="{{ account_mode }}" data-account-tab="{{ account_tab }}">
   <section class="page-hero account-hero" aria-labelledby="account-title">
     <div class="container">
-      <p class="eyebrow">لوحة حساب تجريبية</p>
+      <p class="eyebrow">إدارة حسابك</p>
       <h1 id="account-title">حسابي</h1>
-      <p>عرض واجهة لحالتَي الدخول والخروج. لا توجد مصادقة حقيقية ولا بيانات عميل ولا طلبات فعلية.</p>
+      <p>تابع اختياراتك وعناوينك وطلباتك من مكان واحد.</p>
       <p class="account-hero__badge">
-        الحالة المعروضة:
-        {% if account_mode == "signed-in" %}دخول تجريبي{% else %}خروج تجريبي{% endif %}
+        نسخة العرض:
+        {% if account_mode == "signed-in" %}حساب مسجّل{% else %}تسجيل الدخول{% endif %}
       </p>
     </div>
   </section>
@@ -43,7 +43,7 @@
     {% if account_mode == "signed-in" %}
       <section class="section account-workspace" aria-labelledby="account-workspace-title">
         <div class="container">
-          <h2 class="sr-only" id="account-workspace-title">لوحة الحساب التجريبية</h2>
+          <h2 class="sr-only" id="account-workspace-title">لوحة الحساب</h2>
           <div class="account-layout">
             <div class="account-side">
               <div class="surface-card account-profile">
@@ -55,10 +55,10 @@
                 <h3 class="account-profile__name">{{ prototype.identity.name }}</h3>
                 <p class="account-profile__meta"><bdi>{{ prototype.identity.email }}</bdi></p>
                 <p class="account-profile__meta"><bdi>{{ prototype.identity.phone }}</bdi></p>
-                <p class="account-chip">هوية عرض — بدون مصادقة</p>
+                <p class="account-chip">بيانات محفوظة محليًا للمعاينة</p>
               </div>
 
-              <nav class="account-nav" data-account-tabs aria-label="أقسام الحساب التجريبي">
+              <nav class="account-nav" data-account-tabs aria-label="أقسام الحساب">
                 <a class="account-nav__item"
                    id="account-tab-orders"
                    href="{% url 'storefront:account' %}?state=signed-in&amp;tab=orders"
@@ -108,7 +108,7 @@
 
               <a class="account-signout" href="{% url 'storefront:account' %}?state=signed-out">
                 <span class="account-nav__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#zk-signout"></use></svg></span>
-                <span>تسجيل الخروج التجريبي</span>
+                <span>تسجيل الخروج</span>
               </a>
             </div>
 
@@ -175,7 +175,7 @@
                        aria-labelledby="account-panel-addresses-title"
                        {% if account_tab != "addresses" %}hidden{% endif %}>
                 <h3 class="account-panel__title" id="account-panel-addresses-title">العناوين</h3>
-                <p class="account-panel__note">عناوين توضيحية تشرح شكل البيانات فقط، ولا تُستخدم في شحن أو تركيب.</p>
+                <p class="account-panel__note">العناوين المعروضة محفوظة محليًا ولا تُستخدم في شحن أو تركيب فعلي.</p>
                 <ul class="account-addresses">
                   {% for address in prototype.addresses %}
                     <li class="account-address">
@@ -198,7 +198,7 @@
                        aria-labelledby="account-panel-payment-title"
                        {% if account_tab != "payment" %}hidden{% endif %}>
                 <h3 class="account-panel__title" id="account-panel-payment-title">وسائل الدفع</h3>
-                <p class="account-panel__note">خيارات معروضة للمراجعة التصميمية فقط دون أي ربط بمزوّد أو بنك.</p>
+                <p class="account-panel__note">خيارات الدفع قيد التجهيز ولا يوجد ربط حاليًا بمزوّد أو بنك.</p>
                 <ul class="account-payments">
                   {% for option in fixture.paymentOptions %}
                     <li class="account-payment">
@@ -270,7 +270,7 @@
 <section class="section account-signed-out" aria-labelledby="account-signin-title" data-account-signed-out>
         <div class="container account-signed-out__grid">
           <div class="surface-card account-signin">
-            <h2 class="section-heading" id="account-signin-title">افتح لوحة الحساب التجريبية</h2>
+            <h2 class="section-heading" id="account-signin-title">تسجيل الدخول</h2>
             <p class="section-copy">{{ prototype.prototypeNotice }}</p>
             <form class="account-signin__form"
                   method="get"
@@ -278,23 +278,23 @@
                   data-account-demo-form>
               <input type="hidden" name="state" value="signed-in">
               <div class="field">
-                <label for="account-demo-email">البريد الإلكتروني التجريبي</label>
-                <input id="account-demo-email" type="email" autocomplete="off" placeholder="nada@zakey.example"
+              <label for="account-demo-email">البريد الإلكتروني</label>
+              <input id="account-demo-email" type="email" autocomplete="email" placeholder="name@example.com"
                        aria-describedby="account-demo-hint account-demo-error">
                 <p class="field-error" id="account-demo-error" hidden></p>
               </div>
               <p class="prototype-note" id="account-demo-hint">
-                الحقل اختياري ويُستخدم لعرض رسالة التحقق فقط. لا توجد كلمة مرور ولا تسجيل دخول حقيقي.
+              الحقل مخصص لمعاينة التحقق فقط. لا توجد مصادقة أو حسابات حقيقية في النسخة الحالية.
               </p>
-              <button class="btn btn--primary" type="submit">اعرض الحساب التجريبي</button>
+            <button class="btn btn--primary" type="submit">عرض الحساب</button>
             </form>
           </div>
 
           <div class="surface-card account-benefits">
             <span class="account-benefits__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#zk-shield"></use></svg></span>
-            <h2 class="account-benefits__title">ماذا تعرض هذه اللوحة؟</h2>
+            <h2 class="account-benefits__title">كل ما تحتاجه في حسابك</h2>
             <ul class="account-benefits__list">
-              <li>سجل شراء توضيحي بحالات عرض واضحة.</li>
+              <li>متابعة حالة الطلبات ومراجعة تفاصيلها.</li>
               <li>قائمة مفضلة مرتبطة بحالة المتصفح المحلية.</li>
               <li>عناوين ووسائل دفع للمراجعة التصميمية فقط.</li>
               <li>إعدادات حساب بتحقق عربي محلي بدون حفظ.</li>

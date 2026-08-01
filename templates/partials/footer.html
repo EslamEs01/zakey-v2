@@ -13,14 +13,7 @@
           <span class="brand-mark brand-mark--gold">{% include "components/icon.html" with name="lock" %}</span>
           <bdi lang="en">ZAKEY</bdi>
         </a>
-        <p>حلول أقفال ذكية تجمع بين الأمان العملي والتصميم الهادئ للمنزل المصري.</p>
-        <p class="prototype-note">كل الأسعار والمراجعات وحالات الحساب هنا محتوى توضيحي للتصميم وليست بيانات إنتاج.</p>
-        <div class="socials" role="group" aria-label="روابط اجتماعية تجريبية">
-          <button type="button" data-prototype-action="Instagram" aria-label="Instagram — رابط تجريبي"><bdi>ig</bdi></button>
-          <button type="button" data-prototype-action="Facebook" aria-label="Facebook — رابط تجريبي"><bdi>f</bdi></button>
-          <button type="button" data-prototype-action="YouTube" aria-label="YouTube — رابط تجريبي"><bdi>▶</bdi></button>
-          <button type="button" data-prototype-action="X" aria-label="X — رابط تجريبي"><bdi>x</bdi></button>
-        </div>
+        <p>حلول دخول ذكية تجمع بين الأمان العملي والتصميم الأنيق، مع دعم عربي يساعدك على اختيار الأنسب لبيتك.</p>
       </div>
       <div>
         <h2 class="footer-title">المنتجات</h2>
@@ -36,26 +29,24 @@
           <a href="{% url 'storefront:contact' %}">تواصل معنا</a>
           <a href="{% url 'storefront:account' %}">حسابي</a>
           <a href="{% url 'storefront:wishlist' %}">المفضلة</a>
-          <button class="btn btn--ghost" type="button" data-prototype-reset>إعادة ضبط النموذج</button>
         </nav>
       </div>
       <div>
         <h2 class="footer-title">الدعم</h2>
         <nav class="footer-links" aria-label="الدعم">
           <a href="{% url 'storefront:contact' %}#contact-form">مركز المساعدة</a>
-          <a href="{% url 'storefront:contact' %}#faq">التركيب</a>
-          <a href="{% url 'storefront:contact' %}#faq">الضمان</a>
-          <a href="{% url 'storefront:contact' %}#faq">الاسترجاع</a>
-          <a href="{% url 'storefront:error-500' %}">حالة خطأ تجريبية</a>
+          <a href="{% url 'storefront:contact' %}#installation-support">الشحن والتركيب</a>
+          <a href="{% url 'storefront:contact' %}#warranty-support">الضمان</a>
+          <a href="{% url 'storefront:contact' %}#returns-support">الاسترجاع</a>
         </nav>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 ZAKEY — واجهة مرجعية تجريبية.</span>
-      <nav class="legal-links" aria-label="روابط قانونية تجريبية">
-        <a href="{% url 'storefront:about' %}">الخصوصية</a>
-        <a href="{% url 'storefront:about' %}">شروط الاستخدام</a>
-        <a href="{% url 'storefront:about' %}">ملفات الارتباط</a>
+      <span>© 2026 ZAKEY. جميع الحقوق محفوظة.</span>
+      <nav class="legal-links" aria-label="الروابط القانونية">
+        <a href="{% url 'storefront:about' %}#privacy">الخصوصية</a>
+        <a href="{% url 'storefront:about' %}#terms">شروط الاستخدام</a>
+        <a href="{% url 'storefront:about' %}#cookies">ملفات الارتباط</a>
       </nav>
     </div>
   </div>
