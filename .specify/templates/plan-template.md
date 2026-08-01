@@ -17,15 +17,15 @@
   the iteration process.
 -->
 
-**Language/Version**: [ratified default: Python 3.12 — any other value requires a constitutional amendment]  
-**Primary Dependencies**: [ratified default: Django 5.2 LTS, Tailwind CSS compiled locally, native JavaScript ES modules, locally hosted Cairo and Poppins, locally served Lucide or project-owned SVG]  
-**Storage**: [ratified default: PostgreSQL-compatible architecture]  
-**Testing**: [ratified default: pytest, pytest-django, Playwright, axe, Ruff, Prettier; Vitest with jsdom where valuable]  
-**Target Platform**: [e.g., Linux server or NEEDS CLARIFICATION]
-**Project Type**: [e.g., server-rendered web application or NEEDS CLARIFICATION]  
-**Locale and Direction**: [ratified: `ar-EG`, RTL primary, light mode only — see Constitution Principle XX]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
+**Language/Version**: [ratified default: Python 3.12 — any other value requires a constitutional amendment]\
+**Primary Dependencies**: [ratified default: Django 5.2 LTS, Tailwind CSS compiled locally, native JavaScript ES modules, locally hosted Cairo and Poppins, locally served Lucide or project-owned SVG]\
+**Storage**: [ratified default: PostgreSQL-compatible architecture]\
+**Testing**: [ratified default: pytest, pytest-django, Playwright, axe, Ruff, Prettier; Vitest with jsdom where valuable]\
+**Target Platform**: [e.g., Linux server or NEEDS CLARIFICATION]\
+**Project Type**: [e.g., server-rendered web application or NEEDS CLARIFICATION]\
+**Locale and Direction**: [ratified: `ar-EG`, RTL primary, light mode only — see Constitution Principle XX]\
+**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]\
+**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]\
 **Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
 
 ## Constitution Check

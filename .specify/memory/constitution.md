@@ -1,6 +1,32 @@
 <!--
 SYNC IMPACT REPORT
 ==================
+Version change: 2.0.0 → 2.0.1
+Amendment date: 2026-08-01
+Ratification date (unchanged): 2026-07-31
+
+Bump rationale (2.0.0 → 2.0.1, PATCH): Governance-blocker closure only. Both open TODOs were
+resolved, and one recorded open question was closed by a user decision. No principle was
+added, removed, or redefined; no governance intent changed; no prior compliance is
+invalidated. Under the Versioning Policy this is a clarification, therefore PATCH.
+
+  1. TODO(AUTO_COMMIT_HOOKS) closed — automatic Git-write hooks disabled in
+     `.specify/extensions.yml`. This enforces the already-ratified Principle XV.3 and XV.9; it
+     does not change what those rules require.
+  2. TODO(FEATURE_POINTER_STALE) closed — `.specify/feature.json` neutralized to
+     `{"feature_directory": ""}`, a metadata-only correction in the tooling's supported format.
+  3. Visual-authority question closed — recorded as the "Ratified Visual Authority Decision"
+     under Canonical Project Facts.
+
+Files changed in v2.0.1: `.specify/memory/constitution.md`, `.specify/extensions.yml`,
+`.specify/feature.json`, `.specify/templates/plan-template.md` (trailing-whitespace removal
+only — nine Technical Context lines converted from two-space Markdown hard breaks to backslash
+hard breaks so `git diff --check` exits 0; rendering and meaning unchanged). No other template
+was touched; validation surfaced no contradiction requiring one.
+
+The v2.0.0 report below remains the authoritative record of the MAJOR amendment.
+
+--- v2.0.0 report (unchanged) ---
 Version change: 1.1.0 → 2.0.0
 Amendment date: 2026-08-01
 Ratification date (unchanged): 2026-07-31
@@ -103,19 +129,55 @@ Templates requiring updates:
        *new* constitution, inherits no governance content from this one, and needs no edit.
 
 Deferred items / TODOs:
-  ⚠ TODO(FEATURE_POINTER_STALE): `.specify/feature.json` still points at
-    `specs/001-premium-storefront-experience`, a directory removed from the working tree in
-    commit 05a37d0. Repointing it would create feature-002 Spec Kit state, which the governance
-    scope of this amendment forbids. It is recorded here and MUST be resolved by the tooling at
-    the Specification gate, not by hand during a governance-only change.
-  ⚠ TODO(AUTO_COMMIT_HOOKS): `.specify/extensions.yml` sets `auto_execute_hooks: true` and
-    registers `speckit.git.commit` on every `after_*` hook, plus a mandatory
-    (`optional: false`) `speckit.git.initialize` on `before_constitution`. This conflicts with
-    Principle XV.9, which forbids automatic commit hooks without an explicit user request. No
-    hook was executed during this amendment. Disabling them is a tooling-configuration change
-    outside this amendment's scope and requires the user's decision.
+  (none open — both v2.0.0 TODOs were closed in v2.0.1; see Resolved items below)
+
+Resolved items:
+  ✅ TODO(AUTO_COMMIT_HOOKS) — CLOSED 2026-08-01, constitution v2.0.1.
+    Before: `.specify/extensions.yml` had `settings.auto_execute_hooks: true`; all 18 hook
+    entries had `enabled: true`; and two entries were mandatory (`optional: false`) —
+    `before_constitution → speckit.git.initialize` and `before_specify → speckit.git.feature`.
+    Under the installed Spec Kit schema a mandatory hook emits `EXECUTE_COMMAND` and runs
+    without asking, and the git extension's scripts perform real Git writes: `git init`,
+    `git add .`, `git commit` (initialize-repo.sh, auto-commit.sh) and `git checkout -b`
+    (create-new-feature.sh).
+    After: `auto_execute_hooks: false`; all 18 hook entries set to `enabled: false`; both
+    mandatory entries demoted to `optional: true`. Three independent layers now block
+    execution — the global switch, the per-hook `enabled` filter, and the loss of mandatory
+    auto-execute semantics. Hook definitions are retained (schema shape preserved) but inert.
+    Verified absent from the entire Spec Kit installation: `git push`, `git merge`,
+    `gh pr`, pull-request creation, `--set-upstream`, and `git remote add/set-url`. The git
+    extension provides only feature / validate / remote / initialize / commit; `speckit.git.remote`
+    only *detects* a remote URL. `git-config.yml` already had `auto_commit.default: false`
+    with every per-command entry `enabled: false`.
+    No hook was executed while inspecting or editing the file.
+  ✅ TODO(FEATURE_POINTER_STALE) — CLOSED 2026-08-01, constitution v2.0.1.
+    Path: `.specify/feature.json`. Before: `{"feature_directory": "specs/001-premium-storefront-experience"}`
+    — a directory deleted from the working tree in commit 05a37d0. After:
+    `{"feature_directory": ""}`.
+    This is a metadata-only correction in the installed Spec Kit's own supported format.
+    `read_feature_json_feature_directory()` in `.specify/scripts/bash/common.sh` resolves an
+    empty, null, or missing value to the empty string across all three of its parsers
+    (`jq -r '.feature_directory // empty'`, the python3 fallback, and the grep/sed fallback),
+    and `get_feature_paths()` then falls through to branch-prefix resolution. Clearing the
+    key therefore creates no directory, no `spec.md`, and no feature state; it only stops the
+    pointer resolving to deleted Feature 001 artifacts. No Feature 001 file was restored,
+    modified, or referenced.
+    Mandatory first action at the start of Specification 002, before any specification content
+    is written: initialize `002-egypt-premium-storefront`, then verify `.specify/feature.json`
+    targets only `specs/002-egypt-premium-storefront`, then verify no Feature 001 file was
+    restored or modified.
+  ✅ VISUAL_AUTHORITY_DECISION — RECORDED 2026-08-01, constitution v2.0.1.
+    See "Ratified Visual Authority Decision" under Canonical Project Facts. The client
+    rejected the previous *implementation*, not the reference. `https://remote-fried-86528699.figma.site/`
+    remains the approved visual authority and MUST still be re-grounded at 1440px, 1024px,
+    768px, and 390px under Principle XIX before Specification 002. No historical observation
+    may override fresh browser evidence. This is no longer an open question.
 
 Prior entries (condensed):
+  1.1.0 → 2.0.0 (MAJOR, 2026-08-01): capability-based lead-agent governance replacing
+    vendor-exclusive ownership; Cairo primary typeface; `ar-EG` / RTL primary; PostgreSQL
+    binding from the outset; Principles XIX, XX, XXI added; Definition of Done 15 → 20.
+    Committed by the user as 09989a3 and pushed to `origin/002-egypt-premium-storefront`.
   1.0.1 → 1.1.0 (MINOR, 2026-07-31): ratified colour table expanded from five to eighteen
     values after extraction of every designer-chosen colour literal in the approved reference;
     provenance rule, gradient rule, and the `#9CA3AF` non-text defect note added.
@@ -926,6 +988,21 @@ Principle XX, and takes precedence over the reference's typeface choice. All oth
 character — scale relationships, weight contrast, tracking discipline, and hierarchy — MUST
 still follow the reference under Principle I.
 
+### Ratified Visual Authority Decision
+
+Recorded 2026-08-01 (v2.0.1) by explicit user decision. This question is CLOSED and MUST NOT be
+reopened as an unresolved item.
+
+1. The client rejected the previous **implementation**, not the reference.
+2. `https://remote-fried-86528699.figma.site/` remains the approved and current visual
+   authority for ZAKEY v2. No replacement reference exists or is pending.
+3. The reference MUST still be re-inspected through the Principle XIX Targeted Visual Grounding
+   Gate — at 1440px, 1024px, 768px, and 390px — **before** Specification 002 is written.
+   Approval of the reference is not a substitute for grounding it.
+4. No historical observation may override fresh browser evidence. Where a prior record and a
+   fresh inspection disagree, the fresh inspection wins and the prior record MUST be corrected.
+   This applies to every entry in the register below.
+
 ### Reference Observations Pending Re-Verification
 
 Recorded under a prior grounding pass, before Principle XIX existed. Advisory only until
@@ -1103,4 +1180,4 @@ This constitution applies to the public storefront and to every future backend, 
 commerce, integration, deployment, and maintenance specification produced for the ZAKEY
 platform in this repository.
 
-**Version**: 2.0.0 | **Ratified**: 2026-07-31 | **Last Amended**: 2026-08-01
+**Version**: 2.0.1 | **Ratified**: 2026-07-31 | **Last Amended**: 2026-08-01
