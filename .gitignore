@@ -1,141 +1,28 @@
-# ZAKEY v2 — repository ignore policy
-#
-# Governed by Constitution Principle XV.6: secrets, databases, uploaded media,
-# test recordings, temporary screenshots, dependency caches, and generated
-# artifacts MUST NOT be committed.
-#
-# Deliberately NOT ignored (these are source, not artifacts):
-#   uv.lock, package-lock.json   — dependency lockfiles
-#   pyproject.toml, package.json — dependency manifests
-#   **/migrations/*.py           — reviewed Django migrations (Principle XIV.8)
-#   **/fixtures/**               — catalog and content fixtures
-#   specs/**                     — specifications and verification evidence
-#   static/**                    — verified brand and product assets
-
-# ---------------------------------------------------------------------------
 # Python
-# ---------------------------------------------------------------------------
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-sdist/
-wheels/
-*.egg-info/
-*.egg
-MANIFEST
-
-# Virtual environments
+.pytest_cache/
+.ruff_cache/
 .venv/
-venv/
-ENV/
-env/
-.python-version.local
 
-# ---------------------------------------------------------------------------
-# Environment and secrets
-# ---------------------------------------------------------------------------
+# Django local state
+db.sqlite3
+media/
+staticfiles/
+
+# Frontend dependencies and generated output
+node_modules/
+static_src/dist/
+test-results/
+playwright-report/
+
+# Local acceptance artifacts
+.artifacts/
+
+# Environment and editor files
 .env
 .env.*
 !.env.example
-*.pem
-*.key
-*.p12
-secrets.json
-.secrets/
-
-# ---------------------------------------------------------------------------
-# Django
-# ---------------------------------------------------------------------------
-*.log
-local_settings.py
-
-# Development databases and their journal/WAL sidecars
-db.sqlite3
-db.sqlite3-journal
-db.sqlite3-wal
-db.sqlite3-shm
-*.sqlite3
-*.sqlite3-journal
-*.sqlite3-wal
-*.sqlite3-shm
-
-# collectstatic output (generated; the sources under static/ stay tracked)
-/staticfiles/
-
-# NOTE for /speckit-plan: once MEDIA_ROOT is chosen, add the user-upload
-# directory here. It is intentionally NOT ignored yet, because verified ZAKEY
-# product media may be committed and must not be excluded by accident.
-
-# ---------------------------------------------------------------------------
-# Node / frontend toolchain
-# ---------------------------------------------------------------------------
-node_modules/
-.npm/
-.yarn/
-.pnpm-store/
-*.tsbuildinfo
-
-# NOTE for /speckit-plan: add the exact Tailwind build-output path here once the
-# asset pipeline is defined. It is intentionally omitted rather than guessed, so
-# no authored stylesheet is ignored by mistake.
-
-# ---------------------------------------------------------------------------
-# Testing, coverage, and verification artifacts
-# ---------------------------------------------------------------------------
-.pytest_cache/
-.ruff_cache/
-.mypy_cache/
-.tox/
-.nox/
-htmlcov/
-.coverage
-.coverage.*
-coverage.xml
-*.cover
-nosetests.xml
-junit.xml
-
-# Playwright
-/test-results/
-/playwright-report/
-/playwright/.cache/
-/blob-report/
-
-# Temporary screenshots and recordings.
-# Inspected screenshots kept as specification evidence belong under
-# specs/**/evidence/ and are NOT ignored (Constitution XIII.6, XVII.6).
-/tmp-screenshots/
-*.webm
-trace.zip
-
-# ---------------------------------------------------------------------------
-# Editor and OS artifacts
-# ---------------------------------------------------------------------------
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-desktop.ini
 .idea/
-*.swp
-*.swo
-*~
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json.example
-
-# ---------------------------------------------------------------------------
-# Agent tooling local state (shared skill definitions stay tracked)
-# ---------------------------------------------------------------------------
-.claude/settings.local.json
+.vscode/
