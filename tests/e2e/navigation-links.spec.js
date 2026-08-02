@@ -41,7 +41,9 @@ for (const source of LINK_SOURCES) {
 
 test("catalogue query controls produce real results", async ({ page }) => {
   await page.goto(sitePath("/shop/"), { waitUntil: "networkidle" });
-  const filters = page.locator(".filter-sidebar [data-catalogue-form]");
+  const mobileFilters = page.viewportSize().width <= 820;
+  if (mobileFilters) await page.locator("[data-filter-open]").click();
+  const filters = page.locator(`${mobileFilters ? "#filter-dialog" : ".filter-sidebar"} [data-catalogue-form]`);
   await filters.locator("input[name='category'][value='fingerprint']").check();
   await Promise.all([
     page.waitForURL(/category=fingerprint/),
@@ -62,4 +64,15 @@ test("catalogue query controls produce real results", async ({ page }) => {
   await page.goto(sitePath("/search/?q=نتيجة-غير-موجودة"), { waitUntil: "networkidle" });
   await expect(page.locator(".state-panel")).toContainText("لا توجد نتائج");
   await expect(page.locator("[data-result-count]")).toHaveText("0");
+
+  await page.goto(sitePath("/shop/?availability=available"), { waitUntil: "networkidle" });
+  await expect(page.locator("[data-product-id='product-elite']")).toHaveCount(1);
+  await expect(page.locator("[data-product-id='product-orbit']")).toHaveCount(1);
+  await expect(page.locator("[data-product-id='product-core']")).toHaveCount(0);
+
+  await page.goto(sitePath("/collections/smart-door-locks/?priceMin=3000&availability=available&page=2"), { waitUntil: "networkidle" });
+  await page.locator("[data-filter-remove='collection']").click();
+  await page.waitForURL((url) => url.pathname === sitePath("/shop/") && url.searchParams.get("priceMin") === "3000");
+  expect(new URL(page.url()).searchParams.get("availability")).toBe("available");
+  expect(new URL(page.url()).searchParams.has("page")).toBe(false);
 });
