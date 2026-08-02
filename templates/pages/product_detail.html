@@ -15,7 +15,7 @@
     <div class="product-summary">
       {% if product.badge %}<span class="product-badge">{{ product.badge }}</span>{% endif %}
       <h1 id="product-heading">{{ product.name }}</h1>
-      <div class="rating" aria-label="ميزة أساسية">{% include "components/icon.html" with name="shield" %}<span>{{ product.features.0.label }}</span><a href="#product-reviews">اكتشف الاستخدامات</a></div>
+      <div class="rating">{% include "components/icon.html" with name="shield" %}<span>{{ product.features.0.label }}</span><a href="#product-reviews">اكتشف الاستخدامات</a></div>
       <p class="product-lead">{{ product.shortDescription }}</p>
       <p class="product-price">{{ product.price }} <small>ج.م</small>{% if product.compareAtPrice %}<del>{{ product.compareAtPrice }} ج.م</del>{% endif %}</p>
       <p class="tax-note">السعر شامل ضريبة القيمة المضافة 14%.</p>

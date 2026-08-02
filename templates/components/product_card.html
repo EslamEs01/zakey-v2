@@ -6,7 +6,7 @@
   <div class="product-card__body">
     <p class="product-card__type">{{ product.typeLabel|default:"قفل ذكي" }}</p>
     <h3 class="product-card__title"><a href="{% url 'storefront:product' product.slug %}">{{ product.name }}</a></h3>
-    <div class="rating" aria-label="ميزة أساسية">
+    <div class="rating">
       {% include "components/icon.html" with name="shield" %}<span>{{ product.features.0.label }}</span>
     </div>
     <div class="product-card__footer">

@@ -35,6 +35,7 @@ jobs:
         run: |
           uv sync --frozen
           npm ci
+          npx playwright install --with-deps chrome
 
       - name: Build and verify frontend
         run: |
@@ -44,6 +45,9 @@ jobs:
 
       - name: Export static site
         run: npm run export:pages
+
+      - name: Verify exported Pages navigation and catalogue
+        run: npm run test:pages
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5

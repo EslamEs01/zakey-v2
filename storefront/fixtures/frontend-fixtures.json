@@ -26,8 +26,8 @@
     "vatRate": 0.14,
     "freeShippingThreshold": 1500,
     "announcement": {
-      "message": "شحن مجاني للطلبات فوق 1,500 ج.م",
-      "emphasis": "استشارة تركيب مجانية قبل الشراء"
+      "message": "شحن مجاني مخطط للطلبات فوق 1,500 ج.م",
+      "emphasis": "دليل اختيار وتركيب قبل الشراء"
     },
     "home": {
       "hero": {
@@ -37,13 +37,13 @@
         "primaryAction": {"label": "تسوّق الأقفال", "href": "/shop/"},
         "secondaryAction": {"label": "اعرف المزيد", "href": "/about/"},
         "image": {"path": "/static/dist/assets/images/generated/apex-black-v2.webp", "width": 1600, "height": 1400, "alt": "قفل ZAKEY ذكي في مدخل منزل عصري"},
-        "metrics": [{"label": "وسائل دخول", "value": "حتى 5"}, {"label": "خدمة التركيب", "value": "3 محافظات"}, {"label": "شحن مجاني", "value": "+1,500 ج.م"}]
+        "metrics": [{"label": "وسائل دخول", "value": "حتى 5"}, {"label": "تغطية تركيب مخططة", "value": "3 محافظات"}, {"label": "حد شحن مجاني مخطط", "value": "+1,500 ج.م"}]
       },
       "trustStrip": [
         {"id": "trust-security", "icon": "shield-check", "title": "تصميم يركز على الأمان", "description": "معلومات واضحة تساعدك على مقارنة وسائل الدخول."},
-        {"id": "trust-installation", "icon": "wrench", "title": "تركيب باحتراف", "description": "خدمة تركيب متاحة في القاهرة والجيزة والإسكندرية."},
-        {"id": "trust-shipping", "icon": "truck", "title": "شحن مجاني فوق 1,500 ج.م", "description": "توصيل مجاني للطلبات المؤهلة إلى جميع المحافظات."},
-        {"id": "trust-support", "icon": "headphones", "title": "دعم باللغة العربية", "description": "مساعدة واضحة قبل الشراء وبعده لاختيار الحل المناسب."},
+        {"id": "trust-installation", "icon": "wrench", "title": "خطة تركيب واضحة", "description": "تغطية مستهدفة عند الإطلاق في القاهرة والجيزة والإسكندرية."},
+        {"id": "trust-shipping", "icon": "truck", "title": "سياسة شحن بسيطة", "description": "شحن مجاني مخطط للطلبات المؤهلة عند إطلاق الخدمة."},
+        {"id": "trust-support", "icon": "headphones", "title": "تجربة دعم بالعربية", "description": "معلومات واضحة تساعدك قبل الشراء وبعده على اختيار الحل المناسب."},
         {"id": "trust-prototype", "icon": "info", "title": "اختيار بثقة", "description": "مواصفات وأسعار وخيارات خدمة واضحة قبل اتخاذ القرار."}
       ],
       "promotion": {
@@ -168,7 +168,7 @@
     {"id": "cat-accessory", "slug": "accessories", "name": "إكسسوارات الأمان", "description": "ملحقات تكمل تجربة القفل والمراقبة المنزلية.", "kind": "product-category", "image": {"path": "/static/dist/assets/images/generated/vision-camera-v2.webp", "width": 720, "height": 720, "alt": "ملحقات أمان منزلية ذكية"}}
   ],
   "collections": [
-    {"id": "collection-best", "slug": "best-sellers", "name": "الأكثر مبيعًا", "description": "اختيارات العملاء من أقفال وحلول ZAKEY الذكية.", "productIds": ["product-apex-pro", "product-nova", "product-orbit", "product-guard"], "promotion": {"eyebrow": "اختيارات العملاء", "tone": "gold"}},
+    {"id": "collection-best", "slug": "best-sellers", "name": "اختيارات بارزة", "description": "مجموعة منتقاة من أقفال وحلول ZAKEY الذكية.", "productIds": ["product-apex-pro", "product-nova", "product-orbit", "product-guard"], "promotion": {"eyebrow": "مختارات ZAKEY", "tone": "gold"}},
     {"id": "collection-featured", "slug": "featured", "name": "منتجات مميزة", "description": "حلول تجمع التصميم الأنيق ووسائل الدخول المتعددة.", "productIds": ["product-elite", "product-vision", "product-pulse", "product-apex-pro"], "promotion": {"eyebrow": "تقنية ZAKEY", "tone": "navy"}},
     {"id": "collection-fingerprint", "slug": "fingerprint-locks", "name": "أقفال بالبصمة", "description": "مجموعة دخول ببصمة الإصبع.", "productIds": ["product-apex-pro", "product-nova", "product-elite", "product-pulse"], "promotion": {"eyebrow": "دخول بلا مفاتيح", "tone": "light"}},
     {"id": "collection-door", "slug": "smart-door-locks", "name": "أقفال الأبواب الذكية", "description": "مجموعة أقفال ومقابض للأبواب الرئيسية والداخلية.", "productIds": ["product-apex-pro", "product-nova", "product-orbit", "product-elite", "product-vision", "product-pulse", "product-core"], "promotion": {"eyebrow": "للمنزل العصري", "tone": "navy"}},

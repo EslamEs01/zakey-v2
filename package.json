@@ -24,7 +24,7 @@
     "test:a11y": "playwright test ./tests/accessibility",
     "test:no-js": "playwright test ./tests/e2e/no-js.spec.js --project=no-js-1440 --project=no-js-1024 --project=no-js-768 --project=no-js-390",
     "screenshots": "playwright test ./tests/e2e/site-integrity.spec.js",
-    "qa": "npm run build && npm run check:js && npm run check:matrix && npm test && npm run check:html && npm run check:evidence"
+    "qa": "npm run build && npm run check:js && npm run check:matrix && npm test && npm run check:html && npm run check:evidence && npm run test:pages"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.12.1",

@@ -181,7 +181,11 @@ function syncForms(criteria) {
 
 function removeFilter(button) {
   if (button.dataset.filterRemove === "collection") {
-    window.location.assign(clearUrl({ collection: true }));
+    const shopPath = document.querySelector("[data-active-filters]")?.dataset.shopUrl || "/shop/";
+    const url = new URL(shopPath, window.location.origin);
+    url.search = window.location.search;
+    url.searchParams.delete("page");
+    window.location.assign(url);
     return;
   }
   const url = new URL(window.location.href);
