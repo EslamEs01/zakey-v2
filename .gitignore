@@ -15,6 +15,7 @@ node_modules/
 static/dist/
 public/
 _site/
+_pages-preview/
 test-results/
 playwright-report/
 

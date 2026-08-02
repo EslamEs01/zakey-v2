@@ -419,7 +419,7 @@
   margin: 0;
 }
 
-.account-hero__badge {
+.account-hero p.account-hero__badge {
   display: inline-block;
   margin: 18px 0 0;
   padding: 7px 14px;

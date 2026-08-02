@@ -1,6 +1,7 @@
 import { defineConfig } from "@playwright/test";
 
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = process.env.ZAKEY_E2E_BASE_URL || "http://127.0.0.1:8000";
+const SERVER_COMMAND = process.env.ZAKEY_E2E_SERVER_COMMAND || "uv run python manage.py runserver 127.0.0.1:8000 --noreload";
 const VIEWPORT_HEIGHT = 1200;
 const VIEWPORT_WIDTHS = [1440, 1024, 768, 390];
 const NO_JS_TEST = /no-js\.spec\.js/;
@@ -55,7 +56,7 @@ export default defineConfig({
     ...VIEWPORT_WIDTHS.map(noJavaScriptProject),
   ],
   webServer: {
-    command: "uv run python manage.py runserver 127.0.0.1:8000 --noreload",
+    command: SERVER_COMMAND,
     url: `${BASE_URL}/`,
     reuseExistingServer: false,
     timeout: 120_000,

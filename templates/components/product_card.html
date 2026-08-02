@@ -6,8 +6,8 @@
   <div class="product-card__body">
     <p class="product-card__type">{{ product.typeLabel|default:"قفل ذكي" }}</p>
     <h3 class="product-card__title"><a href="{% url 'storefront:product' product.slug %}">{{ product.name }}</a></h3>
-    <div class="rating" role="img" aria-label="تقييم {{ product.rating }} من 5">
-      {% include "components/icon.html" with name="star" %}<span>{{ product.rating }}</span><span style="color:var(--muted)">({{ product.reviewCount }})</span>
+    <div class="rating" aria-label="ميزة أساسية">
+      {% include "components/icon.html" with name="shield" %}<span>{{ product.features.0.label }}</span>
     </div>
     <div class="product-card__footer">
       <span class="price">{{ product.price }} <small>ج.م</small>{% if product.compareAtPrice %}<span class="old-price">{{ product.compareAtPrice }}</span>{% endif %}</span>

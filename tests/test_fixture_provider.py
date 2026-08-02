@@ -204,6 +204,13 @@ class CatalogueBehaviorTests(SimpleTestCase):
             ["zakey-core-c1"],
         )
 
+    def test_available_filter_includes_limited_stock_products(self):
+        catalogue = get_catalogue({"availability": "available"})
+        slugs = {product["slug"] for product in catalogue["products"]}
+        self.assertIn("zakey-nexus-elite", slugs)
+        self.assertIn("zakey-orbit-k3", slugs)
+        self.assertNotIn("zakey-core-c1", slugs)
+
 
 class FrontendBoundaryTests(SimpleTestCase):
     def test_django_shell_has_no_database_or_business_application_dependencies(self):

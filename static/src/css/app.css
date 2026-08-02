@@ -144,7 +144,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round
 .product-card__body { padding: 18px; }
 .product-card__type { margin: 0 0 2px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 .product-card__title { margin: 0; color: var(--navy); font-size: 16px; line-height: 1.4; font-weight: 700; }
-.rating { display: flex; align-items: center; gap: 6px; margin-top: 6px; color: var(--gold); font-size: 13px; }
+.rating { display: flex; align-items: center; gap: 6px; margin-top: 6px; color: var(--gold-ink); font-size: 13px; }
 .rating svg { width: 14px; height: 14px; fill: currentColor; }
 .product-card__footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; }
 .price { color: var(--navy); font-size: 20px; font-weight: 700; }

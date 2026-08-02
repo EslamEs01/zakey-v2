@@ -49,7 +49,8 @@ function matchesCriteria(product, criteria, fixture) {
   if (criteria.q && !searchable.includes(criteria.q.toLocaleLowerCase("ar-EG"))) return false;
   if (criteria.priceMin !== null && product.price < criteria.priceMin) return false;
   if (criteria.priceMax !== null && product.price > criteria.priceMax) return false;
-  if (criteria.availability && product.availability !== criteria.availability) return false;
+  if (criteria.availability === "available" && !["available", "limited"].includes(product.availability)) return false;
+  if (criteria.availability === "unavailable" && product.availability !== "unavailable") return false;
   const productFeatures = new Set(product.features.map((feature) => feature.key));
   return criteria.features.every((feature) => productFeatures.has(feature));
 }
@@ -116,7 +117,9 @@ function renderResults(products, criteria) {
 function filterLabels(criteria, fixture) {
   const labels = [];
   const category = fixture.categories.find((entry) => entry.slug === criteria.category);
+  const collection = fixture.collections.find((entry) => entry.slug === criteria.collection);
   if (category) labels.push({ key: "category", value: category.slug, label: category.name });
+  if (collection) labels.push({ key: "collection", value: collection.slug, label: collection.name });
   if (criteria.priceMin !== null) labels.push({ key: "priceMin", value: String(criteria.priceMin), label: `من ${criteria.priceMin} ج.م` });
   if (criteria.priceMax !== null) labels.push({ key: "priceMax", value: String(criteria.priceMax), label: `حتى ${criteria.priceMax} ج.م` });
   for (const key of criteria.features) {
@@ -128,7 +131,8 @@ function filterLabels(criteria, fixture) {
 }
 
 function clearUrl(criteria) {
-  const url = new URL(window.location.href);
+  const shopPath = document.querySelector("[data-active-filters]")?.dataset.shopUrl || window.location.pathname;
+  const url = new URL(criteria.collection ? shopPath : window.location.href, window.location.origin);
   url.search = "";
   if (document.body.dataset.page === "search" && criteria.q) url.searchParams.set("q", criteria.q);
   return url;
@@ -176,6 +180,10 @@ function syncForms(criteria) {
 }
 
 function removeFilter(button) {
+  if (button.dataset.filterRemove === "collection") {
+    window.location.assign(clearUrl({ collection: true }));
+    return;
+  }
   const url = new URL(window.location.href);
   const key = button.dataset.filterRemove;
   if (key === "feature") {

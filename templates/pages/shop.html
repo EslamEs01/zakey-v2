@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <div class="active-filters" role="group" aria-label="الفلاتر النشطة" data-active-filters {% if not catalogue.activeChips %}hidden{% endif %}><span>محدد:</span>{% for chip in catalogue.activeChips %}<button type="button" class="filter-chip" data-filter-remove="{{ chip.key }}" data-filter-value="{{ chip.value }}">{{ chip.label }} {% include "components/icon.html" with name="x" %}</button>{% endfor %}<a href="{% url 'storefront:shop' %}">مسح الكل</a></div>
+    <div class="active-filters" role="group" aria-label="الفلاتر النشطة" data-active-filters data-shop-url="{% url 'storefront:shop' %}" {% if not catalogue.activeChips %}hidden{% endif %}><span>محدد:</span>{% for chip in catalogue.activeChips %}<button type="button" class="filter-chip" data-filter-remove="{{ chip.key }}" data-filter-value="{{ chip.value }}">{{ chip.label }} {% include "components/icon.html" with name="x" %}</button>{% endfor %}<a href="{% url 'storefront:shop' %}">مسح الكل</a></div>
 
     <div hidden data-catalogue-product-library>
       {% for product in fixture.products %}

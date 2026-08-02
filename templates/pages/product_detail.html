@@ -15,7 +15,7 @@
     <div class="product-summary">
       {% if product.badge %}<span class="product-badge">{{ product.badge }}</span>{% endif %}
       <h1 id="product-heading">{{ product.name }}</h1>
-      <div class="rating" role="group" aria-label="تقييم {{ product.rating }} من 5">{% include "components/icon.html" with name="star" %}<span>{{ product.rating }}</span><a href="#product-reviews">({{ product.reviewCount }} تجربة استخدام)</a></div>
+      <div class="rating" aria-label="ميزة أساسية">{% include "components/icon.html" with name="shield" %}<span>{{ product.features.0.label }}</span><a href="#product-reviews">اكتشف الاستخدامات</a></div>
       <p class="product-lead">{{ product.shortDescription }}</p>
       <p class="product-price">{{ product.price }} <small>ج.م</small>{% if product.compareAtPrice %}<del>{{ product.compareAtPrice }} ج.م</del>{% endif %}</p>
       <p class="tax-note">السعر شامل ضريبة القيمة المضافة 14%.</p>
@@ -40,13 +40,13 @@
       <button type="button" role="tab" id="tab-features" aria-controls="panel-features" aria-selected="true" tabindex="0">المزايا</button>
       <button type="button" role="tab" id="tab-specifications" aria-controls="panel-specifications" aria-selected="false" tabindex="-1">المواصفات</button>
       <button type="button" role="tab" id="tab-downloads" aria-controls="panel-downloads" aria-selected="false" tabindex="-1">التنزيلات</button>
-      <button type="button" role="tab" id="tab-reviews" aria-controls="panel-reviews" aria-selected="false" tabindex="-1">المراجعات</button>
+      <button type="button" role="tab" id="tab-reviews" aria-controls="panel-reviews" aria-selected="false" tabindex="-1">الاستخدامات</button>
       <button type="button" role="tab" id="tab-faq" aria-controls="panel-faq" aria-selected="false" tabindex="-1">الأسئلة الشائعة</button>
     </div>
     <div class="tab-panel" id="panel-features" role="tabpanel" aria-labelledby="tab-features"><div class="grid grid--4">{% for feature in product.features %}<article class="feature-card"><span class="feature-card__icon">{% include "components/icon.html" with name="check" %}</span><h3>{{ feature.label }}</h3><p>{{ feature.description }}</p></article>{% endfor %}</div></div>
     <div class="tab-panel" id="panel-specifications" role="tabpanel" aria-labelledby="tab-specifications" hidden>{% for group in product.specificationGroups %}<h3>{{ group.label }}</h3><dl class="specification-list">{% for item in group.items %}<div><dt>{{ item.label }}</dt><dd>{{ item.value }}</dd></div>{% endfor %}</dl>{% endfor %}</div>
     <div class="tab-panel" id="panel-downloads" role="tabpanel" aria-labelledby="tab-downloads" hidden>{% for download in product.downloads %}<article class="download-row"><div>{% include "components/icon.html" with name="box" %}<span><strong>{{ download.label }}</strong><small>{{ download.prototypeNotice }}</small></span></div><a class="btn btn--outline" href="{{ download.path }}" download>{{ download.format }} — تنزيل</a></article>{% empty %}<p>لا توجد مستندات متاحة لهذا المنتج حاليًا.</p>{% endfor %}</div>
-    <div class="tab-panel" id="panel-reviews" role="tabpanel" aria-labelledby="tab-reviews" hidden><div id="product-reviews" class="grid grid--3">{% for review in reviews %}<article class="review-card"><div class="rating">{% include "components/icon.html" with name="star" %} {{ review.rating }} / 5</div><blockquote>“{{ review.quote }}”</blockquote><strong>{{ review.customerName }}</strong><small>{{ review.prototypeAttribution }}</small></article>{% empty %}<p>لا توجد تجارب استخدام منشورة بعد.</p>{% endfor %}</div></div>
+    <div class="tab-panel" id="panel-reviews" role="tabpanel" aria-labelledby="tab-reviews" hidden><div id="product-reviews" class="grid grid--3">{% for review in reviews %}<article class="review-card"><h3>{{ review.customerName }}</h3><p>{{ review.quote }}</p><small>{{ review.prototypeAttribution }}</small></article>{% empty %}<p>لا توجد سيناريوهات استخدام لهذا المنتج.</p>{% endfor %}</div></div>
     <div class="tab-panel" id="panel-faq" role="tabpanel" aria-labelledby="tab-faq" hidden><div class="faq-list">{% for faq in faqs %}<details><summary>{{ faq.question }}</summary><p>{{ faq.answer }}</p></details>{% endfor %}</div></div>
   </div>
 </section>

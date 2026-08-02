@@ -180,12 +180,14 @@ def get_catalogue(query: Mapping[str, Any], collection: str | None = None) -> di
             for product in products
             if set(criteria.features).issubset({item["key"] for item in product.get("features", [])})
         ]
-    if criteria.availability:
+    if criteria.availability == "available":
         products = [
             product
             for product in products
-            if product["availability"] == criteria.availability
+            if product["availability"] in {"available", "limited"}
         ]
+    elif criteria.availability == "unavailable":
+        products = [product for product in products if product["availability"] == "unavailable"]
     if criteria.sort == "price-asc":
         products.sort(key=lambda item: (item["price"], fixture_order[item["id"]]))
     elif criteria.sort == "price-desc":
