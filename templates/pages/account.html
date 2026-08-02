@@ -210,7 +210,6 @@
                       <div class="account-payment__body">
                         <h4><bdi>{{ option.label }}</bdi></h4>
                         <p>{{ option.description }}</p>
-                        <p class="prototype-note">{{ option.prototypeNotice }}</p>
                       </div>
                     </li>
                   {% endfor %}
@@ -271,7 +270,7 @@
         <div class="container account-signed-out__grid">
           <div class="surface-card account-signin">
             <h2 class="section-heading" id="account-signin-title">تسجيل الدخول</h2>
-            <p class="section-copy">{{ prototype.prototypeNotice }}</p>
+            <p class="section-copy">استخدم بريدك للوصول إلى الطلبات والعناوين والمفضلة من مكان واحد.</p>
             <form class="account-signin__form"
                   method="get"
                   action="{% url 'storefront:account' %}"
@@ -295,9 +294,9 @@
             <h2 class="account-benefits__title">كل ما تحتاجه في حسابك</h2>
             <ul class="account-benefits__list">
               <li>متابعة حالة الطلبات ومراجعة تفاصيلها.</li>
-              <li>قائمة مفضلة مرتبطة بحالة المتصفح المحلية.</li>
-              <li>عناوين ووسائل دفع للمراجعة التصميمية فقط.</li>
-              <li>إعدادات حساب بتحقق عربي محلي بدون حفظ.</li>
+              <li>قائمة مفضلة تجمع المنتجات التي تهمك.</li>
+              <li>إدارة العناوين ووسائل الدفع بسهولة.</li>
+              <li>تحديث بيانات الحساب من مكان واحد.</li>
             </ul>
             <div class="account-benefits__actions">
               <a class="btn btn--outline" href="{% url 'storefront:shop' %}">تصفّح المنتجات</a>

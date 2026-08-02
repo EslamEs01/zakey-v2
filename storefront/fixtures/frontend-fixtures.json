@@ -71,13 +71,13 @@
         "useCases": [{"id": "solution-family", "title": "دخول العائلة", "description": "وسائل دخول مرنة لكل فرد من أفراد المنزل."}, {"id": "solution-visitor", "title": "رؤية الزائر", "description": "كاميرا وجرس مدمجان لمعرفة من يقف أمام الباب."}, {"id": "solution-routine", "title": "أمان يومي", "description": "إغلاق تلقائي وتنبيهات تساعدك على مغادرة المنزل بثقة."}],
         "image": {"path": "/static/dist/assets/images/home/smart-home-solutions.webp", "width": 1440, "height": 960, "alt": "مدخل منزل يضم قفلًا وكاميرا ذكيين من ZAKEY"}
       },
-      "reviewsHeading": "لماذا يختار العملاء ZAKEY؟",
+      "reviewsHeading": "حلول تناسب تفاصيل يومك",
       "partnersHeading": "حلول تناسب كل مساحة",
       "newsletterHeading": "كل جديد من ZAKEY في رسالة واحدة"
     },
     "about": {
       "hero": {"eyebrow": "قصة ZAKEY", "heading": "نجعل أمان الباب أبسط وأذكى", "description": "ZAKEY علامة متخصصة في حلول الدخول الذكي، تجمع بين التقنية العملية والتصميم الذي يناسب تفاصيل البيت المصري.", "image": {"path": "/static/dist/assets/images/about/about-hero.webp", "width": 1800, "height": 1000, "alt": "مدخل منزل عصري يعبر عن رؤية ZAKEY"}},
-      "stats": [{"id": "stat-products", "value": "9", "label": "حلول ذكية"}, {"id": "stat-governorates", "value": "27", "label": "محافظة نخدمها"}, {"id": "stat-viewports", "value": "3", "label": "محافظات للتركيب"}, {"id": "stat-language", "value": "100%", "label": "دعم باللغة العربية"}],
+      "stats": [{"id": "stat-products", "value": "9", "label": "حلول في الكتالوج"}, {"id": "stat-governorates", "value": "27", "label": "محافظة في قائمة العناوين"}, {"id": "stat-viewports", "value": "3", "label": "محافظات مستهدفة للتركيب"}, {"id": "stat-language", "value": "100%", "label": "تجربة باللغة العربية"}],
       "mission": {"eyebrow": "مهمتنا", "heading": "تقنية مفهومة. أمان يمكن الاعتماد عليه.", "body": "نختار حلول دخول ذكية سهلة الاستخدام، ونقدم مواصفاتها وخيارات تركيبها بوضوح حتى يصل كل عميل إلى القفل الأنسب لبابه واحتياجاته.", "image": {"path": "/static/dist/assets/images/generated/apex-black-v2.webp", "width": 1200, "height": 900, "alt": "تفاصيل قفل ذكي على باب خشبي"}},
       "teamHeading": "خبرات تعمل لهدف واحد",
       "teamMemberIds": ["team-laila", "team-yassin", "team-salma", "team-ziad"],
@@ -86,14 +86,14 @@
     "contact": {
       "heading": "نحن هنا لمساعدتك",
       "eyebrow": "تواصل مع ZAKEY",
-      "description": "أخبرنا بما تحتاجه وسيساعدك فريق ZAKEY في اختيار المنتج وخدمة التركيب المناسبة.",
+      "description": "أخبرنا بما تحتاجه لمعاينة رحلة الاستشارة واختيار المنتج المناسب قبل إطلاق قنوات الدعم.",
       "email": "support@zakey.example",
       "phoneDisplay": "0100 000 0000",
-      "hours": "يوميًا من 10 صباحًا حتى 8 مساءً",
+      "hours": "سيتم إعلان مواعيد الدعم عند الإطلاق",
       "methodCards": [
-        {"id": "contact-phone", "icon": "phone", "title": "استشارة قبل الشراء", "detail": "اختيار القفل المناسب لبابك واحتياجات أسرتك.", "action": "contact-form"},
-        {"id": "contact-email", "icon": "mail", "title": "طلب خدمة تركيب", "detail": "تنسيق المعاينة والتركيب في المناطق المتاحة.", "action": "contact-form"},
-        {"id": "contact-hours", "icon": "clock", "title": "دعم ما بعد البيع", "detail": "إرشادات الاستخدام والصيانة والضمان.", "action": "contact-form"}
+        {"id": "contact-phone", "icon": "phone", "title": "اختيار المنتج", "detail": "قارن القفل المناسب لبابك واحتياجات أسرتك.", "action": "contact-form"},
+        {"id": "contact-email", "icon": "mail", "title": "خطة التركيب", "detail": "تعرّف على خطوات المعاينة والمناطق المستهدفة للخدمة.", "action": "contact-form"},
+        {"id": "contact-hours", "icon": "clock", "title": "معلومات ما بعد البيع", "detail": "إرشادات الاستخدام والصيانة وسياسة الضمان المخططة.", "action": "contact-form"}
       ],
       "form": {"heading": "أرسل استفسارك", "fields": {"name": "الاسم", "phone": "رقم الموبايل المصري", "email": "البريد الإلكتروني", "subject": "الموضوع", "message": "رسالتك"}, "submitLabel": "مراجعة الرسالة", "successMessage": "رسالتك جاهزة. الإرسال الفعلي غير متاح في نسخة العرض الحالية."},
       "faqIds": ["faq-shipping", "faq-payment"],
@@ -409,9 +409,9 @@
     {"id": "review-bridge", "productId": "product-bridge", "customerName": "للمنزل المترابط", "rating": 4, "quote": "جسر صغير يجمع إدارة الأقفال المتوافقة وروتينات الدخول في مكان واحد.", "placement": ["product"], "prototypeAttribution": "سيناريو استخدام مقترح"}
   ],
   "faqs": [
-    {"id": "faq-door-fit", "question": "كيف أعرف أن القفل مناسب لبابي؟", "answer": "قارن سُمك الباب واتجاه الفتح بالمواصفات، ثم اطلب معاينة من فريق التركيب لتأكيد المقاس قبل الشراء.", "page": "product", "productIds": ["product-apex-pro", "product-elite", "product-pulse", "product-orbit", "product-nova", "product-core"]},
+    {"id": "faq-door-fit", "question": "كيف أعرف أن القفل مناسب لبابي؟", "answer": "قارن سُمك الباب واتجاه الفتح بالمواصفات. عند إطلاق خدمة التركيب ستؤكد المعاينة المقاس قبل الشراء.", "page": "product", "productIds": ["product-apex-pro", "product-elite", "product-pulse", "product-orbit", "product-nova", "product-core"]},
     {"id": "faq-power", "question": "ماذا يحدث عند انخفاض البطارية؟", "answer": "ينبهك القفل مبكرًا قبل نفاد البطارية، وتوضح صفحة كل منتج خيار الطاقة الاحتياطية المتاح له.", "page": "product", "productIds": ["product-apex-pro", "product-vision", "product-pulse", "product-orbit", "product-nova", "product-guard", "product-bridge"]},
-    {"id": "faq-installation", "question": "أين تتوفر خدمة التركيب؟", "answer": "خدمة التركيب معروضة لعناوين القاهرة والجيزة والإسكندرية، ويؤكد الفريق التغطية والموعد قبل التنفيذ.", "page": "product", "productIds": ["product-apex-pro", "product-elite", "product-vision", "product-nova"]},
+    {"id": "faq-installation", "question": "أين ستتوفر خدمة التركيب؟", "answer": "التغطية المخططة عند الإطلاق تشمل عناوين محددة في القاهرة والجيزة والإسكندرية، وتحتاج إلى تأكيد قبل التنفيذ.", "page": "product", "productIds": ["product-apex-pro", "product-elite", "product-vision", "product-nova"]},
     {"id": "faq-camera", "question": "هل يتم حفظ صور الكاميرا؟", "answer": "تعتمد خصائص المشاهدة والتخزين على المنتج وإعداداته. لا تحفظ نسخة الموقع الحالية أي صور أو بيانات كاميرا.", "page": "product", "productIds": ["product-vision", "product-guard"]},
     {"id": "faq-connectivity", "question": "كيف يعمل جسر ZAKEY مع الأقفال؟", "answer": "صُمم الجسر لإدارة الأقفال المتوافقة من مكان واحد. خصائص الاتصال الفعلية تُفعّل عند إطلاق الخدمة المدعومة.", "page": "product", "productIds": ["product-bridge"]},
     {"id": "faq-unavailable", "question": "هل يمكن شراء منتج غير متاح؟", "answer": "لا. تبقى معلومات المنتج ظاهرة للمراجعة بينما تُعطّل إجراءات الشراء بوضوح.", "page": "product", "productIds": ["product-core"]},
@@ -480,17 +480,17 @@
     ]
   },
   "shippingOptions": [
-    {"id": "shipping-standard", "label": "شحن قياسي", "description": "مدة توضيحية من 3 إلى 5 أيام عمل.", "prototypeNotice": "خيار واجهة غير متصل بشركة شحن.", "eligibility": {"scope": "all-governorates"}, "icon": {"path": "/static/dist/assets/images/icons/shipping-standard.svg", "width": 48, "height": 48, "alt": "أيقونة الشحن القياسي"}},
-    {"id": "shipping-free", "label": "شحن مجاني", "description": "يظهر عند وصول المجموع الفرعي إلى 1,500 ج.م.", "prototypeNotice": "عتبة عرض تجريبية وليست عرضًا تشغيليًا.", "eligibility": {"scope": "all-governorates", "minimumSubtotal": 1500}, "icon": {"path": "/static/dist/assets/images/icons/shipping-free.svg", "width": 48, "height": 48, "alt": "أيقونة الشحن المجاني"}},
-    {"id": "shipping-same-day", "label": "توصيل في اليوم نفسه", "description": "يظهر فقط للمناطق المحددة داخل القاهرة الكبرى.", "prototypeNotice": "التوافر المعروض تجريبي ولا يحجز عملية توصيل.", "eligibility": {"scope": "configured-areas", "areaKeys": ["cairo-nasr-city", "cairo-heliopolis", "cairo-new-cairo", "cairo-maadi", "giza-dokki", "giza-mohandessin", "giza-sheikh-zayed", "giza-october"]}, "icon": {"path": "/static/dist/assets/images/icons/shipping-same-day.svg", "width": 48, "height": 48, "alt": "أيقونة التوصيل في اليوم نفسه"}}
+    {"id": "shipping-standard", "label": "شحن قياسي", "description": "المدة المستهدفة من 3 إلى 5 أيام عمل.", "prototypeNotice": "خيار مخطط وغير متصل حاليًا بشركة شحن.", "eligibility": {"scope": "all-governorates"}, "icon": {"path": "/static/dist/assets/images/icons/shipping-standard.svg", "width": 48, "height": 48, "alt": "أيقونة الشحن القياسي"}},
+    {"id": "shipping-free", "label": "شحن مجاني", "description": "للطلبات التي تصل إلى 1,500 ج.م أو أكثر.", "prototypeNotice": "سياسة مخططة قبل إطلاق خدمة الشحن.", "eligibility": {"scope": "all-governorates", "minimumSubtotal": 1500}, "icon": {"path": "/static/dist/assets/images/icons/shipping-free.svg", "width": 48, "height": 48, "alt": "أيقونة الشحن المجاني"}},
+    {"id": "shipping-same-day", "label": "توصيل في اليوم نفسه", "description": "للمناطق المؤهلة داخل القاهرة الكبرى.", "prototypeNotice": "خدمة مخططة ولا تحجز عملية توصيل حاليًا.", "eligibility": {"scope": "configured-areas", "areaKeys": ["cairo-nasr-city", "cairo-heliopolis", "cairo-new-cairo", "cairo-maadi", "giza-dokki", "giza-mohandessin", "giza-sheikh-zayed", "giza-october"]}, "icon": {"path": "/static/dist/assets/images/icons/shipping-same-day.svg", "width": 48, "height": 48, "alt": "أيقونة التوصيل في اليوم نفسه"}}
   ],
   "paymentOptions": [
-    {"id": "payment-cod", "label": "الدفع عند الاستلام", "description": "اختيار تجريبي لمراجعة ملخص الدفع.", "prototypeNotice": "لا يتم إنشاء طلب أو تحصيل مبلغ.", "eligibility": {"scope": "all-governorates"}, "icon": {"path": "/static/dist/assets/images/icons/payment-cod.svg", "width": 48, "height": 48, "alt": "أيقونة الدفع عند الاستلام"}},
-    {"id": "payment-instapay", "label": "InstaPay", "description": "حالة واجهة لتحويل محلي تجريبي.", "prototypeNotice": "لا يوجد ربط أو تحويل عبر InstaPay.", "eligibility": {"scope": "all-governorates"}, "icon": {"path": "/static/dist/assets/images/icons/payment-instapay.svg", "width": 48, "height": 48, "alt": "أيقونة InstaPay التجريبية"}},
-    {"id": "payment-vodafone-cash", "label": "Vodafone Cash", "description": "محفظة هاتف معروضة كخيار واجهة فقط.", "prototypeNotice": "لا يوجد ربط بمحفظة أو مزود.", "eligibility": {"scope": "all-governorates"}, "icon": {"path": "/static/dist/assets/images/icons/payment-vodafone-cash.svg", "width": 48, "height": 48, "alt": "أيقونة Vodafone Cash التجريبية"}},
-    {"id": "payment-etisalat-cash", "label": "Etisalat Cash", "description": "محفظة هاتف معروضة كخيار واجهة فقط.", "prototypeNotice": "لا يوجد ربط بمحفظة أو مزود.", "eligibility": {"scope": "all-governorates"}, "icon": {"path": "/static/dist/assets/images/icons/payment-etisalat-cash.svg", "width": 48, "height": 48, "alt": "أيقونة Etisalat Cash التجريبية"}},
-    {"id": "payment-cashu", "label": "CashU", "description": "اختيار تجريبي يظهر عند استعراض طرق الدفع الرقمية.", "prototypeNotice": "لا يوجد تكامل أو حساب أو معاملة CashU.", "eligibility": {"scope": "all-governorates"}, "icon": {"path": "/static/dist/assets/images/icons/payment-cashu.svg", "width": 48, "height": 48, "alt": "أيقونة CashU التجريبية"}},
-    {"id": "payment-installments", "label": "تقسيط ببطاقة بنكية مصرية", "description": "خطط عرض تجريبية حتى 12 شهرًا.", "prototypeNotice": "لا يوجد ربط ببنك ولا موافقة ائتمانية أو خصم.", "eligibility": {"scope": "all-governorates"}, "icon": {"path": "/static/dist/assets/images/icons/payment-installments.svg", "width": 48, "height": 48, "alt": "أيقونة التقسيط البنكي التجريبي"}}
+    {"id": "payment-cod", "label": "الدفع عند الاستلام", "description": "سداد قيمة الطلب عند وصوله.", "prototypeNotice": "لا يتم إنشاء طلب أو تحصيل مبلغ حاليًا.", "eligibility": {"scope": "all-governorates"}, "icon": {"path": "/static/dist/assets/images/icons/payment-cod.svg", "width": 48, "height": 48, "alt": "أيقونة الدفع عند الاستلام"}},
+    {"id": "payment-instapay", "label": "InstaPay", "description": "تحويل فوري عبر شبكة المدفوعات اللحظية.", "prototypeNotice": "لا يوجد ربط أو تحويل عبر InstaPay حاليًا.", "eligibility": {"scope": "all-governorates"}, "icon": {"path": "/static/dist/assets/images/icons/payment-instapay.svg", "width": 48, "height": 48, "alt": "أيقونة InstaPay"}},
+    {"id": "payment-vodafone-cash", "label": "Vodafone Cash", "description": "الدفع من محفظة الهاتف المحمول.", "prototypeNotice": "لا يوجد ربط بمحفظة أو مزود حاليًا.", "eligibility": {"scope": "all-governorates"}, "icon": {"path": "/static/dist/assets/images/icons/payment-vodafone-cash.svg", "width": 48, "height": 48, "alt": "أيقونة Vodafone Cash"}},
+    {"id": "payment-etisalat-cash", "label": "e& Cash", "description": "الدفع من محفظة الهاتف المحمول.", "prototypeNotice": "لا يوجد ربط بمحفظة أو مزود حاليًا.", "eligibility": {"scope": "all-governorates"}, "icon": {"path": "/static/dist/assets/images/icons/payment-etisalat-cash.svg", "width": 48, "height": 48, "alt": "أيقونة e& Cash"}},
+    {"id": "payment-cashu", "label": "CashU", "description": "خيار دفع رقمي للمعاملات المحلية.", "prototypeNotice": "لا يوجد تكامل أو حساب أو معاملة CashU حاليًا.", "eligibility": {"scope": "all-governorates"}, "icon": {"path": "/static/dist/assets/images/icons/payment-cashu.svg", "width": 48, "height": 48, "alt": "أيقونة CashU"}},
+    {"id": "payment-installments", "label": "تقسيط ببطاقة بنكية مصرية", "description": "خطط تقسيط مخططة حتى 12 شهرًا.", "prototypeNotice": "لا يوجد ربط ببنك ولا موافقة ائتمانية أو خصم حاليًا.", "eligibility": {"scope": "all-governorates"}, "icon": {"path": "/static/dist/assets/images/icons/payment-installments.svg", "width": 48, "height": 48, "alt": "أيقونة التقسيط البنكي"}}
   ],
   "prototypeAccounts": [
     {"id": "account-signed-out", "mode": "signed-out", "selectedTab": "sign-in", "identity": null, "addresses": [], "orderHistory": [], "prototypeNotice": "حالة خروج تجريبية ولا تطلب بيانات اعتماد حقيقية."},

@@ -136,8 +136,7 @@
                       <img src="{{ option.icon.path }}" width="{{ option.icon.width }}" height="{{ option.icon.height }}" alt="">
                       <span>
                         <strong>{{ option.label }}</strong>
-                        <small>{{ option.description }}</small>
-                        <small class="prototype-note" id="{{ option.id }}-notice">{{ option.prototypeNotice }}</small>
+                        <small id="{{ option.id }}-notice">{{ option.description }}</small>
                       </span>
                     </label>
                   {% endfor %}
@@ -182,8 +181,7 @@
                       <img src="{{ option.icon.path }}" width="{{ option.icon.width }}" height="{{ option.icon.height }}" alt="">
                       <span>
                         <strong {% if option.id != 'payment-cod' %}dir="ltr"{% endif %}>{{ option.label }}</strong>
-                        <small>{{ option.description }}</small>
-                        <small class="prototype-note" id="{{ option.id }}-notice">{{ option.prototypeNotice }}</small>
+                        <small id="{{ option.id }}-notice">{{ option.description }}</small>
                       </span>
                     </label>
                   {% endfor %}
@@ -231,7 +229,6 @@
               <button class="btn btn--outline" type="button" data-go-step="payment">العودة إلى الدفع</button>
               <button class="btn btn--gold" type="button" data-checkout-final>تأكيد المعاينة</button>
             </div>
-            <p class="prototype-note">{{ site.prototypeNotice }}</p>
           </section>
         </div>
 
@@ -247,7 +244,6 @@
           </dl>
           <p class="checkout-summary__shipping-note" data-checkout-shipping-note></p>
           <a class="checkout-summary__cart-link" href="{% url 'storefront:cart' %}">تعديل السلة</a>
-          <small>{{ site.prototypeNotice }}</small>
         </aside>
       </div>
 

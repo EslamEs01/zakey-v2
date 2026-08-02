@@ -9,10 +9,11 @@ from scripts import export_static_site
 
 class StaticExportTests(TestCase):
     def test_prefix_root_paths_preserves_external_and_fragment_urls(self) -> None:
-        source = 'href="/shop/" src="https://example.com/a.png" href="#faq"'
+        source = 'href="/" href="/shop/" src="https://example.com/a.png" href="#faq"'
 
         rewritten = export_static_site.prefix_root_paths(source, "/zakey-v2/")
 
+        self.assertIn('href="/zakey-v2/"', rewritten)
         self.assertIn('href="/zakey-v2/shop/"', rewritten)
         self.assertIn('src="https://example.com/a.png"', rewritten)
         self.assertIn('href="#faq"', rewritten)

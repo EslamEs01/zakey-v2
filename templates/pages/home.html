@@ -104,10 +104,10 @@
 
 <section class="section section--navy" aria-labelledby="reviews-heading">
   <div class="container">
-    <div class="section-head"><div><p class="eyebrow">تجارب استخدام</p><h2 class="section-heading section-heading--light" id="reviews-heading">{{ home.reviewsHeading }}</h2></div></div>
+    <div class="section-head"><div><p class="eyebrow">سيناريوهات استخدام</p><h2 class="section-heading section-heading--light" id="reviews-heading">{{ home.reviewsHeading }}</h2></div></div>
     <div class="grid grid--3">
       {% for review in home_reviews %}
-        <article class="testimonial"><div class="rating" role="img" aria-label="{{ review.rating }} من 5">{% include "components/icon.html" with name="star" %}<span>{{ review.rating }} / 5</span></div><blockquote>“{{ review.quote }}”</blockquote><div class="reviewer"><span class="reviewer__avatar">{{ review.customerName|slice:":1" }}</span><div><strong>{{ review.customerName }}</strong><small class="prototype-note">{{ review.prototypeAttribution }}</small></div></div></article>
+        <article class="testimonial"><h3>{{ review.customerName }}</h3><p>{{ review.quote }}</p><small class="prototype-note">{{ review.prototypeAttribution }}</small></article>
       {% endfor %}
     </div>
   </div>

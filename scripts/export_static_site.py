@@ -26,6 +26,7 @@ from storefront.fixture_provider import load_fixture  # noqa: E402
 STATIC_SOURCE = PROJECT_ROOT / "static" / "dist"
 EXPORT_SENTINEL = ".zakey-static-export"
 ROOT_PATH_PATTERN = re.compile(r"(?P<quote>[\"'`])/(?P<path>(?!/)[A-Za-z])")
+ROOT_ATTRIBUTE_PATTERN = re.compile(r"(?P<attribute>\b(?:href|action|src)=)(?P<quote>[\"'])/(?P=quote)")
 CSS_ROOT_URL_PATTERN = re.compile(r"url\(/(?P<path>(?!/)[A-Za-z])")
 
 
@@ -47,6 +48,10 @@ def prefix_root_paths(content: str, base_path: str) -> str:
     prefix = base_path.rstrip("/")
     content = ROOT_PATH_PATTERN.sub(
         lambda match: f"{match.group('quote')}{prefix}/{match.group('path')}",
+        content,
+    )
+    content = ROOT_ATTRIBUTE_PATTERN.sub(
+        lambda match: f"{match.group('attribute')}{match.group('quote')}{base_path}{match.group('quote')}",
         content,
     )
     return CSS_ROOT_URL_PATTERN.sub(

@@ -20,6 +20,7 @@
     "export:pages": "uv run python ./scripts/export_static_site.py --output ./_site --base-path /zakey-v2/",
     "test": "playwright test",
     "test:e2e": "playwright test ./tests/e2e",
+    "test:pages": "npm run build && uv run python ./scripts/export_static_site.py --output ./_pages-preview/zakey-v2 --base-path /zakey-v2/ && ZAKEY_E2E_BASE_URL=http://127.0.0.1:4173/zakey-v2/ ZAKEY_E2E_PATH_PREFIX=/zakey-v2 ZAKEY_E2E_SERVER_COMMAND='uv run python -m http.server 4173 --directory ./_pages-preview' playwright test ./tests/e2e/navigation-links.spec.js --project=chrome-1440",
     "test:a11y": "playwright test ./tests/accessibility",
     "test:no-js": "playwright test ./tests/e2e/no-js.spec.js --project=no-js-1440 --project=no-js-1024 --project=no-js-768 --project=no-js-390",
     "screenshots": "playwright test ./tests/e2e/site-integrity.spec.js",
