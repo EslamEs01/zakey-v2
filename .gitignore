@@ -28,6 +28,9 @@ specs/003-zakey-frontend-reference-build/qa/playwright-results/
 # Local acceptance artifacts
 .artifacts/
 
+# Local disposable per-developer PostgreSQL dev cluster (FR-002 bootstrap aid)
+.pgdev/
+
 # Environment and editor files
 .env
 .env.*

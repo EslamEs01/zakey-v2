@@ -2,12 +2,20 @@ from __future__ import annotations
 
 import tempfile
 from pathlib import Path
-from unittest import TestCase
+from django.core.management import call_command
+from django.test import TestCase
 
 from scripts import export_static_site
 
 
 class StaticExportTests(TestCase):
+    """The exporter renders the real, database-backed storefront (T-1608), so
+    the approved demonstration catalogue is seeded before exporting."""
+
+    @classmethod
+    def setUpTestData(cls):
+        call_command("seed_demo", verbosity=0)
+
     def test_prefix_root_paths_preserves_external_and_fragment_urls(self) -> None:
         source = 'href="/" href="/shop/" src="https://example.com/a.png" href="#faq"'
 
@@ -24,11 +32,11 @@ class StaticExportTests(TestCase):
 
             page_count = export_static_site.export_site(output, "/zakey-v2/")
 
+            # 11 fixed pages + 6 collections + 9 products = 26.
             self.assertGreaterEqual(page_count, 20)
             self.assertTrue((output / "index.html").is_file())
             self.assertTrue((output / "404.html").is_file())
             self.assertTrue((output / "products" / "zakey-apex-pro" / "index.html").is_file())
-            self.assertTrue((output / "account" / "signed-out" / "index.html").is_file())
             home = (output / "index.html").read_text(encoding="utf-8")
             css = (output / "static" / "dist" / "css" / "app.css").read_text(encoding="utf-8")
             self.assertIn('href="/zakey-v2/static/dist/css/app.css"', home)

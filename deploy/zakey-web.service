@@ -1,0 +1,65 @@
+# systemd unit for the ZAKEY web application (T-2001).
+#
+# NOT INSTALLED. This is a reviewed example; no unit has been installed and no
+# VPS has been accessed from this repository.
+#
+# Every path names ZAKEY explicitly. Nothing here is shared with, or writable
+# by, another project on the same host.
+#
+#   install: /etc/systemd/system/zakey-web.service
+#   secrets: /etc/zakey/zakey.env   (root:zakey 0640 — NEVER in git)
+
+[Unit]
+Description=ZAKEY commerce web application
+Documentation=file:///srv/zakey/specs/004-zakey-commerce-backend-admin/runbook.md
+After=network-online.target postgresql.service
+Wants=network-online.target
+Requires=postgresql.service
+
+[Service]
+Type=notify
+User=zakey
+Group=zakey
+WorkingDirectory=/srv/zakey
+
+# Secrets arrive from a root-owned file, never from this unit and never from the
+# repository. A missing file stops the service rather than starting it with
+# defaults.
+EnvironmentFile=/etc/zakey/zakey.env
+Environment=DJANGO_SETTINGS_MODULE=config.settings.production
+Environment=PYTHONUNBUFFERED=1
+
+ExecStart=/srv/zakey/.venv/bin/gunicorn \
+    --config /srv/zakey/deploy/gunicorn.conf.py \
+    config.wsgi:application
+
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=30
+Restart=on-failure
+RestartSec=5
+
+# --- isolation -------------------------------------------------------------
+# The service can read its own tree and write only its own media and run dirs.
+# A compromised worker cannot reach another project's files on the same host.
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+ReadWritePaths=/srv/zakey/media /srv/zakey/run
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=zakey-web
+
+[Install]
+WantedBy=multi-user.target

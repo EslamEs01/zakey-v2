@@ -21,13 +21,17 @@
       <p class="tax-note">السعر شامل ضريبة القيمة المضافة 14%.</p>
       <div class="instalment-note">{% include "components/icon.html" with name="cart" %}<span>{{ product.instalmentMessage }}</span></div>
       <p class="availability {% if product.availability == 'unavailable' %}availability--off{% endif %}">{% include "components/icon.html" with name="check" %}{% if product.availability == 'available' %}متاح{% else %}غير متاح حاليًا{% endif %}</p>
-      <fieldset class="finish-options"><legend>اللون</legend>{% for finish in product.finishes %}<label><input type="radio" name="finish" value="{{ finish.id }}" {% if forloop.first %}checked{% endif %}><span class="finish-swatch" style="--swatch:{{ finish.swatch }}"></span>{{ finish.label }}</label>{% endfor %}</fieldset>
+      <form method="post" action="{% url 'storefront:cart-add' %}" data-add-to-cart-form>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      <fieldset class="finish-options"><legend>اللون</legend>{% for finish in product.finishes %}<label><input type="radio" name="variant" value="{{ finish.variantId }}" data-finish-id="{{ finish.id }}" {% if forloop.first %}checked{% endif %}><span class="finish-swatch" style="--swatch:{{ finish.swatch }}"></span>{{ finish.label }}</label>{% endfor %}</fieldset>
       <div class="product-buy-row">
-        <div class="quantity-control" role="group" aria-label="الكمية"><button type="button" data-quantity-minus aria-label="تقليل الكمية">{% include "components/icon.html" with name="minus" %}</button><input type="number" value="1" min="1" max="9" aria-label="كمية المنتج" data-quantity><button type="button" data-quantity-plus aria-label="زيادة الكمية">{% include "components/icon.html" with name="plus" %}</button></div>
-        <button class="btn btn--primary" type="button" data-add-product {% if product.availability == 'unavailable' %}disabled{% endif %}>إضافة إلى السلة</button>
-        <button class="btn btn--gold" type="button" data-buy-product {% if product.availability == 'unavailable' %}disabled{% endif %}>اشترِ الآن</button>
+        <div class="quantity-control" role="group" aria-label="الكمية"><button type="button" data-quantity-minus aria-label="تقليل الكمية">{% include "components/icon.html" with name="minus" %}</button><input type="number" name="quantity" value="1" min="1" max="9" aria-label="كمية المنتج" data-quantity><button type="button" data-quantity-plus aria-label="زيادة الكمية">{% include "components/icon.html" with name="plus" %}</button></div>
+        <button class="btn btn--primary" type="submit" data-add-product {% if product.availability == 'unavailable' %}disabled{% endif %}>إضافة إلى السلة</button>
+        <button class="btn btn--gold" type="submit" name="buy_now" value="1" data-buy-product {% if product.availability == 'unavailable' %}disabled{% endif %}>اشترِ الآن</button>
       </div>
-      <div class="product-secondary-actions"><button class="btn btn--outline" type="button" data-wishlist-toggle="{{ product.id }}" aria-pressed="false">{% include "components/icon.html" with name="heart" %} المفضلة</button><button class="btn btn--outline" type="button" data-share-product>{% include "components/icon.html" with name="share" %} مشاركة</button></div>
+      </form>
+      <div class="product-secondary-actions"><form method="post" action="{% url 'storefront:wishlist-toggle' %}" style="display:contents">{% csrf_token %}<input type="hidden" name="product" value="{{ product.pk }}"><input type="hidden" name="next" value="{{ request.get_full_path }}"><button class="btn btn--outline" type="submit" data-wishlist-toggle="{{ product.id }}" aria-pressed="{% if product.pk in wishlist_product_ids %}true{% else %}false{% endif %}">{% include "components/icon.html" with name="heart" %} المفضلة</button></form><button class="btn btn--outline" type="button" data-share-product>{% include "components/icon.html" with name="share" %} مشاركة</button></div>
       <ul class="product-service-list"><li>{% include "components/icon.html" with name="truck" %} شحن مجاني فوق ١٬٥٠٠ ج.م</li>{% if product.serviceFlags.installationSupported %}<li>{% include "components/icon.html" with name="shield" %} خدمة التركيب متاحة للقاهرة والجيزة والإسكندرية</li>{% endif %}</ul>
     </div>
   </div>

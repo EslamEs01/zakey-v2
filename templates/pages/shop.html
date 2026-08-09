@@ -7,7 +7,7 @@
   <div class="container">
     <nav class="breadcrumb breadcrumb--light" aria-label="مسار التنقل"><a href="{% url 'storefront:home' %}">الرئيسية</a>{% include "components/icon.html" with name="chevron" %}<span aria-current="page">{% if page_id == 'search' %}البحث{% elif page_id == 'collection' %}المجموعة{% else %}المتجر{% endif %}</span></nav>
     <h1>{% if page_id == 'search' %}نتائج البحث{% elif page_id == 'collection' %}مجموعة مختارة{% else %}أقفال ZAKEY الذكية{% endif %}</h1>
-    <p data-catalogue-description>{% if catalogue.criteria.q %}نتائج البحث عن “{{ catalogue.criteria.q }}”{% else %}قارن وسائل الدخول والتصميم والسعر واختر القفل الأنسب لاحتياجاتك.{% endif %}</p>
+    <p data-catalogue-description>{% if catalogue.criteria.q %}نتائج البحث عن “{{ catalogue.criteria.q }}”{% elif page_id == 'search' %}اكتب اسم منتج أو ميزة للبحث في مجموعة ZAKEY.{% else %}قارن وسائل الدخول والتصميم والسعر واختر القفل الأنسب لاحتياجاتك.{% endif %}</p>
   </div>
 </section>
 
@@ -34,11 +34,12 @@
 
     <div class="active-filters" role="group" aria-label="الفلاتر النشطة" data-active-filters data-shop-url="{% url 'storefront:shop' %}" {% if not catalogue.activeChips %}hidden{% endif %}><span>محدد:</span>{% for chip in catalogue.activeChips %}<button type="button" class="filter-chip" data-filter-remove="{{ chip.key }}" data-filter-value="{{ chip.value }}">{{ chip.label }} {% include "components/icon.html" with name="x" %}</button>{% endfor %}<a href="{% url 'storefront:shop' %}">مسح الكل</a></div>
 
-    <div hidden data-catalogue-product-library>
-      {% for product in fixture.products %}
-        <template data-catalogue-product-template="{{ product.id }}">{% include "components/product_card.html" %}</template>
-      {% endfor %}
-    </div>
+    {% comment %}
+      The hidden per-product template library that used to live here fed the
+      browser-side catalogue re-render. The server filters, sorts and paginates
+      now (T-1602/T-1607), so shipping every product to every visitor bought
+      nothing but weight and a second source of truth.
+    {% endcomment %}
 
     <div class="catalogue-layout">
       <aside class="filter-sidebar" aria-label="فلاتر المنتجات">{% include "components/catalogue_filters.html" %}</aside>

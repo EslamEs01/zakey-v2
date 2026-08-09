@@ -2,7 +2,7 @@
 {% block title %}تواصل مع ZAKEY | المبيعات والتركيب والدعم{% endblock %}
 
 {% block content %}
-{% with contact=fixture.site.contact %}
+{% with contact=site.contact %}
 <svg class="zk-icon-defs" width="0" height="0" aria-hidden="true" focusable="false">
   <symbol id="zk-phone" viewBox="0 0 24 24">
     <rect x="6.5" y="2.5" width="11" height="19" rx="2.5"></rect><path d="M10.8 18.4h2.4"></path>
@@ -53,11 +53,16 @@
         <p class="section-copy">{{ contact.description }}</p>
 
         <form class="contact-form"
-              method="get"
-              action="{% url 'storefront:contact' %}"
+              method="post"
+              action="{% url 'storefront:contact-send' %}"
               data-contact-form
               aria-describedby="contact-form-note">
-          <input type="hidden" name="qa" value="unsent">
+          {% csrf_token %}
+          {# Honeypot: hidden from people and from screen readers, filled by bots. #}
+          <div aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">
+            <label for="contact-company">الشركة</label>
+            <input id="contact-company" name="company" type="text" tabindex="-1" autocomplete="off">
+          </div>
 
           <div class="contact-form__row">
             <div class="field">
@@ -144,12 +149,20 @@
             <h4>الاسترجاع والاستبدال</h4>
             <p>ستُنشر المدد والاستثناءات وخطوات طلب الاسترجاع عند اعتماد السياسة النهائية قبل الإطلاق.</p>
           </div>
-          {% for faq in fixture.faqs %}{% if faq.id in contact.faqIds %}
+          {% comment %}
+          The list is already restricted to this page by ``ctx.faqs("contact")``,
+          which filters on FAQ.page. The old ``{% if faq.id in contact.faqIds %}``
+          guard came from the fixture era, when every FAQ was loaded at once and
+          each page picked its own by id. ``contact.faqIds`` no longer exists, so
+          that condition was silently false and the accordion rendered empty —
+          two real FAQ rows disappeared from the page.
+          {% endcomment %}
+          {% for faq in contact_faqs %}
             <details class="contact-faq__item">
               <summary>{{ faq.question }}</summary>
               <p>{{ faq.answer }}</p>
             </details>
-          {% endif %}{% endfor %}
+          {% endfor %}
           <a class="contact-faq__more" href="{% url 'storefront:shop' %}">تصفّح المنتجات لمعرفة التفاصيل الكاملة</a>
         </div>
 

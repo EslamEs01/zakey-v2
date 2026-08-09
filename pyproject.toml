@@ -1,11 +1,66 @@
 [project]
-name = "zakey-frontend-reference-build"
-version = "0.1.0"
-description = "Frontend-only Django template reference build for ZAKEY v2"
+name = "zakey-commerce-backend"
+version = "0.2.0"
+description = "ZAKEY v2 commerce backend and staff administration behind the approved Arabic-first storefront"
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "Django==5.2.16",
+    "psycopg[binary]>=3.2,<4",
+    "django-jazzmin>=3.0,<4",
+    # >=12.3 is a security floor, not a preference: 11.x carries 25 known
+    # advisories and this project feeds untrusted uploads to Pillow (T-1702).
+    "Pillow>=12.3,<13",
+    "argon2-cffi>=23,<26",
+    "django-import-export>=4,<5",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3,<10",  # PYSEC-2026-1845
+    "pytest-django>=4.9,<5",
+    "pytest-cov>=6,<8",
+    "factory-boy>=3.3,<4",
 ]
 
 [tool.uv]
 package = false
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+python_files = ["test_*.py", "tests.py"]
+testpaths = ["apps", "tests"]
+addopts = "-q --strict-markers"
+markers = [
+    "concurrency: PostgreSQL-backed concurrency test (requires a real database, never SQLite)",
+]
+
+# Coverage is scoped to exactly what NFR-013 names — services, models and the
+# permission matrix — rather than the whole tree. A repository-wide percentage
+# is dominated by migrations, settings and admin declarations, which are either
+# generated or trivially "covered" by importing them; that number can sit
+# comfortably above target while the code that decides money and access is
+# barely exercised.
+[tool.coverage.run]
+branch = true
+source = ["apps"]
+omit = [
+    "*/migrations/*",
+    "*/tests/*",
+    "*/__init__.py",
+    "*/apps.py",
+]
+
+[tool.coverage.report]
+# The floor NFR-013 sets. Never lower it to make a run pass.
+fail_under = 85
+show_missing = true
+skip_covered = false
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
+
+[tool.coverage.paths]
+source = ["apps"]

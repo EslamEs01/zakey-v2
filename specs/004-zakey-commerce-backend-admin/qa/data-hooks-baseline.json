@@ -1,0 +1,491 @@
+{
+  "actual_unique_attributes": 139,
+  "attributes": {
+    "data-account-demo-form": [
+      "templates/pages/account.html:277"
+    ],
+    "data-account-mode": [
+      "templates/pages/account.html:28"
+    ],
+    "data-account-panel": [
+      "templates/pages/account.html:102",
+      "templates/pages/account.html:115",
+      "templates/pages/account.html:118",
+      "templates/pages/account.html:153",
+      "templates/pages/account.html:174",
+      "templates/pages/account.html:197",
+      "templates/pages/account.html:223",
+      "templates/pages/account.html:66",
+      "templates/pages/account.html:75",
+      "templates/pages/account.html:84",
+      "templates/pages/account.html:93"
+    ],
+    "data-account-panel-id": [
+      "templates/pages/account.html:118",
+      "templates/pages/account.html:153",
+      "templates/pages/account.html:174",
+      "templates/pages/account.html:197",
+      "templates/pages/account.html:223"
+    ],
+    "data-account-panels": [
+      "templates/pages/account.html:115"
+    ],
+    "data-account-settings": [
+      "templates/pages/account.html:231",
+      "templates/pages/account.html:256"
+    ],
+    "data-account-settings-submit": [
+      "templates/pages/account.html:256"
+    ],
+    "data-account-signed-out": [
+      "templates/pages/account.html:269"
+    ],
+    "data-account-status": [
+      "templates/pages/account.html:147",
+      "templates/pages/account.html:191",
+      "templates/pages/account.html:217",
+      "templates/pages/account.html:260"
+    ],
+    "data-account-tab": [
+      "templates/pages/account.html:101",
+      "templates/pages/account.html:28",
+      "templates/pages/account.html:61",
+      "templates/pages/account.html:65",
+      "templates/pages/account.html:74",
+      "templates/pages/account.html:83",
+      "templates/pages/account.html:92"
+    ],
+    "data-account-tab-id": [
+      "templates/pages/account.html:101",
+      "templates/pages/account.html:65",
+      "templates/pages/account.html:74",
+      "templates/pages/account.html:83",
+      "templates/pages/account.html:92"
+    ],
+    "data-account-tabs": [
+      "templates/pages/account.html:61"
+    ],
+    "data-account-unavailable": [
+      "templates/pages/account.html:148",
+      "templates/pages/account.html:192",
+      "templates/pages/account.html:218"
+    ],
+    "data-account-wishlist-empty": [
+      "templates/pages/account.html:157"
+    ],
+    "data-account-wishlist-items": [
+      "templates/pages/account.html:167"
+    ],
+    "data-account-wishlist-list": [
+      "templates/pages/account.html:165"
+    ],
+    "data-account-wishlist-summary": [
+      "templates/pages/account.html:166"
+    ],
+    "data-active-filters": [
+      "templates/pages/shop.html:35"
+    ],
+    "data-add-product": [
+      "templates/pages/product_detail.html:27"
+    ],
+    "data-area-field": [
+      "templates/pages/checkout.html:106"
+    ],
+    "data-buy-product": [
+      "templates/pages/product_detail.html:28"
+    ],
+    "data-cart-category": [
+      "templates/pages/cart.html:86"
+    ],
+    "data-cart-count": [
+      "templates/partials/header.html:37"
+    ],
+    "data-cart-decrease": [
+      "templates/pages/cart.html:92"
+    ],
+    "data-cart-discount": [
+      "templates/pages/cart.html:50"
+    ],
+    "data-cart-discount-row": [
+      "templates/pages/cart.html:50"
+    ],
+    "data-cart-empty": [
+      "templates/pages/cart.html:62"
+    ],
+    "data-cart-finish": [
+      "templates/pages/cart.html:88"
+    ],
+    "data-cart-image": [
+      "templates/pages/cart.html:83"
+    ],
+    "data-cart-increase": [
+      "templates/pages/cart.html:94"
+    ],
+    "data-cart-line": [
+      "templates/pages/cart.html:32",
+      "templates/pages/cart.html:81",
+      "templates/pages/cart.html:96"
+    ],
+    "data-cart-line-price": [
+      "templates/pages/cart.html:96"
+    ],
+    "data-cart-lines": [
+      "templates/pages/cart.html:32"
+    ],
+    "data-cart-link": [
+      "templates/partials/header.html:36"
+    ],
+    "data-cart-loading": [
+      "templates/pages/cart.html:25"
+    ],
+    "data-cart-name": [
+      "templates/pages/cart.html:87"
+    ],
+    "data-cart-populated": [
+      "templates/pages/cart.html:30"
+    ],
+    "data-cart-product-link": [
+      "templates/pages/cart.html:82",
+      "templates/pages/cart.html:87"
+    ],
+    "data-cart-quantity": [
+      "templates/pages/cart.html:93"
+    ],
+    "data-cart-remove": [
+      "templates/pages/cart.html:89"
+    ],
+    "data-cart-root": [
+      "templates/pages/cart.html:24"
+    ],
+    "data-cart-shipping": [
+      "templates/pages/cart.html:51"
+    ],
+    "data-cart-subtotal": [
+      "templates/pages/cart.html:49"
+    ],
+    "data-cart-total": [
+      "templates/pages/cart.html:53"
+    ],
+    "data-cart-vat": [
+      "templates/pages/cart.html:52"
+    ],
+    "data-catalogue-description": [
+      "templates/pages/shop.html:10"
+    ],
+    "data-catalogue-form": [
+      "templates/components/catalogue_filters.html:1"
+    ],
+    "data-catalogue-product-library": [
+      "templates/pages/shop.html:37"
+    ],
+    "data-catalogue-product-template": [
+      "templates/pages/shop.html:39"
+    ],
+    "data-checkout-discount": [
+      "templates/pages/checkout.html:240"
+    ],
+    "data-checkout-discount-row": [
+      "templates/pages/checkout.html:240"
+    ],
+    "data-checkout-empty": [
+      "templates/pages/checkout.html:38"
+    ],
+    "data-checkout-final": [
+      "templates/pages/checkout.html:230"
+    ],
+    "data-checkout-layout": [
+      "templates/pages/checkout.html:48"
+    ],
+    "data-checkout-line-image": [
+      "templates/pages/checkout.html:263"
+    ],
+    "data-checkout-line-meta": [
+      "templates/pages/checkout.html:264"
+    ],
+    "data-checkout-line-name": [
+      "templates/pages/checkout.html:264"
+    ],
+    "data-checkout-line-price": [
+      "templates/pages/checkout.html:265"
+    ],
+    "data-checkout-lines": [
+      "templates/pages/checkout.html:237"
+    ],
+    "data-checkout-loading": [
+      "templates/pages/checkout.html:33"
+    ],
+    "data-checkout-next": [
+      "templates/pages/checkout.html:161"
+    ],
+    "data-checkout-panel": [
+      "templates/pages/checkout.html:165",
+      "templates/pages/checkout.html:204",
+      "templates/pages/checkout.html:50"
+    ],
+    "data-checkout-root": [
+      "templates/pages/checkout.html:6"
+    ],
+    "data-checkout-shipping": [
+      "templates/pages/checkout.html:241",
+      "templates/pages/checkout.html:245"
+    ],
+    "data-checkout-shipping-note": [
+      "templates/pages/checkout.html:245"
+    ],
+    "data-checkout-step": [
+      "templates/pages/checkout.html:10",
+      "templates/pages/checkout.html:11",
+      "templates/pages/checkout.html:16",
+      "templates/pages/checkout.html:17",
+      "templates/pages/checkout.html:22",
+      "templates/pages/checkout.html:23"
+    ],
+    "data-checkout-step-item": [
+      "templates/pages/checkout.html:10",
+      "templates/pages/checkout.html:16",
+      "templates/pages/checkout.html:22"
+    ],
+    "data-checkout-subtotal": [
+      "templates/pages/checkout.html:239"
+    ],
+    "data-checkout-total": [
+      "templates/pages/checkout.html:243"
+    ],
+    "data-checkout-vat": [
+      "templates/pages/checkout.html:242"
+    ],
+    "data-contact-form": [
+      "templates/pages/contact.html:58"
+    ],
+    "data-contact-retry": [
+      "templates/pages/contact.html:125"
+    ],
+    "data-contact-submit": [
+      "templates/pages/contact.html:107"
+    ],
+    "data-coupon-form": [
+      "templates/pages/cart.html:33"
+    ],
+    "data-coupon-status": [
+      "templates/pages/cart.html:42"
+    ],
+    "data-coupon-submit": [
+      "templates/pages/cart.html:40"
+    ],
+    "data-dialog-close": [
+      "templates/pages/shop.html:66"
+    ],
+    "data-error-summary": [
+      "templates/pages/checkout.html:60",
+      "templates/pages/checkout.html:62"
+    ],
+    "data-error-summary-list": [
+      "templates/pages/checkout.html:62"
+    ],
+    "data-filter-open": [
+      "templates/pages/shop.html:19"
+    ],
+    "data-filter-remove": [
+      "templates/pages/shop.html:35"
+    ],
+    "data-filter-value": [
+      "templates/pages/shop.html:35"
+    ],
+    "data-final-state": [
+      "templates/pages/checkout.html:227"
+    ],
+    "data-form-status": [
+      "templates/components/newsletter.html:14"
+    ],
+    "data-gallery-alt": [
+      "templates/pages/product_detail.html:12"
+    ],
+    "data-gallery-image": [
+      "templates/pages/product_detail.html:12"
+    ],
+    "data-gallery-main": [
+      "templates/pages/product_detail.html:10"
+    ],
+    "data-go-step": [
+      "templates/pages/checkout.html:171",
+      "templates/pages/checkout.html:198",
+      "templates/pages/checkout.html:214",
+      "templates/pages/checkout.html:218",
+      "templates/pages/checkout.html:222",
+      "templates/pages/checkout.html:229"
+    ],
+    "data-initial-step": [
+      "templates/pages/checkout.html:6"
+    ],
+    "data-installation-fieldset": [
+      "templates/pages/checkout.html:147"
+    ],
+    "data-mobile-menu-trigger": [
+      "templates/partials/header.html:40"
+    ],
+    "data-page": [
+      "templates/base.html:14"
+    ],
+    "data-payment-error": [
+      "templates/pages/checkout.html:189"
+    ],
+    "data-payment-form": [
+      "templates/pages/checkout.html:174"
+    ],
+    "data-product-card": [
+      "templates/components/product_card.html:1"
+    ],
+    "data-product-gallery": [
+      "templates/pages/product_detail.html:9"
+    ],
+    "data-product-id": [
+      "templates/components/product_card.html:1"
+    ],
+    "data-products-menu-trigger": [
+      "templates/partials/header.html:16"
+    ],
+    "data-prototype-form": [
+      "templates/components/newsletter.html:5"
+    ],
+    "data-qa-state": [
+      "templates/pages/checkout.html:6"
+    ],
+    "data-quantity": [
+      "templates/pages/product_detail.html:26"
+    ],
+    "data-quantity-minus": [
+      "templates/pages/product_detail.html:26"
+    ],
+    "data-quantity-plus": [
+      "templates/pages/product_detail.html:26"
+    ],
+    "data-result-count": [
+      "templates/pages/shop.html:17"
+    ],
+    "data-retry-catalogue": [
+      "templates/pages/shop.html:49"
+    ],
+    "data-review-customer": [
+      "templates/pages/checkout.html:215"
+    ],
+    "data-review-delivery": [
+      "templates/pages/checkout.html:219"
+    ],
+    "data-review-payment": [
+      "templates/pages/checkout.html:223"
+    ],
+    "data-search-close": [
+      "templates/partials/header.html:54"
+    ],
+    "data-search-trigger": [
+      "templates/partials/header.html:27"
+    ],
+    "data-share-product": [
+      "templates/pages/product_detail.html:30"
+    ],
+    "data-shipping-error": [
+      "templates/pages/checkout.html:144"
+    ],
+    "data-shipping-form": [
+      "templates/pages/checkout.html:59"
+    ],
+    "data-shipping-message": [
+      "templates/pages/cart.html:55"
+    ],
+    "data-shipping-option": [
+      "templates/pages/checkout.html:130",
+      "templates/pages/checkout.html:134"
+    ],
+    "data-shipping-options": [
+      "templates/pages/checkout.html:130"
+    ],
+    "data-shop-url": [
+      "templates/pages/shop.html:35"
+    ],
+    "data-sort-form": [
+      "templates/pages/shop.html:20"
+    ],
+    "data-state": [
+      "templates/base.html:14"
+    ],
+    "data-to-payment": [
+      "templates/pages/checkout.html:161"
+    ],
+    "data-wishlist-add-cart": [
+      "templates/pages/wishlist.html:69"
+    ],
+    "data-wishlist-availability": [
+      "templates/pages/wishlist.html:61"
+    ],
+    "data-wishlist-card": [
+      "templates/pages/wishlist.html:58"
+    ],
+    "data-wishlist-category": [
+      "templates/pages/wishlist.html:64"
+    ],
+    "data-wishlist-count": [
+      "templates/partials/header.html:34"
+    ],
+    "data-wishlist-description": [
+      "templates/pages/wishlist.html:66"
+    ],
+    "data-wishlist-empty": [
+      "templates/pages/wishlist.html:39"
+    ],
+    "data-wishlist-grid": [
+      "templates/pages/wishlist.html:35"
+    ],
+    "data-wishlist-image": [
+      "templates/pages/wishlist.html:60"
+    ],
+    "data-wishlist-link": [
+      "templates/partials/header.html:33"
+    ],
+    "data-wishlist-loading": [
+      "templates/pages/wishlist.html:25"
+    ],
+    "data-wishlist-name": [
+      "templates/pages/wishlist.html:65"
+    ],
+    "data-wishlist-populated": [
+      "templates/pages/wishlist.html:30"
+    ],
+    "data-wishlist-price": [
+      "templates/pages/wishlist.html:67"
+    ],
+    "data-wishlist-product-link": [
+      "templates/pages/wishlist.html:59",
+      "templates/pages/wishlist.html:65"
+    ],
+    "data-wishlist-remove": [
+      "templates/pages/wishlist.html:70"
+    ],
+    "data-wishlist-root": [
+      "templates/pages/wishlist.html:24"
+    ],
+    "data-wishlist-toggle": [
+      "templates/components/product_card.html:16"
+    ],
+    "data-wishlist-total": [
+      "templates/pages/wishlist.html:32"
+    ]
+  },
+  "generated_at": "2026-08-05",
+  "generated_by": "scripts/list-data-hooks.py",
+  "historical_count": 139,
+  "matched_files": 12,
+  "note": "actual vs 139: inventoried 139 unique data-* attributes (322 occurrences) across templates/ and static/src; the plan's historical 139 records hook occurrences, and the actual unique-attribute count is 139 (not forced to 139).",
+  "scan_dirs": [
+    "templates",
+    "static/src"
+  ],
+  "scan_suffixes": [
+    ".css",
+    ".htm",
+    ".html",
+    ".js",
+    ".svg"
+  ],
+  "scanned_files": 58,
+  "total_occurrences": 322
+}

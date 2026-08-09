@@ -21,55 +21,61 @@
   </section>
 
   <section class="section wishlist-content" aria-label="منتجات المفضلة">
-    <div class="container" data-wishlist-root aria-live="polite" aria-busy="true">
-      <div class="commerce-loading" data-wishlist-loading>
-        <span aria-hidden="true"></span>
-        <p>جارٍ تحميل المفضلة المحلية…</p>
-      </div>
+    <div class="container" data-wishlist-root aria-live="polite" aria-busy="false">
+      {% if messages %}
+        <div class="form-messages" role="status">
+          {% for message in messages %}<p class="form-message form-message--{{ message.tags }}">{{ message }}</p>{% endfor %}
+        </div>
+      {% endif %}
 
-      <div data-wishlist-populated hidden>
+      {% if wishlist_products %}
+      <div data-wishlist-populated>
         <div class="wishlist-toolbar">
-          <p><strong data-wishlist-total>0</strong> منتجات محفوظة</p>
+          <p><strong data-wishlist-total>{{ wishlist_count }}</strong> منتجات محفوظة</p>
           <a class="btn btn--outline" href="{% url 'storefront:shop' %}">استكشف المزيد</a>
         </div>
-        <div class="wishlist-grid" data-wishlist-grid></div>
+        <div class="wishlist-grid" data-wishlist-grid>
+          {% for product in wishlist_products %}
+          <article class="wishlist-card" data-wishlist-card data-product-id="{{ product.id }}">
+            <a class="wishlist-card__media" href="{% url 'storefront:product' product.slug %}" data-wishlist-product-link aria-label="عرض {{ product.name }}">
+              <img src="{{ product.images.0.path }}" width="640" height="640" alt="{{ product.images.0.alt }}" data-wishlist-image>
+              <span class="wishlist-card__availability" data-wishlist-availability>{% if product.availability == 'unavailable' %}غير متاح{% elif product.availability == 'limited' %}كمية محدودة{% else %}متاح{% endif %}</span>
+            </a>
+            <div class="wishlist-card__body">
+              <p class="wishlist-card__category" data-wishlist-category>{{ product.category.name }}</p>
+              <h2><a href="{% url 'storefront:product' product.slug %}" data-wishlist-product-link data-wishlist-name>{{ product.name }}</a></h2>
+              <p class="wishlist-card__description" data-wishlist-description>{{ product.shortDescription }}</p>
+              <p class="wishlist-card__price" data-wishlist-price>{{ product.price|floatformat:0 }} ج.م</p>
+              <div class="wishlist-card__actions">
+                <form method="post" action="{% url 'storefront:cart-add' %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="variant" value="{{ product.defaultVariantId }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                  <button class="btn btn--primary" type="submit" data-wishlist-add-cart {% if product.availability == 'unavailable' %}disabled{% endif %}>إضافة إلى السلة</button>
+                </form>
+                <form method="post" action="{% url 'storefront:wishlist-toggle' %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="product" value="{{ product.pk }}">
+                  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                  <button class="btn btn--outline" type="submit" data-wishlist-remove>إزالة</button>
+                </form>
+              </div>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
         <p class="prototype-note wishlist-note">{{ site.prototypeNotice }}</p>
       </div>
-
-      <div class="commerce-empty" data-wishlist-empty hidden>
+      {% else %}
+      <div class="commerce-empty" data-wishlist-empty>
         <span class="commerce-empty__icon">{% include "components/icon.html" with name="heart" %}</span>
         <h2>لم تحفظ أي منتج بعد</h2>
         <p>استخدم زر المفضلة في بطاقات المنتجات لتكوين قائمتك الخاصة.</p>
         <a class="btn btn--primary" href="{% url 'storefront:shop' %}">استكشف المنتجات</a>
       </div>
-
-      <noscript>
-        <div class="commerce-empty commerce-empty--noscript">
-          <h2>تحتاج المفضلة إلى JavaScript</h2>
-          <p>يبقى المتجر متاحًا للتصفح، ويمكنك تفعيل JavaScript لمعاينة الحفظ المحلي.</p>
-          <a class="btn btn--primary" href="{% url 'storefront:shop' %}">عرض المنتجات</a>
-        </div>
-      </noscript>
+      {% endif %}
     </div>
   </section>
 </div>
-
-<template id="wishlist-card-template">
-  <article class="wishlist-card" data-wishlist-card>
-    <a class="wishlist-card__media" href="{% url 'storefront:shop' %}" data-wishlist-product-link aria-label="عرض المنتج">
-<img src="/static/dist/assets/images/generated/apex-black-v2.webp" width="640" height="640" alt="صورة منتج ZAKEY" data-wishlist-image>
-      <span class="wishlist-card__availability" data-wishlist-availability>حالة التوفر</span>
-    </a>
-    <div class="wishlist-card__body">
-      <p class="wishlist-card__category" data-wishlist-category>منتج ZAKEY</p>
-      <h2><a href="{% url 'storefront:shop' %}" data-wishlist-product-link data-wishlist-name>قفل ZAKEY ذكي</a></h2>
-      <p class="wishlist-card__description" data-wishlist-description>تفاصيل المنتج المحفوظ.</p>
-      <p class="wishlist-card__price" data-wishlist-price>— ج.م</p>
-      <div class="wishlist-card__actions">
-        <button class="btn btn--primary" type="button" data-wishlist-add-cart>إضافة إلى السلة</button>
-        <button class="btn btn--outline" type="button" data-wishlist-remove>إزالة</button>
-      </div>
-    </div>
-  </article>
-</template>
 {% endblock %}

@@ -30,11 +30,11 @@
       <a class="icon-btn header-account" href="{% url 'storefront:account' %}" aria-label="حسابي">
         {% include "components/icon.html" with name="user" %}
       </a>
-      <a class="icon-btn header-wishlist" href="{% url 'storefront:wishlist' %}" aria-label="المفضلة، 0 عناصر" data-wishlist-link>
-        {% include "components/icon.html" with name="heart" %}<span class="badge-count" data-wishlist-count hidden>0</span>
+      <a class="icon-btn header-wishlist" href="{% url 'storefront:wishlist' %}" aria-label="المفضلة، {{ wishlist_count }} عناصر" data-wishlist-link>
+        {% include "components/icon.html" with name="heart" %}<span class="badge-count" data-wishlist-count {% if not wishlist_count %}hidden{% endif %}>{{ wishlist_count }}</span>
       </a>
-      <a class="icon-btn header-cart" href="{% url 'storefront:cart' %}" aria-label="سلة التسوق، 0 عناصر" data-cart-link>
-        {% include "components/icon.html" with name="cart" %}<span class="badge-count" data-cart-count hidden>0</span>
+      <a class="icon-btn header-cart" href="{% url 'storefront:cart' %}" aria-label="سلة التسوق، {{ cart_count }} عناصر" data-cart-link>
+        {% include "components/icon.html" with name="cart" %}<span class="badge-count" data-cart-count {% if not cart_count %}hidden{% endif %}>{{ cart_count }}</span>
       </a>
       <a class="btn btn--primary header-cta" href="{% url 'storefront:shop' %}">تسوق الآن</a>
       <button class="icon-btn menu-toggle" type="button" data-mobile-menu-trigger aria-haspopup="dialog" aria-label="فتح القائمة">

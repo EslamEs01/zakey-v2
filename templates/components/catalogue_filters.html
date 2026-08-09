@@ -3,7 +3,7 @@
   <div class="filter-heading"><h2>تصفية النتائج</h2><a href="{% if page_id == 'search' %}{% url 'storefront:search' %}{% elif page_id == 'collection' %}{{ request.path }}{% else %}{% url 'storefront:shop' %}{% endif %}{% if catalogue.criteria.q %}?q={{ catalogue.criteria.q|urlencode }}{% endif %}">مسح الكل</a></div>
   <fieldset class="filter-group">
     <legend>الفئة</legend>
-    {% for category in fixture.categories %}
+    {% for category in categories %}
       <label class="check-row"><input type="radio" name="category" value="{{ category.slug }}" {% if catalogue.criteria.category == category.slug %}checked{% endif %}><span>{{ category.name }}</span></label>
     {% endfor %}
   </fieldset>

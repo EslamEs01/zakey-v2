@@ -1,6 +1,6 @@
 import { closeDialog, openDialog } from "./dialog.js";
 
-export function initializeHeader(store) {
+export function initializeHeader() {
   const searchPanel = document.querySelector("#header-search");
   const searchTrigger = document.querySelector("[data-search-trigger]");
   const searchInput = searchPanel?.querySelector("input");
@@ -40,21 +40,8 @@ export function initializeHeader(store) {
   mobileTrigger?.addEventListener("click", () => openDialog(mobileDialog, mobileTrigger));
   mobileDialog?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => closeDialog(mobileDialog)));
 
-  const updateCounts = () => {
-    updateCount("cart", store.cartCount());
-    updateCount("wishlist", store.wishlistCount());
-  };
-  document.addEventListener("zakey:cart-change", updateCounts);
-  document.addEventListener("zakey:wishlist-change", updateCounts);
-  updateCounts();
-}
-
-function updateCount(kind, count) {
-  const badge = document.querySelector(`[data-${kind}-count]`);
-  const link = document.querySelector(`[data-${kind}-link]`);
-  if (badge) { badge.textContent = String(count); badge.hidden = count === 0; }
-  if (link) {
-    const label = kind === "cart" ? "سلة التسوق" : "المفضلة";
-    link.setAttribute("aria-label", `${label}، ${count} عناصر`);
-  }
+  // The cart and wishlist badges are rendered by the server with the real
+  // counts (storefront/carts.py:badge_counts). The prototype recomputed them
+  // here from localStorage, which meant the header could disagree with the
+  // cart page it linked to.
 }

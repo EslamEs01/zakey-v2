@@ -1,0 +1,46 @@
+{% extends "admin/index.html" %}
+{% comment %}
+ZAKEY admin dashboard (T-1308, FR-101).
+
+Renders the eleven bounded widgets above Django's stock app list, so the app
+list itself is untouched and Jazzmin keeps theming it.
+{% endcomment %}
+
+{% block content %}
+  {% if zakey_widgets %}
+    <div class="zakey-dashboard" dir="rtl" style="margin-bottom:1.5rem">
+      <div style="display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:1rem">
+        {% for widget in zakey_widgets %}
+          {% if widget.kind != "list" %}
+            <div class="card" style="flex:1 1 12rem;min-width:12rem;padding:1rem;border:1px solid rgba(0,0,0,.1);border-radius:.5rem">
+              <div style="font-size:.85rem;opacity:.75">{{ widget.label }}</div>
+              <div style="font-size:1.6rem;font-weight:700">
+                {% if widget.kind == "money" %}{{ widget.value|floatformat:2 }}{% else %}{{ widget.value }}{% endif %}
+              </div>
+              {% if widget.url %}<a href="{{ widget.url }}" style="font-size:.8rem">عرض الكل</a>{% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:.75rem">
+        {% for widget in zakey_widgets %}
+          {% if widget.kind == "list" %}
+            <div class="card" style="flex:1 1 20rem;min-width:20rem;padding:1rem;border:1px solid rgba(0,0,0,.1);border-radius:.5rem">
+              <div style="font-weight:700;margin-bottom:.5rem">{{ widget.label }}</div>
+              {% if widget.value %}
+                <ul style="margin:0;padding-inline-start:1rem">
+                  {% for row in widget.value %}<li>{{ row }}</li>{% endfor %}
+                </ul>
+              {% else %}
+                <div style="opacity:.7">لا يوجد</div>
+              {% endif %}
+              {% if widget.url %}<a href="{{ widget.url }}" style="font-size:.8rem">عرض الكل</a>{% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+  {{ block.super }}
+{% endblock %}

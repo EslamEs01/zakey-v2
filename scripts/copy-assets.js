@@ -92,6 +92,10 @@ async function rebuildLocalAssets() {
     await rm(path.join(AUTHORED_OUTPUT, directory), { recursive: true, force: true });
   }
   await Promise.all([copyFonts(), copyIcons()]);
+  // Clear the destination first. `cp` overwrites but never prunes, so a module
+  // deleted from src/ would keep being served from dist/ indefinitely — which
+  // is how a retired script outlives the code that stopped importing it.
+  await rm(path.join(PROJECT_ROOT, "static/dist/js"), { recursive: true, force: true });
   await mkdir(path.join(PROJECT_ROOT, "static/dist/js"), { recursive: true });
   await cp(
     path.join(PROJECT_ROOT, "static/src/js"),

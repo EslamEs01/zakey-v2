@@ -1,31 +1,33 @@
-import { announce, emailIsValid, setBusy } from "../utilities/dom.js";
+import { emailIsValid } from "../utilities/dom.js";
 
-export function initializePrototypeForms() {
-  document.querySelectorAll("[data-prototype-form='newsletter']").forEach((form) => {
-    form.addEventListener("submit", (event) => validateNewsletter(event, form));
+/**
+ * Form enhancement (T-1607, FR-136).
+ *
+ * The prototype's newsletter handler called `preventDefault()`, faked a delay,
+ * and reported success while explicitly telling the visitor nothing had been
+ * saved. The form now POSTs to a real endpoint that persists the subscription.
+ *
+ * What is left here is a courtesy: catch an obviously malformed address before
+ * the round trip. If it looks valid the submit proceeds normally, and the
+ * server validates it again — this check is never the one that decides.
+ */
+export function initializeForms() {
+  document.querySelectorAll("[data-newsletter-form]").forEach((form) => {
+    form.addEventListener("submit", (event) => {
+      const input = form.elements.email;
+      const error = form.querySelector("#newsletter-error");
+      if (emailIsValid(input.value)) {
+        input.removeAttribute("aria-invalid");
+        if (error) error.hidden = true;
+        return; // let the browser submit
+      }
+      event.preventDefault();
+      input.setAttribute("aria-invalid", "true");
+      if (error) {
+        error.textContent = "اكتب بريداً إلكترونياً صحيحاً، مثل name@example.com";
+        error.hidden = false;
+      }
+      input.focus();
+    });
   });
-}
-
-async function validateNewsletter(event, form) {
-  event.preventDefault();
-  const input = form.elements.email;
-  const error = form.querySelector("#newsletter-error");
-  const status = document.querySelector("[data-form-status='newsletter']");
-  const button = form.querySelector("button[type='submit']");
-  if (!emailIsValid(input.value)) {
-    input.setAttribute("aria-invalid", "true");
-    error.textContent = "اكتب بريداً إلكترونياً صحيحاً، مثل name@example.com";
-    error.hidden = false;
-    input.focus();
-    return;
-  }
-  input.removeAttribute("aria-invalid");
-  error.hidden = true;
-  setBusy(button, true, "جارٍ العرض...");
-  await new Promise((resolve) => window.setTimeout(resolve, 450));
-  setBusy(button, false);
-  status.className = "status-message status-message--success";
-  status.textContent = "تم التحقق من البريد في النموذج فقط — لم يتم إرسال أو حفظ أي بيانات.";
-  status.hidden = false;
-  announce(status.textContent);
 }

@@ -1,151 +1,87 @@
-import { announce, egyptianMobileIsValid, emailIsValid, setBusy } from "../utilities/dom.js";
+import { announce, egyptianMobileIsValid, emailIsValid } from "../utilities/dom.js";
+
+/**
+ * Contact form enhancement (T-1206/T-1607, FR-098, FR-136).
+ *
+ * The prototype's handler called `preventDefault()`, waited 350 ms and then
+ * reported success while stating the message had not been sent anywhere. The
+ * form now POSTs to a real endpoint that stores a `ContactMessage`.
+ *
+ * What is left is early feedback: catch obviously invalid fields before the
+ * round trip, with the same Arabic messages the server uses. If everything
+ * looks right the submit proceeds normally and the server validates again.
+ */
 
 const MIN_MESSAGE_LENGTH = 20;
-const PROTOTYPE_DELAY = 500;
 
 const RULES = [
+  { name: "name", test: (value) => value.trim().length >= 2, message: "اكتب الاسم بالكامل بالعربية." },
+  { name: "email", test: emailIsValid, message: "اكتب بريدًا إلكترونيًا صحيحًا، مثل name@example.com." },
   {
-    id: "contact-name",
-    message: "اكتب اسمك كاملًا (حرفان على الأقل).",
-    test: (value) => value.trim().length >= 2,
+    name: "phone",
+    test: (value) => !value.trim() || egyptianMobileIsValid(value),
+    message: "اكتب رقم موبايل مصريًا صحيحًا من 11 رقمًا.",
   },
+  { name: "subject", test: (value) => Boolean(value), message: "اختر موضوعًا." },
   {
-    id: "contact-phone",
-    message: "اكتب رقم موبايل مصري صحيح يبدأ بـ 010 أو 011 أو 012 أو 015.",
-    test: (value) => egyptianMobileIsValid(value),
-  },
-  {
-    id: "contact-email",
-    message: "اكتب بريدًا إلكترونيًا صحيحًا، مثل name@example.com",
-    test: (value) => emailIsValid(value),
-  },
-  {
-    id: "contact-subject",
-    message: "اختر موضوع الرسالة من القائمة.",
-    test: (value) => value.trim() !== "",
-  },
-  {
-    id: "contact-message",
-    message: `اكتب رسالتك في ${MIN_MESSAGE_LENGTH} حرفًا على الأقل.`,
+    name: "message",
     test: (value) => value.trim().length >= MIN_MESSAGE_LENGTH,
+    message: `اكتب ${MIN_MESSAGE_LENGTH} حرفًا على الأقل.`,
   },
 ];
 
-function collectFields(form) {
-  return RULES.map((rule) => ({
-    rule,
-    input: form.querySelector(`#${rule.id}`),
-    error: form.querySelector(`#${rule.id}-error`),
-  })).filter((field) => field.input && field.error);
+function errorNode(form, name) {
+  return form.querySelector(`#contact-${name}-error`);
 }
 
-function showError(field) {
-  field.input.setAttribute("aria-invalid", "true");
-  field.error.textContent = field.rule.message;
-  field.error.hidden = false;
+function clearError(form, name) {
+  const input = form.elements[name];
+  input?.removeAttribute("aria-invalid");
+  const node = errorNode(form, name);
+  if (node) node.hidden = true;
 }
 
-function clearError(field) {
-  field.input.removeAttribute("aria-invalid");
-  field.error.textContent = "";
-  field.error.hidden = true;
-}
-
-function renderStatus(container, tone, message, retryLabel) {
-  if (!container) return;
-  container.textContent = "";
-  const note = document.createElement("p");
-  note.className = tone ? `status-message status-message--${tone}` : "status-message";
-  note.textContent = message;
-  if (retryLabel) {
-    const retry = document.createElement("button");
-    retry.type = "button";
-    retry.className = "btn btn--outline contact-status__retry";
-    retry.dataset.contactRetry = "";
-    retry.textContent = retryLabel;
-    note.append(" ", retry);
+function showError(form, rule) {
+  const input = form.elements[rule.name];
+  input?.setAttribute("aria-invalid", "true");
+  const node = errorNode(form, rule.name);
+  if (node) {
+    node.textContent = rule.message;
+    node.hidden = false;
   }
-  container.append(note);
 }
 
-function clearStatus(container) {
-  if (container) container.textContent = "";
-}
-
-function successMessage(fixture) {
-  return fixture?.site?.contact?.form?.successMessage || "اكتمل التحقق محليًا، ولم تُرسل الرسالة.";
-}
-
-export function initialize(store, fixture) {
+export function initialize() {
   const form = document.querySelector("[data-contact-form]");
   if (!form) return;
 
-  const fields = collectFields(form);
-  if (!fields.length) return;
-
-  const status = document.querySelector("[data-form-status='contact']");
-  const submit = form.querySelector("[data-contact-submit]");
-
-  // Linked Arabic messages replace native bubbles only once scripting is available.
+  // Native bubbles are replaced by the linked Arabic messages only when
+  // scripting is available; without it the browser's own validation applies.
   form.noValidate = true;
 
-  fields.forEach((field) => {
-    field.input.addEventListener("input", () => clearError(field));
-    field.input.addEventListener("change", () => clearError(field));
+  RULES.forEach((rule) => {
+    const input = form.elements[rule.name];
+    if (!input) return;
+    input.addEventListener("input", () => clearError(form, rule.name));
+    input.addEventListener("change", () => clearError(form, rule.name));
   });
 
-  const validate = () => fields.filter((field) => !field.rule.test(field.input.value));
+  form.addEventListener("submit", (event) => {
+    const invalid = RULES.filter((rule) => {
+      const input = form.elements[rule.name];
+      return input && !rule.test(input.value);
+    });
+    if (!invalid.length) return; // let the browser submit
 
-  const reportInvalid = (invalid, moveFocus) => {
-    fields.forEach(clearError);
-    invalid.forEach(showError);
-    const message = `راجع ${invalid.length} من حقول النموذج قبل المتابعة.`;
-    renderStatus(status, "error", message);
-    announce(message);
-    if (moveFocus) invalid[0].input.focus();
-  };
-
-  form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const invalid = validate();
-    if (invalid.length) {
-      reportInvalid(invalid, true);
-      return;
-    }
-    fields.forEach(clearError);
-    renderStatus(status, "", "جارٍ التحقق من الرسالة داخل الواجهة، ولن تُرسل إلى أي خدمة.");
-    setBusy(submit, true, "جارٍ التحقق...");
-    await new Promise((resolve) => window.setTimeout(resolve, PROTOTYPE_DELAY));
-    setBusy(submit, false);
-    const message = successMessage(fixture || store?.fixture);
-    renderStatus(status, "success", message);
+    RULES.forEach((rule) => clearError(form, rule.name));
+    invalid.forEach((rule) => showError(form, rule));
+    const message = `راجع ${invalid.length} من حقول النموذج قبل المتابعة.`;
     announce(message);
+    form.elements[invalid[0].name].focus();
   });
 
   form.addEventListener("reset", () => {
-    window.setTimeout(() => {
-      fields.forEach(clearError);
-      clearStatus(status);
-    }, 0);
+    window.setTimeout(() => RULES.forEach((rule) => clearError(form, rule.name)), 0);
   });
-
-  status?.addEventListener("click", (event) => {
-    if (!event.target.closest("[data-contact-retry]")) return;
-    clearStatus(status);
-    fields.forEach(clearError);
-    fields[0].input.focus();
-    announce("يمكنك تعديل الرسالة وإعادة المحاولة.");
-  });
-
-  if (document.body.dataset.state === "validation") {
-    const invalid = validate();
-    if (invalid.length) reportInvalid(invalid, false);
-  } else if (document.body.dataset.state === "loading") {
-    renderStatus(status, "", "جارٍ التحقق من الرسالة داخل الواجهة، ولن تُرسل إلى أي خدمة.");
-    setBusy(submit, true, "جارٍ التحقق...");
-  } else if (document.body.dataset.state === "unsent") {
-    renderStatus(status, "success", successMessage(fixture || store?.fixture));
-  } else if (["error", "recoverable-error"].includes(document.body.dataset.state)) {
-    renderStatus(status, "error", "تعذّر إكمال التحقق المحلي. بقيت بيانات النموذج في الصفحة.", "إعادة المحاولة");
-  }
 }

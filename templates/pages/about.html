@@ -2,7 +2,7 @@
 {% block title %}عن ZAKEY | رؤيتنا وخبراتنا{% endblock %}
 
 {% block content %}
-{% with about=fixture.site.about %}
+{% with about=site.about %}
 
 <article class="about-page">
   <section class="about-hero" aria-labelledby="about-title">
@@ -67,7 +67,7 @@
         </div>
       </div>
       <div class="about-team">
-        {% for member in fixture.team %}{% if member.id in about.teamMemberIds %}
+        {% for member in team_members %}{% if member.id in about.teamMemberIds %}
           <article class="about-member">
             <div class="about-member__monogram" aria-hidden="true">{{ member.name|slice:":1" }}</div>
             <div class="about-member__body">

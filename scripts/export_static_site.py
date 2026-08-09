@@ -20,7 +20,8 @@ django.setup()
 
 from django.test import Client  # noqa: E402
 
-from storefront.fixture_provider import load_fixture  # noqa: E402
+from apps.catalog.models import Collection, Product  # noqa: E402
+from apps.core.models import PublicationStatus  # noqa: E402
 
 
 STATIC_SOURCE = PROJECT_ROOT / "static" / "dist"
@@ -61,7 +62,16 @@ def prefix_root_paths(content: str, base_path: str) -> str:
 
 
 def html_routes() -> list[ExportRoute]:
-    fixture = load_fixture()
+    """Every page the static preview exports, from the published catalogue.
+
+    Slugs come from the database (T-1608) rather than the JSON fixture, so the
+    preview cannot drift from what the real storefront serves.
+
+    The account page is exported once, signed-out. A static export has no
+    session, and the signed-in view is now decided by the session rather than
+    by a ``?state=`` query parameter that any visitor could set.
+    """
+    published = {"status": PublicationStatus.PUBLISHED}
     routes = [
         ExportRoute("/", "index.html"),
         ExportRoute("/shop/", "shop/index.html"),
@@ -69,20 +79,19 @@ def html_routes() -> list[ExportRoute]:
         ExportRoute("/cart/", "cart/index.html"),
         ExportRoute("/checkout/", "checkout/index.html"),
         ExportRoute("/wishlist/", "wishlist/index.html"),
-        ExportRoute("/account/?state=signed-in", "account/index.html"),
-        ExportRoute("/account/?state=signed-out", "account/signed-out/index.html"),
+        ExportRoute("/account/", "account/index.html"),
         ExportRoute("/about/", "about/index.html"),
         ExportRoute("/contact/", "contact/index.html"),
         ExportRoute("/errors/404/", "errors/404/index.html", 404),
         ExportRoute("/errors/500/", "errors/500/index.html", 500),
     ]
     routes.extend(
-        ExportRoute(f"/collections/{item['slug']}/", f"collections/{item['slug']}/index.html")
-        for item in fixture["collections"]
+        ExportRoute(f"/collections/{slug}/", f"collections/{slug}/index.html")
+        for slug in Collection.objects.filter(**published).values_list("slug", flat=True)
     )
     routes.extend(
-        ExportRoute(f"/products/{item['slug']}/", f"products/{item['slug']}/index.html")
-        for item in fixture["products"]
+        ExportRoute(f"/products/{slug}/", f"products/{slug}/index.html")
+        for slug in Product.objects.filter(**published).values_list("slug", flat=True)
     )
     return routes
 

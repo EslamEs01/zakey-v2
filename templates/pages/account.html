@@ -31,283 +31,252 @@
       <p class="eyebrow">إدارة حسابك</p>
       <h1 id="account-title">حسابي</h1>
       <p>تابع اختياراتك وعناوينك وطلباتك من مكان واحد.</p>
-      <p class="account-hero__badge">
-        نسخة العرض:
-        {% if account_mode == "signed-in" %}حساب مسجّل{% else %}تسجيل الدخول{% endif %}
-      </p>
     </div>
   </section>
 
-  {% for prototype in fixture.prototypeAccounts %}{% if prototype.mode == account_mode %}
+  {% if messages %}
+    <div class="container"><div class="form-messages" role="status" data-account-status>
+      {% for message in messages %}<p class="form-message form-message--{{ message.tags }}">{{ message }}</p>{% endfor %}
+    </div></div>
+  {% endif %}
 
-    {% if account_mode == "signed-in" %}
-      <section class="section account-workspace" aria-labelledby="account-workspace-title">
-        <div class="container">
-          <h2 class="sr-only" id="account-workspace-title">لوحة الحساب</h2>
-          <div class="account-layout">
-            <div class="account-side">
-              <div class="surface-card account-profile">
-                <img class="account-profile__avatar"
-                     src="{{ prototype.identity.profileImage.path }}"
-                     width="{{ prototype.identity.profileImage.width }}"
-                     height="{{ prototype.identity.profileImage.height }}"
-                     alt="{{ prototype.identity.profileImage.alt }}">
-                <h3 class="account-profile__name">{{ prototype.identity.name }}</h3>
-                <p class="account-profile__meta"><bdi>{{ prototype.identity.email }}</bdi></p>
-                <p class="account-profile__meta"><bdi>{{ prototype.identity.phone }}</bdi></p>
-                <p class="account-chip">بيانات محفوظة محليًا للمعاينة</p>
-              </div>
+  {% if account_mode == "signed-in" %}
+    <section class="section account-workspace" aria-labelledby="account-workspace-title">
+      <div class="container">
+        <h2 class="sr-only" id="account-workspace-title">لوحة الحساب</h2>
+        <div class="account-layout">
+          <aside class="account-sidebar">
+            <div class="account-profile">
+              <h3 class="account-profile__name">{{ profile.full_name }}</h3>
+              <p class="account-profile__meta"><bdi>{{ user.email }}</bdi></p>
+              <p class="account-profile__meta"><bdi dir="ltr">{{ profile.phone }}</bdi></p>
+            </div>
 
-              <nav class="account-nav" data-account-tabs aria-label="أقسام الحساب">
-                <a class="account-nav__item"
-                   id="account-tab-orders"
-                   href="{% url 'storefront:account' %}?state=signed-in&amp;tab=orders"
-                   data-account-tab-id="orders"
-                   data-account-panel="account-panel-orders"
-                   {% if account_tab != "wishlist" and account_tab != "addresses" and account_tab != "payment" and account_tab != "settings" %}aria-current="page"{% endif %}>
-                  <span class="account-nav__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#zk-package"></use></svg></span>
-                  <span>طلباتي</span>
-                </a>
-                <a class="account-nav__item"
-                   id="account-tab-wishlist"
-                   href="{% url 'storefront:account' %}?state=signed-in&amp;tab=wishlist"
-                   data-account-tab-id="wishlist"
-                   data-account-panel="account-panel-wishlist"
-                   {% if account_tab == "wishlist" %}aria-current="page"{% endif %}>
-                  <span class="account-nav__icon">{% include "components/icon.html" with name="heart" %}</span>
-                  <span>المفضلة</span>
-                </a>
-                <a class="account-nav__item"
-                   id="account-tab-addresses"
-                   href="{% url 'storefront:account' %}?state=signed-in&amp;tab=addresses"
-                   data-account-tab-id="addresses"
-                   data-account-panel="account-panel-addresses"
-                   {% if account_tab == "addresses" %}aria-current="page"{% endif %}>
-                  <span class="account-nav__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#zk-map-pin"></use></svg></span>
-                  <span>العناوين</span>
-                </a>
-                <a class="account-nav__item"
-                   id="account-tab-payment"
-                   href="{% url 'storefront:account' %}?state=signed-in&amp;tab=payment"
-                   data-account-tab-id="payment"
-                   data-account-panel="account-panel-payment"
-                   {% if account_tab == "payment" %}aria-current="page"{% endif %}>
-                  <span class="account-nav__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#zk-card"></use></svg></span>
-                  <span>وسائل الدفع</span>
-                </a>
-                <a class="account-nav__item"
-                   id="account-tab-settings"
-                   href="{% url 'storefront:account' %}?state=signed-in&amp;tab=settings"
-                   data-account-tab-id="settings"
-                   data-account-panel="account-panel-settings"
-                   {% if account_tab == "settings" %}aria-current="page"{% endif %}>
-                  <span class="account-nav__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#zk-sliders"></use></svg></span>
-                  <span>إعدادات الحساب</span>
-                </a>
-              </nav>
-
-              <a class="account-signout" href="{% url 'storefront:account' %}?state=signed-out">
-                <span class="account-nav__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#zk-signout"></use></svg></span>
-                <span>تسجيل الخروج</span>
+            <nav class="account-nav" data-account-tabs aria-label="أقسام الحساب">
+              <a class="account-nav__link{% if account_tab == 'orders' %} is-active{% endif %}" href="?tab=orders" data-account-tab-id="orders" data-account-panel="account-panel-orders" {% if account_tab == 'orders' %}aria-current="page"{% endif %}>
+                <span class="account-nav__icon"><svg width="20" height="20" aria-hidden="true"><use href="#zk-package"></use></svg></span> الطلبات
               </a>
-            </div>
+              <a class="account-nav__link{% if account_tab == 'wishlist' %} is-active{% endif %}" href="?tab=wishlist" data-account-tab-id="wishlist" data-account-panel="account-panel-wishlist" {% if account_tab == 'wishlist' %}aria-current="page"{% endif %}>
+                <span class="account-nav__icon">{% include "components/icon.html" with name="heart" %}</span> المفضلة
+              </a>
+              <a class="account-nav__link{% if account_tab == 'addresses' %} is-active{% endif %}" href="?tab=addresses" data-account-tab-id="addresses" data-account-panel="account-panel-addresses" {% if account_tab == 'addresses' %}aria-current="page"{% endif %}>
+                <span class="account-nav__icon"><svg width="20" height="20" aria-hidden="true"><use href="#zk-map-pin"></use></svg></span> العناوين
+              </a>
+              <a class="account-nav__link{% if account_tab == 'payment' %} is-active{% endif %}" href="?tab=payment" data-account-tab-id="payment" data-account-panel="account-panel-payment" {% if account_tab == 'payment' %}aria-current="page"{% endif %}>
+                <span class="account-nav__icon"><svg width="20" height="20" aria-hidden="true"><use href="#zk-card"></use></svg></span> وسائل الدفع
+              </a>
+              <a class="account-nav__link{% if account_tab == 'settings' %} is-active{% endif %}" href="?tab=settings" data-account-tab-id="settings" data-account-panel="account-panel-settings" {% if account_tab == 'settings' %}aria-current="page"{% endif %}>
+                <span class="account-nav__icon"><svg width="20" height="20" aria-hidden="true"><use href="#zk-sliders"></use></svg></span> الإعدادات
+              </a>
+              <form method="post" action="{% url 'storefront:account-logout' %}">
+                {% csrf_token %}
+                <button class="account-nav__link account-nav__link--signout" type="submit" data-account-signout>
+                  <span class="account-nav__icon"><svg width="20" height="20" aria-hidden="true"><use href="#zk-signout"></use></svg></span> تسجيل الخروج
+                </button>
+              </form>
+            </nav>
+          </aside>
 
-            <div class="account-panels" data-account-panels>
-              <section class="surface-card account-panel"
-                       id="account-panel-orders"
-                       data-account-panel-id="orders"
-                       aria-labelledby="account-panel-orders-title"
-                       {% if account_tab == "wishlist" or account_tab == "addresses" or account_tab == "payment" or account_tab == "settings" %}hidden{% endif %}>
-                <h3 class="account-panel__title" id="account-panel-orders-title">طلباتي</h3>
-                <p class="account-panel__note">{{ prototype.prototypeNotice }}</p>
+          <div class="account-panels" data-account-panels>
+            <section class="account-panel" id="account-panel-orders" data-account-panel-id="orders" aria-labelledby="account-orders-title" {% if account_tab != 'orders' %}hidden{% endif %}>
+              <h3 id="account-orders-title">طلباتي</h3>
+              {% if orders %}
                 <ul class="account-orders">
-                  {% for order in prototype.orderHistory %}
-                    <li class="account-order">
-                      {% for product_id in order.productIds %}{% for product in fixture.products %}{% if product.id == product_id %}
-                        <span class="account-order__media">
-                          <img src="{{ product.images.0.path }}"
-                               width="{{ product.images.0.width }}"
-                               height="{{ product.images.0.height }}"
-                               loading="lazy"
-                               alt="">
-                        </span>
-                        <div class="account-order__body">
-                          <p class="account-order__reference">{{ order.referenceLabel }}</p>
-                          <h4 class="account-order__title"><a href="{% url 'storefront:product' product.slug %}">{{ product.name }}</a></h4>
-                          <p class="account-order__date">{{ order.displayDate }}</p>
-                        </div>
-                      {% endif %}{% endfor %}{% endfor %}
-                      <div class="account-order__meta">
-                        <span class="price">{{ order.displayTotal }} <small>ج.م</small></span>
-                        <span class="account-status-chip">{{ order.statusLabel }}</span>
+                  {% for order in orders %}
+                    <li class="account-order" data-account-order>
+                      <div class="account-order__head">
+                        <a href="{% url 'storefront:order-confirmation' order.number %}"><bdi lang="en">{{ order.number }}</bdi></a>
+                        <span class="account-order__status">{{ order.get_status_display }}</span>
                       </div>
+                      <p class="account-order__meta">{{ order.placed_at|date:"Y/m/d" }} — {{ order.lines.count }} منتج</p>
+                      <p class="account-order__total">{{ order.grand_total|floatformat:0 }} ج.م</p>
                     </li>
                   {% endfor %}
                 </ul>
-                <div class="account-panel__status" data-account-status role="status"></div>
-                <button class="btn btn--outline" type="button" data-account-unavailable="تتبّع الطلب">تتبّع طلبًا</button>
-              </section>
+              {% else %}
+                <div class="state-panel account-empty">
+                  <span class="state-panel__icon"><svg width="28" height="28" aria-hidden="true"><use href="#zk-package"></use></svg></span>
+                  <h4>لا توجد طلبات بعد</h4>
+                  <p>عند إتمام أول طلب ستجد تفاصيله هنا.</p>
+                  <a class="btn btn--primary" href="{% url 'storefront:shop' %}">ابدأ التسوق</a>
+                </div>
+              {% endif %}
+            </section>
 
-              <section class="surface-card account-panel"
-                       id="account-panel-wishlist"
-                       data-account-panel-id="wishlist"
-                       aria-labelledby="account-panel-wishlist-title"
-                       {% if account_tab != "wishlist" %}hidden{% endif %}>
-                <h3 class="account-panel__title" id="account-panel-wishlist-title">المفضلة</h3>
+            <section class="account-panel" id="account-panel-wishlist" data-account-panel-id="wishlist" aria-labelledby="account-wishlist-title" {% if account_tab != 'wishlist' %}hidden{% endif %}>
+              <h3 id="account-wishlist-title">المفضلة</h3>
+              {% if wishlist_products %}
+                <div class="account-wishlist" data-account-wishlist-list>
+                  <p class="account-panel__note" data-account-wishlist-summary>{{ wishlist_count }} منتجات محفوظة</p>
+                  <ul class="account-wishlist__items" data-account-wishlist-items>
+                    {% for product in wishlist_products %}
+                      <li><a href="{% url 'storefront:product' product.slug %}">{{ product.name }}</a> — {{ product.price|floatformat:0 }} ج.م</li>
+                    {% endfor %}
+                  </ul>
+                  <a class="btn btn--outline" href="{% url 'storefront:wishlist' %}">عرض المفضلة</a>
+                </div>
+              {% else %}
                 <div class="state-panel account-empty" data-account-wishlist-empty>
-                  <div>
-                    <span class="state-panel__icon">{% include "components/icon.html" with name="heart" %}</span>
-                    <h4>لا توجد منتجات محفوظة بعد</h4>
-                    <p class="section-copy">احفظ أي منتج من بطاقات المتجر لتظهر قائمته هنا داخل هذا المتصفح فقط.</p>
-                    <a class="btn btn--primary" href="{% url 'storefront:shop' %}">استكشف المنتجات</a>
-                  </div>
+                  <span class="state-panel__icon">{% include "components/icon.html" with name="heart" %}</span>
+                  <h4>لم تحفظ أي منتج بعد</h4>
+                  <p>استخدم زر المفضلة في بطاقات المنتجات لتكوين قائمتك.</p>
+                  <a class="btn btn--primary" href="{% url 'storefront:shop' %}">استكشف المنتجات</a>
                 </div>
-                <div class="account-wishlist" data-account-wishlist-list hidden>
-                  <p class="account-panel__note" data-account-wishlist-summary></p>
-                  <ul class="account-wishlist__items" data-account-wishlist-items></ul>
-                  <a class="btn btn--outline" href="{% url 'storefront:wishlist' %}">افتح صفحة المفضلة</a>
-                </div>
-              </section>
+              {% endif %}
+            </section>
 
-              <section class="surface-card account-panel"
-                       id="account-panel-addresses"
-                       data-account-panel-id="addresses"
-                       aria-labelledby="account-panel-addresses-title"
-                       {% if account_tab != "addresses" %}hidden{% endif %}>
-                <h3 class="account-panel__title" id="account-panel-addresses-title">العناوين</h3>
-                <p class="account-panel__note">العناوين المعروضة محفوظة محليًا ولا تُستخدم في شحن أو تركيب فعلي.</p>
+            <section class="account-panel" id="account-panel-addresses" data-account-panel-id="addresses" aria-labelledby="account-addresses-title" {% if account_tab != 'addresses' %}hidden{% endif %}>
+              <h3 id="account-addresses-title">العناوين</h3>
+              {% if addresses %}
                 <ul class="account-addresses">
-                  {% for address in prototype.addresses %}
-                    <li class="account-address">
-                      <h4>{{ address.label }}</h4>
-                      <p>{{ address.street }} — {{ address.building }}</p>
-                      <p class="account-address__region">
-                        {% for area in fixture.serviceEligibility.areas %}{% if area.key == address.areaKey %}{{ area.label }}، {% endif %}{% endfor %}
-                        {% for governorate in fixture.governorates %}{% if governorate.key == address.governorateKey %}{{ governorate.label }}{% endif %}{% endfor %}
-                      </p>
+                  {% for address in addresses %}
+                    <li class="account-address" data-account-address>
+                      <p><strong>{{ address.full_name }}</strong>{% if address.is_default %} <span class="account-address__default">الافتراضي</span>{% endif %}</p>
+                      <p>{{ address.street }}، مبنى {{ address.building }}</p>
+                      <p>{{ address.city }} — {{ address.governorate.name }}{% if address.area %} ({{ address.area.name }}){% endif %}</p>
+                      <p dir="ltr">{{ address.phone }}</p>
+                      <form method="post" action="{% url 'storefront:address-delete' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="address" value="{{ address.pk }}">
+                        <button class="cart-remove" type="submit">حذف العنوان</button>
+                      </form>
                     </li>
                   {% endfor %}
                 </ul>
-                <div class="account-panel__status" data-account-status role="status"></div>
-                <button class="btn btn--outline" type="button" data-account-unavailable="إضافة عنوان">أضف عنوانًا جديدًا</button>
-              </section>
+              {% else %}
+                <p class="account-panel__note">لم تُضف عنوانًا بعد.</p>
+              {% endif %}
 
-              <section class="surface-card account-panel"
-                       id="account-panel-payment"
-                       data-account-panel-id="payment"
-                       aria-labelledby="account-panel-payment-title"
-                       {% if account_tab != "payment" %}hidden{% endif %}>
-                <h3 class="account-panel__title" id="account-panel-payment-title">وسائل الدفع</h3>
-                <p class="account-panel__note">خيارات الدفع قيد التجهيز ولا يوجد ربط حاليًا بمزوّد أو بنك.</p>
-                <ul class="account-payments">
-                  {% for option in fixture.paymentOptions %}
-                    <li class="account-payment">
-                      <img src="{{ option.icon.path }}"
-                           width="{{ option.icon.width }}"
-                           height="{{ option.icon.height }}"
-                           loading="lazy"
-                           alt="{{ option.icon.alt }}">
-                      <div class="account-payment__body">
-                        <h4><bdi>{{ option.label }}</bdi></h4>
-                        <p>{{ option.description }}</p>
-                      </div>
-                    </li>
-                  {% endfor %}
-                </ul>
-                <div class="account-panel__status" data-account-status role="status"></div>
-                <button class="btn btn--outline" type="button" data-account-unavailable="ربط وسيلة دفع">أضف وسيلة دفع</button>
-              </section>
+              <form class="account-address-form" method="post" action="{% url 'storefront:address-create' %}">
+                {% csrf_token %}
+                <fieldset>
+                  <legend>أضف عنوانًا جديدًا</legend>
+                  <div class="checkout-form-grid">
+                    <div class="field"><label for="address-label">اسم العنوان</label><input id="address-label" name="label" type="text" maxlength="60" placeholder="المنزل"></div>
+                    <div class="field"><label for="address-name">اسم المستلم</label><input id="address-name" name="full_name" type="text" maxlength="120" required></div>
+                    <div class="field"><label for="address-phone">رقم الموبايل</label><input id="address-phone" name="phone" type="tel" dir="ltr" maxlength="18" required></div>
+                    <div class="field">
+                      <label for="address-governorate">المحافظة</label>
+                      <select id="address-governorate" name="governorate" required>
+                        <option value="">اختر المحافظة</option>
+                        {% for governorate in governorates %}<option value="{{ governorate.key }}">{{ governorate.name }}</option>{% endfor %}
+                      </select>
+                    </div>
+                    <div class="field"><label for="address-city">المدينة أو المركز</label><input id="address-city" name="city" type="text" maxlength="80" required></div>
+                    <div class="field"><label for="address-building">رقم المبنى</label><input id="address-building" name="building" type="text" maxlength="24" required></div>
+                    <div class="field checkout-field--wide"><label for="address-street">الشارع والعنوان التفصيلي</label><textarea id="address-street" name="street" maxlength="140" rows="2" required></textarea></div>
+                    <div class="field checkout-field--wide"><label for="address-landmark">علامة مميزة</label><input id="address-landmark" name="landmark" type="text" maxlength="100" placeholder="اختياري"></div>
+                  </div>
+                  <label class="checkout-check-row"><input type="checkbox" name="is_default" value="1"><span>اجعله العنوان الافتراضي</span></label>
+                  <button class="btn btn--primary" type="submit">حفظ العنوان</button>
+                </fieldset>
+              </form>
+            </section>
 
-              <section class="surface-card account-panel"
-                       id="account-panel-settings"
-                       data-account-panel-id="settings"
-                       aria-labelledby="account-panel-settings-title"
-                       {% if account_tab != "settings" %}hidden{% endif %}>
-                <h3 class="account-panel__title" id="account-panel-settings-title">إعدادات الحساب</h3>
-                <p class="account-panel__note">تحقق عربي محلي للحقول. لا يُحفظ أي تعديل ولا يُرسل إلى أي خدمة.</p>
-                <form class="account-settings-form"
-                      method="get"
-                      action="{% url 'storefront:account' %}"
-                      data-account-settings>
-                  <input type="hidden" name="state" value="signed-in">
-                  <input type="hidden" name="tab" value="settings">
-                  <div class="account-settings-form__row">
-                    <div class="field">
-                      <label for="account-settings-name">الاسم المعروض</label>
-                      <input id="account-settings-name" type="text" value="{{ prototype.identity.name }}" required
-                             aria-describedby="account-settings-name-error">
-                      <p class="field-error" id="account-settings-name-error" hidden></p>
-                    </div>
-                    <div class="field">
-                      <label for="account-settings-phone">رقم الموبايل المصري</label>
-                      <input id="account-settings-phone" type="tel" inputmode="tel" value="{{ prototype.identity.phone }}" required
-                             aria-describedby="account-settings-phone-hint account-settings-phone-error">
-                      <p class="field-hint" id="account-settings-phone-hint"><bdi>01000000000</bdi> أو <bdi>+201000000000</bdi></p>
-                      <p class="field-error" id="account-settings-phone-error" hidden></p>
-                    </div>
-                  </div>
-                  <div class="field">
-                    <label for="account-settings-email">البريد الإلكتروني</label>
-                    <input id="account-settings-email" type="email" value="{{ prototype.identity.email }}" required
-                           aria-describedby="account-settings-email-error">
-                    <p class="field-error" id="account-settings-email-error" hidden></p>
-                  </div>
-                  <div class="account-settings-form__actions">
-                    <button class="btn btn--primary" type="submit" data-account-settings-submit>تحقق من البيانات</button>
-                    <button class="btn btn--outline" type="reset">استعادة القيم المعروضة</button>
-                  </div>
-                </form>
-                <div class="account-panel__status" data-account-status role="status"></div>
-              </section>
-            </div>
+            <section class="account-panel" id="account-panel-payment" data-account-panel-id="payment" aria-labelledby="account-payment-title" {% if account_tab != 'payment' %}hidden{% endif %}>
+              <h3 id="account-payment-title">وسائل الدفع</h3>
+              <p class="account-panel__note">لا نحتفظ ببيانات بطاقات. يتم اختيار طريقة الدفع عند إتمام كل طلب، والدفع عند الاستلام متاح الآن.</p>
+              <a class="btn btn--outline" href="{% url 'storefront:checkout' %}">عرض طرق الدفع عند الطلب</a>
+            </section>
+
+            <section class="account-panel" id="account-panel-settings" data-account-panel-id="settings" aria-labelledby="account-settings-title" {% if account_tab != 'settings' %}hidden{% endif %}>
+              <h3 id="account-settings-title">الإعدادات</h3>
+              <form class="account-settings-form" method="post" action="{% url 'storefront:profile-update' %}" data-account-settings>
+                {% csrf_token %}
+                <div class="field">
+                  <label for="account-settings-name">الاسم بالكامل</label>
+                  <input id="account-settings-name" name="full_name" type="text" maxlength="120" value="{{ profile.full_name }}" required>
+                </div>
+                <div class="field">
+                  <label for="account-settings-phone">رقم الموبايل</label>
+                  <input id="account-settings-phone" name="phone" type="tel" inputmode="tel" dir="ltr" maxlength="18" value="{{ profile.phone }}" required>
+                </div>
+                <div class="field">
+                  <label for="account-settings-email">البريد الإلكتروني</label>
+                  <input id="account-settings-email" type="email" dir="ltr" value="{{ user.email }}" disabled aria-describedby="account-email-note">
+                  <small id="account-email-note">لتغيير البريد الإلكتروني تواصل مع خدمة العملاء؛ التغيير يحتاج إلى تأكيد.</small>
+                </div>
+                <button class="btn btn--primary" type="submit" data-account-settings-submit>حفظ التغييرات</button>
+              </form>
+            </section>
           </div>
         </div>
-      </section>
-
-    {% else %}
-
-<section class="section account-signed-out" aria-labelledby="account-signin-title" data-account-signed-out>
-        <div class="container account-signed-out__grid">
-          <div class="surface-card account-signin">
-            <h2 class="section-heading" id="account-signin-title">تسجيل الدخول</h2>
-            <p class="section-copy">استخدم بريدك للوصول إلى الطلبات والعناوين والمفضلة من مكان واحد.</p>
-            <form class="account-signin__form"
-                  method="get"
-                  action="{% url 'storefront:account' %}"
-                  data-account-demo-form>
-              <input type="hidden" name="state" value="signed-in">
-              <div class="field">
-              <label for="account-demo-email">البريد الإلكتروني</label>
-              <input id="account-demo-email" type="email" autocomplete="email" placeholder="name@example.com"
-                       aria-describedby="account-demo-hint account-demo-error">
-                <p class="field-error" id="account-demo-error" hidden></p>
-              </div>
-              <p class="prototype-note" id="account-demo-hint">
-              الحقل مخصص لمعاينة التحقق فقط. لا توجد مصادقة أو حسابات حقيقية في النسخة الحالية.
-              </p>
-            <button class="btn btn--primary" type="submit">عرض الحساب</button>
-            </form>
-          </div>
-
-          <div class="surface-card account-benefits">
-            <span class="account-benefits__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#zk-shield"></use></svg></span>
-            <h2 class="account-benefits__title">كل ما تحتاجه في حسابك</h2>
-            <ul class="account-benefits__list">
-              <li>متابعة حالة الطلبات ومراجعة تفاصيلها.</li>
-              <li>قائمة مفضلة تجمع المنتجات التي تهمك.</li>
-              <li>إدارة العناوين ووسائل الدفع بسهولة.</li>
-              <li>تحديث بيانات الحساب من مكان واحد.</li>
-            </ul>
-            <div class="account-benefits__actions">
-              <a class="btn btn--outline" href="{% url 'storefront:shop' %}">تصفّح المنتجات</a>
-              <a class="btn btn--ghost account-benefits__link" href="{% url 'storefront:wishlist' %}">المفضلة</a>
+      </div>
+    </section>
+  {% else %}
+    <section class="section account-auth" data-account-signed-out aria-labelledby="account-auth-title">
+      <div class="container">
+        <h2 id="account-auth-title" class="sr-only">تسجيل الدخول أو إنشاء حساب</h2>
+        <div class="account-auth-grid">
+          <form class="account-auth-card" method="post" action="{% url 'storefront:account-login' %}" data-login-form>
+            {% csrf_token %}
+            <h3>تسجيل الدخول</h3>
+            <div class="field">
+              <label for="login-email">البريد الإلكتروني</label>
+              <input id="login-email" name="email" type="email" dir="ltr" autocomplete="email" required>
             </div>
-          </div>
+            <div class="field">
+              <label for="login-password">كلمة المرور</label>
+              <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+            </div>
+            <button class="btn btn--primary" type="submit">دخول</button>
+          </form>
+
+          <form class="account-auth-card" method="post" action="{% url 'storefront:account-register' %}" data-register-form>
+            {% csrf_token %}
+            <h3>إنشاء حساب جديد</h3>
+            <div class="field">
+              <label for="register-name">الاسم بالكامل</label>
+              <input id="register-name" name="full_name" type="text" maxlength="120" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="register-email">البريد الإلكتروني</label>
+              <input id="register-email" name="email" type="email" dir="ltr" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="register-mobile">رقم الموبايل</label>
+              <input id="register-mobile" name="mobile" type="tel" dir="ltr" maxlength="18" autocomplete="tel" required>
+            </div>
+            <div class="field">
+              <label for="register-password">كلمة المرور</label>
+              <input id="register-password" name="password" type="password" autocomplete="new-password" required>
+            </div>
+            <div class="field">
+              <label for="register-password-confirm">تأكيد كلمة المرور</label>
+              <input id="register-password-confirm" name="password_confirm" type="password" autocomplete="new-password" required>
+            </div>
+            <label class="checkout-check-row"><input type="checkbox" name="accepts_marketing" value="1"><span>أرغب في تلقي أخبار ZAKEY</span></label>
+            <button class="btn btn--gold" type="submit">إنشاء الحساب</button>
+          </form>
         </div>
-      </section>
-
-    {% endif %}
-
-  {% endif %}{% endfor %}
+        {% if reset_form %}
+          <form class="account-auth-card" method="post" action="{% url 'storefront:password-reset-confirm' reset_token %}" data-reset-form>
+            {% csrf_token %}
+            <h3>تعيين كلمة مرور جديدة</h3>
+            <div class="field">
+              <label for="reset-password">كلمة المرور الجديدة</label>
+              <input id="reset-password" name="password" type="password" autocomplete="new-password" required>
+            </div>
+            <div class="field">
+              <label for="reset-password-confirm">تأكيد كلمة المرور</label>
+              <input id="reset-password-confirm" name="password_confirm" type="password" autocomplete="new-password" required>
+            </div>
+            <button class="btn btn--primary" type="submit">حفظ كلمة المرور</button>
+          </form>
+        {% else %}
+          <form class="account-auth-card" method="post" action="{% url 'storefront:password-reset-request' %}" data-forgot-form>
+            {% csrf_token %}
+            <h3>نسيت كلمة المرور؟</h3>
+            <div class="field">
+              <label for="forgot-email">البريد الإلكتروني</label>
+              <input id="forgot-email" name="email" type="email" dir="ltr" autocomplete="email" required>
+            </div>
+            <button class="btn btn--outline" type="submit">أرسل رابط إعادة التعيين</button>
+          </form>
+        {% endif %}
+        <p class="account-panel__note">يمكنك إتمام الطلب كزائر دون إنشاء حساب.</p>
+      </div>
+    </section>
+  {% endif %}
 </article>
 {% endblock %}

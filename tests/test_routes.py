@@ -1,4 +1,5 @@
-from django.test import SimpleTestCase
+from django.core.management import call_command
+from django.test import TestCase
 from django.urls import reverse
 
 
@@ -101,7 +102,15 @@ ROUTE_EXPECTATIONS = (
 )
 
 
-class PresentationRouteTests(SimpleTestCase):
+class PresentationRouteTests(TestCase):
+    """The storefront renders from the database now (T-1601–T-1603), so this
+    suite seeds the approved demonstration catalogue once per class instead of
+    relying on a request-time JSON fixture."""
+
+    @classmethod
+    def setUpTestData(cls):
+        call_command("seed_demo", verbosity=0)
+
     def assert_shared_arabic_chrome(self, response, expected_page_id):
         document = response.content.decode("utf-8")
         self.assertIn('<html lang="ar-EG" dir="rtl">', document)

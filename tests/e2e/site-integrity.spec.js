@@ -6,25 +6,22 @@ import path from "node:path";
 
 const root = process.cwd();
 const matrix = JSON.parse(readFileSync(path.join(root, "specs/003-zakey-frontend-reference-build/contracts/qa-matrix.json"), "utf8"));
-const fixture = JSON.parse(readFileSync(path.join(root, "storefront/fixtures/frontend-fixtures.json"), "utf8"));
+const fixture = JSON.parse(readFileSync(path.join(root, "apps/core/seed_data/approved-catalogue.json"), "utf8"));
 const screenshotDirectory = path.join(root, "specs/003-zakey-frontend-reference-build/qa/implementation-screenshots");
 const htmlDirectory = path.join(root, "specs/003-zakey-frontend-reference-build/qa/rendered-html");
 const htmlOnly = process.env.ZAKEY_HTML_ONLY === "1";
 
-function storageEnvelope(setup = {}) {
-  const populatedCart = fixture.prototypeCarts.find((state) => state.id === "cart-populated");
-  const populatedWishlist = fixture.prototypeWishlists.find((state) => state.id === "wishlist-populated");
-  const useCart = setup.fixture === "populated-cart";
-  const useWishlist = setup.fixture === "populated-wishlist";
-  return {
-    version: 1,
-    cart: {
-      items: useCart ? populatedCart.lineItems.map(({ productId, quantity, finishId }) => ({ productId, quantity, finishId: finishId || "default" })) : [],
-      coupon: "",
-    },
-    wishlist: { productIds: useWishlist ? populatedWishlist.productIds : [] },
-    account: { mode: "signed-out", tab: "orders" },
-  };
+async function seedServerState(page, setup = {}) {
+  const wanted = setup.fixture;
+  if (wanted !== "populated-cart" && wanted !== "populated-wishlist") return;
+
+  // Establish a session and read the CSRF token the same way a form would.
+  await page.goto("/products/zakey-apex-pro/", { waitUntil: "domcontentloaded" });
+  if (wanted === "populated-cart") {
+    await page.locator("[data-add-product]").click();
+  } else {
+    await page.locator("[data-wishlist-toggle]").first().click();
+  }
 }
 
 async function performAction(page, action) {
@@ -55,8 +52,13 @@ async function performAction(page, action) {
       await expect(page.locator(".hero-actions .btn").first()).toBeFocused();
     },
     "submit-empty-newsletter": async () => {
-      await page.locator("[data-prototype-form='newsletter'] button[type='submit']").click();
+      // The newsletter posts to a real endpoint now. Submitting an invalid
+      // address must surface a visible, linked error and must NOT report the
+      // fake success the prototype used to show.
+      await page.locator("[data-newsletter-form] [name='email']").fill("not-an-email");
+      await page.locator("[data-newsletter-form] button[type='submit']").click();
       await expect(page.locator("#newsletter-error")).toBeVisible();
+      await expect(page.locator("[data-form-status='newsletter']")).not.toContainText("تم تسجيل");
     },
     "open-filter-drawer": async () => {
       await page.locator("#filter-dialog").evaluate((dialog) => dialog.showModal());
@@ -75,8 +77,13 @@ async function performAction(page, action) {
       await expect(page.locator("[data-product-id] [data-wishlist-toggle]").first()).toHaveAttribute("aria-pressed", "true");
     },
     "submit-empty-shipping": async () => {
-      await page.locator("[data-checkout-next]").click();
+      // Submit the real checkout with nothing filled in. The server — not the
+      // browser — must refuse it and render the error summary. Reaching the
+      // confirm button means walking to the last step, as a customer would.
+      await page.locator("[data-checkout-step='review']").click();
+      await page.locator("[data-checkout-final]").click();
       await expect(page.locator("[data-error-summary]")).toBeVisible();
+      await expect(page).toHaveURL(/\/checkout\//);
     },
     "submit-empty-contact": async () => {
       await page.locator("[data-contact-submit]").click();
@@ -120,7 +127,10 @@ for (const state of matrix.states) {
     page.on("response", (response) => {
       if (response.status() >= 400 && /\/static\//.test(response.url())) failedAssets.push(`${response.status()} ${response.url()}`);
     });
-    await page.addInitScript((envelope) => localStorage.setItem("zakey:prototype:v1", JSON.stringify(envelope)), storageEnvelope(state.setup));
+    // Populated states are built through the real endpoints, so the page under
+    // test renders from database rows exactly as it does for a customer. The
+    // prototype seeded localStorage here, which tested nothing but the fixture.
+    await seedServerState(page, state.setup);
     if (state.setup.reducedMotion === "reduce") await page.emulateMedia({ reducedMotion: "reduce" });
     const response = await page.goto(state.route, { waitUntil: htmlOnly ? "domcontentloaded" : "networkidle" });
     expect(response, "route produced no response").not.toBeNull();
