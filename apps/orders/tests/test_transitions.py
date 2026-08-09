@@ -216,3 +216,140 @@ class TestIdempotencyKeyIsUnique:
                 subtotal=Decimal("100.00"),
                 grand_total=Decimal("100.00"),
             )
+
+
+class TestEveryStatusChangeIsRecorded:
+    """The order history is written by the transition, not alongside it."""
+
+    def test_each_status_change_writes_an_event_naming_who_what_and_when(self, user):
+        """FR-069: actor, from-state, to-state and timestamp on every change.
+
+        One order is walked the length of the pipeline and the events are read
+        back as a trail: one event per change, in order, each one saying where
+        the order came from, where it went, who moved it and when. A missing or
+        blank ``from_status`` would leave a history that cannot be replayed.
+        """
+        from apps.orders.models import OrderEvent
+        from apps.orders.services import transition
+
+        order = make_order(OrderStatus.PENDING, number="ZK-EVT-1")
+        walk = [
+            OrderStatus.CONFIRMED,
+            OrderStatus.PROCESSING,
+            OrderStatus.SHIPPED,
+            OrderStatus.DELIVERED,
+            OrderStatus.REFUNDED,
+        ]
+
+        previous = OrderStatus.PENDING
+        for target in walk:
+            transition(order, target, actor=user)
+            order.refresh_from_db()
+            assert order.status == target
+
+            event = OrderEvent.objects.filter(order=order, to_status=target).get()
+            assert event.event_type == "status_change"
+            assert event.from_status == previous
+            assert event.to_status == target
+            assert event.actor_id == user.pk
+            assert event.created_at is not None
+            previous = target
+
+        trail = list(
+            OrderEvent.objects.filter(order=order, event_type="status_change")
+            .order_by("created_at", "id")
+            .values_list("from_status", "to_status")
+        )
+        assert trail == list(zip([OrderStatus.PENDING, *walk], walk))
+
+    def test_the_note_is_optional_and_stored_verbatim_when_given(self, user):
+        """FR-069: an optional note, recorded as written.
+
+        Staff explain awkward transitions in their own words; a note that is
+        silently dropped or truncated is worse than no note field at all.
+        """
+        from apps.orders.models import OrderEvent
+        from apps.orders.services import transition
+
+        order = make_order(OrderStatus.PENDING, number="ZK-EVT-NOTE")
+
+        transition(order, OrderStatus.CONFIRMED, actor=user)
+        assert OrderEvent.objects.get(order=order, to_status=OrderStatus.CONFIRMED).note == ""
+
+        reason = "العميل طلب التأجيل حتى نهاية الأسبوع."
+        transition(order, OrderStatus.CANCELLED, actor=user, note=reason)
+        assert OrderEvent.objects.get(order=order, to_status=OrderStatus.CANCELLED).note == reason
+
+    def test_a_refused_transition_records_nothing(self, user):
+        """FR-069: only *changes* are recorded.
+
+        An attempt that the state machine rejected did not change the order, so
+        writing an event for it would put a change in the history that never
+        happened.
+        """
+        from apps.orders.models import InvalidTransition, OrderEvent
+        from apps.orders.services import transition
+
+        order = make_order(OrderStatus.PENDING, number="ZK-EVT-BAD")
+
+        with pytest.raises(InvalidTransition):
+            transition(order, OrderStatus.DELIVERED, actor=user)
+
+        order.refresh_from_db()
+        assert order.status == OrderStatus.PENDING
+        assert not OrderEvent.objects.filter(order=order).exists()
+
+    def test_an_event_cannot_be_rewritten_or_removed(self, user):
+        """FR-069: the trail is append-only, or it is not a record."""
+        from django.core.exceptions import ValidationError
+
+        from apps.orders.models import OrderEvent
+        from apps.orders.services import transition
+
+        order = make_order(OrderStatus.PENDING, number="ZK-EVT-APPEND")
+        transition(order, OrderStatus.CONFIRMED, actor=user)
+        event = OrderEvent.objects.get(order=order)
+
+        event.note = "تعديل لاحق"
+        with pytest.raises(ValidationError):
+            event.save()
+        with pytest.raises(ValidationError):
+            event.delete()
+
+    def test_staff_notes_and_customer_visible_notes_stay_apart(self, user):
+        """FR-069: the two kinds of note are distinguishable rows, and the
+        internal one is the default.
+
+        Staff write things customers must not read. If visibility were a
+        convention rather than a stored flag — or if it defaulted to visible —
+        an internal remark would reach the customer the first time somebody
+        forgot to say otherwise.
+        """
+        from apps.orders.models import OrderNote
+
+        order = make_order(OrderStatus.PENDING, number="ZK-NOTE-1")
+
+        internal = OrderNote.objects.create(
+            order=order, author=user, body="العميل تأخر في السداد سابقًا."
+        )
+        published = OrderNote.objects.create(
+            order=order,
+            author=user,
+            body="سنتواصل معك لتأكيد موعد التسليم.",
+            is_customer_visible=True,
+        )
+
+        assert internal.is_customer_visible is False, "notes are internal unless published"
+        assert published.is_customer_visible is True
+
+        visible = set(order.notes.filter(is_customer_visible=True).values_list("pk", flat=True))
+        assert visible == {published.pk}
+        assert internal.pk not in visible
+
+        # …and the status history is a third, separate record: publishing a note
+        # never moves an order, and a transition note is not a customer note.
+        from apps.orders.services import transition
+
+        transition(order, OrderStatus.CONFIRMED, actor=user, note="ملاحظة داخلية على الانتقال")
+        assert order.notes.count() == 2
+        assert order.notes.filter(is_customer_visible=True).count() == 1

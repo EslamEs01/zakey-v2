@@ -8,9 +8,13 @@ recording. There is no provider integration, and
 from __future__ import annotations
 
 from decimal import Decimal
+from io import StringIO
 
 import pytest
 from django.core.exceptions import ValidationError
+from django.core.management import call_command
+from django.core.management.base import CommandError
+from django.db import IntegrityError, transaction
 
 from apps.orders.models import Order, PaymentStatus
 from apps.payments import gateways, services
@@ -73,6 +77,11 @@ class TestSeededMethods:
         )
 
     def test_only_cod_and_manual_methods_are_offered_at_checkout(self, seeded_catalogue):
+        """FR-071: the launch set is cash on delivery and manual/offline only.
+
+        Everything else is displayed as coming-soon; a method is offerable only
+        because it collects on delivery or is reconciled by hand.
+        """
         for method in PaymentMethod.objects.all():
             expected = method.collects_on_delivery or method.is_manual
             assert method.is_available_for_checkout is expected
@@ -99,6 +108,13 @@ class TestProviderBoundary:
             assert gateways.gateway_for(method).is_external is False
 
     def test_a_method_claiming_integration_is_refused(self, db):
+        """FR-079: an integration cannot be switched on, only built.
+
+        ``is_integrated`` is the single edit that could make the shop behave as
+        though a provider were connected. The gateway lookup refuses it, so
+        connecting a real provider stays a separate, visible piece of work
+        rather than a flag someone flips.
+        """
         pretend = PaymentMethod.objects.create(
             code="payment-card", label="بطاقة", is_integrated=True
         )
@@ -206,6 +222,60 @@ class TestPaymentLifecycle:
         )
         assert payment.currency == "EGP"
 
+    def test_a_payment_records_amount_currency_method_and_provider_reference(
+        self, order, manual
+    ):
+        """FR-073: one attempt persists all five facts the requirement names.
+
+        Read back from the database rather than from the returned instance, so
+        the assertion is about the row and not about what the service happened
+        to leave in memory.
+        """
+        payment = services.record_payment(
+            order=order,
+            method=manual,
+            amount=Decimal("250.00"),
+            idempotency_key="k-fields",
+            reference="TRX-9911",
+        )
+
+        stored = Payment.objects.get(pk=payment.pk)
+        assert stored.amount == Decimal("250.00")
+        assert stored.currency == "EGP"
+        assert stored.method_id == manual.pk
+        assert stored.provider_reference == "TRX-9911"
+        assert stored.state == PaymentState.PENDING
+
+    def test_the_state_vocabulary_is_exactly_the_seven_specified_states(self):
+        """FR-073: the payment state set is closed, and these are its members."""
+        expected = {
+            "pending",
+            "authorised",
+            "captured",
+            "failed",
+            "cancelled",
+            "refunded",
+            "partially_refunded",
+        }
+        assert set(PaymentState.values) == expected
+        assert {
+            value for value, _label in Payment._meta.get_field("state").choices
+        } == expected
+
+    def test_every_declared_state_can_actually_be_stored(self, order, cod):
+        """FR-073: a state the column cannot hold is not a state the shop has."""
+        for index, state in enumerate(PaymentState.values):
+            payment = Payment.objects.create(
+                order=order,
+                method=cod,
+                amount=Decimal("1.00"),
+                currency="EGP",
+                state=state,
+                idempotency_key=f"state-{index}",
+            )
+            payment.refresh_from_db()
+            assert payment.state == state
+
     def test_every_movement_leaves_an_immutable_event(self, order, cod):
         payment = _captured(order, cod)
         events = list(PaymentEvent.objects.filter(payment=payment))
@@ -255,12 +325,18 @@ class TestRefunds:
         assert payment.state == PaymentState.REFUNDED
 
     def test_over_refund_is_refused(self, order, cod):
+        """FR-075: a refund larger than the capture is refused and writes nothing."""
         payment = _captured(order, cod)
         with pytest.raises(services.OverRefund):
             services.refund(payment, Decimal("1000.01"), reason="أكثر من المحصّل")
         assert not Refund.objects.exists()
 
     def test_refund_beyond_the_remainder_is_refused(self, order, cod):
+        """FR-075: the bound is captured *minus already-refunded*, not captured.
+
+        900 of 1000 is legitimate; a further 200 is not, even though 200 is far
+        below the captured amount on its own.
+        """
         payment = _captured(order, cod)
         services.refund(payment, Decimal("900.00"), reason="جزئي")
         with pytest.raises(services.OverRefund):
@@ -280,6 +356,30 @@ class TestRefunds:
         for amount in ("0.00", "-1.00"):
             with pytest.raises(ValidationError):
                 services.refund(payment, Decimal(amount), reason="لا")
+
+    def test_the_database_refuses_a_refund_row_that_is_not_positive(self, order, cod):
+        """FR-075 at the database, where the service cannot be gone around.
+
+        The remaining balance is ``captured − Σ refunds``. A negative row written
+        behind the service's back would *raise* that remainder and let the next
+        refund exceed the capture, so ``refund_amount_positive`` is part of the
+        bound — and unlike the model validators, which ``Refund.objects.create``
+        never runs, PostgreSQL always checks it.
+        """
+        payment = _captured(order, cod)
+
+        with pytest.raises(IntegrityError):
+            with transaction.atomic():
+                Refund.objects.create(
+                    payment=payment,
+                    amount=Decimal("-500.00"),
+                    reason="تسميم الرصيد المتبقي",
+                    state=RefundState.COMPLETED,
+                )
+
+        payment.refresh_from_db()
+        assert payment.refunded_amount == Decimal("0.00")
+        assert payment.refundable_amount == Decimal("1000.00")
 
     def test_refund_is_audited(self, order, cod):
         from apps.audit.models import AuditAction, AuditLog
@@ -322,6 +422,39 @@ class TestReconciliation:
         assert order.payment_status == PaymentStatus.UNPAID, (
             "reconcile repaired the divergence instead of reporting it (FR-076)"
         )
+
+    def test_the_management_command_reports_divergence_without_mutating(self, order, cod):
+        """FR-076: `reconcile_payments` names the divergence and changes nothing.
+
+        The requirement is about the *command*, so the command is what runs
+        here — its report, its non-zero exit, and an untouched ledger afterwards.
+        """
+        _captured(order, cod)
+        Order.objects.filter(pk=order.pk).update(payment_status=PaymentStatus.UNPAID)
+        ledger_before = list(Payment.objects.values_list("pk", "state", "amount"))
+
+        out = StringIO()
+        with pytest.raises(CommandError):
+            call_command("reconcile_payments", "--order", order.number, stdout=out)
+
+        report = out.getvalue()
+        assert order.number in report
+        assert "payment_status" in report
+
+        order.refresh_from_db()
+        assert order.payment_status == PaymentStatus.UNPAID, (
+            "the command repaired the divergence it was asked to report"
+        )
+        assert list(Payment.objects.values_list("pk", "state", "amount")) == ledger_before
+
+    def test_the_management_command_stays_quiet_when_the_ledger_agrees(self, order, cod):
+        """FR-076: a consistent order reconciles cleanly and exits zero."""
+        _captured(order, cod)
+
+        out = StringIO()
+        call_command("reconcile_payments", "--order", order.number, stdout=out)
+
+        assert "No divergence" in out.getvalue()
 
 
 # ---------------------------------------------------------------------------

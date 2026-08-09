@@ -34,10 +34,14 @@ def validate_coupon(coupon: Coupon, subtotal: Decimal, *, customer=None, cart=No
         raise CouponError(REJECTED_MESSAGE)
     if coupon.starts_at and coupon.starts_at > now:
         raise CouponError(REJECTED_MESSAGE)
+    # Expired and exhausted both answer with the *prototype's* rejection label
+    # (FR-086). A distinct "this code has expired" / "this code is used up"
+    # confirms to whoever typed it that the code is real — the same enumeration
+    # oracle the coupon rate limiter exists to close (storefront/views.py, T-1707).
     if coupon.ends_at and coupon.ends_at <= now:
-        raise CouponError("انتهت صلاحية هذا الكود.")
+        raise CouponError(REJECTED_MESSAGE)
     if coupon.usage_limit is not None and coupon.times_used >= coupon.usage_limit:
-        raise CouponError("تم استنفاد هذا الكود.")
+        raise CouponError(REJECTED_MESSAGE)
     if coupon.minimum_subtotal is not None and subtotal < coupon.minimum_subtotal:
         raise CouponError(
             f"الحد الأدنى لاستخدام الكود هو {coupon.minimum_subtotal:.0f} ج.م."
@@ -82,7 +86,7 @@ def redeem(coupon: Coupon, order, amount: Decimal, *, customer=None) -> CouponRe
     """
     locked = Coupon.objects.select_for_update().get(pk=coupon.pk)
     if locked.usage_limit is not None and locked.times_used >= locked.usage_limit:
-        raise CouponError("تم استنفاد هذا الكود.")
+        raise CouponError(REJECTED_MESSAGE)  # exhausted fails closed (FR-086)
 
     locked.times_used += 1
     locked.save(update_fields=["times_used", "updated_at"])

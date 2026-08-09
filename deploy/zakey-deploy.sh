@@ -92,6 +92,10 @@ rollback() {
   local revision="${2:-}"
   [ -n "$revision" ] || die "usage: zakey-deploy.sh rollback <git-revision>"
   validate_environment
+  # The operator runs this from wherever they happen to stand. Without entering
+  # the release root, `uv sync` and `collectstatic` below would silently operate
+  # on whatever project that shell is sitting in. (Found by the T-2003 rehearsal.)
+  [ "$DRY_RUN" = "1" ] || cd "$ZAKEY_ROOT" || die "cannot enter ${ZAKEY_ROOT}"
 
   step "rolling back application code to ${revision}"
   run git -C "$ZAKEY_ROOT" checkout --detach "$revision"

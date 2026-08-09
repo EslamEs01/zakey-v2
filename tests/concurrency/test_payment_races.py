@@ -126,6 +126,10 @@ class TestRefundRace(PaymentConcurrencyBase):
 
         Five can legitimately succeed. Without the locked re-read they would all
         pass a check taken before any of them wrote, and refund 2000.
+
+        This is FR-075's locked service check under real contention: the bound
+        holds only because the remaining balance is read inside the row lock,
+        and a sequential test would pass against a completely unlocked one.
         """
 
         def give_back(_index: int):

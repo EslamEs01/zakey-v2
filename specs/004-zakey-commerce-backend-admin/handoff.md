@@ -82,13 +82,41 @@ close-out procedure is in `qa/visual-approval-ledger.md`.
 **T-1906 — `npm run qa` is not green.** It is deterministic, but a deterministic
 red is still red. It exits 0 only once the seven comparisons above are resolved.
 
-**T-1806 — traceability is incomplete.** 122 requirements; 121 claimed by a task;
-57 named directly by a test; **49 requirement-to-test gaps remain.** These are
-labelling gaps rather than known coverage holes, but closing them honestly needs
-per-requirement verification, and mapping a test that does not prove a
-requirement would make the matrix worse than empty.
-
 **T-2006 — awaiting the business.** See §6.
+
+### Closed since this report was first written
+
+**T-1806 — traceability is complete.** 122 requirements · 122 claimed by a task ·
+**121 with test evidence · 0 problems**; the 122nd is FR-135, which is `📄` by
+design. 68 gaps were closed with real assertions, ~540 tests added, and every
+mapping reviewed individually. The generator was also tightened so a module-level
+claim no longer credits every test in a file to every requirement its header
+lists. Record: `qa/traceability-closure.md`.
+
+**T-2003 — rollback rehearsed.** Release B → release A against real git releases,
+a real health endpoint and a real PostgreSQL scratch restore, with the service
+manager mocked; 32 tests, every failure path exercised. It found a real defect —
+`rollback()` never entered `ZAKEY_ROOT`, so `uv sync` and `collectstatic` ran in
+the operator's shell directory. Fixed. Record: `qa/rollback-rehearsal.md`.
+
+### Three things T-1806 found that are still open
+
+Full detail in **`qa/spec-divergences.md`**. None was closed by writing a test
+that names the requirement and proves something adjacent.
+
+- **FR-025** — `mark_failed` never releases reservations, so the "payment
+  failure" trigger is unimplemented; three of four triggers are proven. Whether a
+  failed attempt should release immediately, after N attempts, or rely on the TTL
+  sweeper is a **product decision**.
+- **FR-075** — the refund cap has **no database constraint**, only the locked
+  service check. Given that this repository's stated philosophy is to enforce
+  load-bearing invariants in the schema (§2), the money-losing invariant being
+  application-only deserves a decision: add the constraint, or amend the
+  requirement.
+- **`templates/base.html`** — the no-JS notice tells customers the cart, filters
+  and wishlist need JavaScript. The strengthened no-JS suite now proves they do
+  not. Left for whoever closes T-1901, since it is shared chrome and seven visual
+  comparisons are mid-approval.
 
 ## 6. The one external dependency
 

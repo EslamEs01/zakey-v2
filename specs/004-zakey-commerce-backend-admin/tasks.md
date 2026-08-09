@@ -247,7 +247,7 @@ description: "Task list for ZAKEY commerce backend and staff administration"
 - [x] **T-1803** 100% of order and payment transitions exercised. → SC-005
 - [x] **T-1804** Query-count assertions on catalogue, detail and every admin changelist. → NFR-002, NFR-003
 - [x] **T-1805** Performance check against NFR-001 and NFR-004.
-- [ ] **T-1806** Complete `traceability.md`: every FR → task → test, verified mechanically. → SC-014
+- [x] **T-1806** Complete `traceability.md`: every FR → task → test, verified mechanically. → SC-014 — 122/122 claimed, 121 with test evidence, **0 problems**; two byte-identical `--check` runs; every mapped node verified collectible by `pytest --collect-only`. Record: `qa/traceability-closure.md`; divergences found: `qa/spec-divergences.md`.
 
 ---
 
@@ -267,7 +267,7 @@ description: "Task list for ZAKEY commerce backend and staff administration"
 
 - [x] **T-2001** Deployment runbook (env vars, migrations, static, superuser, roles) → `quickstart.md` + runbook.
 - [x] **T-2002** Backup and **rehearsed** restore procedure. → security §3
-- [ ] **T-2003** Rollback rehearsal per `rollout-and-rollback.md`.
+- [x] **T-2003** Rollback rehearsal per `rollout-and-rollback.md`. → `qa/rollback-rehearsal.md`, `tests/deployment/test_rollback_rehearsal.py` (32 tests); found and fixed a missing `cd "$ZAKEY_ROOT"` in `rollback()`.
 - [x] **T-2004** Operational monitoring: health checks, error reporting, reconciliation schedule.
 - [x] **T-2005** Staff documentation for the 9 roles and the core admin workflows.
 - [ ] **T-2006** ⚠️ **Business-input gate**: real shipping rates and installation fee entered by the business, replacing development placeholders. → ASM-004, ASM-005

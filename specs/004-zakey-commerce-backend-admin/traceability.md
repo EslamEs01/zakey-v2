@@ -6,208 +6,129 @@ Regenerate, or the matrix stops describing the repository.
 `✅` a test names the requirement · `📄` satisfied by a process artifact ·
 `❌` no evidence.
 
-Functional requirements: **122** · with a task claim: **122** · with test evidence: **45** · problems: **76**
+Functional requirements: **122** · with a task claim: **122** · with test evidence: **121** · problems: **0**
 
 | Requirement | Status | Task(s) | Tests | Evidence |
 |---|---|---|---|---|
-| FR-001 | ❌ | T-0201 | 0 | — |
+| FR-001 | ✅ | T-0201 | 3 | tests/test_requirements_infrastructure.py::TestSettingsLayout::test_no_settings_module_hardcodes_a_secret_key, tests/test_requirements_infrastructure.py::TestSettingsLayout::test_production_reads_its_secret_from_the_environment (+1) |
 | FR-002 | ✅ | T-0202, T-0207 | 1 | tests/test_backend_boundary.py::BackendStackTests::test_database_is_postgresql |
 | FR-003 | ✅ | T-0203, T-0203a | 1 | tests/test_backend_boundary.py::BackendStackTests::test_required_backend_stack_is_enabled |
-| FR-004 | ✅ | T-0204 | 14 | tests/security/test_deploy_check.py::TestDeployCheckIsClean::test_check_deploy_reports_no_issues, tests/security/test_deploy_check.py::TestProductionSettings::test_allowed_hosts_is_explicit (+12) |
-| FR-005 | ❌ | T-0302 | 0 | — |
-| FR-006 | ❌ | T-0206 | 0 | — |
-| FR-007 | ❌ | T-0206 | 0 | — |
-| FR-010 | ❌ | T-0501, T-0502, T-0506, T-0507 | 0 | — |
-| FR-011 | ❌ | T-0501, T-0503 | 0 | — |
-| FR-012 | ❌ | T-0504 | 0 | — |
-| FR-013 | ❌ | T-0503 | 0 | — |
+| FR-004 | ✅ | T-0204 | 10 | tests/security/test_deploy_check.py::TestProductionSettings::test_allowed_hosts_is_explicit, tests/security/test_deploy_check.py::TestProductionSettings::test_content_type_nosniff_is_on (+8) |
+| FR-005 | ✅ | T-0302 | 3 | tests/test_requirements_infrastructure.py::TestCommerceConstantsHaveOneSource::test_only_one_row_can_exist, tests/test_requirements_infrastructure.py::TestCommerceConstantsHaveOneSource::test_the_singleton_carries_every_named_constant (+1) |
+| FR-006 | ✅ | T-0206 | 2 | tests/test_requirements_infrastructure.py::TestHealthEndpoint::test_it_leaks_no_configuration, tests/test_requirements_infrastructure.py::TestHealthEndpoint::test_it_reports_ok_when_the_database_is_reachable |
+| FR-007 | ✅ | T-0206 | 2 | tests/test_requirements_infrastructure.py::TestStructuredLoggingRedaction::test_logging_uses_a_structured_formatter, tests/test_requirements_infrastructure.py::TestStructuredLoggingRedaction::test_sensitive_values_are_redacted |
+| FR-010 | ✅ | T-0501, T-0502, T-0506, T-0507 | 2 | tests/test_requirements_infrastructure.py::TestCatalogueModelCoverage::test_categories_nest_within_themselves, tests/test_requirements_infrastructure.py::TestCatalogueModelCoverage::test_the_model_exists |
+| FR-011 | ✅ | T-0501, T-0503 | 5 | tests/fixtures/test_seed_demo.py::TestSlugContract::test_a_second_import_keeps_every_slug_on_its_original_row, tests/fixtures/test_seed_demo.py::TestSlugContract::test_the_database_refuses_a_duplicate_product_slug (+3) |
+| FR-012 | ✅ | T-0504 | 3 | apps/catalog/tests/test_catalogue_rules.py::TestVariantSkuIdentity::test_a_duplicate_sku_under_another_product_is_rejected, apps/catalog/tests/test_catalogue_rules.py::TestVariantSkuIdentity::test_a_duplicate_sku_under_the_same_product_is_rejected (+1) |
+| FR-013 | ✅ | T-0503 | 2 | apps/catalog/tests/test_catalogue_rules.py::TestPublicationVisibility::test_only_published_products_reach_the_storefront, apps/catalog/tests/test_catalogue_rules.py::TestPublicationVisibility::test_the_lifecycle_has_exactly_the_three_documented_states |
 | FR-014 | ✅ | T-0510 | 28 | apps/catalog/tests/test_archive_policy.py::TestArchiving::test_a_non_publishable_record_is_refused, apps/catalog/tests/test_archive_policy.py::TestArchiving::test_archiving_an_ordered_product_is_allowed (+26) |
-| FR-015 | ❌ | T-0505 | 0 | — |
-| FR-016 | ❌ | T-0505 | 0 | — |
-| FR-017 | ❌ | T-0504 | 0 | — |
+| FR-015 | ✅ | T-0505 | 4 | apps/catalog/tests/test_catalogue_rules.py::TestProductCompleteness::test_every_catalogue_product_has_an_image_and_a_variant, apps/catalog/tests/test_catalogue_rules.py::TestProductCompleteness::test_the_default_variant_is_the_first_by_position (+2) |
+| FR-016 | ✅ | T-0505 | 3 | apps/catalog/tests/test_catalogue_rules.py::TestOrderingIsExplicitAndStaffControllable::test_reordering_images_changes_what_the_storefront_renders_first, apps/catalog/tests/test_catalogue_rules.py::TestOrderingIsExplicitAndStaffControllable::test_reordering_variants_changes_the_finish_order (+1) |
+| FR-017 | ✅ | T-0504 | 5 | apps/catalog/tests/test_catalogue_rules.py::TestPriceOwnership::test_a_higher_compare_at_price_is_accepted_and_exposed, apps/catalog/tests/test_catalogue_rules.py::TestPriceOwnership::test_compare_at_price_is_optional (+3) |
 | FR-018 | ✅ | T-0508 | 1 | tests/integration/test_catalogue_parity.py::test_availability_parity_including_limited |
-| FR-019 | ❌ | T-0503 | 0 | — |
+| FR-019 | ✅ | T-0503 | 3 | apps/catalog/tests/test_catalogue_rules.py::TestMerchandisingFields::test_feature_keys_drive_the_catalogue_facets, apps/catalog/tests/test_catalogue_rules.py::TestMerchandisingFields::test_seo_title_and_description_are_stored_and_staff_editable (+1) |
 | FR-020 | ✅ | T-0601 | 13 | apps/inventory/tests/test_stock_constraints.py::TestDatabaseEnforcesStockInvariant::test_on_hand_cannot_go_negative, apps/inventory/tests/test_stock_constraints.py::TestDatabaseEnforcesStockInvariant::test_raw_sql_cannot_bypass_the_constraint (+11) |
 | FR-021 | ✅ | T-0602 | 46 | apps/inventory/tests/test_ledger_reconciliation.py::TestItCannotConcealOtherDrift::test_a_second_unrelated_break_is_still_reported, apps/inventory/tests/test_ledger_reconciliation.py::TestItCannotConcealOtherDrift::test_it_does_not_hide_a_different_field_on_the_same_gap (+44) |
-| FR-022 | ❌ | T-0602 | 0 | — |
-| FR-023 | ❌ | T-0604 | 0 | — |
+| FR-022 | ✅ | T-0602 | 6 | apps/inventory/tests/test_movement_reasons.py::TestTheReasonVocabulary::test_a_reason_outside_the_vocabulary_is_rejected_by_the_model, apps/inventory/tests/test_movement_reasons.py::TestTheReasonVocabulary::test_every_named_reason_is_accepted_by_the_ledger (+4) |
+| FR-023 | ✅ | T-0604 | 2 | tests/concurrency/test_races.py::TestCheckoutLocksTheStockRows::test_a_failure_after_reserving_rolls_the_reservation_back, tests/concurrency/test_races.py::TestCheckoutLocksTheStockRows::test_checkout_waits_for_a_lock_held_on_the_stock_row |
 | FR-024 | ✅ | T-0603, T-0605 | 14 | apps/inventory/tests/test_release_expired_command.py::TestTheSweep::test_a_live_reservation_is_left_alone, apps/inventory/tests/test_release_expired_command.py::TestTheSweep::test_an_expired_reservation_is_released (+12) |
-| FR-025 | ❌ | T-0604 | 0 | — |
+| FR-025 | ✅ | T-0604 | 4 | apps/inventory/tests/test_movement_reasons.py::TestTheLifecycleWritesTheRightMovement::test_a_released_hold_can_never_afterwards_be_fulfilled, apps/inventory/tests/test_movement_reasons.py::TestTheLifecycleWritesTheRightMovement::test_cancelling_an_order_releases_its_reservations (+2) |
 | FR-026 | ✅ | T-0604 | 13 | apps/inventory/tests/test_stock_constraints.py::TestDatabaseEnforcesStockInvariant::test_on_hand_cannot_go_negative, apps/inventory/tests/test_stock_constraints.py::TestDatabaseEnforcesStockInvariant::test_raw_sql_cannot_bypass_the_constraint (+11) |
 | FR-027 | ✅ | T-0606 | 22 | apps/inventory/tests/test_stock_integrity.py::TestCleanData::test_a_consistent_item_reports_no_drift, apps/inventory/tests/test_stock_integrity.py::TestCleanData::test_an_active_reservation_matching_reserved_is_clean (+20) |
-| FR-028 | ❌ | T-0607 | 0 | — |
+| FR-028 | ✅ | T-0607 | 6 | apps/inventory/tests/test_returns_decision.py::TestNothingRestocksAutomatically::test_cancelling_after_fulfilment_does_not_put_the_goods_back, apps/inventory/tests/test_returns_decision.py::TestNothingRestocksAutomatically::test_marking_the_order_returned_writes_no_stock_movement (+4) |
 | FR-029 | ✅ | T-0601 | 37 | apps/inventory/tests/test_stock_constraints.py::TestDatabaseEnforcesStockInvariant::test_on_hand_cannot_go_negative, apps/inventory/tests/test_stock_constraints.py::TestDatabaseEnforcesStockInvariant::test_raw_sql_cannot_bypass_the_constraint (+35) |
-| FR-030 | ✅ | T-0702, T-0703 | 28 | apps/cart/tests/test_cart_identity.py::TestOneActiveCartPerOwner::test_a_converted_cart_frees_the_slot, apps/cart/tests/test_cart_identity.py::TestOneActiveCartPerOwner::test_cart_line_protects_its_variant_from_deletion (+26) |
-| FR-031 | ❌ | T-0701 | 0 | — |
-| FR-032 | ❌ | T-0706 | 0 | — |
+| FR-030 | ✅ | T-0702, T-0703 | 38 | apps/cart/tests/test_cart_identity.py::TestOneActiveCartPerOwner::test_a_converted_cart_frees_the_slot, apps/cart/tests/test_cart_identity.py::TestOneActiveCartPerOwner::test_cart_line_protects_its_variant_from_deletion (+36) |
+| FR-031 | ✅ | T-0701 | 2 | tests/integration/test_cart_flow.py::test_a_signed_in_basket_persists_into_the_next_session, tests/integration/test_cart_flow.py::test_an_anonymous_basket_belongs_to_one_session_only |
+| FR-032 | ✅ | T-0706 | 3 | tests/integration/test_cart_flow.py::test_signing_in_sums_the_anonymous_basket_into_the_account_one, tests/integration/test_cart_flow.py::test_the_sign_in_merge_clamps_to_available_stock (+1) |
 | FR-033 | ✅ | T-0702 | 3 | apps/cart/tests/test_cart_identity.py::TestQuantityBounds::test_nine_is_allowed, apps/cart/tests/test_cart_identity.py::TestQuantityBounds::test_quantity_above_nine_rejected (+1) |
-| FR-034 | ❌ | T-0704 | 0 | — |
-| FR-035 | ❌ | T-0705 | 0 | — |
-| FR-036 | ❌ | T-0705 | 0 | — |
-| FR-037 | ❌ | T-0707 | 0 | — |
-| FR-038 | ❌ | T-0708 | 0 | — |
-| FR-039 | ❌ | T-1701 | 0 | — |
-| FR-040 | ✅ | T-0301, T-0704 | 29 | apps/core/tests/test_money.py::TestCouponMath::test_five_percent_matches_the_prototype_coupon, apps/core/tests/test_money.py::TestFormatting::test_renders_integer_egp_with_arabic_label (+27) |
-| FR-041 | ❌ | T-0803, T-1604 | 0 | — |
+| FR-034 | ✅ | T-0704 | 1 | tests/integration/test_cart_flow.py::test_posted_money_fields_are_ignored |
+| FR-035 | ✅ | T-0705 | 1 | tests/integration/test_cart_flow.py::test_a_line_that_became_unavailable_is_flagged_and_excluded_but_still_shown |
+| FR-036 | ✅ | T-0705 | 1 | tests/integration/test_cart_flow.py::test_a_price_change_since_adding_is_applied_and_shown_before_submission |
+| FR-037 | ✅ | T-0707 | 3 | tests/integration/test_cart_flow.py::test_a_saved_product_survives_into_a_new_session, tests/integration/test_cart_flow.py::test_a_session_wishlist_merges_into_the_account_on_sign_in (+1) |
+| FR-038 | ✅ | T-0708 | 2 | tests/test_requirements_infrastructure.py::TestCartExpiry::test_the_cleanup_command_exists_and_is_idempotent, tests/test_requirements_infrastructure.py::TestCartExpiry::test_the_ttl_is_configurable |
+| FR-039 | ✅ | T-1701 | 5 | tests/integration/test_cart_flow.py::test_mutating_endpoints_reject_get, tests/integration/test_cart_flow.py::test_mutating_endpoints_require_csrf (+3) |
+| FR-040 | ✅ | T-0301, T-0704 | 39 | apps/core/tests/test_money.py::TestCouponMath::test_five_percent_matches_the_prototype_coupon, apps/core/tests/test_money.py::TestFormatting::test_renders_integer_egp_with_arabic_label (+37) |
+| FR-041 | ✅ | T-0803, T-1604 | 2 | tests/test_requirements_infrastructure.py::TestShippingEntersTheTotal::test_grand_total_is_not_merely_subtotal_minus_discount, tests/test_requirements_infrastructure.py::TestShippingEntersTheTotal::test_the_order_total_includes_shipping |
 | FR-042 | ✅ | T-0301 | 13 | apps/core/tests/test_money.py::TestCouponMath::test_five_percent_matches_the_prototype_coupon, apps/core/tests/test_money.py::TestFormatting::test_renders_integer_egp_with_arabic_label (+11) |
-| FR-043 | ✅ | T-0301 | 13 | apps/core/tests/test_money.py::TestCouponMath::test_five_percent_matches_the_prototype_coupon, apps/core/tests/test_money.py::TestFormatting::test_renders_integer_egp_with_arabic_label (+11) |
-| FR-044 | ❌ | T-0801 | 0 | — |
-| FR-045 | ✅ | T-0802 | 20 | tests/security/test_commercial_rate_gate.py::TestAvailableMethods::test_a_method_with_a_rate_is_offered, tests/security/test_commercial_rate_gate.py::TestAvailableMethods::test_a_method_with_no_rate_is_not_offered (+18) |
-| FR-046 | ❌ | T-0803 | 0 | — |
-| FR-047 | ❌ | T-0804 | 0 | — |
-| FR-048 | ❌ | T-0805 | 0 | — |
-| FR-049 | ✅ | T-0806 | 20 | tests/security/test_commercial_rate_gate.py::TestAvailableMethods::test_a_method_with_a_rate_is_offered, tests/security/test_commercial_rate_gate.py::TestAvailableMethods::test_a_method_with_no_rate_is_not_offered (+18) |
-| FR-050 | ✅ | T-0401 | 34 | apps/accounts/tests/test_auth.py::test_bad_email_rejected_with_exact_message, apps/accounts/tests/test_auth.py::test_confirm_email_marks_profile_verified_and_token_dies (+32) |
+| FR-043 | ✅ | T-0301 | 1 | apps/core/tests/test_money.py::TestRounding::test_line_totals_quantize_before_summing |
+| FR-044 | ✅ | T-0801 | 3 | tests/test_requirements_infrastructure.py::TestGovernorateCoverage::test_all_twenty_seven_are_seeded, tests/test_requirements_infrastructure.py::TestGovernorateCoverage::test_every_key_is_a_stable_slug (+1) |
+| FR-045 | ✅ | T-0802 | 26 | tests/security/test_commercial_rate_gate.py::TestAvailableMethods::test_a_method_with_a_rate_is_offered, tests/security/test_commercial_rate_gate.py::TestAvailableMethods::test_a_method_with_no_rate_is_not_offered (+24) |
+| FR-046 | ✅ | T-0803 | 4 | tests/integration/test_checkout_flow.py::test_a_discount_that_drops_the_basket_below_the_threshold_restores_the_charge, tests/integration/test_checkout_flow.py::test_free_shipping_applies_when_the_basket_reaches_the_configured_threshold (+2) |
+| FR-047 | ✅ | T-0804 | 2 | tests/security/test_commercial_rate_gate.py::TestSameDayEligibility::test_an_ineligible_area_cannot_be_quoted_even_if_it_is_asked_for, tests/security/test_commercial_rate_gate.py::TestSameDayEligibility::test_same_day_needs_an_eligible_area_and_a_staff_enabled_method |
+| FR-048 | ✅ | T-0805 | 2 | tests/security/test_commercial_rate_gate.py::TestInstallationEligibility::test_an_empty_cart_is_not_offered_installation, tests/security/test_commercial_rate_gate.py::TestInstallationEligibility::test_installation_needs_an_eligible_governorate_and_installable_lines |
+| FR-049 | ✅ | T-0806 | 26 | tests/security/test_commercial_rate_gate.py::TestAvailableMethods::test_a_method_with_a_rate_is_offered, tests/security/test_commercial_rate_gate.py::TestAvailableMethods::test_a_method_with_no_rate_is_not_offered (+24) |
+| FR-050 | ✅ | T-0401 | 36 | apps/accounts/tests/test_auth.py::test_bad_email_rejected_with_exact_message, apps/accounts/tests/test_auth.py::test_confirm_email_marks_profile_verified_and_token_dies (+34) |
 | FR-051 | ✅ | T-0402 | 13 | apps/accounts/tests/test_mobile.py::test_accepted_numbers_are_valid, apps/accounts/tests/test_mobile.py::test_accepted_numbers_normalise_to_canonical (+11) |
-| FR-052 | ❌ | T-0401 | 0 | — |
-| FR-053 | ✅ | T-0404 | 20 | tests/integration/test_auth_flows.py::TestEmailConfirmation::test_a_reset_token_is_not_a_confirmation_token, tests/integration/test_auth_flows.py::TestEmailConfirmation::test_a_tampered_link_is_refused (+18) |
+| FR-052 | ✅ | T-0401 | 4 | apps/accounts/tests/test_auth.py::test_duplicate_email_is_rejected, apps/accounts/tests/test_auth.py::test_duplicate_verified_mobile_is_rejected (+2) |
+| FR-053 | ✅ | T-0404 | 1 | tests/integration/test_auth_flows.py::test_guest_checkout_needs_no_account |
 | FR-054 | ✅ | T-0404 | 20 | tests/integration/test_auth_flows.py::TestEmailConfirmation::test_a_reset_token_is_not_a_confirmation_token, tests/integration/test_auth_flows.py::TestEmailConfirmation::test_a_tampered_link_is_refused (+18) |
-| FR-055 | ❌ | T-0403 | 0 | — |
-| FR-056 | ✅ | T-0406 | 10 | tests/integration/test_ownership.py::test_anonymous_row_without_session_key_is_unanswerable, tests/integration/test_ownership.py::test_anonymous_session_reads_own_row (+8) |
+| FR-055 | ✅ | T-0403 | 8 | apps/accounts/tests/test_addresses.py::TestTheAddressBook::test_a_customer_may_hold_several_addresses, apps/accounts/tests/test_addresses.py::TestTheAddressBook::test_each_customer_keeps_their_own_default (+6) |
+| FR-056 | ✅ | T-0406 | 3 | tests/integration/test_ownership.py::test_cross_user_access_is_a_404, tests/integration/test_ownership.py::test_login_required_confusion_cannot_be_wrapped_into_a_403 (+1) |
 | FR-057 | ✅ | T-0407 | 21 | tests/integration/test_account_flow.py::test_anonymous_cart_merges_into_the_account_on_login, tests/integration/test_account_flow.py::test_anonymous_wishlist_merges_on_login (+19) |
-| FR-058 | ✅ | T-0405 | 29 | apps/accounts/tests/test_auth.py::test_bad_email_rejected_with_exact_message, apps/accounts/tests/test_auth.py::test_confirm_email_marks_profile_verified_and_token_dies (+27) |
+| FR-058 | ✅ | T-0405 | 31 | apps/accounts/tests/test_auth.py::test_bad_email_rejected_with_exact_message, apps/accounts/tests/test_auth.py::test_confirm_email_marks_profile_verified_and_token_dies (+29) |
 | FR-059 | ✅ | T-1010 | 17 | tests/integration/test_guest_order_association.py::TestAdminAction::test_the_action_associates_the_selected_order, tests/integration/test_guest_order_association.py::TestAdminAction::test_the_action_is_registered (+15) |
-| FR-060 | ✅ | T-1003, T-1605 | 29 | apps/accounts/tests/test_mobile.py::test_accepted_numbers_are_valid, apps/accounts/tests/test_mobile.py::test_accepted_numbers_normalise_to_canonical (+27) |
-| FR-061 | ❌ | T-1004 | 0 | — |
-| FR-062 | ❌ | T-0805, T-1004, T-1605 | 0 | — |
-| FR-063 | ❌ | T-1605 | 0 | — |
-| FR-064 | ✅ | T-1005 | 16 | tests/integration/test_checkout_flow.py::test_another_visitor_cannot_read_the_order_by_number, tests/integration/test_checkout_flow.py::test_cart_is_converted_and_no_longer_active (+14) |
-| FR-065 | ❌ | T-1007 | 0 | — |
-| FR-066 | ❌ | T-1001 | 0 | — |
+| FR-060 | ✅ | T-1003, T-1605 | 36 | apps/accounts/tests/test_mobile.py::test_accepted_numbers_are_valid, apps/accounts/tests/test_mobile.py::test_accepted_numbers_normalise_to_canonical (+34) |
+| FR-061 | ✅ | T-1004 | 4 | apps/orders/tests/test_order_creation.py::TestOrderCreationIsOneTransaction::test_a_failure_consuming_the_coupon_undoes_everything_before_it, apps/orders/tests/test_order_creation.py::TestOrderCreationIsOneTransaction::test_a_failure_reserving_the_second_line_releases_the_first (+2) |
+| FR-062 | ✅ | T-0805, T-1004, T-1605 | 1 | tests/integration/test_checkout_flow.py::test_the_installation_fee_is_added_to_the_total_and_shown_as_a_summary_row |
+| FR-063 | ✅ | T-1605 | 4 | tests/integration/test_checkout_flow.py::test_accepting_the_terms_is_recorded_on_the_order, tests/integration/test_checkout_flow.py::test_an_order_cannot_be_placed_without_accepting_the_terms (+2) |
+| FR-064 | ✅ | T-1005 | 23 | tests/integration/test_checkout_flow.py::test_a_discount_that_drops_the_basket_below_the_threshold_restores_the_charge, tests/integration/test_checkout_flow.py::test_accepting_the_terms_is_recorded_on_the_order (+21) |
+| FR-065 | ✅ | T-1007 | 3 | apps/orders/tests/test_order_creation.py::TestOrderNumber::test_numbers_are_readable_unique_and_not_a_running_counter, apps/orders/tests/test_order_creation.py::TestOrderNumber::test_the_database_refuses_a_second_order_with_the_same_number (+1) |
+| FR-066 | ✅ | T-1001 | 2 | apps/orders/tests/test_order_snapshots.py::test_none_of_it_moves_when_the_sources_move, apps/orders/tests/test_order_snapshots.py::test_the_order_stores_every_component_the_customer_agreed_to |
 | FR-067 | ✅ | T-1009 | 29 | apps/catalog/tests/test_archive_policy.py::TestArchiving::test_a_non_publishable_record_is_refused, apps/catalog/tests/test_archive_policy.py::TestArchiving::test_archiving_an_ordered_product_is_allowed (+27) |
-| FR-068 | ✅ | T-1008 | 13 | apps/orders/tests/test_transitions.py::TestAllowedTransitions::test_cancellation_is_reachable_from_every_pre_delivery_state, apps/orders/tests/test_transitions.py::TestAllowedTransitions::test_valid_transition_is_permitted (+11) |
-| FR-069 | ❌ | T-1002 | 0 | — |
-| FR-070 | ❌ | T-1102, T-1103 | 0 | — |
-| FR-071 | ❌ | T-1101 | 0 | — |
+| FR-068 | ✅ | T-1008 | 18 | apps/orders/tests/test_transitions.py::TestAllowedTransitions::test_cancellation_is_reachable_from_every_pre_delivery_state, apps/orders/tests/test_transitions.py::TestAllowedTransitions::test_valid_transition_is_permitted (+16) |
+| FR-069 | ✅ | T-1002 | 5 | apps/orders/tests/test_transitions.py::TestEveryStatusChangeIsRecorded::test_a_refused_transition_records_nothing, apps/orders/tests/test_transitions.py::TestEveryStatusChangeIsRecorded::test_an_event_cannot_be_rewritten_or_removed (+3) |
+| FR-070 | ✅ | T-1102, T-1103 | 4 | apps/payments/tests/test_provider_neutrality.py::TestTheArchitectureIsProviderNeutral::test_a_gateway_cannot_write_a_row_itself, apps/payments/tests/test_provider_neutrality.py::TestTheArchitectureIsProviderNeutral::test_no_column_is_named_after_a_particular_provider (+2) |
+| FR-071 | ✅ | T-1101 | 8 | apps/payments/tests/test_payments.py::TestSeededMethods::test_only_cod_and_manual_methods_are_offered_at_checkout, apps/payments/tests/test_provider_neutrality.py::TestNoProviderIntegrationExists::test_every_configured_method_resolves_to_an_offline_gateway (+6) |
 | FR-072 | ✅ | T-1101 | 1 | tests/security/test_no_card_data.py::TestNoModelCanStoreCardData::test_no_payment_method_claims_a_live_integration |
-| FR-073 | ❌ | T-1102, T-1105 | 0 | — |
+| FR-073 | ✅ | T-1102, T-1105 | 3 | apps/payments/tests/test_payments.py::TestPaymentLifecycle::test_a_payment_records_amount_currency_method_and_provider_reference, apps/payments/tests/test_payments.py::TestPaymentLifecycle::test_every_declared_state_can_actually_be_stored (+1) |
 | FR-074 | ✅ | T-1107 | 5 | tests/concurrency/test_payment_races.py::TestPaymentIdempotencyRace::test_distinct_keys_create_distinct_attempts, tests/concurrency/test_payment_races.py::TestPaymentIdempotencyRace::test_twenty_concurrent_attempts_with_one_key_create_one_payment (+3) |
-| FR-075 | ❌ | T-1104 | 0 | — |
-| FR-076 | ❌ | T-1106 | 0 | — |
+| FR-075 | ✅ | T-1104 | 4 | apps/payments/tests/test_payments.py::TestRefunds::test_over_refund_is_refused, apps/payments/tests/test_payments.py::TestRefunds::test_refund_beyond_the_remainder_is_refused (+2) |
+| FR-076 | ✅ | T-1106 | 2 | apps/payments/tests/test_payments.py::TestReconciliation::test_the_management_command_reports_divergence_without_mutating, apps/payments/tests/test_payments.py::TestReconciliation::test_the_management_command_stays_quiet_when_the_ledger_agrees |
 | FR-077 | ✅ | T-1108 | 13 | tests/security/test_no_card_data.py::TestCardNumbersAreRedactedFromLogs::test_a_cvv_assignment_is_redacted, tests/security/test_no_card_data.py::TestCardNumbersAreRedactedFromLogs::test_a_pan_never_survives_redaction (+11) |
 | FR-078 | ✅ | T-1108 | 13 | tests/security/test_no_card_data.py::TestCardNumbersAreRedactedFromLogs::test_a_cvv_assignment_is_redacted, tests/security/test_no_card_data.py::TestCardNumbersAreRedactedFromLogs::test_a_pan_never_survives_redaction (+11) |
-| FR-079 | ❌ | T-1103 | 0 | — |
-| FR-080 | ❌ | T-0901 | 0 | — |
-| FR-081 | ❌ | T-0901 | 0 | — |
-| FR-082 | ❌ | T-0902 | 0 | — |
-| FR-083 | ❌ | T-0903 | 0 | — |
-| FR-084 | ❌ | T-0904 | 0 | — |
-| FR-085 | ❌ | T-0902 | 0 | — |
-| FR-086 | ❌ | T-0904 | 0 | — |
-| FR-090 | ❌ | T-1201 | 0 | — |
-| FR-091 | ❌ | T-1201 | 0 | — |
-| FR-092 | ❌ | T-1202 | 0 | — |
-| FR-093 | ❌ | T-1201 | 0 | — |
-| FR-094 | ❌ | T-1203 | 0 | — |
-| FR-095 | ❌ | T-1204 | 0 | — |
-| FR-096 | ❌ | T-1205 | 0 | — |
-| FR-097 | ❌ | T-1205 | 0 | — |
+| FR-079 | ✅ | T-1103 | 3 | apps/payments/tests/test_payments.py::TestProviderBoundary::test_a_method_claiming_integration_is_refused, apps/payments/tests/test_provider_neutrality.py::TestProviderIntegrationRemainsASeparateTask::test_no_integration_has_been_started_under_another_name (+1) |
+| FR-080 | ✅ | T-0901 | 3 | apps/core/tests/test_coupon_rules.py::TestDiscountShape::test_a_fixed_coupon_discounts_its_exact_value, apps/core/tests/test_coupon_rules.py::TestDiscountShape::test_a_percentage_coupon_discounts_a_share_of_the_subtotal (+1) |
+| FR-081 | ✅ | T-0901 | 9 | apps/core/tests/test_coupon_rules.py::TestEligibilityRules::test_a_category_restricted_coupon_follows_the_category, apps/core/tests/test_coupon_rules.py::TestEligibilityRules::test_a_coupon_after_its_window_is_refused (+7) |
+| FR-082 | ✅ | T-0902 | 2 | apps/orders/tests/test_coupons.py::test_a_coupon_accepted_at_apply_time_is_re_evaluated_at_order_creation, apps/orders/tests/test_coupons.py::test_the_apply_endpoint_decides_eligibility_on_the_server |
+| FR-083 | ✅ | T-0903 | 5 | apps/orders/tests/test_coupons.py::TestRedemptionIsRecorded::test_a_failure_after_the_redemption_rolls_the_usage_back, apps/orders/tests/test_coupons.py::TestRedemptionIsRecorded::test_a_guest_checkout_still_records_the_use_against_the_order (+3) |
+| FR-084 | ✅ | T-0904 | 4 | apps/orders/tests/test_coupons.py::TestOneCouponPerOrder::test_a_basket_names_one_coupon_not_a_collection, apps/orders/tests/test_coupons.py::TestOneCouponPerOrder::test_an_order_carries_one_code_and_one_redemption (+2) |
+| FR-085 | ✅ | T-0902 | 3 | apps/core/tests/test_coupon_rules.py::TestCodeCasing::test_a_code_is_stored_uppercase_however_it_was_typed, apps/core/tests/test_coupon_rules.py::TestCodeCasing::test_lookup_is_case_insensitive_on_input (+1) |
+| FR-086 | ✅ | T-0904 | 4 | apps/core/tests/test_coupon_rules.py::TestExhaustedOrExpiredFailsClosed::test_a_refused_coupon_neither_leaks_nor_discounts, apps/core/tests/test_coupon_rules.py::TestExhaustedOrExpiredFailsClosed::test_an_exhausted_coupon_is_refused_with_the_existing_rejection_message (+2) |
+| FR-090 | ✅ | T-1201 | 3 | apps/reviews/tests/test_reviews.py::TestSubmission::test_a_review_carries_rating_title_body_author_product_and_creation_time, apps/reviews/tests/test_reviews.py::TestSubmission::test_database_rejects_an_out_of_range_rating_even_bypassing_the_service (+1) |
+| FR-091 | ✅ | T-1201 | 1 | apps/reviews/tests/test_reviews.py::TestModeration::test_a_review_is_public_only_while_it_is_approved |
+| FR-092 | ✅ | T-1202 | 3 | apps/reviews/tests/test_reviews.py::TestVerifiedPurchase::test_a_delivered_order_makes_the_review_verified, apps/reviews/tests/test_reviews.py::TestVerifiedPurchase::test_an_undelivered_order_does_not_verify (+1) |
+| FR-093 | ✅ | T-1201 | 1 | apps/reviews/tests/test_reviews.py::TestSubmission::test_the_database_refuses_a_second_review_of_one_product_by_one_customer |
+| FR-094 | ✅ | T-1203 | 3 | apps/reviews/tests/test_reviews.py::TestAggregates::test_aggregate_fields_are_read_only_in_the_admin, apps/reviews/tests/test_reviews.py::TestAggregates::test_approving_updates_the_average_and_count (+1) |
+| FR-095 | ✅ | T-1204 | 2 | apps/reviews/tests/test_reviews.py::TestSubmission::test_html_in_a_review_is_stored_verbatim_and_escaped_on_render, apps/reviews/tests/test_reviews.py::TestSubmission::test_submission_is_rate_limited_per_customer |
+| FR-096 | ✅ | T-1205 | 7 | tests/integration/test_cms_manageable.py::TestAuthoredCopyIsStaffManageable::test_a_content_manager_edits_it_and_the_storefront_serves_the_change, tests/integration/test_cms_manageable.py::TestAuthoredCopyIsStaffManageable::test_the_edited_hero_copy_reaches_the_rendered_page (+5) |
+| FR-097 | ✅ | T-1205 | 5 | tests/integration/test_cms_manageable.py::TestNavigationIsStaffManageable::test_a_content_manager_can_add_an_item_and_the_storefront_serves_it, tests/integration/test_cms_manageable.py::TestNavigationIsStaffManageable::test_deactivating_an_item_withdraws_it_from_the_storefront (+3) |
 | FR-098 | ✅ | T-1206 | 9 | tests/integration/test_content_forms.py::test_contact_message_is_stored, tests/integration/test_content_forms.py::test_contact_page_renders_the_real_post_form (+7) |
-| FR-099 | ❌ | T-1205 | 0 | — |
+| FR-099 | ✅ | T-1205 | 4 | tests/integration/test_cms_manageable.py::TestPresentationalLabelsStayInTheTemplates::test_home_sections_carry_copy_only, tests/integration/test_cms_manageable.py::TestPresentationalLabelsStayInTheTemplates::test_no_content_model_stores_a_layout_or_component_boundary (+2) |
 | FR-100 | ✅ | T-1301 | 2 | tests/test_backend_boundary.py::BackendStackTests::test_jazzmin_assets_never_load_on_the_storefront, tests/test_backend_boundary.py::BackendStackTests::test_jazzmin_is_admin_only_and_precedes_django_admin |
 | FR-101 | ✅ | T-1308 | 24 | apps/core/tests/test_dashboard.py::TestChangelistQueryBudgets::test_changelist_stays_within_budget, apps/core/tests/test_dashboard.py::TestChangelistQueryBudgets::test_every_registered_model_has_a_documented_budget (+22) |
 | FR-102 | ✅ | T-1308 | 24 | apps/core/tests/test_dashboard.py::TestChangelistQueryBudgets::test_changelist_stays_within_budget, apps/core/tests/test_dashboard.py::TestChangelistQueryBudgets::test_every_registered_model_has_a_documented_budget (+22) |
 | FR-103 | ✅ | T-1301 | 1 | tests/test_backend_boundary.py::BackendStackTests::test_jazzmin_assets_never_load_on_the_storefront |
 | FR-104 | ✅ | T-1302, T-1307, T-1309 | 19 | apps/core/tests/test_import_export.py::TestCouponImport::test_a_coupon_can_be_created_by_import, apps/core/tests/test_import_export.py::TestCouponImport::test_times_used_is_not_importable (+17) |
-| FR-105 | ❌ | T-1303, T-1304, T-1305 | 0 | — |
+| FR-105 | ✅ | T-1303, T-1304, T-1305 | 7 | tests/security/test_admin_readonly.py::TestLedgersAreReadOnly::test_a_posted_edit_to_a_stock_movement_is_refused, tests/security/test_admin_readonly.py::TestLedgersAreReadOnly::test_order_lines_have_no_admin_page_of_their_own (+5) |
 | FR-106 | ✅ | T-1310 | 24 | apps/core/tests/test_dashboard.py::TestChangelistQueryBudgets::test_changelist_stays_within_budget, apps/core/tests/test_dashboard.py::TestChangelistQueryBudgets::test_every_registered_model_has_a_documented_budget (+22) |
-| FR-107 | ❌ | T-1304 | 0 | — |
-| FR-108 | ❌ | T-1302 | 0 | — |
+| FR-107 | ✅ | T-1304 | 3 | tests/security/test_admin_readonly.py::TestBulkActionsReportPerObject::test_a_mixed_selection_names_every_object_that_failed, tests/security/test_admin_readonly.py::TestBulkActionsReportPerObject::test_a_wholly_invalid_selection_is_reported_rather_than_silent (+1) |
+| FR-108 | ✅ | T-1302 | 2 | tests/security/test_admin_readonly.py::TestProductCreationIsOneScreen::test_one_post_creates_the_product_and_all_five_children, tests/security/test_admin_readonly.py::TestProductCreationIsOneScreen::test_the_add_screen_carries_all_five_inline_formsets |
 | FR-109 | ✅ | T-0510 | 38 | apps/catalog/tests/test_archive_admin.py::TestAdminArchiveActions::test_an_ordered_product_can_still_be_archived_from_the_admin, apps/catalog/tests/test_archive_admin.py::TestAdminArchiveActions::test_archive_action_archives_and_audits (+36) |
-| FR-110 | ❌ | T-1401, T-1402 | 0 | — |
+| FR-110 | ✅ | T-1401, T-1402 | 1 | tests/security/test_permissions_matrix.py::TestTheMatrixItself::test_there_are_exactly_nine_roles |
 | FR-111 | ✅ | T-1403, T-1405 | 30 | apps/catalog/tests/test_archive_admin.py::TestAdminArchiveActions::test_an_ordered_product_can_still_be_archived_from_the_admin, apps/catalog/tests/test_archive_admin.py::TestAdminArchiveActions::test_archive_action_archives_and_audits (+28) |
-| FR-112 | ❌ | T-1306 | 0 | — |
+| FR-112 | ✅ | T-1306 | 6 | tests/security/test_admin_readonly.py::TestFinancialSurfacesAreRestricted::test_finance_does_hold_them, tests/security/test_admin_readonly.py::TestFinancialSurfacesAreRestricted::test_the_payment_changelist_refuses_them_over_http (+4) |
 | FR-113 | ✅ | T-0303, T-1406 | 41 | apps/audit/tests/test_signals.py::TestAuthenticationLogging::test_a_failed_login_for_an_unknown_address_is_still_logged, apps/audit/tests/test_signals.py::TestAuthenticationLogging::test_a_failed_login_is_logged (+39) |
-| FR-114 | ❌ | T-0303 | 0 | — |
-| FR-115 | ✅ | T-1407 | 22 | apps/audit/tests/test_signals.py::TestAuthenticationLogging::test_a_failed_login_for_an_unknown_address_is_still_logged, apps/audit/tests/test_signals.py::TestAuthenticationLogging::test_a_failed_login_is_logged (+20) |
-| FR-120 | ❌ | T-1501, T-1502, T-1503, T-1504 | 0 | — |
-| FR-121 | ❌ | T-1506 | 0 | — |
-| FR-122 | ❌ | T-1501 | 0 | — |
-| FR-123 | ❌ | T-1506 | 0 | — |
-| FR-124 | ❌ | T-1505 | 0 | — |
-| FR-130 | ❌ | T-0509, T-1601, T-1602, T-1603, T-1606, T-1608 | 0 | — |
-| FR-131 | ❌ | T-1601 | 0 | — |
-| FR-132 | ❌ | T-1604 | 0 | — |
-| FR-133 | ❌ | T-1607 | 0 | — |
-| FR-134 | ❌ | T-1604 | 0 | — |
+| FR-114 | ✅ | T-0303 | 8 | tests/security/test_admin_readonly.py::TestAuditRecordsAreImmutable::test_a_superuser_cannot_delete_through_the_admin, tests/security/test_admin_readonly.py::TestAuditRecordsAreImmutable::test_a_superuser_cannot_forge_a_new_row_through_the_admin (+6) |
+| FR-115 | ✅ | T-1407 | 1 | apps/audit/tests/test_signals.py::TestAuthenticationLogging::test_the_admin_login_is_logged_too |
+| FR-120 | ✅ | T-1501, T-1502, T-1503, T-1504 | 5 | tests/fixtures/test_seed_demo.py::TestFixtureValuesSurviveTheImport::test_a_second_import_leaves_every_value_identical, tests/fixtures/test_seed_demo.py::TestFixtureValuesSurviveTheImport::test_categories_and_collections_keep_their_arabic_names (+3) |
+| FR-121 | ✅ | T-1506 | 4 | tests/fixtures/test_seed_demo.py::TestRerunningIsSafeAndReported::test_a_first_run_reports_the_records_it_created, tests/fixtures/test_seed_demo.py::TestRerunningIsSafeAndReported::test_a_second_run_creates_no_new_rows (+2) |
+| FR-122 | ✅ | T-1501 | 4 | tests/fixtures/test_seed_demo.py::TestSeedingRefusesToTouchRealCommerce::test_a_refused_run_leaves_the_order_untouched, tests/fixtures/test_seed_demo.py::TestSeedingRefusesToTouchRealCommerce::test_force_overrides_the_refusal (+2) |
+| FR-123 | ✅ | T-1506 | 4 | tests/fixtures/test_seed_demo.py::TestDemoContentIsDistinguishable::test_a_fixture_not_marked_as_demonstration_is_refused, tests/fixtures/test_seed_demo.py::TestDemoContentIsDistinguishable::test_a_placeholder_price_cannot_be_quoted_as_a_real_one (+2) |
+| FR-124 | ✅ | T-1505 | 6 | tests/fixtures/test_seed_demo.py::TestMappingFollowsTheDocumentedMap::test_a_product_maps_field_by_field, tests/fixtures/test_seed_demo.py::TestMappingFollowsTheDocumentedMap::test_collection_membership_keeps_the_fixture_order (+4) |
+| FR-130 | ✅ | T-0509, T-1601, T-1602, T-1603, T-1606, T-1608 | 4 | tests/integration/test_context_keys.py::test_every_page_still_hands_the_templates_the_prototype_context_keys, tests/integration/test_context_keys.py::test_no_page_context_still_carries_the_fixture_payload (+2) |
+| FR-131 | ✅ | T-1601 | 4 | tests/test_route_contract.py::test_all_thirteen_public_routes_return_expected_status, tests/test_route_contract.py::test_collection_slug_stays_resolvable_and_renders (+2) |
+| FR-132 | ✅ | T-1604 | 5 | tests/integration/test_client_state_removal.py::TestTheClientSideStoreIsGone::test_no_shipped_script_touches_web_storage, tests/integration/test_client_state_removal.py::TestTheClientSideStoreIsGone::test_the_prototype_storage_key_appears_nowhere_that_ships (+3) |
+| FR-133 | ✅ | T-1607 | 3 | tests/test_template_hygiene.py::ShippedScriptTests::test_no_shipped_script_formats_currency_or_holds_a_commerce_constant, tests/test_template_hygiene.py::ShippedScriptTests::test_no_shipped_script_names_a_money_value (+1) |
+| FR-134 | ✅ | T-1604 | 5 | tests/integration/test_form_hardening.py::test_every_mutating_endpoint_refuses_a_get, tests/integration/test_form_hardening.py::test_every_post_form_carries_a_csrf_token (+3) |
 | FR-135 | 📄 | «phase» | 0 | specs/004-zakey-commerce-backend-admin/rollout-and-rollback.md |
-| FR-136 | ❌ | T-1607, T-1905 | 0 | — |
-
-## Problems
-
-- FR-001: no test proves it
-- FR-005: no test proves it
-- FR-006: no test proves it
-- FR-007: no test proves it
-- FR-010: no test proves it
-- FR-011: no test proves it
-- FR-012: no test proves it
-- FR-013: no test proves it
-- FR-015: no test proves it
-- FR-016: no test proves it
-- FR-017: no test proves it
-- FR-019: no test proves it
-- FR-022: no test proves it
-- FR-023: no test proves it
-- FR-025: no test proves it
-- FR-028: no test proves it
-- FR-031: no test proves it
-- FR-032: no test proves it
-- FR-034: no test proves it
-- FR-035: no test proves it
-- FR-036: no test proves it
-- FR-037: no test proves it
-- FR-038: no test proves it
-- FR-039: no test proves it
-- FR-041: no test proves it
-- FR-044: no test proves it
-- FR-046: no test proves it
-- FR-047: no test proves it
-- FR-048: no test proves it
-- FR-052: no test proves it
-- FR-055: no test proves it
-- FR-061: no test proves it
-- FR-062: no test proves it
-- FR-063: no test proves it
-- FR-065: no test proves it
-- FR-066: no test proves it
-- FR-069: no test proves it
-- FR-070: no test proves it
-- FR-071: no test proves it
-- FR-073: no test proves it
-- FR-075: no test proves it
-- FR-076: no test proves it
-- FR-079: no test proves it
-- FR-080: no test proves it
-- FR-081: no test proves it
-- FR-082: no test proves it
-- FR-083: no test proves it
-- FR-084: no test proves it
-- FR-085: no test proves it
-- FR-086: no test proves it
-- FR-090: no test proves it
-- FR-091: no test proves it
-- FR-092: no test proves it
-- FR-093: no test proves it
-- FR-094: no test proves it
-- FR-095: no test proves it
-- FR-096: no test proves it
-- FR-097: no test proves it
-- FR-099: no test proves it
-- FR-105: no test proves it
-- FR-107: no test proves it
-- FR-108: no test proves it
-- FR-110: no test proves it
-- FR-112: no test proves it
-- FR-114: no test proves it
-- FR-120: no test proves it
-- FR-121: no test proves it
-- FR-122: no test proves it
-- FR-123: no test proves it
-- FR-124: no test proves it
-- FR-130: no test proves it
-- FR-131: no test proves it
-- FR-132: no test proves it
-- FR-133: no test proves it
-- FR-134: no test proves it
-- FR-136: no test proves it
+| FR-136 | ✅ | T-1607, T-1905 | 1 | tests/e2e/no-js.spec.js |

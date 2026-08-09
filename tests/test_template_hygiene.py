@@ -115,3 +115,123 @@ class RenderedMarkupTests(SimpleTestCase):
                 self.assertEqual(
                     parsed.stray_text, [], f"{path} shows raw template syntax"
                 )
+
+
+JS_ROOTS = (
+    Path(settings.BASE_DIR) / "static" / "src" / "js",
+    Path(settings.BASE_DIR) / "static" / "dist" / "js",
+)
+
+_BLOCK_COMMENT = re.compile(r"/\*.*?\*/", re.S)
+
+
+def _executable_javascript(text: str) -> str:
+    """``text`` with its comments removed.
+
+    Every module in ``static/src/js`` opens with a block comment describing the
+    business rule it *used* to own — ``pages/checkout.js`` quotes the retired
+    VAT extraction verbatim, ``Math.round((total * vatRate) / (1 + vatRate))``.
+    Scanning raw source would therefore fail on the very documentation that
+    records the rule's removal. Only whole-line ``//`` comments are stripped, so
+    a ``https://`` inside a string is never mistaken for one.
+    """
+    without_blocks = _BLOCK_COMMENT.sub("", text)
+    return "\n".join(
+        line
+        for line in without_blocks.splitlines()
+        if not line.lstrip().startswith("//")
+    )
+
+
+class ShippedScriptTests(SimpleTestCase):
+    """No business rule survives in the browser (T-1607, FR-133).
+
+    This is a negative requirement, so the only honest proof is a scan: read
+    every script the storefront actually ships and show the arithmetic is not
+    there. The prototype priced the basket, applied the coupon, extracted VAT
+    and picked a shipping method client-side; the server owns all four now, and
+    a second implementation in JavaScript would not merely be redundant — it
+    would be the one the customer sees, and the one the customer can edit.
+
+    Deliberately *not* forbidden: ``shipping`` and ``payment``. Both appear as
+    the names of checkout steps and form fields. Naming a method is
+    presentation; choosing one, or pricing it, is a business rule.
+    """
+
+    #: Vocabulary a presentation-only script has no innocent use for. Matched
+    #: at the start of an identifier (case-insensitive) so ``vatRate`` is caught
+    #: while ``activate`` is not.
+    MONEY_WORDS = ("price", "subtotal", "total", "vat", "discount", "coupon", "amount")
+
+    #: The prototype rendered money through ``Intl.NumberFormat`` in cart.js,
+    #: checkout.js and wishlist.js (frontend-contract.md §1). A script that
+    #: formats currency is a script that produced a number.
+    FORMATTERS = ("Intl.NumberFormat", "toFixed", "formatCurrency", "formatMoney")
+
+    #: The commerce constants the prototype hard-coded in the browser: the VAT
+    #: rate, the free-shipping threshold, and the coupon rule's field names.
+    CONSTANTS = (
+        "0.14",
+        "1500",
+        "vatRate",
+        "freeShippingThreshold",
+        "discountRate",
+        "minimumSubtotal",
+    )
+
+    def _sources(self):
+        for root in JS_ROOTS:
+            for path in sorted(root.rglob("*.js")):
+                yield path, _executable_javascript(path.read_text(encoding="utf-8"))
+
+    def test_no_shipped_script_names_a_money_value(self):
+        """A script that cannot name a price cannot compute one."""
+        pattern = re.compile(
+            r"(?<![A-Za-z])(" + "|".join(self.MONEY_WORDS) + r")", re.IGNORECASE
+        )
+        offenders = []
+        for path, code in self._sources():
+            for match in pattern.finditer(code):
+                line = code[: match.start()].count("\n") + 1
+                offenders.append(
+                    f"{path.relative_to(settings.BASE_DIR)}:{line}: {match.group(0)}"
+                )
+        self.assertEqual(
+            offenders,
+            [],
+            "money vocabulary is back in shipped JavaScript; the server owns "
+            f"these numbers: {offenders}",
+        )
+
+    def test_no_shipped_script_formats_currency_or_holds_a_commerce_constant(self):
+        offenders = []
+        for path, code in self._sources():
+            for token in (*self.FORMATTERS, *self.CONSTANTS):
+                if token in code:
+                    offenders.append(f"{path.relative_to(settings.BASE_DIR)}: {token}")
+        self.assertEqual(
+            offenders,
+            [],
+            f"a shipped script prices or formats money again: {offenders}",
+        )
+
+    def test_the_browser_is_not_handed_the_inputs_a_business_rule_needs(self):
+        """The other half of the same guarantee.
+
+        Removing the arithmetic is not enough if the page still ships the
+        catalogue, the coupon rules and the VAT rate to the browser: the rule
+        could simply be rewritten. ``client_payload`` is the sole producer of
+        the ``#zakey-fixture`` payload (``base.html:23``), and its key set is
+        frozen to formatting metadata.
+        """
+        from apps.core.models import SiteSetting
+        from storefront.context import client_payload
+
+        payload = client_payload(SiteSetting())
+
+        self.assertEqual(
+            sorted(payload),
+            ["currency", "direction", "locale", "maxLineQuantity"],
+            "the client payload grew a key; anything beyond formatting metadata "
+            "hands a business rule back to the browser",
+        )

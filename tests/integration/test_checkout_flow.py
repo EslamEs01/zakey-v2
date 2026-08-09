@@ -301,3 +301,221 @@ def test_governorate_without_a_shipping_rate_is_refused(storefront):
 
     assert not Order.objects.exists()
     assert "لا توجد تسعيرة شحن لهذه المحافظة." in response.content.decode()
+
+
+# ---------------------------------------------------------------------------
+# Free shipping, installation and the terms control (FR-046, FR-062, FR-063)
+#
+# The seeded shipping and installation money is development placeholder data
+# (ASM-004, ASM-005) and the commercial figures are still an open business
+# decision (T-2006). Every amount the tests below write is therefore an
+# obviously fake number kept behind ``is_placeholder=True`` — enough to tell
+# "charged" from "free", and impossible to mistake for an approved price.
+# ---------------------------------------------------------------------------
+
+FAKE_RATE = Decimal("11.00")
+FAKE_INSTALLATION_FEE = Decimal("22.00")
+
+
+def _fake_free_over_threshold_method():
+    """The seeded free-shipping method, priced with a fake development rate.
+
+    Its seeded placeholder is 0.00, which would make "free" and "charged"
+    indistinguishable and the assertion below vacuous.
+    """
+    from apps.shipping.models import ShippingMethod, ShippingRate
+
+    method = ShippingMethod.objects.get(code="shipping-free")
+    assert method.free_over_threshold is True
+    ShippingRate.objects.filter(method=method).update(
+        price=FAKE_RATE, is_placeholder=True, is_active=True
+    )
+    return method
+
+
+def _set_threshold(amount: Decimal) -> Decimal:
+    from apps.core.models import SiteSetting
+
+    settings_obj = SiteSetting.objects.get_solo()
+    settings_obj.free_shipping_threshold = amount
+    settings_obj.save(update_fields=["free_shipping_threshold"])
+    return amount
+
+
+def test_free_shipping_applies_when_the_basket_reaches_the_configured_threshold(storefront):
+    """FR-046: at or above the configured threshold the customer pays no shipping."""
+    method = _fake_free_over_threshold_method()
+    variant = _stock_cart(storefront, 1)
+    threshold = _set_threshold((variant.price * Decimal("0.75")).quantize(Decimal("0.01")))
+
+    storefront.post(
+        reverse("storefront:checkout-submit"),
+        _fill(shippingMethod=method.code),
+        follow=True,
+    )
+
+    order = Order.objects.get()
+    assert order.subtotal >= threshold
+    assert order.discount_total == Decimal("0.00")
+    assert order.shipping_total == Decimal("0.00")
+
+
+def test_a_discount_that_drops_the_basket_below_the_threshold_restores_the_charge(storefront):
+    """FR-046: the threshold is tested against the subtotal *after* the discount.
+
+    The gross subtotal clears the threshold on its own here, so shipping can
+    only come back if the discount is subtracted first. Checking the gross
+    figure would give this cart free delivery it did not earn.
+    """
+    from apps.cart.models import Cart, CartStatus
+    from apps.promotions.models import Coupon, DiscountType
+
+    method = _fake_free_over_threshold_method()
+    variant = _stock_cart(storefront, 1)
+    threshold = _set_threshold((variant.price * Decimal("0.75")).quantize(Decimal("0.01")))
+
+    coupon = Coupon.objects.create(
+        code="FR046HALFOFF",
+        discount_type=DiscountType.PERCENTAGE,
+        value=Decimal("50.00"),
+        is_demo=True,
+    )
+    basket = Cart.objects.get(status=CartStatus.ACTIVE)
+    basket.coupon = coupon
+    basket.save(update_fields=["coupon", "updated_at"])
+
+    storefront.post(
+        reverse("storefront:checkout-submit"),
+        _fill(shippingMethod=method.code),
+        follow=True,
+    )
+
+    order = Order.objects.get()
+    assert order.subtotal >= threshold, "the gross subtotal alone would have qualified"
+    assert order.discount_total > Decimal("0.00")
+    assert order.subtotal - order.discount_total < threshold
+    assert order.shipping_total == FAKE_RATE
+
+
+def test_the_installation_fee_is_added_to_the_total_and_shown_as_a_summary_row(storefront):
+    """FR-062: the fee lands in the grand total and appears as its own row.
+
+    Two identical baskets are checked out, one asking for installation and one
+    not. The whole difference between the two totals is the fee, which is what
+    "added to the order total" has to mean; and the confirmation summary gains
+    one row rather than folding the money silently into another line.
+    """
+    from django.template.defaultfilters import floatformat
+    from django.test import Client
+
+    from apps.shipping.models import InstallationService
+
+    InstallationService.objects.filter(is_active=True).update(
+        fee=FAKE_INSTALLATION_FEE, is_placeholder=True
+    )
+
+    _stock_cart(storefront, 1)
+    storefront.post(
+        reverse("storefront:checkout-submit"),
+        _fill(installation="requested"),
+        follow=True,
+    )
+    with_installation = Order.objects.get()
+
+    plain_visitor = Client()
+    _stock_cart(plain_visitor, 1)
+    plain_visitor.post(
+        reverse("storefront:checkout-submit"),
+        _fill(idempotency_key="test-key-0002"),
+        follow=True,
+    )
+    without = Order.objects.exclude(pk=with_installation.pk).get()
+
+    assert with_installation.installation_requested is True
+    assert with_installation.installation_total == FAKE_INSTALLATION_FEE
+    assert without.installation_requested is False
+    assert without.installation_total == Decimal("0.00")
+    assert with_installation.subtotal == without.subtotal
+    assert (
+        with_installation.grand_total - without.grand_total == FAKE_INSTALLATION_FEE
+    ), "the fee must be added to the total, not absorbed by it"
+    # An order priced on unapproved development money says so (T-2006).
+    assert with_installation.used_placeholder_rates is True
+
+    body = storefront.get(
+        reverse("storefront:order-confirmation", kwargs={"number": with_installation.number})
+    ).content.decode()
+    assert (
+        f"<dt>التركيب</dt><dd>{floatformat(FAKE_INSTALLATION_FEE, 0)} ج.م</dd>" in body
+    ), "the summary must show installation as its own row"
+
+
+def test_the_acknowledgement_keeps_its_control_position_and_styling(storefront):
+    """FR-063: the same checkbox, in the same place, wearing the same classes.
+
+    The approved storefront is a protected surface: this requirement changes
+    the *meaning* of the control and its label, and nothing else. So the test
+    pins the parts that must not move — the element, its name, its id, its
+    classes and its position between the payment review and the confirm button
+    — rather than merely checking that some checkbox exists somewhere.
+    """
+    _stock_cart(storefront)
+    page = storefront.get(reverse("storefront:checkout")).content.decode()
+
+    assert 'class="checkout-check-row checkout-acknowledgement"' in page
+
+    start = page.index('<input type="checkbox" id="checkout-acknowledgement"')
+    control = page[start : page.index(">", start) + 1]
+    assert 'name="acknowledgement"' in control
+    assert 'value="accepted"' in control
+    assert "required" in control
+    assert 'aria-describedby="checkout-acknowledgement-error"' in control
+
+    assert (
+        page.index("data-review-payment")
+        < page.index('id="checkout-acknowledgement"')
+        < page.index("data-checkout-final")
+    ), "the control must stay between the payment review and the confirm button"
+
+
+def test_the_label_now_asks_for_terms_acceptance_rather_than_prototype_awareness(storefront):
+    """FR-063: the label is what changed — it asks for consent, not awareness.
+
+    The prototype's checkbox confirmed the visitor understood the demo was not
+    a shop ("أكد فهمك أن هذه واجهة تجريبية"). The button now creates a real
+    order, so the same control has to ask for something real.
+    """
+    _stock_cart(storefront)
+    page = storefront.get(reverse("storefront:checkout")).content.decode()
+
+    start = page.index('class="checkout-check-row checkout-acknowledgement"')
+    label = page[start : page.index("</label>", start)]
+
+    assert "أوافق على الشروط والأحكام" in label
+    assert "واجهة تجريبية" not in label
+    assert checkout_forms.REQUIRED_TERMS_MESSAGE == "أكد موافقتك على الشروط لإتمام الطلب."
+
+
+def test_accepting_the_terms_is_recorded_on_the_order(storefront):
+    """FR-063: acceptance is stored, not merely required.
+
+    A consent that leaves no trace cannot be produced later, when it is the
+    only thing that matters.
+    """
+    _stock_cart(storefront)
+    storefront.post(reverse("storefront:checkout-submit"), _fill(), follow=True)
+
+    order = Order.objects.get()
+    assert order.terms_accepted_at is not None
+    assert order.terms_accepted_at <= order.placed_at
+
+
+def test_an_order_cannot_be_placed_without_accepting_the_terms(storefront):
+    """FR-063: the box is a gate, and the refusal names the terms."""
+    _stock_cart(storefront)
+    response = storefront.post(
+        reverse("storefront:checkout-submit"), _fill(acknowledgement="")
+    )
+
+    assert not Order.objects.exists()
+    assert checkout_forms.REQUIRED_TERMS_MESSAGE in response.content.decode()

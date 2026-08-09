@@ -260,7 +260,7 @@
             <div><dt>المجموع الفرعي</dt><dd data-checkout-subtotal>{{ cart_totals.subtotal|floatformat:0 }} ج.م</dd></div>
             <div data-checkout-discount-row {% if not cart_totals.discount_total %}hidden{% endif %}><dt>الخصم</dt><dd data-checkout-discount>−{{ cart_totals.discount_total|floatformat:0 }} ج.م</dd></div>
             <div><dt>الشحن</dt><dd data-checkout-shipping>{% if cart_totals.free_shipping_qualified %}مجاني{% else %}يُحدد حسب الاختيار{% endif %}</dd></div>
-            <div><dt>منها ضريبة قيمة مضافة 14%</dt><dd data-checkout-vat>{{ cart_totals.vat_amount|floatformat:0 }} ج.م</dd></div>
+            <div><dt>منها ضريبة قيمة مضافة {% widthratio site.vatRate 1 100 %}%</dt><dd data-checkout-vat>{{ cart_totals.vat_amount|floatformat:0 }} ج.م</dd></div>
             <div class="checkout-summary__total"><dt>الإجمالي</dt><dd data-checkout-total>{{ cart_totals.grand_total|floatformat:0 }} ج.م</dd></div>
           </dl>
           <p class="checkout-summary__shipping-note" data-checkout-shipping-note>{% if not cart_totals.free_shipping_qualified %}أضف {{ cart_totals.remaining_for_free_shipping|floatformat:0 }} ج.م للحصول على شحن مجاني.{% endif %}</p>

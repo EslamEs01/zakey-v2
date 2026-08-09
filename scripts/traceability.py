@@ -108,7 +108,21 @@ def _nearest_task(heading_stack) -> str:
 
 
 def parse_test_evidence() -> dict[str, set[str]]:
-    """requirement -> {exact test node ids}, from docstrings, via AST."""
+    """requirement -> {exact test node ids}, from docstrings, via AST.
+
+    **The narrowest claim wins.** A module docstring naming a requirement speaks
+    for the whole file, which is right when the file is about that one thing and
+    wrong the moment it covers several: every test would be attributed to every
+    requirement the header lists, so a 26-test admin file claiming five
+    requirements would report "26 tests prove FR-105" and cite a bulk-action
+    test as the evidence. Inflated counts and mis-sampled evidence are how a
+    matrix stops describing the repository while still looking thorough.
+
+    So a module-level claim applies only to requirements that no class or
+    function inside that same file claims for itself. Nothing loses its mapping:
+    a requirement claimed narrowly keeps its own nodes, and one claimed only at
+    module level still covers the file.
+    """
     evidence: dict[str, set[str]] = {}
 
     for root in TEST_ROOTS:
@@ -121,8 +135,19 @@ def parse_test_evidence() -> dict[str, set[str]]:
                 tree = ast.parse(path.read_text(encoding="utf-8"))
             except SyntaxError:  # pragma: no cover
                 continue
+
+            nodes: list[tuple[str, set[str]]] = []
+            _walk(tree, rel, [], set(), nodes)
+
+            for node_id, reqs in nodes:
+                for req in reqs:
+                    evidence.setdefault(req, set()).add(node_id)
+
+            narrow = {req for _, reqs in nodes for req in reqs}
             module_reqs = set(REQ_RE.findall(ast.get_docstring(tree) or ""))
-            _walk(tree, rel, [], module_reqs, evidence)
+            for req in sorted(module_reqs - narrow):
+                for node_id, _ in nodes:
+                    evidence.setdefault(req, set()).add(node_id)
 
         # Playwright specs carry no AST we can walk; attribute at file level and
         # say so, rather than pretending to a precision we do not have.
@@ -134,18 +159,22 @@ def parse_test_evidence() -> dict[str, set[str]]:
     return evidence
 
 
-def _walk(node, rel: str, prefix: list[str], inherited: set[str], evidence: dict) -> None:
+def _walk(node, rel: str, prefix: list[str], inherited: set[str], out: list) -> None:
+    """Collect ``(node id, requirements claimed at or above it below module level)``.
+
+    ``inherited`` starts empty rather than at the module's claims, so the caller
+    can tell a requirement the file merely lists in its header from one a class
+    or function names for itself.
+    """
     for child in node.body:
         if isinstance(child, ast.ClassDef):
             reqs = inherited | set(REQ_RE.findall(ast.get_docstring(child) or ""))
-            _walk(child, rel, prefix + [child.name], reqs, evidence)
+            _walk(child, rel, prefix + [child.name], reqs, out)
         elif isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef)):
             if not child.name.startswith("test"):
                 continue
             reqs = inherited | set(REQ_RE.findall(ast.get_docstring(child) or ""))
-            node_id = "::".join([rel, *prefix, child.name])
-            for req in reqs:
-                evidence.setdefault(req, set()).add(node_id)
+            out.append(("::".join([rel, *prefix, child.name]), reqs))
 
 
 def known_test_nodes() -> set[str]:

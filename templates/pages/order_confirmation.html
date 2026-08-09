@@ -62,7 +62,7 @@
           {% if order.discount_total %}<div><dt>الخصم{% if order.coupon_code %} (<bdi lang="en">{{ order.coupon_code }}</bdi>){% endif %}</dt><dd>−{{ order.discount_total|floatformat:0 }} ج.م</dd></div>{% endif %}
           <div><dt>الشحن{% if order.shipping_method_label %} — {{ order.shipping_method_label }}{% endif %}</dt><dd>{% if order.shipping_total %}{{ order.shipping_total|floatformat:0 }} ج.م{% else %}مجاني{% endif %}</dd></div>
           {% if order.installation_requested %}<div><dt>التركيب</dt><dd>{{ order.installation_total|floatformat:0 }} ج.م</dd></div>{% endif %}
-          <div><dt>منها ضريبة قيمة مضافة 14%</dt><dd>{{ order.vat_amount|floatformat:0 }} ج.م</dd></div>
+          <div><dt>منها ضريبة قيمة مضافة {% widthratio site.vatRate 1 100 %}%</dt><dd>{{ order.vat_amount|floatformat:0 }} ج.م</dd></div>
           <div class="cart-summary__total"><dt>الإجمالي</dt><dd>{{ order.grand_total|floatformat:0 }} ج.م</dd></div>
         </dl>
         <p>حالة الطلب: <strong>{{ order.get_status_display }}</strong></p>

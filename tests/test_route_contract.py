@@ -77,8 +77,46 @@ ROUTE_EXPECTATIONS = (
     {"name": "storefront:error-500", "status": 500},
 )
 
+# The literal URL every route name must keep producing. ``reverse()`` returning
+# *something* only proves the name still exists: rename ``path("shop/")`` to
+# ``path("store/")`` and every reverse-based assertion in this file still
+# passes, while every bookmark, inbound link and indexed result breaks. The
+# URLs are half of what FR-131 protects, so they are frozen literally.
+FROZEN_URLS = {
+    "storefront:home": "/",
+    "storefront:shop": "/shop/",
+    "storefront:collection": "/collections/fingerprint-locks/",
+    "storefront:search": "/search/",
+    "storefront:product": "/products/zakey-apex-pro/",
+    "storefront:cart": "/cart/",
+    "storefront:checkout": "/checkout/",
+    "storefront:wishlist": "/wishlist/",
+    "storefront:account": "/account/",
+    "storefront:about": "/about/",
+    "storefront:contact": "/contact/",
+    "storefront:error-404": "/errors/404/",
+    "storefront:error-500": "/errors/500/",
+}
+
+
+def test_every_route_name_reverses_to_its_frozen_url():
+    """The name → URL mapping is itself the contract (FR-131).
+
+    No database and no rendering: this is purely "did the URL move?", which is
+    the question a reverse-and-fetch test cannot answer on its own.
+    """
+    assert set(FROZEN_URLS) == {expected["name"] for expected in ROUTE_EXPECTATIONS}, (
+        "the frozen URL table and the route table disagree about which routes exist"
+    )
+    for expected in ROUTE_EXPECTATIONS:
+        name = expected["name"]
+        assert reverse(name, kwargs=expected.get("kwargs")) == FROZEN_URLS[name], (
+            f"{name} no longer lives at {FROZEN_URLS[name]}"
+        )
+
 
 def test_all_thirteen_public_routes_return_expected_status(storefront):
+    """Every public route name still resolves and still answers identically (FR-131)."""
     client = storefront
     assert len(ROUTE_EXPECTATIONS) == 13
     for expected in ROUTE_EXPECTATIONS:
@@ -117,6 +155,7 @@ def test_fixture_counts_remain_frozen(fixture_payload):
     ],
 )
 def test_collection_slug_stays_resolvable_and_renders(storefront, fixture_payload, slug):
+    """A collection keeps its ``/collections/<slug>/`` URL and still renders (FR-131)."""
     _assert_slug_present(fixture_payload, "collections", slug)
     url = reverse("storefront:collection", kwargs={"slug": slug})
     assert url == f"/collections/{slug}/"
@@ -142,6 +181,7 @@ def test_collection_slug_stays_resolvable_and_renders(storefront, fixture_payloa
     ],
 )
 def test_product_slug_stays_resolvable_and_renders(storefront, fixture_payload, slug):
+    """A product keeps its ``/products/<slug>/`` URL and still renders (FR-131)."""
     _assert_slug_present(fixture_payload, "products", slug)
     url = reverse("storefront:product", kwargs={"slug": slug})
     assert url == f"/products/{slug}/"

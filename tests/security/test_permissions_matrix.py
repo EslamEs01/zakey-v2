@@ -34,6 +34,22 @@ OPERATIONS = ("view", "add", "change", "delete")
 #: Apps whose permissions no role is ever granted wholesale.
 PLUMBING = {"admin", "sessions", "contenttypes"}
 
+#: The nine role names the specification lists, spelled exactly as it spells
+#: them. Written out rather than derived from ``ROLES`` on purpose: deriving the
+#: expectation from the implementation would make the check pass however the
+#: groups were renamed.
+NINE_ROLES = (
+    "Super Administrator",
+    "Store Manager",
+    "Catalogue Manager",
+    "Inventory Manager",
+    "Order Fulfilment",
+    "Customer Service",
+    "Finance",
+    "Content Manager",
+    "Read-only Auditor",
+)
+
 #: Ledgers with no mutation path in the admin, for anybody (INV-013).
 APPEND_ONLY = {
     "audit.auditlog",
@@ -121,8 +137,18 @@ ROLE_MODEL_PAIRS = [
 
 class TestTheMatrixItself:
     def test_there_are_exactly_nine_roles(self, roles_installed):
-        assert len(ROLES) == 9
-        assert Group.objects.filter(name__in=ROLES).count() == 9
+        """FR-110: the nine named roles exist as Django groups, by name.
+
+        The count alone would survive a rename, and a renamed group is a role
+        nobody is assigned to — so the names are asserted, not just the total.
+        """
+        assert sorted(ROLES) == sorted(NINE_ROLES)
+
+        installed = set(Group.objects.values_list("name", flat=True))
+        assert set(NINE_ROLES) <= installed, (
+            f"missing role groups: {sorted(set(NINE_ROLES) - installed)}"
+        )
+        assert Group.objects.filter(name__in=NINE_ROLES).count() == 9
 
     def test_setup_roles_is_idempotent(self, roles_installed):
         from django.core.management import call_command

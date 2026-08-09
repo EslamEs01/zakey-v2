@@ -94,5 +94,5 @@ Each batch: implement → run the full preservation gate → Claude reviews the 
 - [ ] Backup taken **and restore rehearsed**
 - [ ] Staff roles assigned and verified
 - [ ] ⚠️ **Real shipping rates and installation fee entered** (T-2006, ASM-004/005) — placeholders must not reach customers
-- [ ] Rollback rehearsed
+- [x] Rollback rehearsed — `qa/rollback-rehearsal.md` (T-2003)
 - [ ] User has approved go-live

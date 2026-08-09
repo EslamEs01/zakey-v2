@@ -135,6 +135,11 @@ ADDRESS = {
 
 
 def test_customer_can_add_an_address(storefront, registered):
+    """FR-055: a customer manages their own address book over HTTP.
+
+    The first address becomes the default without being asked for one, because
+    a book with entries and no default has no shipping destination.
+    """
     _login(storefront)
     storefront.post(reverse("storefront:address-create"), ADDRESS, follow=True)
 
@@ -146,6 +151,7 @@ def test_customer_can_add_an_address(storefront, registered):
 
 
 def test_only_one_address_stays_default(storefront, registered):
+    """FR-055: promoting a new default demotes the old one — never two."""
     _login(storefront)
     storefront.post(reverse("storefront:address-create"), ADDRESS, follow=True)
     storefront.post(

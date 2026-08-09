@@ -18,6 +18,79 @@ npx playwright test ./tests/visual --grep contact --reporter=list
 
 ---
 
+## 0. Fresh re-verification (final-completion session)
+
+The comparison set was **re-discovered from scratch in a new session**, not
+carried over. Port 8000 was occupied by an unrelated project, so the suite was
+run against a private port; nothing else was varied.
+
+```
+npm run reset:dev
+ZAKEY_E2E_BASE_URL=http://127.0.0.1:8012 \
+ZAKEY_E2E_SERVER_COMMAND='uv run python manage.py runserver 127.0.0.1:8012 --noreload' \
+npx playwright test ./tests/visual --reporter=list
+
+7 failed
+  [chrome-1440] account   [chrome-1024] account   [chrome-768] account   [chrome-390] account
+  [chrome-1024] checkout  [chrome-768] checkout   [chrome-390] checkout
+89 passed (9.5m)
+```
+
+Identical to the set recorded in §2 below: `account` × 4 and `checkout` × 3.
+The contact regression stays fixed and the `search` @ 390 fix still holds.
+**No snapshot was updated in this session either** — `git status --short
+tests/visual/` is empty and all 52 tracked snapshots keep their pre-session
+timestamps.
+
+### These seven are the *only* thing failing the QA gate (T-1906)
+
+A complete `npm run qa` was run afterwards:
+
+```
+505 passed, 7 failed  ·  exit 1
+  [chrome-1440] account   [chrome-1024] account   [chrome-768] account   [chrome-390] account
+  [chrome-1024] checkout  [chrome-768] checkout   [chrome-390] checkout
+```
+
+Every other stage passed — build, `check:js`, `check:matrix`, e2e, accessibility,
+no-JS, `check:html`, `check:evidence` and `test:pages`. So **T-1906 needs nothing
+of its own**: approving or fixing these seven comparisons turns the gate green.
+
+### The 21 images that must be opened
+
+| # | route | vp | file |
+|---|---|---|---|
+| 1 | account | 1440 | `tests/visual/visual-regression.spec.js-snapshots/account-chrome-1440-linux.png` (expected) |
+| 2 | account | 1440 | `specs/003-zakey-frontend-reference-build/qa/playwright-results/visual-visual-regression-account-chrome-1440/account-actual.png` |
+| 3 | account | 1440 | `specs/003-zakey-frontend-reference-build/qa/playwright-results/visual-visual-regression-account-chrome-1440/account-diff.png` |
+| 4 | account | 1024 | `tests/visual/visual-regression.spec.js-snapshots/account-chrome-1024-linux.png` (expected) |
+| 5 | account | 1024 | `specs/003-zakey-frontend-reference-build/qa/playwright-results/visual-visual-regression-account-chrome-1024/account-actual.png` |
+| 6 | account | 1024 | `specs/003-zakey-frontend-reference-build/qa/playwright-results/visual-visual-regression-account-chrome-1024/account-diff.png` |
+| 7 | account | 768 | `tests/visual/visual-regression.spec.js-snapshots/account-chrome-768-linux.png` (expected) |
+| 8 | account | 768 | `specs/003-zakey-frontend-reference-build/qa/playwright-results/visual-visual-regression-account-chrome-768/account-actual.png` |
+| 9 | account | 768 | `specs/003-zakey-frontend-reference-build/qa/playwright-results/visual-visual-regression-account-chrome-768/account-diff.png` |
+| 10 | account | 390 | `tests/visual/visual-regression.spec.js-snapshots/account-chrome-390-linux.png` (expected) |
+| 11 | account | 390 | `specs/003-zakey-frontend-reference-build/qa/playwright-results/visual-visual-regression-account-chrome-390/account-actual.png` |
+| 12 | account | 390 | `specs/003-zakey-frontend-reference-build/qa/playwright-results/visual-visual-regression-account-chrome-390/account-diff.png` |
+| 13 | checkout | 1024 | `tests/visual/visual-regression.spec.js-snapshots/checkout-chrome-1024-linux.png` (expected) |
+| 14 | checkout | 1024 | `specs/003-zakey-frontend-reference-build/qa/playwright-results/visual-visual-regression-checkout-chrome-1024/checkout-actual.png` |
+| 15 | checkout | 1024 | `specs/003-zakey-frontend-reference-build/qa/playwright-results/visual-visual-regression-checkout-chrome-1024/checkout-diff.png` |
+| 16 | checkout | 768 | `tests/visual/visual-regression.spec.js-snapshots/checkout-chrome-768-linux.png` (expected) |
+| 17 | checkout | 768 | `specs/003-zakey-frontend-reference-build/qa/playwright-results/visual-visual-regression-checkout-chrome-768/checkout-actual.png` |
+| 18 | checkout | 768 | `specs/003-zakey-frontend-reference-build/qa/playwright-results/visual-visual-regression-checkout-chrome-768/checkout-diff.png` |
+| 19 | checkout | 390 | `tests/visual/visual-regression.spec.js-snapshots/checkout-chrome-390-linux.png` (expected) |
+| 20 | checkout | 390 | `specs/003-zakey-frontend-reference-build/qa/playwright-results/visual-visual-regression-checkout-chrome-390/checkout-actual.png` |
+| 21 | checkout | 390 | `specs/003-zakey-frontend-reference-build/qa/playwright-results/visual-visual-regression-checkout-chrome-390/checkout-diff.png` |
+
+All 21 files were confirmed present on disk. **Image viewing is unavailable in
+this session**: the `Read` tool reports *"No such tool available: Read. Read is
+disabled for this session, in subagents as well as here"*, and no other
+image-capable tool exists. Approval therefore remains impossible here, for the
+same reason as before — and the `contact` case in §1 is the standing proof that
+pixel counts and band analysis are not a substitute for looking.
+
+---
+
 ## 1. Resolved: `contact` × 4 viewports — GENUINE PRODUCT REGRESSION
 
 | field | value |

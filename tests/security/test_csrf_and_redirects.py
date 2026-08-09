@@ -126,6 +126,82 @@ class TestCsrfProtection:
 
 
 # ---------------------------------------------------------------------------
+# T-1701 — a mutation may only touch the requester's own basket (FR-039)
+# ---------------------------------------------------------------------------
+
+
+class TestCartAndWishlistMutationsAreScopedToTheRequester:
+    """A cart or wishlist mutation is authorised against the requesting session.
+
+    CSRF alone is not authorisation: a token proves the request came from our
+    page, not that it may touch *this* basket. Every mutation resolves the cart
+    from the session or the signed-in customer and never from an id in the body,
+    so one visitor's POST cannot reach another visitor's rows (FR-039).
+    """
+
+    def _variant(self):
+        from apps.catalog.models import Product
+
+        return Product.objects.get(slug="zakey-apex-pro").variants.first()
+
+    def test_a_stranger_cannot_remove_your_cart_line(self, storefront):
+        from apps.cart.models import CartLine
+
+        variant = self._variant()
+        storefront.post(
+            reverse("storefront:cart-add"),
+            {"variant": variant.pk, "quantity": 2},
+            follow=True,
+        )
+
+        stranger = Client()
+        stranger.post(reverse("storefront:cart-remove"), {"variant": variant.pk}, follow=True)
+
+        line = CartLine.objects.get()
+        assert line.variant_id == variant.pk, "another session emptied the basket"
+        assert line.quantity == 2
+
+    def test_a_stranger_cannot_change_your_quantity(self, storefront):
+        from apps.cart.models import CartLine
+
+        variant = self._variant()
+        storefront.post(
+            reverse("storefront:cart-add"),
+            {"variant": variant.pk, "quantity": 2},
+            follow=True,
+        )
+
+        stranger = Client()
+        stranger.post(
+            reverse("storefront:cart-update"),
+            {"variant": variant.pk, "quantity": 9},
+            follow=True,
+        )
+
+        assert CartLine.objects.get().quantity == 2, "another session repriced the basket"
+
+    def test_a_stranger_cannot_unsave_your_wishlist_product(self, storefront):
+        from apps.cart.models import Wishlist
+        from apps.catalog.models import Product
+
+        product = Product.objects.get(slug="zakey-apex-pro")
+        storefront.post(
+            reverse("storefront:wishlist-toggle"), {"product": product.pk}, follow=True
+        )
+        owner = Wishlist.objects.get()
+
+        stranger = Client()
+        stranger.post(
+            reverse("storefront:wishlist-toggle"), {"product": product.pk}, follow=True
+        )
+
+        assert owner.items.filter(product=product).exists(), (
+            "another session removed a saved product"
+        )
+        assert Wishlist.objects.count() == 2, "the stranger wrote into someone else's list"
+
+
+# ---------------------------------------------------------------------------
 # T-1704 — safe redirects (threat T-10)
 # ---------------------------------------------------------------------------
 

@@ -11,7 +11,9 @@ refuses a non-PostgreSQL backend outright.
 from __future__ import annotations
 
 import threading
+import time
 from decimal import Decimal
+from unittest import mock
 
 from django.db import connections, transaction
 from django.test import TransactionTestCase
@@ -22,7 +24,7 @@ from apps.cart.models import Cart, CartLine
 from apps.cart.services import add_to_cart
 from apps.catalog.models import Category, Product, ProductVariant
 from apps.core.models import PublicationStatus, SiteSetting
-from apps.inventory.models import StockItem
+from apps.inventory.models import StockItem, StockMovement, StockReservation
 from apps.orders.models import Order
 from apps.orders.services import create_order
 from apps.promotions.models import Coupon, DiscountType
@@ -343,3 +345,117 @@ class TestStockAdjustDuringCheckout(ConcurrencyBase):
         stock = StockItem.objects.get(variant=self.variant)
         assert stock.available >= 0, "available went negative (INV-001 violated)"
         assert stock.reserved <= stock.on_hand
+
+
+class TestCheckoutLocksTheStockRows(ConcurrencyBase):
+    """*Where* the reservation happens, not merely what it adds up to.
+
+    The oversell tests above prove the outcome is right. They would still pass
+    if the reservation were serialised by some other mechanism — an advisory
+    lock, a retry loop, luck. These two assert the mechanism itself: the
+    checkout takes ``SELECT … FOR UPDATE`` on the stock row, and it does so
+    inside the same transaction that writes the order.
+    """
+
+    def _checkout(self, cart, *, index: int, key: str):
+        return create_order(
+            cart=Cart.objects.get(pk=cart.pk),
+            email=f"buyer{index}@example.com",
+            phone="01012345678",
+            address_data=dict(ADDRESS),
+            idempotency_key=key,
+            terms_accepted=True,
+        )
+
+    def test_checkout_waits_for_a_lock_held_on_the_stock_row(self):
+        """FR-023: checkout blocks on the stock row's ``FOR UPDATE`` lock.
+
+        A second connection holds the row and does nothing else. If checkout
+        read the row without locking it, it would sail past; the assertion that
+        it is still running proves it queued behind the lock. The control
+        checkout immediately before it rules out the alternative explanation
+        that a checkout is simply slow.
+        """
+        StockItem.objects.create(variant=self.variant, on_hand=5, reserved=0)
+        control_cart = self.make_cart_with_one_unit(0)
+        blocked_cart = self.make_cart_with_one_unit(1)
+
+        started = time.monotonic()
+        self._checkout(control_cart, index=0, key="lock-control")
+        unblocked_seconds = time.monotonic() - started
+        assert unblocked_seconds < 2, (
+            f"an uncontended checkout took {unblocked_seconds:.1f}s; the block "
+            "measured below would prove nothing"
+        )
+
+        lock_taken = threading.Event()
+        may_release = threading.Event()
+
+        def hold_the_stock_row() -> None:
+            try:
+                with transaction.atomic():
+                    StockItem.objects.select_for_update().get(variant=self.variant)
+                    lock_taken.set()
+                    may_release.wait(timeout=30)
+            finally:
+                lock_taken.set()
+                connections.close_all()
+
+        holder = threading.Thread(target=hold_the_stock_row)
+        holder.start()
+        assert lock_taken.wait(timeout=10), "the holding thread never took the lock"
+
+        finished = threading.Event()
+        failures: list[BaseException] = []
+
+        def blocked_checkout() -> None:
+            try:
+                self._checkout(blocked_cart, index=1, key="lock-blocked")
+            except BaseException as exc:  # noqa: BLE001 - recorded, not swallowed
+                failures.append(exc)
+            finally:
+                finished.set()
+                connections.close_all()
+
+        buyer = threading.Thread(target=blocked_checkout)
+        buyer.start()
+        try:
+            assert not finished.wait(timeout=2), (
+                "checkout finished while another transaction held SELECT ... FOR "
+                "UPDATE on the stock row — it never locked the row"
+            )
+        finally:
+            may_release.set()
+            holder.join(timeout=30)
+
+        assert finished.wait(timeout=30), "checkout never resumed after the lock lifted"
+        buyer.join(timeout=30)
+        assert not failures, f"the blocked checkout failed: {failures}"
+
+        assert Order.objects.count() == 2
+        stock = StockItem.objects.get(variant=self.variant)
+        assert stock.reserved == 2
+
+    def test_a_failure_after_reserving_rolls_the_reservation_back(self):
+        """FR-023: the reservation is written inside the order transaction.
+
+        Reserving in its own transaction would look identical while everything
+        succeeds. Interrupting the checkout *after* the reservation is written
+        tells the two apart: if the hold survives a rolled-back order, the stock
+        is held for a customer who does not exist.
+        """
+        StockItem.objects.create(variant=self.variant, on_hand=5, reserved=0)
+        cart = self.make_cart_with_one_unit(0)
+
+        with mock.patch(
+            "apps.orders.services.OrderEvent.objects.create",
+            side_effect=RuntimeError("مقاطعة بعد الحجز"),
+        ):
+            with self.assertRaises(RuntimeError):
+                self._checkout(cart, index=0, key="rollback-1")
+
+        assert Order.objects.count() == 0, "the order survived its own failure"
+        assert StockReservation.objects.count() == 0, "the hold outlived the order"
+        assert StockMovement.objects.count() == 0, "a ledger row outlived the order"
+        stock = StockItem.objects.get(variant=self.variant)
+        assert (stock.on_hand, stock.reserved) == (5, 0)

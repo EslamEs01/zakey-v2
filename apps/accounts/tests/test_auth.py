@@ -12,6 +12,7 @@ from unittest.mock import patch  # noqa: F401 — kept for symmetry with future 
 import pytest
 from django.contrib.auth import get_user_model, password_validation  # noqa: F401
 from django.core import signing
+from django.db import IntegrityError, transaction
 from django.utils import timezone  # noqa: F401
 
 from apps.accounts import forms, services
@@ -106,6 +107,7 @@ def test_full_name_requires_arabic_and_min_length(name):
 
 
 def test_duplicate_email_is_rejected():
+    """FR-052: a second registration cannot claim an email already in use."""
     first = _form()
     assert first.is_valid(), first.errors.as_json()
     services.register(first)
@@ -120,6 +122,7 @@ def test_duplicate_email_is_rejected():
 
 
 def test_duplicate_verified_mobile_is_rejected(customer):
+    """FR-052: a mobile already verified on another profile cannot be reused."""
     # `customer`, not `user`: the rule guards a mobile already VERIFIED on a
     # profile, and the bare `user` fixture deliberately has no profile row.
     profile = customer
@@ -129,6 +132,38 @@ def test_duplicate_verified_mobile_is_rejected(customer):
     form = _form(email="fresh@example.com", mobile="01012345678")
     assert not form.is_valid()
     assert "mobile" in form.errors
+
+
+def test_email_uniqueness_is_enforced_by_the_database(user):
+    """FR-052: the email rule is a column constraint, not only form logic.
+
+    Form validation is bypassable — an import, a shell session, a data migration
+    — so the guarantee has to still hold one layer down.
+    """
+    with pytest.raises(IntegrityError):
+        with transaction.atomic():
+            User.objects.create_user(email=user.email, password="Another-Pass!123")
+
+
+def test_phone_uniqueness_binds_verified_customers_only(customer, other_customer):
+    """FR-052: the phone rule is *partial*, and both halves are asserted here.
+
+    Unverified duplicates are a data-entry reality and stay legal — two people
+    can mistype the same number. The moment a second profile claims that number
+    as *verified*, the database refuses, which is what makes a verified mobile
+    usable as an identity at all.
+    """
+    other_customer.phone = customer.phone
+    other_customer.save(update_fields=["phone", "updated_at"])
+    assert CustomerProfile.objects.filter(phone=customer.phone).count() == 2
+
+    customer.phone_verified = True
+    customer.save(update_fields=["phone_verified", "updated_at"])
+
+    other_customer.phone_verified = True
+    with pytest.raises(IntegrityError):
+        with transaction.atomic():
+            other_customer.save(update_fields=["phone_verified", "updated_at"])
 
 
 # ---------------------------------------------------------------------------

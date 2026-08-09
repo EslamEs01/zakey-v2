@@ -38,6 +38,12 @@ def expire(reservation) -> None:
 
 class TestTheSweep:
     def test_an_expired_reservation_is_released(self, variant, stock):
+        """The expiry arm of FR-025: a hold that ran out is given back.
+
+        The units return to the pool — ``reserved`` falls to zero — without any
+        of them being deducted, because nothing was ever shipped.
+        """
+        opening = stock.on_hand
         reservation = inventory_services.reserve(variant, 3)
         expire(reservation)
 
@@ -50,7 +56,9 @@ class TestTheSweep:
         # deliberate administrative act. The two must stay distinguishable in
         # the history.
         assert reservation.state == ReservationState.EXPIRED
-        assert StockItem.objects.get(pk=stock.pk).reserved == 0
+        swept = StockItem.objects.get(pk=stock.pk)
+        assert swept.reserved == 0
+        assert swept.on_hand == opening, "expiry deducted stock that never shipped"
 
     def test_a_live_reservation_is_left_alone(self, variant, stock):
         """Only *expired* holds may be swept."""

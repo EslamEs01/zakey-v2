@@ -61,8 +61,31 @@ class TestSubmission:
         assert review.status == ReviewStatus.PENDING
         assert not Review.objects.approved().filter(pk=review.pk).exists()
 
+    def test_a_review_carries_rating_title_body_author_product_and_creation_time(
+        self, product, customer
+    ):
+        """FR-090: every field the requirement names survives the round trip."""
+        review = services.submit_review(
+            product=product,
+            customer=customer,
+            author_name="ندى إبراهيم",
+            rating=4,
+            title="قفل ممتاز",
+            body="التركيب استغرق نصف ساعة والبصمة تعمل بدقة.",
+        )
+        review.refresh_from_db()
+
+        assert 1 <= review.rating <= 5
+        assert review.rating == 4
+        assert review.title == "قفل ممتاز"
+        assert review.body == "التركيب استغرق نصف ساعة والبصمة تعمل بدقة."
+        assert review.author_name == "ندى إبراهيم"
+        assert review.product_id == product.pk
+        assert review.created_at is not None
+
     @pytest.mark.parametrize("rating", [0, 6, -1, 99])
     def test_rating_outside_one_to_five_is_refused(self, product, customer, rating):
+        """FR-090: the rating a review carries is bounded to 1–5."""
         with pytest.raises(ValidationError):
             _submit(product, customer, rating=rating)
         assert not Review.objects.exists()
@@ -74,7 +97,7 @@ class TestSubmission:
     def test_database_rejects_an_out_of_range_rating_even_bypassing_the_service(
         self, product, customer
     ):
-        """The bound is a check constraint, not just a service rule."""
+        """The bound is a check constraint, not just a service rule (FR-090)."""
         with pytest.raises(IntegrityError), transaction.atomic():
             Review.objects.create(
                 product=product, customer=customer, author_name="x", rating=9, body="y"
@@ -90,10 +113,69 @@ class TestSubmission:
             _submit(product, customer)
         assert Review.objects.count() == 1
 
+    def test_the_database_refuses_a_second_review_of_one_product_by_one_customer(
+        self, product, customer
+    ):
+        """FR-093: the one-per-product rule is a database constraint.
+
+        The service refuses it first, so this writes straight to the table. The
+        rule has to survive an import, a shell session, or a second code path
+        that forgets to ask.
+        """
+        Review.objects.create(
+            product=product,
+            customer=customer,
+            author_name="ندى",
+            rating=5,
+            body="قفل ممتاز وسهل التركيب.",
+        )
+        with pytest.raises(IntegrityError), transaction.atomic():
+            Review.objects.create(
+                product=product,
+                customer=customer,
+                author_name="ندى",
+                rating=1,
+                body="رأي ثانٍ من نفس العميل.",
+            )
+
+    def test_submission_is_rate_limited_per_customer(self, category, customer):
+        """FR-095: review submission is rate-limited.
+
+        Spam is posted across *different* products, so the one-per-product rule
+        above does nothing against it; the ceiling that does is per customer per
+        window.
+        """
+        from django.utils import timezone
+
+        from apps.catalog.models import Product
+        from apps.core import ratelimit
+        from apps.core.models import PublicationStatus
+
+        limit, _ = ratelimit.LIMITS["review"]
+        targets = [
+            Product.objects.create(
+                slug=f"zakey-spam-target-{index}",
+                name=f"قفل تجريبي {index}",
+                category=category,
+                status=PublicationStatus.PUBLISHED,
+                published_at=timezone.now(),
+            )
+            for index in range(limit + 1)
+        ]
+
+        for target in targets[:limit]:
+            _submit(target, customer)
+
+        with pytest.raises(services.ReviewNotAllowed) as raised:
+            _submit(targets[limit], customer)
+
+        assert raised.value.messages == ["لقد أرسلت مراجعات كثيرة مؤخرًا؛ حاول لاحقًا."]
+        assert Review.objects.count() == limit, "the throttled review was still stored"
+
     def test_html_in_a_review_is_stored_verbatim_and_escaped_on_render(
         self, storefront, customer
     ):
-        """Storage keeps what was typed; the template escapes it.
+        """Storage keeps what was typed; the template escapes it (FR-095).
 
         Uses the *seeded* catalogue rather than the unit `product` fixture: both
         claim the slug `zakey-apex-pro`, and creating one on top of the other
@@ -125,6 +207,7 @@ class TestVerifiedPurchase:
         assert _submit(product, customer).is_verified_purchase is False
 
     def test_a_delivered_order_makes_the_review_verified(self, product, customer, variant):
+        """FR-092: a delivered order containing the product sets the flag."""
         _delivered_order(customer, variant)
         assert _submit(product, customer).is_verified_purchase is True
 
@@ -132,6 +215,7 @@ class TestVerifiedPurchase:
         "status", [OrderStatus.PENDING, OrderStatus.CONFIRMED, OrderStatus.SHIPPED]
     )
     def test_an_undelivered_order_does_not_verify(self, product, customer, variant, status):
+        """FR-092: *delivered*, not merely placed — goods still in transit prove nothing."""
         order = _delivered_order(customer, variant)
         Order.objects.filter(pk=order.pk).update(status=status)
         assert _submit(product, customer).is_verified_purchase is False
@@ -139,6 +223,7 @@ class TestVerifiedPurchase:
     def test_another_customers_order_does_not_verify(
         self, product, customer, other_customer, variant
     ):
+        """FR-092: the delivered order has to be the review author's own."""
         _delivered_order(other_customer, variant, number="ZK-THEIRS")
         assert _submit(product, customer).is_verified_purchase is False
 
@@ -163,6 +248,7 @@ class TestAggregates:
         assert product.rating_average == Decimal("0.00")
 
     def test_approving_updates_the_average_and_count(self, product, customer, other_customer):
+        """FR-094: the system maintains both aggregates from the approved set."""
         services.approve(_submit(product, customer, rating=5))
         services.approve(_submit(product, other_customer, rating=3))
 
@@ -171,6 +257,7 @@ class TestAggregates:
         assert product.rating_average == Decimal("4.00")
 
     def test_rejecting_removes_it_from_the_average(self, product, customer, other_customer):
+        """FR-094: the aggregates track moderation in both directions."""
         first = _submit(product, customer, rating=5)
         second = _submit(product, other_customer, rating=1)
         services.approve(first)
@@ -198,7 +285,11 @@ class TestAggregates:
         assert first == second
 
     def test_aggregate_fields_are_read_only_in_the_admin(self):
-        """A hand-typed average would misreport what customers actually said."""
+        """FR-094: never hand-edited.
+
+        A hand-typed average would misreport what customers actually said, so
+        the admin exposes both fields read-only.
+        """
         from django.contrib import admin
 
         from apps.catalog.models import Product
@@ -216,6 +307,35 @@ class TestAggregates:
 
 
 class TestModeration:
+    def test_a_review_is_public_only_while_it_is_approved(self, storefront, customer):
+        """FR-091: the three moderation states, and only one of them is public.
+
+        Walks one review through `pending` → `approved` → `rejected` and asks
+        the real product page each time, so "only approved reviews are public"
+        is asserted against what a visitor can actually read.
+        """
+        from django.urls import reverse
+
+        from apps.catalog.models import Product
+
+        assert set(ReviewStatus.values) == {"pending", "approved", "rejected"}
+
+        seeded = Product.objects.get(slug="zakey-apex-pro")
+        url = reverse("storefront:product", kwargs={"slug": seeded.slug})
+        body = "مراجعة تمر بالحالات الثلاث كلها."
+        review = _submit(seeded, customer, body=body)
+
+        assert review.status == ReviewStatus.PENDING
+        assert body not in storefront.get(url).content.decode()
+
+        services.approve(review)
+        assert review.status == ReviewStatus.APPROVED
+        assert body in storefront.get(url).content.decode()
+
+        services.reject(review)
+        assert review.status == ReviewStatus.REJECTED
+        assert body not in storefront.get(url).content.decode()
+
     def test_only_approved_reviews_reach_the_storefront(self, storefront, customer):
         from django.urls import reverse
 
