@@ -13,7 +13,8 @@
 </head>
 <body data-page="{{ page_id }}" data-state="{{ page_state }}">
   <a class="skip-link" href="#main-content">تخطي إلى المحتوى</a>
-  <noscript><p class="noscript-note">يمكنك تصفح الصفحات والمنتجات، ولتشغيل السلة والفلاتر والمفضلة يرجى تفعيل JavaScript.</p></noscript>
+  {# Shown only when scripting is off, so it never appears in a JS-enabled capture. Each language carries its own lang/dir so a screen reader switches voice and the Latin run is not mirrored by the RTL page (NFR-010, FR-136). #}
+  <noscript><p class="noscript-note"><span lang="ar" dir="rtl">جافاسكريبت مطلوب للعناصر التفاعلية في المتجر، مثل القوائم المنسدلة والنوافذ الحوارية. التصفح والشراء وإتمام الطلب تعمل بدونه.</span> <span lang="en" dir="ltr">JavaScript is required for interactive storefront features such as dropdown menus and dialogs. Browsing, shopping and checkout work without it.</span></p></noscript>
   {% include "partials/header.html" %}
   <main id="main-content" tabindex="-1">
     {% block content %}{% endblock %}

@@ -70,12 +70,35 @@ which is `📄` by design — a process artifact, not a gap.)
 | gate | result |
 |---|---|
 | `scripts/traceability.py --check` | **exit 0, 0 problems** |
-| two consecutive runs from equivalent state | **byte-identical**, md5 `18f0c205be6937fbbe90f18b69247139`, both exit 0 |
+| two consecutive runs from equivalent state | **byte-identical**, md5 `1e45217c0d7fa2b636c3f64e3cfef008`, both exit 0 |
 | `scripts/verify_traceability_nodes.py` | **every mapped node collectible** (checked against `pytest --collect-only`) |
 | orphans / false mappings | none — all 68 newly closed FRs reviewed personally; every one maps to a domain-correct file |
-| full Python suite (1,902 tests) | 1,900 pass; 2 pre-existing **wall-clock** tests (`test_home_p95`, `test_login_form_failure_wall_time_is_equalised`) fail under machine load and pass in isolation — neither file was touched this session, neither is in `npm run qa` |
+| full Python suite | **0 failures, 0 errors** on the post-divergence run (~1,975 tests). An earlier run under heavy machine load had flagged two pre-existing **wall-clock** tests (`test_home_p95`, `test_login_form_failure_wall_time_is_equalised`); both pass on a quiet machine and neither file was touched. |
 
-**T-1806 is closed.** Ledger now 140 checked / 3 open.
+**T-1806 is closed.** Ledger 140 checked / 3 open (T-1901, T-1906, T-2006).
+
+## Spec divergences — all five RESOLVED
+
+Reopened and closed against the *literal* specification. Detail in
+`qa/spec-divergences.md`.
+
+| # | requirement | mechanism | tests |
+|---|---|---|---|
+| 1 | FR-086 | expired/exhausted coupons use the existing rejection message | prior session |
+| 2 | FR-132 | client store removed; end state proven | prior session |
+| 3 | **FR-025** | `orders.services.release_reservations_after_payment_failure`, called from `mark_failed`; releases only when no attempt is still pending/authorised/captured | 14 + 2 concurrency |
+| 4 | **no-JS notice** | `templates/base.html` bilingual `<noscript>`, per-language `lang`/`dir` | 12 |
+| 5 | **FR-075** | `payments/migrations/0002` — PostgreSQL `CONSTRAINT TRIGGER` taking `SELECT … FOR UPDATE` on the payment before summing completed refunds | 14 + 2 concurrency |
+
+Key evidence: 10 concurrent direct writes of 200.00 against a 1000.00 capture
+resolve to **exactly 5 accepted / 5 refused / 1000.00 total**, with the refusals
+being `IntegrityError` from the trigger — the service is not in that path at all.
+Bypasses proven blocked: direct ORM create, `bulk_create`, raw SQL `INSERT`,
+`UPDATE`, and a parked `pending` refund completed after the cap is used up.
+
+**No visual snapshot was updated.** `<noscript>` content never renders in a
+scripted browser, and a test asserts the notice text appears nowhere outside the
+element.
 
 Narrative record: `qa/traceability-closure.md`. Divergences: `qa/spec-divergences.md`.
 

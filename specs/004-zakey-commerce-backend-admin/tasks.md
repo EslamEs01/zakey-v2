@@ -247,7 +247,7 @@ description: "Task list for ZAKEY commerce backend and staff administration"
 - [x] **T-1803** 100% of order and payment transitions exercised. → SC-005
 - [x] **T-1804** Query-count assertions on catalogue, detail and every admin changelist. → NFR-002, NFR-003
 - [x] **T-1805** Performance check against NFR-001 and NFR-004.
-- [x] **T-1806** Complete `traceability.md`: every FR → task → test, verified mechanically. → SC-014 — 122/122 claimed, 121 with test evidence, **0 problems**; two byte-identical `--check` runs; every mapped node verified collectible by `pytest --collect-only`. Record: `qa/traceability-closure.md`; divergences found: `qa/spec-divergences.md`.
+- [x] **T-1806** Complete `traceability.md`: every FR → task → test, verified mechanically. → SC-014 — 122/122 claimed, 121 with test evidence, **0 problems**; two byte-identical `--check` runs (md5 `1e45217c`), both exit 0; every mapped node verified collectible by `pytest --collect-only`. **All five spec divergences resolved** — the reservation hold is released on terminal payment failure, the refund cap is enforced by a PostgreSQL constraint trigger, and the no-JS notice is accurate and bilingual. (Requirement ids deliberately not repeated here: a task line naming one *claims* it, and these belong to their own phase tasks.) Records: `qa/traceability-closure.md`, `qa/spec-divergences.md`.
 
 ---
 

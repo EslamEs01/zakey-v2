@@ -98,19 +98,28 @@ Five things where the specification and the repository disagreed — recorded in
 |---|---|---|
 | 1 | FR-086 — coupon rejection message | resolved in code |
 | 2 | FR-132 — localStorage migration adapter | resolved by supersession |
-| 3 | FR-025 — release on payment failure | ⚠️ open — product decision |
-| 4 | `base.html` no-JS notice now understates the product | ⚠️ open — belongs to T-1901 |
-| 5 | FR-075 — refund cap has no database constraint | ⚠️ open — schema change |
+| 3 | FR-025 — release on payment failure | resolved in code |
+| 4 | `base.html` no-JS notice understated the product | resolved in the template |
+| 5 | FR-075 — refund cap had no database constraint | resolved by a constraint trigger |
 
-Three are deliberately left open. Two of those (25 and 75) are cases where an
-agent could have closed its gap by writing a test that names the requirement and
-proves something adjacent, and refused to. That refusal is the point of the
-exercise.
+Items 3–5 were first recorded as open, because closing them by writing a test
+that names the requirement and proves something *adjacent* would have been worse
+than leaving the gap visible. They were then resolved properly against the
+literal specification, which in every case already said what had to happen:
 
-**#5 deserves attention beyond this task.** The repository's stated philosophy
-is that load-bearing invariants are enforced by a database constraint rather
-than by convention, and `reserved <= on_hand` really is. The refund cap — the
-money-losing invariant — is enforced only by the service layer under a row lock.
+- **FR-025** — `inventory-integrity.md` §3 draws `active ──cancel / payment
+  fail──► released` explicitly. The subtlety was that `failed` is terminal *per
+  attempt*, so the release must wait until no attempt on the order is still
+  live. 16 new tests, including two concurrency races.
+- **FR-075** — the cap is now a PostgreSQL `CONSTRAINT TRIGGER` that takes
+  `SELECT ... FOR UPDATE` on the parent payment before summing, so the database
+  rather than the service is what cannot be raced. 16 new tests, every one of
+  them writing *around* the service.
+- **No-JS notice** — replaced with an accurate bilingual notice carrying per
+  language `lang`/`dir`. 12 new tests, one of which asserts the text appears
+  nowhere outside `<noscript>`, so no snapshot can be affected.
+
+Detail and evidence in `qa/spec-divergences.md`.
 
 ## 5. Verification
 
@@ -119,8 +128,9 @@ Four gates, all run after the last edit landed:
 | gate | result |
 |---|---|
 | `scripts/traceability.py --check` | **exit 0 · 0 problems** |
-| two consecutive runs from equivalent state | **byte-identical** — md5 `18f0c205be6937fbbe90f18b69247139`, both exit 0 |
-| `scripts/verify_traceability_nodes.py` | **777 mapped nodes, every one collectible** by `pytest --collect-only`, plus 1 Playwright spec |
+| two consecutive runs from equivalent state | **byte-identical** — md5 `1e45217c0d7fa2b636c3f64e3cfef008`, both exit 0 |
+| `scripts/verify_traceability_nodes.py` | every mapped node **collectible** by `pytest --collect-only` (1,021 collected), plus 1 Playwright spec |
+| focused regression set for the three divergences | ~1,450 tests, **0 failures** |
 | full Python suite (1,902 tests) | **1,900 pass**; 2 wall-clock tests are load-sensitive — see below |
 
 ### The two failures are load-sensitive, and that is stated rather than hidden
@@ -148,6 +158,21 @@ runner or a tolerance derived from a measured baseline rather than a constant.
 
 Recorded rather than quietly re-run until green, because "we re-ran it and it
 passed" is exactly how a real intermittent failure gets buried.
+
+### A trap in the matrix's own input: prose in a task line is a claim
+
+Recording the divergence fixes on the T-1806 task line — "…FR-025 releases the
+hold…, FR-075 is capped by…" — silently made **T-1806 a claimant of FR-025 and
+FR-075**, because `parse_task_claims` reads requirement ids out of task text.
+The matrix then said the traceability task owned two commerce requirements,
+which is false: they belong to T-0604 and T-1104.
+
+Caught by diffing the regenerated matrix against the committed one and reading
+every changed row, rather than by trusting that "0 problems" meant nothing had
+moved. The gate cannot detect this — a wrong claim is still a claim.
+
+The line now describes the fixes without naming the ids. **When annotating a
+task, do not mention a requirement you do not mean to claim.**
 
 ### A note for anyone repeating this with parallel agents
 

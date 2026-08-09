@@ -11,13 +11,20 @@ prevent.
 |---|---|---|
 | 1 | FR-086 — coupon rejection message | **resolved in code** |
 | 2 | FR-132 — localStorage migration adapter | **resolved by supersession** |
-| 3 | FR-025 — release on payment failure | ⚠️ **OPEN — product decision** |
-| 4 | `base.html` no-JS notice | ⚠️ **OPEN — belongs to T-1901** |
-| 5 | FR-075 — refund cap as a *database* constraint | ⚠️ **OPEN — schema change** |
+| 3 | FR-025 — release on payment failure | ✅ **RESOLVED in code** |
+| 4 | `base.html` no-JS notice | ✅ **RESOLVED in the template** |
+| 5 | FR-075 — refund cap as a *database* constraint | ✅ **RESOLVED by a constraint trigger** |
 
-Items 3–5 are deliberately left open: a product decision about oversell risk,
-storefront copy that should not move while seven visual comparisons are
-mid-approval, and a schema migration. None is mine to take unilaterally.
+**All five are now closed.** Items 3–5 were resolved against the *literal*
+specification rather than being treated as discretionary: in each case the
+requirement, the design documents, or both already said what had to happen, and
+the only thing missing was the implementation.
+
+| # | mechanism | direct tests |
+|---|---|---|
+| 3 | `orders.services.release_reservations_after_payment_failure`, called from `payments.services.mark_failed` | `apps/orders/tests/test_payment_failure_release.py` (14) · `tests/concurrency/test_refund_cap_and_release_races.py` (2) |
+| 4 | `templates/base.html` bilingual `<noscript>` notice | `tests/integration/test_noscript_notice.py` (12) |
+| 5 | `payments/migrations/0002_refund_cap_constraint_trigger.py` | `tests/security/test_refund_cap_database.py` (14) · `tests/concurrency/test_refund_cap_and_release_races.py` (2) |
 
 ---
 
@@ -81,7 +88,7 @@ the prototype key absent from source, bundle and templates, the adapter module
 really deleted, no basket or money serialised into `#zakey-fixture`, and the
 cart rendered server-side. It does not claim a migration path.
 
-## 3. FR-025 — ⚠️ OPEN, and a product decision
+## 3. FR-025 — RESOLVED: the hold is released when the order's payment terminally fails
 
 > Reservations MUST be released on **cancellation, payment failure or expiry**,
 > and converted to a deduction on fulfilment.
@@ -103,25 +110,67 @@ order or the TTL sweeper expires it.
 | fulfilment → deduction | yes | `…::test_fulfilment_converts_the_reservation_into_a_deduction` |
 | **payment failure** | **no** | **nothing — deliberately not faked** |
 
-**Why this was not simply "fixed".** Releasing on the first failed attempt would
-drop the customer's hold mid-retry: a mistyped card would hand their stock to
-someone else while they are still checking out. Whether a failed attempt should
-release immediately, release after N attempts, or rely on the TTL sweeper is a
-**product decision about customer experience and oversell risk**, not a defect
-with an obvious correct answer.
+### It was never a discretionary decision
 
-### What the owner of `apps/payments` must decide
+`inventory-integrity.md` §3 draws the edge explicitly:
 
-1. **`mark_failed` releases the reservation** — matches FR-025 literally; risks
-   losing the hold during a legitimate retry.
-2. **TTL expiry remains the only path** — matches today's code; amend FR-025 to
-   say so explicitly, e.g. *"…on cancellation or expiry; a failed payment
-   attempt leaves the reservation to the TTL sweeper."*
-3. **Release after a threshold** — a middle path, and new work.
+```
+        ┌────────┐  fulfil   ┌──────────┐
+        │ active │──────────►│ consumed │
+        └───┬────┘           └──────────┘
+            │ cancel / payment fail
+            ▼
+        ┌──────────┐
+        │ released │
+        └──────────┘
+```
 
-Until that is decided, FR-025's row in `traceability.md` is evidenced by tests
-covering three of its four triggers. That is stated here so the ✅ is not read
-as "all four are proven".
+So the design documents already required it. What made it *look* like a policy
+question is a real subtlety, and the implementation turns on getting that right
+rather than on choosing a preference.
+
+### Terminal for the order, not for one attempt
+
+`payment-state-machine.md` §2 makes `failed` terminal **per attempt** — a retry
+is a new `Payment` row, never a revived one. An order can therefore hold a failed
+attempt and a live one at the same time. Releasing on the first failure would
+take a customer's basket away while they are still paying.
+
+`release_reservations_after_payment_failure` (in `orders/services.py`) therefore
+releases only when **no** attempt on the order remains `pending`, `authorised`,
+`captured`, `partially_refunded` or `refunded`. That is the distinction between a
+retryable failure and a terminal one, read off the payment model rather than
+invented.
+
+| situation | behaviour | test |
+|---|---|---|
+| only attempt fails | released | `test_the_reservation_is_released_and_the_stock_comes_back` |
+| one fails, a retry is pending | **kept** | `test_a_failure_alongside_a_pending_retry_releases_nothing` |
+| the retry then fails too | released, once | `test_the_hold_ends_only_when_the_last_attempt_fails` |
+| part-captured, remainder declined | **kept** | `test_a_captured_payment_keeps_the_hold_even_if_a_later_attempt_fails` |
+| the same callback delivered 3× | released once | `test_a_duplicate_failure_callback_releases_nothing_the_second_time` |
+| two failures land simultaneously | released once | `test_two_simultaneous_failures_release_the_hold_once` |
+| the same callback ×4 concurrently | released once | `test_the_same_failure_callback_delivered_four_times_at_once_releases_once` |
+| another order holds stock | untouched | `test_it_cannot_release_another_order_s_reservation` |
+
+### Integrity properties
+
+* **Atomic** — one transaction, locking `Order` then `StockItem`, the same order
+  `transition()` uses, so the two cannot deadlock against each other.
+* **Idempotent** — `inventory.services.release` is a no-op on any reservation
+  that is not `active`; `mark_failed` also stops appending a duplicate
+  `failed` event on replay.
+* **Concurrency-safe** — `select_for_update` on the order serialises two
+  simultaneous failure callbacks.
+* **Scoped** — reservations are read through `locked.reservations`, so another
+  order's hold is unreachable by construction.
+* **Append-only** — every release goes through the inventory service, writing a
+  `StockMovement(release)` with before/after snapshots. `verify_stock_integrity`
+  reports no drift afterwards, which is asserted. No history is rewritten and no
+  balance is edited directly.
+
+All four FR-025 triggers — cancellation, **payment failure**, expiry, and
+conversion to a deduction on fulfilment — are now implemented and proven.
 
 ## 4. `templates/base.html` — customer-facing copy is now understating the product
 
@@ -137,17 +186,30 @@ product, seeing a server-rendered total, changing quantity, removing the line,
 sorting the catalogue and reaching checkout — all with `javaScriptEnabled:
 false`. The note tells customers a working feature is unavailable.
 
-**Deliberately not changed here.** It is storefront copy on every page, and the
-seven `account`/`checkout` visual comparisons in `qa/visual-approval-ledger.md`
-are still awaiting approval; editing shared chrome mid-approval would muddy that
-review for a defect that is cosmetic and outside T-1806's scope. It belongs to
-whoever closes T-1901.
+### Resolved: a bilingual notice that says the true thing
 
-Suggested replacement text, for whoever takes it:
+`templates/base.html` now carries:
 
-> يمكنك التسوق وإتمام طلبك بدون JavaScript؛ تفعيله يضيف تحسينات في التصفح فقط.
-> *("You can shop and complete your order without JavaScript; enabling it only
-> adds browsing enhancements.")*
+> <span lang="ar">جافاسكريبت مطلوب للعناصر التفاعلية في المتجر، مثل القوائم المنسدلة والنوافذ الحوارية. التصفح والشراء وإتمام الطلب تعمل بدونه.</span>
+> <span lang="en">JavaScript is required for interactive storefront features such as dropdown menus and dialogs. Browsing, shopping and checkout work without it.</span>
+
+* **Bilingual with per-language markup.** Each sentence is its own `<span>` with
+  `lang` and `dir`. Without `dir="ltr"` the English run is reordered by the RTL
+  page and its punctuation lands at the wrong end; without `lang` a screen reader
+  pronounces English with Arabic phonemes (NFR-010).
+* **The page direction is untouched** — `<html lang="ar-EG" dir="rtl">` is
+  asserted unchanged.
+* **The established design is untouched** — same `.noscript-note` class, same
+  CSS. A copy fix was not used as an excuse to restyle anything.
+* **Invisible in captures.** `<noscript>` content is not rendered when scripting
+  is on, and a test asserts neither "JavaScript" nor "جافاسكريبت" appears
+  anywhere *outside* the element — so a stray copy cannot leak into a snapshot.
+  **No visual snapshot was updated in this session.**
+* **No draft wording** — a test scans for `TODO`, `FIXME`, `XXX`, `Lorem`,
+  `placeholder` and Arabic filler.
+
+The specific falsehood is pinned so it cannot return: a test asserts the string
+"لتشغيل السلة والفلاتر والمفضلة يرجى تفعيل" is **absent**.
 
 ## 5. FR-075 — ⚠️ OPEN: the refund cap has no database constraint
 
@@ -179,13 +241,62 @@ service layer is the only thing standing between the shop and paying a customer
 twice. Any second code path that writes a `Refund` row — an import, a shell
 session, a future admin action, a repaired migration — bypasses the check.
 
-FR-075 is mapped to the tests that prove the normative core (the bound holds,
-and holds under contention) plus a new test asserting `refund_amount_positive`
-is enforced by PostgreSQL — which is a real part of the bound, because a
-negative refund row written behind the service would *raise* the refundable
-amount and let the next refund exceed the capture.
+### Resolved: a constraint trigger, and the lock inside it
 
-**Open task**: add the missing constraint (`apps/payments/models.py` + a
-migration), or amend FR-075 to say the cap is service-enforced under a row lock.
-Do not leave the code and the requirement disagreeing on something this
-expensive.
+`payments/migrations/0002_refund_cap_constraint_trigger.py` installs a
+`CONSTRAINT TRIGGER` on `payments_refund`, firing `AFTER INSERT OR UPDATE`,
+`DEFERRABLE INITIALLY IMMEDIATE`.
+
+**The lock is the load-bearing part, not the sum.** Under `READ COMMITTED` two
+concurrent transactions cannot see each other's uncommitted refunds, so both
+would compute the same stale total and both would pass. The trigger therefore
+takes `SELECT ... FOR UPDATE` on the parent payment *before* summing:
+
+```sql
+SELECT CASE WHEN p.state IN ('captured','partially_refunded','refunded')
+            THEN p.amount ELSE 0 END
+  INTO captured
+  FROM payments_payment p
+ WHERE p.id = NEW.payment_id
+   FOR UPDATE;
+```
+
+The second transaction blocks until the first commits, re-reads, and sees the
+money already returned. The database — not the service — is what cannot be raced.
+
+Encoding the state in the cap also gives the second half of FR-075's wording for
+free: "captured minus already-refunded" means a payment that never captured has
+nothing refundable, so a completed refund against a `pending` payment is refused
+by the database.
+
+### What is proven, and how it is bypassed on purpose
+
+Every test writes **around** `payments.services.refund`. A test that went through
+the service would only prove the service works, which was never in doubt.
+
+| bypass | result | test |
+|---|---|---|
+| direct `Refund.objects.create` | `IntegrityError` | `test_a_direct_orm_create_over_the_cap_is_refused` |
+| `bulk_create` (skips `save()`) | `IntegrityError` | `test_bulk_create_over_the_cap_is_refused` |
+| raw SQL `INSERT`, no Django in the path | `IntegrityError` | `test_raw_sql_over_the_cap_is_refused` |
+| `UPDATE` lifting an existing refund | `IntegrityError` | `test_an_update_that_lifts_a_refund_over_the_cap_is_refused` |
+| parking a `pending` refund, completing it later | `IntegrityError` | `test_flipping_a_pending_refund_to_completed_over_the_cap_is_refused` |
+| refund against an uncaptured payment | `IntegrityError` | `test_a_refund_against_an_uncaptured_payment_is_refused` |
+| ten concurrent direct writes, 200 each, 1000 captured | exactly 5 accepted, 5 refused, total 1000.00 | `test_concurrent_direct_writes_cannot_together_exceed_the_capture` |
+
+Valid behaviour is pinned too: partial refunds below the cap, refunding *exactly*
+the captured amount to the piastre, pending and failed refunds not consuming the
+cap, and two payments holding independent caps. The service still raises its
+readable `OverRefund` first — the trigger is the authority behind it, not a
+replacement for the friendly error.
+
+The migration is proven to run on a clean database by
+`test_the_migration_installed_a_constraint_trigger`, which reads `pg_trigger` in
+the freshly-migrated test database and asserts the trigger exists **and** is a
+constraint trigger.
+
+**SQLite is not a consideration here and was not allowed to become one.**
+`conftest.py` refuses to run the suite on anything but PostgreSQL (FR-002,
+NFR-005), so there is no environment in which this constraint is silently
+skipped — no `connection.vendor` guard, no conditional migration, no test that
+passes by not checking.

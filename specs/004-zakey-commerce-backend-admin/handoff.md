@@ -99,24 +99,33 @@ manager mocked; 32 tests, every failure path exercised. It found a real defect �
 `rollback()` never entered `ZAKEY_ROOT`, so `uv sync` and `collectstatic` ran in
 the operator's shell directory. Fixed. Record: `qa/rollback-rehearsal.md`.
 
-### Three things T-1806 found that are still open
+### Three things T-1806 found, since resolved
 
-Full detail in **`qa/spec-divergences.md`**. None was closed by writing a test
-that names the requirement and proves something adjacent.
+Full detail and evidence in **`qa/spec-divergences.md`**. Each was resolved
+against the literal specification rather than closed with a test that names the
+requirement and proves something adjacent.
 
-- **FR-025** — `mark_failed` never releases reservations, so the "payment
-  failure" trigger is unimplemented; three of four triggers are proven. Whether a
-  failed attempt should release immediately, after N attempts, or rely on the TTL
-  sweeper is a **product decision**.
-- **FR-075** — the refund cap has **no database constraint**, only the locked
-  service check. Given that this repository's stated philosophy is to enforce
-  load-bearing invariants in the schema (§2), the money-losing invariant being
-  application-only deserves a decision: add the constraint, or amend the
-  requirement.
-- **`templates/base.html`** — the no-JS notice tells customers the cart, filters
-  and wishlist need JavaScript. The strengthened no-JS suite now proves they do
-  not. Left for whoever closes T-1901, since it is shared chrome and seven visual
-  comparisons are mid-approval.
+- **FR-025 — a failed payment now releases the hold.** `inventory-integrity.md`
+  §3 always drew the edge (`active ──cancel / payment fail──► released`); it was
+  simply never wired up, so a declined card kept stock off the shelf until staff
+  noticed or the TTL swept it. The subtlety is that `failed` is terminal *per
+  attempt*, so the release waits until no attempt on the order is still pending,
+  authorised or captured — a retry keeps its basket. Atomic, idempotent under
+  duplicate callbacks, serialised by a lock on the order, scoped so it cannot
+  touch another order's stock, and recorded as a `StockMovement(release)`.
+- **FR-075 — the refund cap is now enforced by the database.** A
+  `CONSTRAINT TRIGGER` (`payments/migrations/0002`) takes
+  `SELECT ... FOR UPDATE` on the parent payment before summing completed
+  refunds, so two concurrent writers cannot both pass a stale total. Proven
+  against direct ORM writes, `bulk_create`, raw SQL, `UPDATE`, a parked pending
+  refund completed later, and ten concurrent threads. The money-losing invariant
+  now lives in the schema alongside `reserved <= on_hand`, as §2 always claimed.
+- **`templates/base.html` — the no-JS notice tells the truth.** It said the cart,
+  filters and wishlist needed JavaScript; the no-JS suite proves they do not. It
+  is now bilingual, with per-language `lang`/`dir`, and says scripting is needed
+  for the interactive layer only. `<noscript>` content never renders in a
+  scripted browser, and a test asserts the text appears nowhere outside the
+  element — **no visual snapshot was updated.**
 
 ## 6. The one external dependency
 

@@ -257,6 +257,90 @@ def transition(order: Order, target: str, *, actor=None, note: str = "") -> Orde
     return locked
 
 
+#: Payment states that still represent a live claim on the order's stock.
+#: ``pending``/``authorised`` mean another attempt is in flight; the captured
+#: family means money actually moved. While any of these exist, the *order* has
+#: not failed to pay, even though one attempt has.
+_LIVE_PAYMENT_STATES = frozenset()  # populated lazily to avoid an import cycle
+
+
+def _live_payment_states():
+    global _LIVE_PAYMENT_STATES
+    if not _LIVE_PAYMENT_STATES:
+        from apps.payments.models import PaymentState
+
+        _LIVE_PAYMENT_STATES = frozenset(
+            {
+                PaymentState.PENDING,
+                PaymentState.AUTHORISED,
+                PaymentState.CAPTURED,
+                PaymentState.PARTIALLY_REFUNDED,
+                PaymentState.REFUNDED,
+            }
+        )
+    return _LIVE_PAYMENT_STATES
+
+
+@transaction.atomic
+def release_reservations_after_payment_failure(order: Order, *, actor=None) -> int:
+    """Release an order's stock once its payment has terminally failed (FR-025).
+
+    ``inventory-integrity.md`` §3 draws this edge explicitly —
+    ``active ──cancel / payment fail──► released`` — so it is required
+    behaviour, not a discretionary policy.
+
+    **Terminal for the order, not merely for one attempt.** The payment machine
+    makes ``failed`` terminal *per attempt* (``payment-state-machine.md`` §2), so
+    a retry is a new ``Payment`` row rather than a revived one. An order may
+    therefore hold a failed attempt and a live one at the same time. Releasing on
+    the first failure would take a customer's stock away while they are still
+    paying — mid-retry, or after a duplicate callback for an attempt that was
+    already superseded. So the hold is released only when **no** attempt remains
+    pending, authorised or captured.
+
+    Safety properties, each relied on by a test:
+
+    * **Atomic** — one transaction; the order row is locked first, then the stock
+      rows via :func:`apps.inventory.services.release`, matching the
+      ``Order → StockItem`` order used by :func:`transition` so the two cannot
+      deadlock against each other.
+    * **Idempotent** — ``release`` is a no-op on any reservation that is not
+      ``active``, so duplicate callbacks and repeated ``mark_failed`` calls
+      release nothing the second time.
+    * **Concurrency-safe** — the ``select_for_update`` on the order serialises
+      two simultaneous failure callbacks; the loser re-reads the released state.
+    * **Scoped** — reservations are read through ``locked.reservations``, so this
+      can only ever touch stock held by *this* order.
+    * **Append-only** — every release goes through the inventory service, which
+      writes a ``StockMovement(release)``. No history is rewritten and no
+      balance is edited directly.
+
+    Returns the number of reservations released.
+    """
+    locked = Order.objects.select_for_update().get(pk=order.pk)
+
+    live = locked.payments.filter(state__in=_live_payment_states()).exists()
+    if live:
+        return 0
+
+    released = 0
+    for reservation in locked.reservations.filter(state=ReservationState.ACTIVE):
+        inventory_services.release(reservation, actor=actor)
+        released += 1
+
+    if released:
+        OrderEvent.objects.create(
+            order=locked,
+            event_type="stock_released",
+            from_status=locked.status,
+            to_status=locked.status,
+            actor=actor,
+            note=f"تحرير {released} حجزًا بعد فشل الدفع.",
+            request_id=get_request_id() or "",
+        )
+    return released
+
+
 def claimable_guest_orders(profile):
     """Guest orders that *could* be associated with ``profile`` (FR-059).
 

@@ -169,14 +169,33 @@ def capture(payment: Payment, *, reference: str = "", actor=None) -> Payment:
 
 @transaction.atomic
 def mark_failed(payment: Payment, *, reason: str, actor=None) -> Payment:
+    """Fail one attempt, and free the order's stock if nothing else is live.
+
+    FR-025 requires a reservation to be released on payment failure, and
+    ``inventory-integrity.md`` §3 draws that edge directly
+    (``active ──cancel / payment fail──► released``). The release is delegated to
+    :func:`apps.orders.services.release_reservations_after_payment_failure`,
+    which decides whether the *order* — not merely this attempt — has run out of
+    ways to pay, and which is idempotent under duplicate callbacks.
+    """
     locked = Payment.objects.select_for_update().get(pk=payment.pk)
+    already_failed = locked.state == PaymentState.FAILED
     _transition(locked, PaymentState.FAILED)
     locked.failed_reason = reason[:255]
     locked.save(update_fields=["state", "failed_reason", "updated_at"])
-    _record_event(locked, "failed", note=reason)
-    _audit(locked, "fail", actor, {"reason": reason})
+    if not already_failed:
+        # A replayed callback must not append a second identical event.
+        _record_event(locked, "failed", note=reason)
+        _audit(locked, "fail", actor, {"reason": reason})
     _sync_order(locked.order)
+    _release_stock_after_failure(locked.order, actor=actor)
     return locked
+
+
+def _release_stock_after_failure(order, *, actor=None) -> int:
+    from apps.orders.services import release_reservations_after_payment_failure
+
+    return release_reservations_after_payment_failure(order, actor=actor)
 
 
 @transaction.atomic
