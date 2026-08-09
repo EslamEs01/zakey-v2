@@ -48,16 +48,45 @@ def _guard_placeholder(is_placeholder: bool, what: str) -> None:
         )
 
 
-def available_methods(governorate: Governorate, area: ServiceArea | None):
-    """Methods offered for this destination (FR-047)."""
+class FulfillmentUnavailable(ValidationError):
+    """The destination or basket has no offered option — say so, never invent one."""
+
+
+def free_shipping_threshold() -> Decimal:
+    from apps.core.models import SiteSetting
+
+    return SiteSetting.objects.get_solo().free_shipping_threshold
+
+
+def available_methods(
+    governorate: Governorate,
+    area: ServiceArea | None,
+    discounted_subtotal: Decimal | None = None,
+):
+    """Methods offered for this destination and basket (FR-047, T-2006).
+
+    ``discounted_subtotal`` matters because of the approved launch policy: the
+    only shipping on offer is free-above-threshold, and a rate marked
+    ``free_threshold_only`` must not appear at all for a basket below the
+    threshold. Omitting the subtotal keeps the pre-launch behaviour of listing
+    everything, which is why every checkout caller passes it.
+    """
     methods = []
+    threshold = free_shipping_threshold()
+
     for method in ShippingMethod.objects.filter(is_active=True).order_by("position"):
         if method.requires_area_eligibility:
             if area is None or not area.same_day_eligible:
                 continue
-        if not ShippingRate.objects.filter(
+
+        rates = ShippingRate.objects.filter(
             method=method, is_active=True, zone__governorates=governorate
-        ).exists():
+        )
+        if discounted_subtotal is not None and discounted_subtotal < threshold:
+            # Below the threshold a free-only rate offers nothing, so the method
+            # is not on offer — as opposed to being on offer at zero.
+            rates = rates.filter(free_threshold_only=False)
+        if not rates.exists():
             continue
         methods.append(method)
     return methods
@@ -82,12 +111,21 @@ def quote_shipping(
         .first()
     )
     if rate is None:
-        raise ValidationError("لا توجد تسعيرة شحن لهذه المحافظة.")
+        raise FulfillmentUnavailable("لا توجد تسعيرة شحن لهذه المحافظة.")
 
-    from apps.core.models import SiteSetting
-
-    threshold = SiteSetting.objects.get_solo().free_shipping_threshold
+    threshold = free_shipping_threshold()
     free_applied = method.free_over_threshold and discounted_subtotal >= threshold
+
+    if rate.free_threshold_only and not free_applied:
+        # The approved launch policy offers no paid shipping at all. Refusing
+        # here — rather than quoting `rate.price`, which the constraint pins to
+        # zero — is what stops a below-threshold basket being silently shipped
+        # for nothing (T-2006).
+        raise FulfillmentUnavailable(
+            "الشحن المدفوع غير متاح حاليًا. "
+            f"الشحن مجاني للطلبات من {threshold:.0f} ج.م فأكثر."
+        )
+
     amount = ZERO if free_applied else quantize_money(rate.price)
 
     # A free quote costs nothing, so an unapproved rate cannot mislead anyone.

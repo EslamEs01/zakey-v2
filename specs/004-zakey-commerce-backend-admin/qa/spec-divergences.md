@@ -211,7 +211,7 @@ false`. The note tells customers a working feature is unavailable.
 The specific falsehood is pinned so it cannot return: a test asserts the string
 "لتشغيل السلة والفلاتر والمفضلة يرجى تفعيل" is **absent**.
 
-## 5. FR-075 — ⚠️ OPEN: the refund cap has no database constraint
+## 5. FR-075 — RESOLVED: the refund cap is now a database constraint
 
 > Refunds MUST NOT exceed captured minus already-refunded, enforced by a
 > **database constraint plus** a locked service check.

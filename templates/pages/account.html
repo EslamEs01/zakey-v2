@@ -208,7 +208,7 @@
       <div class="container">
         <h2 id="account-auth-title" class="sr-only">تسجيل الدخول أو إنشاء حساب</h2>
         <div class="account-auth-grid">
-          <form class="account-auth-card" method="post" action="{% url 'storefront:account-login' %}" data-login-form>
+          <form class="surface-card account-auth-card" method="post" action="{% url 'storefront:account-login' %}" data-login-form>
             {% csrf_token %}
             <h3>تسجيل الدخول</h3>
             <div class="field">
@@ -222,7 +222,7 @@
             <button class="btn btn--primary" type="submit">دخول</button>
           </form>
 
-          <form class="account-auth-card" method="post" action="{% url 'storefront:account-register' %}" data-register-form>
+          <form class="surface-card account-auth-card" method="post" action="{% url 'storefront:account-register' %}" data-register-form>
             {% csrf_token %}
             <h3>إنشاء حساب جديد</h3>
             <div class="field">
@@ -248,9 +248,31 @@
             <label class="checkout-check-row"><input type="checkbox" name="accepts_marketing" value="1"><span>أرغب في تلقي أخبار ZAKEY</span></label>
             <button class="btn btn--gold" type="submit">إنشاء الحساب</button>
           </form>
+
+          {% comment %}
+            Restored from the approved storefront (T-1901). Rewiring the account
+            page to real authentication dropped this card entirely, which lost
+            approved content and left the signed-out grid with an empty column.
+            The auth forms are the intended change; deleting the benefits card
+            was not. Markup and copy are the approved ones, verbatim.
+          {% endcomment %}
+          <div class="surface-card account-benefits">
+            <span class="account-benefits__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#zk-shield"></use></svg></span>
+            <h2 class="account-benefits__title">كل ما تحتاجه في حسابك</h2>
+            <ul class="account-benefits__list">
+              <li>متابعة حالة الطلبات ومراجعة تفاصيلها.</li>
+              <li>قائمة مفضلة تجمع المنتجات التي تهمك.</li>
+              <li>إدارة العناوين ووسائل الدفع بسهولة.</li>
+              <li>تحديث بيانات الحساب من مكان واحد.</li>
+            </ul>
+            <div class="account-benefits__actions">
+              <a class="btn btn--outline" href="{% url 'storefront:shop' %}">تصفّح المنتجات</a>
+              <a class="btn btn--ghost account-benefits__link" href="{% url 'storefront:wishlist' %}">المفضلة</a>
+            </div>
+          </div>
         </div>
         {% if reset_form %}
-          <form class="account-auth-card" method="post" action="{% url 'storefront:password-reset-confirm' reset_token %}" data-reset-form>
+          <form class="surface-card account-auth-card" method="post" action="{% url 'storefront:password-reset-confirm' reset_token %}" data-reset-form>
             {% csrf_token %}
             <h3>تعيين كلمة مرور جديدة</h3>
             <div class="field">
@@ -264,7 +286,7 @@
             <button class="btn btn--primary" type="submit">حفظ كلمة المرور</button>
           </form>
         {% else %}
-          <form class="account-auth-card" method="post" action="{% url 'storefront:password-reset-request' %}" data-forgot-form>
+          <form class="surface-card account-auth-card" method="post" action="{% url 'storefront:password-reset-request' %}" data-forgot-form>
             {% csrf_token %}
             <h3>نسيت كلمة المرور؟</h3>
             <div class="field">

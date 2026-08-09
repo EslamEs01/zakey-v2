@@ -378,6 +378,7 @@ def _checkout_context(request, *, form=None, step="shipping") -> dict:
         governorates=ctx.governorates(),
         service_eligibility=ctx.service_eligibility(),
         shipping_options=ctx.shipping_options(),
+        installation_offered=ctx.installation_offered(),
         payment_options=ctx.payment_options(),
         # One key per submission attempt. Replaying the same rendered page —
         # a double-click, a refresh, a flaky connection — carries the same key

@@ -131,6 +131,14 @@ class ShippingRate(TimeStampedModel):
         default=True,
         help_text="سعر تجريبي للتطوير فقط ولا يمثل سعرًا تجاريًا معتمدًا.",
     )
+    free_threshold_only = models.BooleanField(
+        "مجاني فوق الحد فقط",
+        default=False,
+        help_text=(
+            "لا تُعرض هذه الطريقة إلا عندما يبلغ إجمالي الطلب حد الشحن المجاني، "
+            "ولا يوجد سعر مدفوع تحت الحد. حالة الإطلاق المعتمدة."
+        ),
+    )
     is_active = models.BooleanField("مفعّل", default=True)
 
     class Meta:
@@ -144,6 +152,16 @@ class ShippingRate(TimeStampedModel):
             models.CheckConstraint(
                 condition=models.Q(price__gte=Decimal("0")),
                 name="shipping_rate_price_non_negative",
+            ),
+            # A free-above-threshold rate that also carries a price is a
+            # contradiction the launch policy must not be able to express: it
+            # would let a paid amount reappear below the threshold through a
+            # single careless admin edit.
+            models.CheckConstraint(
+                condition=(
+                    models.Q(free_threshold_only=False) | models.Q(price=Decimal("0"))
+                ),
+                name="free_threshold_only_rate_is_free",
             ),
         ]
 

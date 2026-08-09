@@ -244,6 +244,21 @@ def shipping_options() -> list[dict[str, Any]]:
     ]
 
 
+def installation_offered() -> bool:
+    """Is installation a service this shop currently offers at all? (T-2006)
+
+    A *capability* flag, not an eligibility check: the checkout form is rendered
+    before a governorate is chosen, so per-address eligibility cannot be known
+    yet. What can be known is whether any active service covers anywhere, which
+    is exactly what the approved launch state turns off.
+    """
+    from apps.shipping.models import InstallationService
+
+    return InstallationService.objects.filter(
+        is_active=True, governorates__isnull=False
+    ).exists()
+
+
 def payment_options() -> list[dict[str, Any]]:
     from apps.payments.models import PaymentMethod
 

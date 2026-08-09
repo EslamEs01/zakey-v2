@@ -626,7 +626,10 @@ class Command(BaseCommand):
         self.stdout.write(
             self.style.WARNING(
                 "Shipping and installation prices are DEVELOPMENT PLACEHOLDERS "
-                "(ASM-004/ASM-005) and are not commercially approved."
+                "(ASM-004/ASM-005) and are not commercially approved. "
+                "For a real deployment run `manage.py apply_launch_policy` to "
+                "apply the approved launch state (T-2006): free shipping at or "
+                "above the threshold, no paid shipping, installation disabled."
             )
         )
         self.stdout.write(

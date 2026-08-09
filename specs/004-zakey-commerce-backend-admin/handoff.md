@@ -127,19 +127,41 @@ requirement and proves something adjacent.
   scripted browser, and a test asserts the text appears nowhere outside the
   element — **no visual snapshot was updated.**
 
-## 6. The one external dependency
+## 6. The commercial launch policy (approved)
 
-ZAKEY cannot invent shipping rates or an installation fee. Still required from
-the business:
+The business decision is a **disabled-service launch**. This is a deliberate
+commercial state, not a set of placeholders left unfilled:
 
-1. **Shipping rates per zone**, for each active shipping method.
-2. **The installation fee**, and the governorates where installation is offered.
+| | |
+|---|---|
+| Currency | EGP |
+| VAT | 14%, extracted from gross |
+| Free shipping | eligible orders **at or above EGP 1,500** |
+| Paid shipping | **not offered at launch** — no method or zone rate below the threshold |
+| Installation | **disabled at launch** — no active fee, no eligible governorate |
+| Effective | the deployment date |
 
-Every technical safeguard around them is built and tested: development values
-are flagged `is_placeholder=True`; production refuses to quote a placeholder
-(`ZAKEY_ALLOW_PLACEHOLDER_RATES` defaults to `False`); `has_unapproved_rates()`
-is the launch gate; and approved values are entered in the admin with no code
-change. A free-over-threshold quote is exempt because zero misleads nobody.
+Applied by `manage.py apply_launch_policy`, which is idempotent and writes an
+`AuditLog` naming what it changed. It is deliberately **not** part of
+`zakey-deploy.sh`: once the business approves paid shipping, re-running a deploy
+must not silently withdraw it again.
+
+**What the state means for a customer.** A basket at or above EGP 1,500 is
+quoted free shipping. A basket below it is offered no shipping method at all and
+is told so — `FulfillmentUnavailable`, naming the threshold that would qualify.
+It is never quoted a made-up price, and never silently shipped for nothing:
+`ShippingRate.free_threshold_only` is checked before the stored price is used,
+and a database constraint stops that rate from ever carrying a non-zero price.
+Installation does not render on checkout while it is off, and a forced POST is
+refused server-side.
+
+**Turning either service on later** is an explicit, audited admin edit with an
+approved figure — entering a rate, activating it, and clearing
+`is_placeholder`. Production refuses to start while any *active* rate is still
+flagged as a development placeholder (`zakey.shipping.E001`), and warns when a
+paid rate becomes active (`zakey.shipping.W001`) so the change is visible in the
+deploy log rather than discovered from a customer complaint.
+`ZAKEY_ALLOW_PLACEHOLDER_RATES` still defaults to `False` in production.
 
 ## 7. First deployment — what the operator must do
 
@@ -152,8 +174,13 @@ change. A free-over-threshold quote is exempt because zero misleads nobody.
 4. Run `deploy/zakey-deploy.sh deploy`.
 5. `createsuperuser`, then assign every staff member exactly one of the nine
    roles.
-6. Enter the approved shipping and installation rates; confirm
-   `has_unapproved_rates()` is `False`.
+6. Apply the approved commercial launch policy —
+   `manage.py apply_launch_policy` — then confirm `has_unapproved_rates()` is
+   `False` and `check --deploy` is clean. This withdraws the seeded development
+   placeholders, leaves free shipping at or above EGP 1,500 as the only offered
+   method, and switches installation off. Run it **once**, at launch: it is not
+   part of `zakey-deploy.sh`, so a later deploy cannot silently withdraw paid
+   shipping after the business has approved it.
 7. Run `deploy/zakey-backup.sh`, then `deploy/zakey-restore-drill.sh` against
    that dump. A backup that has never been restored is a hypothesis.
 8. Install the cron schedule in `operations.md` §1.

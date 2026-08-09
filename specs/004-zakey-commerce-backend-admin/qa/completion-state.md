@@ -1,144 +1,85 @@
 # Final-completion session state (compaction-durable)
 
-Authoritative ledger: **143 total · 139 checked · 4 open** —
-T-1806, T-1901, T-1906, T-2006. (**T-2003 closed this session.**)
+Ledger: **143 total · 142 checked · 1 open** — only **T-1906**, the two
+consecutive green QA runs.
 
-## T-2003 — DONE
-
-`tests/deployment/test_rollback_rehearsal.py` — 32 tests green. Record in
-`qa/rollback-rehearsal.md`. Real scripts, real git releases A/B, real curl
-against a real health endpoint, real PostgreSQL scratch restore; `systemctl`
-and `uv` shimmed. **Found and fixed a real defect**: `rollback()` never entered
-`ZAKEY_ROOT`, so `uv sync` and `collectstatic` ran in the operator's cwd.
-
-Rebuild this picture at any time with:
+Rebuild this picture at any time:
 
 ```
-grep -c '^- \[x\]' specs/004-zakey-commerce-backend-admin/tasks.md   # 139
-grep -c '^- \[ \]' specs/004-zakey-commerce-backend-admin/tasks.md   #   4
-uv run python scripts/traceability.py --check                        # T-1806 gate
+grep -c '^- \[x\]' specs/004-zakey-commerce-backend-admin/tasks.md   # 142
+grep -c '^- \[ \]' specs/004-zakey-commerce-backend-admin/tasks.md   #   1
+uv run python scripts/traceability.py --check                        # exit 0
+npx playwright test ./tests/visual                                   # 96 passed
 ```
 
-## Blockers established this session (verified, not assumed)
+## Closed in earlier passes of this session
 
-| task | state | evidence |
-|---|---|---|
-| T-1901 | **BLOCKED — no image viewing** | the `Read` tool errors `No such tool available: Read. Read is disabled for this session, in subagents as well as here.` No other image-capable tool exists (ToolSearch returned only `ctx_overview`, `TaskList`, `WebFetch`). |
+* **T-2003** — rollback rehearsal, 32 tests. Real scripts, real git releases
+  A/B, real `curl` against a real health endpoint, real PostgreSQL scratch
+  restore; `systemctl` and `uv` shimmed. Found and fixed a real defect:
+  `rollback()` never entered `ZAKEY_ROOT`. Record: `qa/rollback-rehearsal.md`.
+* **T-1806** — traceability. 122 FRs · 122 claimed · 121 with evidence ·
+  **0 problems**; two byte-identical `--check` runs, exit 0 both; every mapped
+  node collectible. Records: `qa/traceability-closure.md`,
+  `qa/spec-divergences.md` (all five divergences resolved).
 
-**T-1901 integrity check:** `git status --short tests/visual/` is **empty**. All
-52 tracked snapshots still carry their pre-session timestamps (4–5 Aug). No
-snapshot was updated, individually or in bulk; `--update-snapshots` was never
-run. The comparison set was independently re-discovered this session and is
-identical: `account` × 4 and `checkout` × 3, 89 passed / 7 failed. The 21 exact
-PNG paths are tabulated in `qa/visual-approval-ledger.md` §0.
-| T-1906 | **BLOCKED by T-1901 — proven, not assumed** | a full `npm run qa` was run this session: **505 passed, 7 failed, exit 1**, and the 7 failures are *exactly* the 7 visual comparisons (`account` ×4, `checkout` ×3). Every other stage — build, `check:js`, `check:matrix`, e2e, accessibility, no-JS, `check:html`, `check:evidence`, `test:pages` — passed. The gate goes green the moment T-1901 closes; nothing else stands in its way. |
-| T-2006 | **BLOCKED — business input absent** | the session instruction carries the literal unfilled placeholder `[INSERT THE APPROVED SHIPPING AND INSTALLATION DECISION HERE]`, plus "Do not invent or infer any commercial value." No rate may be entered. |
+## T-1901 — closed: visual inspection, 96 passed / 0 failed
 
-### T-2006 — machinery verified ready, only the numbers are missing
+All 21 images opened and inspected through the Codex CLI's image input (Claude's
+own `Read` is disabled here). Record: `qa/visual-approval-record.md`.
 
-Re-checked this session, so that entering the values is the *only* remaining step:
+* **checkout ×3 — genuine product regression, fixed, baselines untouched.**
+  `.checkout-stepper-wrap` carries `padding-block: 42px 34px` = **exactly 76px**.
+  The stepper is correctly suppressed on an empty basket (its `aria-controls`
+  would dangle), but the padded wrapper still rendered, pushing the empty-state
+  card down by precisely 76px. The class is now applied only when there is a
+  stepper. All three pass against their **original** baselines.
+* **account ×4 — correct intentional production change, approved individually.**
+  The prototype's demo-only email card (`نسخة العرض`, `name@example.com`, "no
+  real authentication exists") replaced by real sign-in, registration and
+  password reset (FR-050/053/054).
+  * Found on the way: `.account-auth`, `.account-auth-grid`, `.account-auth-card`
+    had **no CSS at all** — source or build. Fixed by adopting `surface-card`
+    (the canonical card) plus layout-only rules.
+  * Also found: the approved **benefits card had been deleted**. Restored
+    verbatim from the approved storefront.
+  * Baselines replaced **one file at a time** with the exact reviewed bytes. No
+    blanket `--update-snapshots` was ever run.
+* Third defect, caught by `material-states`: Django `{# … #}` is **single-line
+  only**; multi-line comments rendered as visible text on two pages. Now
+  `{% comment %}`.
 
-- `apps/shipping/services.py::has_unapproved_rates()` is the launch gate — true
-  while any active `ShippingRate` or `InstallationService` is `is_placeholder`.
-- `ZAKEY_ALLOW_PLACEHOLDER_RATES` defaults to **False** in
-  `config/settings/production.py`, so production refuses to quote a placeholder.
-- `tests/security/test_commercial_rate_gate.py` (26 tests) covers the gate,
-  including FR-046/047/048 added this session — all using deliberately fake
-  development values.
+## T-2006 — closed: approved commercial launch policy applied
 
-**Still required from the business** (verbatim from `handoff.md` §6):
-1. **Shipping rates per zone**, for each active shipping method.
-2. **The installation fee**, and the governorates where installation is offered.
+A **disabled-service launch**, not unfilled placeholders: EGP · VAT 14% · free
+shipping at or above **EGP 1,500** · **no paid shipping** below it · installation
+**disabled** · effective on the deployment date.
 
-## T-1806 — traceability
+* `manage.py apply_launch_policy` — idempotent, `--dry-run`, writes an `AuditLog`
+  naming every change and the accountable staff member. **Deliberately not in
+  `zakey-deploy.sh`**: re-running a deploy must not silently withdraw paid
+  shipping once the business approves it.
+* `ShippingRate.free_threshold_only` + a `CheckConstraint` pinning such a rate to
+  price 0, so paid shipping cannot reappear below the threshold via one edit.
+* Below the threshold the customer is **refused, not invented for** —
+  `FulfillmentUnavailable` naming the qualifying amount; the method is not even
+  listed.
+* Installation does not render on checkout while off; a forced POST is refused.
+* `apps/shipping/checks.py` — `zakey.shipping.E001` fails production startup
+  while any *active* rate is a placeholder; `W001` warns when paid shipping goes
+  live. Tolerant of an unmigrated database.
+* `ZAKEY_ALLOW_PLACEHOLDER_RATES` still defaults **False** in production.
+* Tests: `tests/security/test_launch_policy.py`.
 
-Mechanism (from `scripts/traceability.py`): evidence is attributed by an **AST
-walk of test docstrings**. A requirement is proven when its ID appears in the
-docstring of a test module, class or function. Closing a gap therefore means
-naming the requirement in the docstring of a test that *actually asserts it*,
-or writing that test where none exists.
+## Open
 
-Baseline at session start: 122 FRs · 122 claimed · **53 with evidence** ·
-**68 problems** (all of form `FR-xxx: no test proves it`). The matrix header's
-"76" was stale.
+**T-1906** — two consecutive complete `npm run qa` runs, both exit 0:
 
-**Now: 122 claimed · 121 with evidence · 0 problems.** (122 − 121 = FR-135,
-which is `📄` by design — a process artifact, not a gap.)
+```
+ZAKEY_E2E_BASE_URL=http://127.0.0.1:8012 \
+ZAKEY_E2E_SERVER_COMMAND='uv run python manage.py runserver 127.0.0.1:8012 --noreload' \
+npm run qa
+```
 
-### T-1806 verification gates
-
-| gate | result |
-|---|---|
-| `scripts/traceability.py --check` | **exit 0, 0 problems** |
-| two consecutive runs from equivalent state | **byte-identical**, md5 `1e45217c0d7fa2b636c3f64e3cfef008`, both exit 0 |
-| `scripts/verify_traceability_nodes.py` | **every mapped node collectible** (checked against `pytest --collect-only`) |
-| orphans / false mappings | none — all 68 newly closed FRs reviewed personally; every one maps to a domain-correct file |
-| full Python suite | **0 failures, 0 errors** on the post-divergence run (~1,975 tests). An earlier run under heavy machine load had flagged two pre-existing **wall-clock** tests (`test_home_p95`, `test_login_form_failure_wall_time_is_equalised`); both pass on a quiet machine and neither file was touched. |
-
-**T-1806 is closed.** Ledger 140 checked / 3 open (T-1901, T-1906, T-2006).
-
-## Spec divergences — all five RESOLVED
-
-Reopened and closed against the *literal* specification. Detail in
-`qa/spec-divergences.md`.
-
-| # | requirement | mechanism | tests |
-|---|---|---|---|
-| 1 | FR-086 | expired/exhausted coupons use the existing rejection message | prior session |
-| 2 | FR-132 | client store removed; end state proven | prior session |
-| 3 | **FR-025** | `orders.services.release_reservations_after_payment_failure`, called from `mark_failed`; releases only when no attempt is still pending/authorised/captured | 14 + 2 concurrency |
-| 4 | **no-JS notice** | `templates/base.html` bilingual `<noscript>`, per-language `lang`/`dir` | 12 |
-| 5 | **FR-075** | `payments/migrations/0002` — PostgreSQL `CONSTRAINT TRIGGER` taking `SELECT … FOR UPDATE` on the payment before summing completed refunds | 14 + 2 concurrency |
-
-Key evidence: 10 concurrent direct writes of 200.00 against a 1000.00 capture
-resolve to **exactly 5 accepted / 5 refused / 1000.00 total**, with the refusals
-being `IntegrityError` from the trigger — the service is not in that path at all.
-Bypasses proven blocked: direct ORM create, `bulk_create`, raw SQL `INSERT`,
-`UPDATE`, and a parked `pending` refund completed after the cap is used up.
-
-**No visual snapshot was updated.** `<noscript>` content never renders in a
-scripted browser, and a test asserts the notice text appears nowhere outside the
-element.
-
-Narrative record: `qa/traceability-closure.md`. Divergences: `qa/spec-divergences.md`.
-
-Closed by 8 parallel agents over disjoint FR ranges with exclusive file
-ownership, then reviewed personally. New test files:
-`test_catalogue_rules`, `test_seed_demo`, `test_movement_reasons`,
-`test_returns_decision`, `test_addresses`, `test_provider_neutrality`,
-`test_coupons`, `test_coupon_rules`, `test_order_creation`,
-`test_order_snapshots`, `test_admin_readonly`, `test_cms_manageable`,
-`test_context_keys`, `test_form_hardening`, `test_client_state_removal`.
-
-### Two generator/precision fixes made this session
-
-1. **`scripts/traceability.py` — narrowest claim wins.** A module docstring
-   naming several requirements previously gave *every* test in the file to
-   *each* of them: `test_admin_readonly.py` reported 26 tests for FR-105, FR-107,
-   FR-108, FR-112 and FR-114 alike, and sampled evidence could cite a
-   bulk-action test as proof of a read-only rule. A module-level claim now
-   applies only to requirements no class or function in that file claims for
-   itself. FR-105 → 7, FR-107 → 3, FR-114 → 8. **No requirement lost its
-   mapping.**
-2. **`scripts/verify_traceability_nodes.py` (new)** — asks pytest itself, via
-   `--collect-only`, whether every mapped node ID is *collectible*, not merely
-   AST-visible. Node IDs need exactly one `-q`: none prints a tree, two collapses
-   to per-file counts, and `pyproject.toml`'s `addopts` already supplies one.
-3. **`scripts/audit_module_level_claims.py` (new)** — reports module-level
-   claims and whether narrower ones already cover them.
-
-### Divergences found — see `qa/spec-divergences.md`
-
-- **FR-086** resolved in code (expired/exhausted coupons now use the existing
-  rejection message; nothing referenced the two removed strings).
-- **FR-132** resolved by supersession (the adapter was removed in T-1608; no
-  browser holds `zakey:prototype:v1` to migrate).
-- **FR-025 is OPEN** — `mark_failed` never releases reservations, so the
-  "payment failure" trigger is unimplemented. Deliberately not faked and not
-  unilaterally "fixed": it is a product decision. Three of four triggers proven.
-
-## T-2003 — rollback rehearsal
-
-Isolated rehearsal only: temporary ZAKEY-only release directories, a scratch
-PostgreSQL database, real `deploy/` rollback logic, mocked service-manager
-boundary. No VPS, no real systemd, no production anything.
+Port 8000 is held by an unrelated project on this machine; the private port is
+the only reason those variables are set.

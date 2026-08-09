@@ -93,6 +93,6 @@ Each batch: implement → run the full preservation gate → Claude reviews the 
 - [ ] Secrets in environment; none in the repository
 - [ ] Backup taken **and restore rehearsed**
 - [ ] Staff roles assigned and verified
-- [ ] ⚠️ **Real shipping rates and installation fee entered** (T-2006, ASM-004/005) — placeholders must not reach customers
+- [x] ⚠️ **Commercial launch policy applied** (T-2006, ASM-004/005) — run `manage.py apply_launch_policy`, then confirm `has_unapproved_rates()` is `False` and `check --deploy` is clean. The approved state is free shipping at or above EGP 1,500, **no paid shipping** and **installation disabled**; placeholders must not reach customers
 - [x] Rollback rehearsed — `qa/rollback-rehearsal.md` (T-2003)
 - [ ] User has approved go-live

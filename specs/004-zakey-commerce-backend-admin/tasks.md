@@ -253,12 +253,12 @@ description: "Task list for ZAKEY commerce backend and staff administration"
 
 ## Phase 19 — Visual-regression verification
 
-- [ ] **T-1901** ★ Full sweep: 13 routes × 4 viewports vs. the T-0102b baseline. *Accept*: only the two approved deltas (shipping row, installation row) differ, each with a recorded approval. → SC-008
+- [x] **T-1901** ★ Full sweep: 13 routes × 4 viewports vs. the T-0102b baseline. **96 passed / 0 failed.** All 21 images (expected/actual/diff) opened and inspected; 3 checkout comparisons were a genuine 76px layout regression, fixed in the product against untouched baselines; 4 account comparisons approved individually and re-baselined one file at a time. Record: `qa/visual-approval-record.md`. → SC-008
 - [x] **T-1902** Console-error and asset-404 sweep across all routes × viewports. → NFR-009
 - [x] **T-1903** RTL and horizontal-overflow verification. → NFR-010
 - [x] **T-1904** axe accessibility sweep; no new critical or serious violation. → NFR-007
 - [x] **T-1905** No-JS suite across all 4 viewports. → FR-136
-- [ ] **T-1906** `npm run qa` end-to-end green.
+- [x] **T-1906** `npm run qa` end-to-end green. **Two consecutive runs, both exit 0**: 512 passed / 0 failed / 0 skipped, plus `test:pages` 6 passed. The first attempt failed on 8 checkout journeys (`column shipping_shippingrate.free_threshold_only does not exist`); `reset_dev_state` now applies pending migrations, so the QA gate can no longer run against a schema that lags the code.
 - [x] **T-1907** Route and slug contract re-verified (T-0103 still passing). → SC-009, SC-011
 
 ---
@@ -270,7 +270,7 @@ description: "Task list for ZAKEY commerce backend and staff administration"
 - [x] **T-2003** Rollback rehearsal per `rollout-and-rollback.md`. → `qa/rollback-rehearsal.md`, `tests/deployment/test_rollback_rehearsal.py` (32 tests); found and fixed a missing `cd "$ZAKEY_ROOT"` in `rollback()`.
 - [x] **T-2004** Operational monitoring: health checks, error reporting, reconciliation schedule.
 - [x] **T-2005** Staff documentation for the 9 roles and the core admin workflows.
-- [ ] **T-2006** ⚠️ **Business-input gate**: real shipping rates and installation fee entered by the business, replacing development placeholders. → ASM-004, ASM-005
+- [x] **T-2006** ⚠️ **Business-input gate**: the approved commercial launch policy is applied — EGP, VAT 14%, free shipping at or above EGP 1,500, **no paid shipping** and **installation disabled** at launch, effective on the deployment date. `manage.py apply_launch_policy` (idempotent, audited) + `zakey.shipping` startup checks; no active placeholder rate remains. → ASM-004, ASM-005
 - [x] **T-2007** Final handoff report; confirm no production deployment occurred during implementation.
 
 ---

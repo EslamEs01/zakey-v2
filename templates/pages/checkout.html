@@ -4,14 +4,19 @@
 
 {% block content %}
 <div class="checkout-page" data-checkout-root data-initial-step="{{ checkout_step }}" data-qa-state="{{ page_state }}" aria-busy="false">
-  <div class="container checkout-stepper-wrap">
+  {% comment %}
+    The stepper's buttons point at the step panels via aria-controls, and the
+    panels only exist when there is something to check out. Rendering it over
+    an empty basket left three aria-controls dangling — a critical
+    aria-valid-attr-value violation, and a control that does nothing.
+
+    `checkout-stepper-wrap` carries `padding-block: 42px 34px`, so leaving the
+    wrapper on an empty basket kept 76px of blank space where the stepper used
+    to be and pushed the empty-state card down by exactly that much (T-1901).
+    The heading stays either way: `checkout-main` is labelled by it.
+  {% endcomment %}
+  <div class="container{% if cart_lines %} checkout-stepper-wrap{% endif %}">
     <h1 class="sr-only" id="checkout-heading" tabindex="-1">إتمام الطلب</h1>
-    {% comment %}
-      The stepper's buttons point at the step panels via aria-controls, and the
-      panels only exist when there is something to check out. Rendering it over
-      an empty basket left three aria-controls dangling — a critical
-      aria-valid-attr-value violation, and a control that does nothing.
-    {% endcomment %}
     {% if cart_lines %}
     <ol class="checkout-stepper" aria-label="خطوات إتمام الطلب">
       <li data-checkout-step-item="shipping">
@@ -161,6 +166,13 @@
                 <p class="field-error" id="checkout-shippingMethod-error" data-shipping-error {% if not checkout_form.shippingMethod.errors %}hidden{% endif %}>{{ checkout_form.shippingMethod.errors.0 }}</p>
               </fieldset>
 
+              {% comment %}
+                Installation is a configured service. While it is switched off
+                (the approved launch state, T-2006) the control must not render
+                at all — an unselectable checkbox advertises a service the shop
+                cannot deliver. A forced POST is refused server-side too.
+              {% endcomment %}
+              {% if installation_offered %}
               <fieldset class="checkout-fieldset checkout-installation" data-installation-fieldset>
                 <legend>خدمة التركيب</legend>
                 <label class="checkout-check-row">
@@ -169,6 +181,7 @@
                 </label>
                 <p class="field-error" id="checkout-installation-error" {% if not checkout_form.installation.errors %}hidden{% endif %}>{{ checkout_form.installation.errors.0 }}</p>
               </fieldset>
+              {% endif %}
           </section>
 
           <section class="checkout-panel" id="checkout-panel-payment" data-checkout-panel="payment" data-payment-form aria-labelledby="payment-heading">

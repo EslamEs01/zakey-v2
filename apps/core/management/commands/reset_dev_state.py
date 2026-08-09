@@ -59,6 +59,9 @@ class Command(BaseCommand):
 
         dry_run = options.get("dry_run", False)
 
+        if not dry_run:
+            self._apply_pending_migrations()
+
         # Only reservations belonging to an order the automated suite placed.
         # A reservation with no order (a bare basket hold) is never QA-owned by
         # this definition, so it is left alone.
@@ -104,6 +107,36 @@ class Command(BaseCommand):
         self._report_availability()
 
     # -- guards -----------------------------------------------------------
+    def _apply_pending_migrations(self) -> None:
+        """Bring the development schema up to the code before anything reads it.
+
+        `npm run qa` calls this command and then drives a live server with
+        Playwright. If a migration has been written but not applied, the schema
+        lags the code and the first query touching a new column raises a 500 —
+        which surfaces as a failing end-to-end journey with no obvious link to
+        the real cause. That is exactly how an unapplied
+        `shipping.0002_launch_free_threshold_only` cost a QA run: eight checkout
+        journeys failed on `column ... does not exist`.
+
+        Safe every time: `migrate` is a no-op when nothing is pending, and
+        `_guard_environment` has already refused to run outside development.
+        """
+        from io import StringIO
+
+        from django.core.management import call_command
+
+        buffer = StringIO()
+        call_command("migrate", "--noinput", stdout=buffer, verbosity=1)
+        applied = [
+            line.strip()
+            for line in buffer.getvalue().splitlines()
+            if line.strip().startswith("Applying")
+        ]
+        if applied:
+            self.stdout.write(f"applied {len(applied)} pending migration(s):")
+            for line in applied:
+                self.stdout.write(f"  {line}")
+
     def _guard_environment(self) -> None:
         """Refuse anything that could plausibly be production."""
         if not settings.DEBUG:

@@ -1115,3 +1115,63 @@
     transition: none;
   }
 }
+
+/* Signed-out authentication surface (T-1606, FR-050/FR-053/FR-054).
+   The login, registration and password-reset forms shipped with the class names
+   `.account-auth`, `.account-auth-grid` and `.account-auth-card`, and not one of
+   them had a single rule anywhere in the stylesheet. They therefore rendered as
+   bare stacked blocks: no card, no border, no grid, full-bleed inputs, and a
+   page tall enough to push the footer roughly 450px down. Found by opening the
+   T-1901 comparison images; these restore the storefront's established card
+   treatment, using the same surface/line/radius tokens as every other panel. */
+.account-auth {
+  padding-block: 40px 64px;
+}
+
+.account-auth-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  align-items: start;
+  gap: 24px;
+}
+
+/* Surface, border, radius and shadow come from `.surface-card`, the storefront's
+   canonical card. Only layout is added here, so the auth cards cannot drift away
+   from every other card on the site. */
+.account-auth-card {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 28px;
+}
+
+.account-auth-card h3 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 22px;
+}
+
+.account-auth-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.account-auth-card .btn {
+  justify-self: start;
+}
+
+/* The reset and forgot forms sit after the grid, so they span the container. */
+.account-auth-card[data-forgot-form],
+.account-auth-card[data-reset-form] {
+  margin-block-start: 24px;
+}
+
+@media (max-width: 720px) {
+  .account-auth-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .account-auth-card {
+    padding: 20px;
+  }
+}

@@ -57,6 +57,27 @@ uv run python manage.py reconcile_payments
 carries demo data flagged `is_demo=True`. The deploy sequence above does not
 invoke it, and nothing else should.
 
+### The commercial launch policy — once, not every deploy
+
+```
+uv run python manage.py apply_launch_policy --dry-run    # report first
+uv run python manage.py apply_launch_policy --actor you@example.eg
+```
+
+Applies the approved launch state (T-2006): free shipping for eligible orders at
+or above EGP 1,500, **no paid shipping**, **installation disabled**. Idempotent,
+and it writes an `AuditLog` naming every change and the staff member accountable.
+
+It is deliberately **absent from the deploy sequence above**. Once the business
+approves a paid rate and staff enter it, a deploy that re-ran this command would
+silently withdraw it again — the failure would show up as customers being told
+shipping is unavailable, which is exactly the sort of thing nobody reports.
+
+After running it, `manage.py check --deploy` must be clean:
+`zakey.shipping.E001` fires while any *active* rate is still flagged as a
+development placeholder, and `zakey.shipping.W001` warns once a paid rate goes
+live so the change is visible in the deploy log.
+
 ## 3. First-run only
 
 ```bash
