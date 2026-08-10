@@ -280,7 +280,9 @@ JAZZMIN_SETTINGS = {
 
 JAZZMIN_UI_TWEAKS = {
     "theme": "flatly",
-    "dark_mode_theme": None,
+    # `dark_mode_theme` is deprecated and ignored by django-jazzmin 3.x, which
+    # logs a warning for it on every admin request. Themes carry light/dark
+    # themselves now, so the key is dropped rather than set.
     "navbar_small_text": False,
     "body_small_text": False,
 }
