@@ -60,6 +60,14 @@ LAUNCH_UNSAFE_FAQ_IDS = frozenset({"faq-unavailable", "faq-payment"})
 #: that and claim nothing about the rest of the shop.
 UNAVAILABLE_PAYMENT_NOTICE = "غير متاحة حاليًا."
 
+#: Site-wide banner while the demonstration catalogue is loaded. It names the
+#: one thing a visitor could otherwise be misled by — the prices — rather than
+#: claiming the shop does not work, which would be false: checkout is live.
+DEMO_CATALOGUE_NOTICE = (
+    "كتالوج عرض للمراجعة والتصميم. الأسعار والمواصفات المعروضة غير نهائية "
+    "ولا تمثل عرضًا تجاريًا معتمدًا."
+)
+
 
 class Command(BaseCommand):
     help = "Seed the operational launch baseline: no products, no reviews, no prototype notices."
@@ -78,6 +86,17 @@ class Command(BaseCommand):
             default="",
             help="Email of the staff member accountable, recorded on the launch-policy audit entry.",
         )
+        parser.add_argument(
+            "--with-demo-catalogue",
+            action="store_true",
+            help="Also import the fixture's products, collections, scenario cards and stock, "
+            "plus a notice saying the prices are not approved. For design review only.",
+        )
+        parser.add_argument(
+            "--without-demo-catalogue",
+            action="store_true",
+            help="Remove everything --with-demo-catalogue created and clear the notice.",
+        )
 
     def handle(self, *args, **options):
         from apps.content.models import HomeSection
@@ -85,17 +104,29 @@ class Command(BaseCommand):
         from .seed_demo import FIXTURE, Command as SeedCommand, Report
 
         dry_run: bool = options["dry_run"]
+        with_demo: bool = options["with_demo_catalogue"]
+        without_demo: bool = options["without_demo_catalogue"]
 
-        if HomeSection.objects.exists() and not options["force"]:
-            self.stdout.write(
-                self.style.SUCCESS("baseline already applied; nothing to do (--force to reapply)")
-            )
+        if with_demo and without_demo:
+            raise CommandError("--with-demo-catalogue and --without-demo-catalogue are exclusive.")
+
+        if without_demo:
+            self._remove_demo_catalogue(dry_run)
             return
 
         if not FIXTURE.is_file():
             raise CommandError(f"Fixture not found: {FIXTURE}")
 
-        data = self._sanitise(json.loads(FIXTURE.read_text(encoding="utf-8")))
+        seed_baseline = not HomeSection.objects.exists() or options["force"]
+        if not seed_baseline and not with_demo:
+            self.stdout.write(
+                self.style.SUCCESS("baseline already applied; nothing to do (--force to reapply)")
+            )
+            return
+
+        data = self._sanitise(
+            json.loads(FIXTURE.read_text(encoding="utf-8")), keep_catalogue=with_demo
+        )
 
         # The section methods are reused rather than reimplemented: they are the
         # ones the test suite exercises, and a second copy would drift.
@@ -108,16 +139,31 @@ class Command(BaseCommand):
 
         try:
             with transaction.atomic():
-                seeder._seed_settings(data)
-                seeder._seed_geography(data)
-                seeder._seed_shipping(data)
-                seeder._seed_payments(data)
-                seeder._seed_categories(data)
-                # Empty containers. `_seed_collections` skips product links whose
-                # product does not exist, which is every one of them here.
-                seeder._seed_collections(data)
-                seeder._seed_content(data)
+                # Order follows seed_demo.handle: products must exist before
+                # collections and cross-references can link to them, and the
+                # FAQs that cross-references attach to come from _seed_content.
+                if seed_baseline:
+                    seeder._seed_settings(data)
+                    seeder._seed_geography(data)
+                    seeder._seed_shipping(data)
+                    seeder._seed_payments(data)
+                    seeder._seed_categories(data)
+                if with_demo:
+                    seeder._seed_products(data)
+                # Without a demonstration catalogue these are empty containers:
+                # `_seed_collections` skips product links whose product does not
+                # exist, which is every one of them.
+                if seed_baseline or with_demo:
+                    seeder._seed_collections(data)
+                if with_demo:
+                    seeder._seed_reviews(data)
+                if seed_baseline:
+                    seeder._seed_content(data)
+                if with_demo:
+                    seeder._seed_cross_references(data)
+                    seeder._seed_stock(data)
                 self._normalise_payment_notices()
+                self._set_catalogue_notice(DEMO_CATALOGUE_NOTICE if with_demo else "")
                 if dry_run:
                     raise _DryRun()
         except _DryRun:
@@ -142,13 +188,73 @@ class Command(BaseCommand):
             self.stdout.write("")
             call_command("apply_launch_policy", actor=options.get("actor", ""))
 
-        self.stdout.write("")
-        self.stdout.write("products seeded        : 0 (catalogue is filled in the admin)")
-        self.stdout.write("reviews seeded         : 0")
-        self.stdout.write("prototype notices      : none written")
-        self.stdout.write(self.style.SUCCESS("launch baseline applied"))
+        self._report_state(with_demo)
 
-    def _sanitise(self, data: dict) -> dict:
+    def _report_state(self, with_demo: bool) -> None:
+        from apps.catalog.models import Product
+        from apps.reviews.models import Review
+
+        self.stdout.write("")
+        if not with_demo:
+            self.stdout.write("products seeded        : 0 (catalogue is filled in the admin)")
+            self.stdout.write("reviews seeded         : 0")
+            self.stdout.write("prototype notices      : none written")
+            self.stdout.write(self.style.SUCCESS("launch baseline applied"))
+            return
+
+        self.stdout.write(f"products seeded        : {Product.objects.count()} (DEMONSTRATION)")
+        self.stdout.write(f"scenario cards         : {Review.objects.count()}")
+        self.stdout.write("catalogue notice       : shown site-wide")
+        self.stdout.write(
+            self.style.WARNING(
+                "REVIEW STATE — these prices are not commercially approved. Keep the site "
+                "excluded from search engines while this is in force, and run "
+                "--without-demo-catalogue before the real catalogue goes in."
+            )
+        )
+
+    def _set_catalogue_notice(self, notice: str) -> None:
+        from apps.core.models import SiteSetting
+
+        row = SiteSetting.objects.get_solo()
+        if row.prototype_notice != notice:
+            row.prototype_notice = notice
+            row.save(update_fields=["prototype_notice", "updated_at"])
+
+    def _remove_demo_catalogue(self, dry_run: bool) -> None:
+        """Delete every row the demonstration catalogue created.
+
+        Refuses once real orders exist: an order line references its product, so
+        deleting the catalogue underneath it would either fail on the foreign key
+        or destroy the record of what was sold.
+        """
+        from apps.catalog.models import Product
+        from apps.orders.models import Order
+        from apps.reviews.models import Review
+
+        if Order.objects.exists():
+            raise CommandError(
+                f"Refusing to remove the catalogue: {Order.objects.count()} order(s) exist. "
+                "Retire the individual products in the admin instead."
+            )
+
+        self.stdout.write(f"products to delete : {Product.objects.count()}")
+        self.stdout.write(f"reviews to delete  : {Review.objects.count()}")
+
+        if dry_run:
+            self.stdout.write(self.style.WARNING("DRY RUN — nothing deleted."))
+            return
+
+        with transaction.atomic():
+            Review.objects.all().delete()
+            Product.objects.all().delete()
+            self._set_catalogue_notice("")
+
+        self.stdout.write("")
+        self.stdout.write("catalogue notice   : cleared")
+        self.stdout.write(self.style.SUCCESS("demonstration catalogue removed"))
+
+    def _sanitise(self, data: dict, *, keep_catalogue: bool = False) -> dict:
         """Strip every pre-launch claim from a copy of the fixture."""
         clean = copy.deepcopy(data)
         site = clean.setdefault("site", {})
@@ -183,14 +289,18 @@ class Command(BaseCommand):
         for option in clean.get("paymentOptions", []):
             option.pop("prototypeNotice", None)
 
-        # 6. Nothing below is read by the sections this command runs, but a
-        #    fixture copy carrying prototype commerce state invites a later
-        #    caller to reach for it.
-        for key in ("products", "reviews", "prototypeAccounts", "prototypeCarts",
-                    "prototypeWishlists", "couponPrototype"):
+        # 6. Prototype commerce state is never seeded, in either mode: those
+        #    rows are fabricated identities, baskets and order history.
+        for key in ("prototypeAccounts", "prototypeCarts", "prototypeWishlists",
+                    "couponPrototype"):
             clean.pop(key, None)
-        clean["products"] = []
-        clean["reviews"] = []
+
+        # 7. The catalogue itself. Kept only for a design review, where the
+        #    products ARE the thing being reviewed and the notice set by
+        #    `_set_catalogue_notice` tells visitors the prices are not final.
+        if not keep_catalogue:
+            clean["products"] = []
+            clean["reviews"] = []
 
         return clean
 

@@ -227,6 +227,18 @@ def shipping_options() -> list[dict[str, Any]]:
 
     Prices are **not** included here: the quote is computed server-side against
     the real basket and destination (FR-041), never picked in the browser.
+
+    Only methods that still have an active rate are offered. The approved launch
+    policy withdraws paid shipping by deactivating its *rates*, not its methods
+    (T-2006), so filtering on the method alone kept listing «شحن قياسي» and
+    «توصيل في اليوم نفسه» as selectable. `quote_shipping` refused them on submit,
+    so no customer could ever have been charged an unapproved rate — but the
+    form offered two choices that could only ever fail.
+
+    The filter is deliberately coarser than `available_methods`: a method with no
+    active rate anywhere cannot be quoted for any destination, so it can be
+    excluded before the customer has entered one. Destination and threshold
+    eligibility stay server-side, where the basket and address are known.
     """
     from apps.shipping.models import ShippingMethod
 
@@ -240,7 +252,9 @@ def shipping_options() -> list[dict[str, Any]]:
             "requiresAreaEligibility": method.requires_area_eligibility,
             "freeOverThreshold": method.free_over_threshold,
         }
-        for method in ShippingMethod.objects.filter(is_active=True)
+        for method in ShippingMethod.objects.filter(
+            is_active=True, rates__is_active=True
+        ).distinct()
     ]
 
 

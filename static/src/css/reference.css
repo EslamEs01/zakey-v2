@@ -51,9 +51,13 @@
 .reviewer { display: flex; align-items: center; gap: 12px; }
 .reviewer__avatar { width: 42px; height: 42px; display: grid; place-items: center; color: var(--navy); background: var(--gold); border-radius: 50%; font-weight: 700; }
 .partners { display: flex; flex-wrap: wrap; justify-content: center; gap: 32px 52px; color: #98a2b3; font-family: "Poppins", sans-serif; font-weight: 700; }
-.partner-mark { min-width: 180px; min-height: 72px; display: grid; place-items: center; gap: 4px; padding: 8px 14px; color: var(--navy); background: transparent; border: 0; border-radius: var(--radius); cursor: pointer; }
+.partner-mark { min-width: 200px; min-height: 104px; display: grid; place-items: center; gap: 8px; padding: 12px 16px; color: var(--navy); background: transparent; border: 0; border-radius: var(--radius); cursor: pointer; }
 .partner-mark:hover { background: var(--canvas); }
-.partner-mark img { width: 72px; height: 30px; object-fit: contain; }
+/* The marks ship at 180x64. They were painted at 72x30, which read as tiny
+   next to the section heading; 132x47 keeps the source aspect ratio and lets
+   the artwork carry the row. min-height above grows with them so the label
+   underneath is not crowded. */
+.partner-mark img { width: 132px; height: 47px; object-fit: contain; }
 .newsletter-card { padding: 56px; color: #fff; background: var(--navy); border-radius: 18px; text-align: center; }
 .newsletter-card h2 { margin: 0; font-size: 34px; }
 .newsletter-form { max-width: 560px; display: flex; gap: 8px; margin: 24px auto 0; }
