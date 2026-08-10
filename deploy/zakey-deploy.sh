@@ -58,20 +58,38 @@ deploy() {
   step "installing locked dependencies"
   run uv sync --frozen --no-dev
 
-  step "django checks"
-  run uv run python manage.py check --deploy --fail-level WARNING
-
   step "database migrations"
   run uv run python manage.py migrate --noinput
 
+  # Operational rows only: site constants, governorates, shipping/payment
+  # methods, taxonomy and page copy — no product, no review, no prototype
+  # notice. It also applies the approved launch policy, because the rates it
+  # writes are flagged is_placeholder and `check --deploy` (below) rejects
+  # those. A no-op once the baseline is present, so a redeploy never overwrites
+  # copy that staff have since edited in the admin.
+  #
+  # seed_demo is NEVER invoked here. It refuses when real orders exist, but the
+  # deploy path must not call it at all: its fixture is marked demonstration
+  # data and carries prototype notices and unapproved prices.
+  step "launch baseline"
+  run uv run python manage.py seed_production_baseline
+
+  # Runs AFTER migrate + baseline: the production checks read the database
+  # (zakey.shipping.E001/E002) and cannot pass against an unseeded one.
+  step "django checks"
+  run uv run python manage.py check --deploy --fail-level WARNING
+
+  # `--ignore=src` excludes the Tailwind SOURCE tree. Production uses
+  # ManifestStaticFilesStorage, which post-processes every collected CSS file
+  # and resolves its @import targets; `static/src/css/app.css` opens with
+  # `@import "tailwindcss"`, a bare package specifier that resolves to no file
+  # on disk, so collecting it aborts the deploy. Only `static/dist` is served.
   step "static files"
-  run uv run python manage.py collectstatic --noinput
+  run uv run python manage.py collectstatic --noinput --ignore=src
 
   step "reconciling the nine staff roles"
   run uv run python manage.py setup_roles
 
-  # seed_demo is NEVER invoked here. It refuses when real orders exist, but the
-  # deploy path must not call it at all.
   step "integrity verification"
   run uv run python manage.py verify_stock_integrity
   run uv run python manage.py reconcile_payments
@@ -100,7 +118,7 @@ rollback() {
   step "rolling back application code to ${revision}"
   run git -C "$ZAKEY_ROOT" checkout --detach "$revision"
   run uv sync --frozen --no-dev
-  run uv run python manage.py collectstatic --noinput
+  run uv run python manage.py collectstatic --noinput --ignore=src
   run systemctl restart "${ZAKEY_SERVICE}"
 
   step "health check"
