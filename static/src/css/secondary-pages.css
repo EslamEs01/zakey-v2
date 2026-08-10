@@ -1175,3 +1175,144 @@
     padding: 20px;
   }
 }
+
+/* ── Signed-in account area ────────────────────────────────────────────────
+   Scoped to `[data-account-mode="signed-in"]` throughout. The signed-out page
+   shares `.account-hero`, and its four snapshots are approved — so nothing here
+   is allowed to reach it.
+
+   The rest of this block is proportion, not decoration: the surface, radius and
+   type all come from tokens already in use. The one deliberate move is the
+   active key-line, below. */
+
+.account-page[data-account-mode="signed-in"] .account-hero {
+  padding-block: 34px 30px;
+}
+
+.account-page[data-account-mode="signed-in"] .account-workspace {
+  padding-block: 28px 40px;
+}
+
+/* The access plate. ZAKEY sells faceplates; the customer's initial gets one. */
+.account-profile__plate {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 14px;
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+  background: var(--navy);
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.account-profile__name {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.account-profile__meta {
+  font-size: 13px;
+  line-height: 1.7;
+  word-break: break-word;
+}
+
+/* The signature: an open lock reads as a gold line on the leading edge. The
+   navy fill already says "selected"; the key-line says which edge you entered
+   from, and survives the high-contrast and forced-colours cases where a
+   background fill alone can vanish. */
+.account-nav__item {
+  position: relative;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.account-nav__item[aria-current="page"]::before,
+.account-nav__item.is-active::before {
+  content: "";
+  position: absolute;
+  inset-block: 10px;
+  inset-inline-start: 0;
+  width: 3px;
+  background: var(--gold);
+  border-radius: 0 3px 3px 0;
+}
+
+.account-nav__item[aria-current="page"],
+.account-nav__item.is-active {
+  font-weight: 700;
+}
+
+.account-panel__title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+/* The empty state was 420px tall around one icon, two lines and a button. */
+.account-panel .state-panel.account-empty {
+  min-height: 0;
+  padding: 40px 24px;
+}
+
+.account-panel .account-empty .state-panel__icon {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 16px;
+  color: var(--gold);
+  background: var(--navy);
+  border-radius: 16px;
+}
+
+.account-panel .account-empty h2,
+.account-panel .account-empty h3 {
+  margin: 0 0 6px;
+  color: var(--navy);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.account-panel .account-empty p {
+  margin: 0 0 20px;
+  color: var(--muted);
+  max-width: 46ch;
+}
+
+@media (max-width: 820px) {
+  /* 820px is where `.account-layout` already collapses to one column, so the
+     menu becomes a full-height block above the content and reaching your orders
+     means scrolling past every section first.
+
+     A horizontally scrolling row was tried and rejected: it hid three of the six
+     destinations behind an edge that read as accidental clipping rather than as
+     an invitation to scroll. A two-column grid of chips shows every destination
+     at once, needs no affordance, and cannot clip. */
+  .account-page[data-account-mode="signed-in"] .account-side {
+    position: static;
+    min-width: 0;
+  }
+
+  .account-page[data-account-mode="signed-in"] .account-nav {
+    min-width: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .account-page[data-account-mode="signed-in"] .account-nav__item {
+    min-height: 46px;
+    padding-inline: 12px;
+  }
+
+  /* Sign out is not a peer of the five sections; it spans and stays last. */
+  .account-page[data-account-mode="signed-in"] .account-nav form {
+    grid-column: 1 / -1;
+  }
+
+  .account-page[data-account-mode="signed-in"] .account-signout {
+    width: 100%;
+    justify-content: center;
+  }
+}

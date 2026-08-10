@@ -45,32 +45,40 @@
       <div class="container">
         <h2 class="sr-only" id="account-workspace-title">لوحة الحساب</h2>
         <div class="account-layout">
-          <aside class="account-sidebar">
-            <div class="account-profile">
-              <h3 class="account-profile__name">{{ profile.full_name }}</h3>
+          <aside class="account-side">
+            <div class="surface-card account-profile">
+              {% comment %}
+                An access plate rather than an avatar: ZAKEY sells locks, and
+                customers have no profile photo to show. The initial sits on a
+                navy tile with a gold ring — the same pairing as the product
+                faceplates — so the column opens with an identity instead of a
+                bare email address floating above a menu.
+              {% endcomment %}
+              <span class="account-profile__plate" aria-hidden="true">{{ profile.full_name|default:user.email|slice:":1"|upper }}</span>
+              <h3 class="account-profile__name">{{ profile.full_name|default:user.email }}</h3>
               <p class="account-profile__meta"><bdi>{{ user.email }}</bdi></p>
-              <p class="account-profile__meta"><bdi dir="ltr">{{ profile.phone }}</bdi></p>
+              {% if profile.phone %}<p class="account-profile__meta"><bdi dir="ltr">{{ profile.phone }}</bdi></p>{% endif %}
             </div>
 
             <nav class="account-nav" data-account-tabs aria-label="أقسام الحساب">
-              <a class="account-nav__link{% if account_tab == 'orders' %} is-active{% endif %}" href="?tab=orders" data-account-tab-id="orders" data-account-panel="account-panel-orders" {% if account_tab == 'orders' %}aria-current="page"{% endif %}>
+              <a class="account-nav__item{% if account_tab == 'orders' %} is-active{% endif %}" href="?tab=orders" data-account-tab-id="orders" data-account-panel="account-panel-orders" {% if account_tab == 'orders' %}aria-current="page"{% endif %}>
                 <span class="account-nav__icon"><svg width="20" height="20" aria-hidden="true"><use href="#zk-package"></use></svg></span> الطلبات
               </a>
-              <a class="account-nav__link{% if account_tab == 'wishlist' %} is-active{% endif %}" href="?tab=wishlist" data-account-tab-id="wishlist" data-account-panel="account-panel-wishlist" {% if account_tab == 'wishlist' %}aria-current="page"{% endif %}>
+              <a class="account-nav__item{% if account_tab == 'wishlist' %} is-active{% endif %}" href="?tab=wishlist" data-account-tab-id="wishlist" data-account-panel="account-panel-wishlist" {% if account_tab == 'wishlist' %}aria-current="page"{% endif %}>
                 <span class="account-nav__icon">{% include "components/icon.html" with name="heart" %}</span> المفضلة
               </a>
-              <a class="account-nav__link{% if account_tab == 'addresses' %} is-active{% endif %}" href="?tab=addresses" data-account-tab-id="addresses" data-account-panel="account-panel-addresses" {% if account_tab == 'addresses' %}aria-current="page"{% endif %}>
+              <a class="account-nav__item{% if account_tab == 'addresses' %} is-active{% endif %}" href="?tab=addresses" data-account-tab-id="addresses" data-account-panel="account-panel-addresses" {% if account_tab == 'addresses' %}aria-current="page"{% endif %}>
                 <span class="account-nav__icon"><svg width="20" height="20" aria-hidden="true"><use href="#zk-map-pin"></use></svg></span> العناوين
               </a>
-              <a class="account-nav__link{% if account_tab == 'payment' %} is-active{% endif %}" href="?tab=payment" data-account-tab-id="payment" data-account-panel="account-panel-payment" {% if account_tab == 'payment' %}aria-current="page"{% endif %}>
+              <a class="account-nav__item{% if account_tab == 'payment' %} is-active{% endif %}" href="?tab=payment" data-account-tab-id="payment" data-account-panel="account-panel-payment" {% if account_tab == 'payment' %}aria-current="page"{% endif %}>
                 <span class="account-nav__icon"><svg width="20" height="20" aria-hidden="true"><use href="#zk-card"></use></svg></span> وسائل الدفع
               </a>
-              <a class="account-nav__link{% if account_tab == 'settings' %} is-active{% endif %}" href="?tab=settings" data-account-tab-id="settings" data-account-panel="account-panel-settings" {% if account_tab == 'settings' %}aria-current="page"{% endif %}>
+              <a class="account-nav__item{% if account_tab == 'settings' %} is-active{% endif %}" href="?tab=settings" data-account-tab-id="settings" data-account-panel="account-panel-settings" {% if account_tab == 'settings' %}aria-current="page"{% endif %}>
                 <span class="account-nav__icon"><svg width="20" height="20" aria-hidden="true"><use href="#zk-sliders"></use></svg></span> الإعدادات
               </a>
               <form method="post" action="{% url 'storefront:account-logout' %}">
                 {% csrf_token %}
-                <button class="account-nav__link account-nav__link--signout" type="submit" data-account-signout>
+                <button class="account-signout" type="submit" data-account-signout>
                   <span class="account-nav__icon"><svg width="20" height="20" aria-hidden="true"><use href="#zk-signout"></use></svg></span> تسجيل الخروج
                 </button>
               </form>
@@ -78,8 +86,8 @@
           </aside>
 
           <div class="account-panels" data-account-panels>
-            <section class="account-panel" id="account-panel-orders" data-account-panel-id="orders" aria-labelledby="account-orders-title" {% if account_tab != 'orders' %}hidden{% endif %}>
-              <h3 id="account-orders-title">طلباتي</h3>
+            <section class="surface-card account-panel" id="account-panel-orders" data-account-panel-id="orders" aria-labelledby="account-orders-title" {% if account_tab != 'orders' %}hidden{% endif %}>
+              <h3 class="account-panel__title" id="account-orders-title">طلباتي</h3>
               {% if orders %}
                 <ul class="account-orders">
                   {% for order in orders %}
@@ -103,8 +111,8 @@
               {% endif %}
             </section>
 
-            <section class="account-panel" id="account-panel-wishlist" data-account-panel-id="wishlist" aria-labelledby="account-wishlist-title" {% if account_tab != 'wishlist' %}hidden{% endif %}>
-              <h3 id="account-wishlist-title">المفضلة</h3>
+            <section class="surface-card account-panel" id="account-panel-wishlist" data-account-panel-id="wishlist" aria-labelledby="account-wishlist-title" {% if account_tab != 'wishlist' %}hidden{% endif %}>
+              <h3 class="account-panel__title" id="account-wishlist-title">المفضلة</h3>
               {% if wishlist_products %}
                 <div class="account-wishlist" data-account-wishlist-list>
                   <p class="account-panel__note" data-account-wishlist-summary>{{ wishlist_count }} منتجات محفوظة</p>
@@ -125,8 +133,8 @@
               {% endif %}
             </section>
 
-            <section class="account-panel" id="account-panel-addresses" data-account-panel-id="addresses" aria-labelledby="account-addresses-title" {% if account_tab != 'addresses' %}hidden{% endif %}>
-              <h3 id="account-addresses-title">العناوين</h3>
+            <section class="surface-card account-panel" id="account-panel-addresses" data-account-panel-id="addresses" aria-labelledby="account-addresses-title" {% if account_tab != 'addresses' %}hidden{% endif %}>
+              <h3 class="account-panel__title" id="account-addresses-title">العناوين</h3>
               {% if addresses %}
                 <ul class="account-addresses">
                   {% for address in addresses %}
@@ -173,14 +181,14 @@
               </form>
             </section>
 
-            <section class="account-panel" id="account-panel-payment" data-account-panel-id="payment" aria-labelledby="account-payment-title" {% if account_tab != 'payment' %}hidden{% endif %}>
-              <h3 id="account-payment-title">وسائل الدفع</h3>
+            <section class="surface-card account-panel" id="account-panel-payment" data-account-panel-id="payment" aria-labelledby="account-payment-title" {% if account_tab != 'payment' %}hidden{% endif %}>
+              <h3 class="account-panel__title" id="account-payment-title">وسائل الدفع</h3>
               <p class="account-panel__note">لا نحتفظ ببيانات بطاقات. يتم اختيار طريقة الدفع عند إتمام كل طلب، والدفع عند الاستلام متاح الآن.</p>
               <a class="btn btn--outline" href="{% url 'storefront:checkout' %}">عرض طرق الدفع عند الطلب</a>
             </section>
 
-            <section class="account-panel" id="account-panel-settings" data-account-panel-id="settings" aria-labelledby="account-settings-title" {% if account_tab != 'settings' %}hidden{% endif %}>
-              <h3 id="account-settings-title">الإعدادات</h3>
+            <section class="surface-card account-panel" id="account-panel-settings" data-account-panel-id="settings" aria-labelledby="account-settings-title" {% if account_tab != 'settings' %}hidden{% endif %}>
+              <h3 class="account-panel__title" id="account-settings-title">الإعدادات</h3>
               <form class="account-settings-form" method="post" action="{% url 'storefront:profile-update' %}" data-account-settings>
                 {% csrf_token %}
                 <div class="field">
