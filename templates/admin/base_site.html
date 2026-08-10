@@ -1,0 +1,35 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% comment %}
+ZAKEY admin shell.
+
+Two additions to Jazzmin's base, and nothing else — the app list, changelists and
+change forms stay Jazzmin's, so upgrading it does not mean re-doing this file.
+
+1. The attention bar, injected through the `messages` block so it sits directly
+   above page content on EVERY admin page. `block.super` is kept, so Django's
+   own success/error messages still render underneath it.
+
+   The container ships EMPTY and is filled by zakey_admin_alerts.js from the
+   `zakey_alerts` endpoint. Building the counts during page render cost eight
+   COUNT queries and pushed two changelists past their documented query budget
+   (T-1310); fetching them afterwards keeps page rendering free.
+
+2. The stylesheet, which is additive: it restyles Jazzmin's existing classes and
+   defines the `.zk-*` classes used here and on the dashboard.
+{% endcomment %}
+
+{% block extrastyle %}{{ block.super }}
+  <link rel="stylesheet" href="{% static 'admin/css/zakey_admin.css' %}">
+{% endblock %}
+
+{% block messages %}
+  <section id="zk-alertbar" class="zk-alertbar" dir="rtl"
+           aria-label="عناصر تحتاج إجراء" aria-live="polite"
+           data-endpoint="{% url 'admin:zakey_alerts' %}" hidden></section>
+  {{ block.super }}
+{% endblock %}
+
+{% block extrajs %}{{ block.super }}
+  <script src="{% static 'admin/js/zakey_admin_alerts.js' %}" defer></script>
+{% endblock %}

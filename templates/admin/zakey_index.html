@@ -4,38 +4,43 @@ ZAKEY admin dashboard (T-1308, FR-101).
 
 Renders the eleven bounded widgets above Django's stock app list, so the app
 list itself is untouched and Jazzmin keeps theming it.
+
+Counters and lists are separated into two grids: a counter is read in a glance
+and wants to be small and dense, a list needs width to stay legible. Styling
+lives in admin/css/zakey_admin.css rather than inline, so the same card classes
+serve the attention bar and this page.
 {% endcomment %}
 
 {% block content %}
   {% if zakey_widgets %}
-    <div class="zakey-dashboard" dir="rtl" style="margin-bottom:1.5rem">
-      <div style="display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:1rem">
+    <div class="zk-dashboard" dir="rtl">
+      <div class="zk-grid">
         {% for widget in zakey_widgets %}
           {% if widget.kind != "list" %}
-            <div class="card" style="flex:1 1 12rem;min-width:12rem;padding:1rem;border:1px solid rgba(0,0,0,.1);border-radius:.5rem">
-              <div style="font-size:.85rem;opacity:.75">{{ widget.label }}</div>
-              <div style="font-size:1.6rem;font-weight:700">
-                {% if widget.kind == "money" %}{{ widget.value|floatformat:2 }}{% else %}{{ widget.value }}{% endif %}
+            <div class="zk-card{% if widget.value %}{% if widget.key == "orders_needing_action" or widget.key == "orders_pending" %} zk-card--critical{% elif widget.key == "low_stock" or widget.key == "out_of_stock" or widget.key == "reviews_pending" %} zk-card--warning{% endif %}{% endif %}">
+              <div class="zk-card__label">{{ widget.label }}</div>
+              <div class="zk-card__value">
+                {% if widget.kind == "money" %}{{ widget.value|floatformat:2 }} <small>ج.م</small>{% else %}{{ widget.value }}{% endif %}
               </div>
-              {% if widget.url %}<a href="{{ widget.url }}" style="font-size:.8rem">عرض الكل</a>{% endif %}
+              {% if widget.url %}<a class="zk-card__link" href="{{ widget.url }}">عرض الكل ←</a>{% endif %}
             </div>
           {% endif %}
         {% endfor %}
       </div>
 
-      <div style="display:flex;flex-wrap:wrap;gap:.75rem">
+      <div class="zk-grid zk-grid--wide">
         {% for widget in zakey_widgets %}
           {% if widget.kind == "list" %}
-            <div class="card" style="flex:1 1 20rem;min-width:20rem;padding:1rem;border:1px solid rgba(0,0,0,.1);border-radius:.5rem">
-              <div style="font-weight:700;margin-bottom:.5rem">{{ widget.label }}</div>
+            <div class="zk-card">
+              <div class="zk-card__label">{{ widget.label }}</div>
               {% if widget.value %}
-                <ul style="margin:0;padding-inline-start:1rem">
+                <ul class="zk-card__list">
                   {% for row in widget.value %}<li>{{ row }}</li>{% endfor %}
                 </ul>
               {% else %}
-                <div style="opacity:.7">لا يوجد</div>
+                <div class="zk-card__empty">لا يوجد</div>
               {% endif %}
-              {% if widget.url %}<a href="{{ widget.url }}" style="font-size:.8rem">عرض الكل</a>{% endif %}
+              {% if widget.url %}<a class="zk-card__link" href="{{ widget.url }}">عرض الكل ←</a>{% endif %}
             </div>
           {% endif %}
         {% endfor %}

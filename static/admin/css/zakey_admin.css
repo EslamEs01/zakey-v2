@@ -1,0 +1,280 @@
+/* ZAKEY admin theme.
+ *
+ * Additive on top of Jazzmin/AdminLTE: this file restyles classes Jazzmin
+ * already emits and adds the `.zk-*` classes used by the attention bar and the
+ * dashboard. Nothing here replaces a Jazzmin template, so upgrading Jazzmin does
+ * not mean redoing the theme.
+ *
+ * Two rules shape everything below:
+ *
+ *   RTL first. The admin is Arabic. Every offset uses logical properties
+ *   (inline-start/end, margin-inline) rather than left/right, so nothing has to
+ *   be mirrored by hand and an LTR page would still lay out correctly.
+ *
+ *   Colour carries meaning, never decoration. Red means money or a customer is
+ *   waiting. Amber means it becomes red if ignored. Grey is a backlog. A tile is
+ *   only tinted when its number is non-zero, so a calm shop looks calm.
+ */
+
+:root {
+  --zk-navy: #0d1b3d;
+  --zk-navy-2: #172c5c;
+  --zk-gold: #c9a227;
+  --zk-gold-soft: #f7edc9;
+  --zk-canvas: #f5f7fa;
+  --zk-surface: #fff;
+  --zk-text: #1f2937;
+  --zk-muted: #667085;
+  --zk-line: #e4e7ec;
+  --zk-critical: #c92a2a;
+  --zk-critical-soft: #fdecec;
+  --zk-warning: #b45309;
+  --zk-warning-soft: #fef4e6;
+  --zk-info: #475467;
+  --zk-info-soft: #f1f3f7;
+  --zk-success: #0b743b;
+  --zk-radius: 12px;
+  --zk-shadow: 0 6px 20px rgb(13 27 61 / 8%);
+}
+
+/* ── Attention bar ──────────────────────────────────────────────────────────
+   Sits above page content on every admin page. It is deliberately a strip of
+   links and not a panel of statistics: each chip is a door into an already
+   filtered changelist, so the count and the work are one click apart. */
+
+.zk-alertbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-bottom: 1rem;
+  padding: 12px 16px;
+  background: var(--zk-surface);
+  border: 1px solid var(--zk-line);
+  border-inline-start: 4px solid var(--zk-gold);
+  border-radius: var(--zk-radius);
+  box-shadow: var(--zk-shadow);
+}
+
+.zk-alertbar__head {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--zk-navy);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.zk-alertbar__head i { color: var(--zk-gold); }
+
+.zk-alertbar__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.zk-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.zk-chip:hover,
+.zk-chip:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: var(--zk-shadow);
+  text-decoration: none;
+}
+
+/* The count is the payload; give it a solid pill so it reads at a glance
+   without the reader parsing the label first. */
+.zk-chip__count {
+  min-width: 1.6em;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: currentcolor;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+/* `color` is inherited by the count pill's background, so the number sits in
+   the tile's own colour and the digits are punched out in the soft tint. */
+.zk-chip--critical { color: var(--zk-critical); background: var(--zk-critical-soft); border-color: rgb(201 42 42 / 25%); }
+.zk-chip--critical .zk-chip__count { color: var(--zk-critical-soft); }
+.zk-chip--warning  { color: var(--zk-warning);  background: var(--zk-warning-soft);  border-color: rgb(180 83 9 / 25%); }
+.zk-chip--warning  .zk-chip__count { color: var(--zk-warning-soft); }
+.zk-chip--info     { color: var(--zk-info);     background: var(--zk-info-soft);     border-color: rgb(71 84 103 / 20%); }
+.zk-chip--info     .zk-chip__count { color: var(--zk-info-soft); }
+
+/* A critical chip pulses once on load rather than forever: it should catch the
+   eye on arrival, then stop competing with the work itself. */
+@media (prefers-reduced-motion: no-preference) {
+  .zk-chip--critical { animation: zk-pop 0.5s ease 1; }
+}
+
+@keyframes zk-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* ── Dashboard ─────────────────────────────────────────────────────────────
+   A responsive grid rather than flex rows, so tiles line up in columns instead
+   of stretching to odd widths on the last row. */
+
+.zk-dashboard { margin-bottom: 1.5rem; }
+
+.zk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 1rem;
+}
+
+.zk-grid--wide {
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+}
+
+.zk-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 18px;
+  background: var(--zk-surface);
+  border: 1px solid var(--zk-line);
+  border-radius: var(--zk-radius);
+  box-shadow: var(--zk-shadow);
+}
+
+.zk-card__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--zk-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.zk-card__label i { color: var(--zk-gold); }
+
+.zk-card__value {
+  color: var(--zk-navy);
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.zk-card__value small { font-size: 0.9rem; font-weight: 600; color: var(--zk-muted); }
+
+.zk-card__link {
+  margin-top: auto;
+  padding-top: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.zk-card__list {
+  margin: 0;
+  padding-inline-start: 1.1rem;
+  color: var(--zk-text);
+  font-size: 0.88rem;
+}
+
+.zk-card__list li { margin-bottom: 4px; }
+
+.zk-card__empty {
+  color: var(--zk-muted);
+  font-size: 0.88rem;
+}
+
+/* Tint a tile only when it is carrying work. */
+.zk-card--critical { border-inline-start: 4px solid var(--zk-critical); }
+.zk-card--warning  { border-inline-start: 4px solid var(--zk-warning); }
+.zk-card--ok       { border-inline-start: 4px solid var(--zk-success); }
+
+/* ── Jazzmin surface polish ────────────────────────────────────────────────
+   Restrained on purpose: rounder corners, a calmer canvas, and a brand accent
+   on the things a staff member actually aims at. */
+
+.content-wrapper { background: var(--zk-canvas); }
+
+.card {
+  border: 1px solid var(--zk-line);
+  border-radius: var(--zk-radius);
+  box-shadow: var(--zk-shadow);
+}
+
+.card-primary.card-outline { border-top: 3px solid var(--zk-gold); }
+
+.main-sidebar,
+.sidebar-dark-primary { background: var(--zk-navy); }
+
+.brand-link {
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* The active item is the one piece of sidebar chrome worth branding: it answers
+   "where am I" faster than reading the label. */
+.nav-sidebar .nav-link.active,
+.nav-sidebar .nav-link:hover {
+  background: rgb(201 162 39 / 16%);
+  color: #fff;
+}
+
+.nav-sidebar .nav-link.active { box-shadow: inset 3px 0 0 var(--zk-gold); }
+
+/* Tables: lighter rules, stronger header, so rows scan as rows. */
+.table thead th {
+  background: var(--zk-canvas);
+  border-bottom: 2px solid var(--zk-line);
+  color: var(--zk-navy);
+  font-weight: 700;
+}
+
+.table > :not(caption) > * > * { border-bottom-color: var(--zk-line); }
+.table-hover > tbody > tr:hover > * { background: var(--zk-gold-soft); }
+
+/* Primary actions in brand gold; ZAKEY's own colour rather than Bootstrap blue. */
+.btn-primary,
+.btn-primary:focus {
+  background: var(--zk-navy);
+  border-color: var(--zk-navy);
+}
+
+.btn-primary:hover { background: var(--zk-navy-2); border-color: var(--zk-navy-2); }
+
+a { color: var(--zk-navy-2); }
+a:hover { color: var(--zk-gold); }
+
+/* Focus ring: keyboard users are staff too, and the default is nearly invisible
+   against the gold. */
+a:focus-visible,
+.btn:focus-visible,
+.zk-chip:focus-visible {
+  outline: 2px solid var(--zk-gold);
+  outline-offset: 2px;
+}
+
+/* Status text in changelists reads better as a badge than as bare words. */
+.field-status, .field-payment_status, .field-fulfillment_status, .field-state {
+  font-weight: 600;
+}
+
+@media (max-width: 575px) {
+  .zk-alertbar { flex-direction: column; align-items: flex-start; }
+  .zk-card__value { font-size: 1.6rem; }
+}
