@@ -1,26 +1,27 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}سلة التسوق | ZAKEY{% endblock %}
+{% block title %}{% translate "سلة التسوق | ZAKEY" %}{% endblock %}
 
 {% block content %}
 <div class="cart-page">
   <div class="container">
-    <nav class="breadcrumb" aria-label="مسار التنقل">
-      <a href="{% url 'storefront:home' %}">الرئيسية</a>
+    <nav class="breadcrumb" aria-label="{% translate "مسار التنقل" %}">
+      <a href="{% url 'storefront:home' %}">{% translate "الرئيسية" %}</a>
       {% include "components/icon.html" with name="chevron" %}
-      <span aria-current="page">سلة التسوق</span>
+      <span aria-current="page">{% translate "سلة التسوق" %}</span>
     </nav>
   </div>
 
   <section class="commerce-heading" aria-labelledby="cart-heading">
     <div class="container">
-      <p class="eyebrow">مراجعة اختياراتك</p>
-      <h1 id="cart-heading" tabindex="-1">سلة التسوق</h1>
-      <p>عدّل الكميات وراجع ملخص الأسعار قبل الانتقال إلى الدفع.</p>
+      <p class="eyebrow">{% translate "مراجعة اختياراتك" %}</p>
+      <h1 id="cart-heading" tabindex="-1">{% translate "سلة التسوق" %}</h1>
+      <p>{% translate "عدّل الكميات وراجع ملخص الأسعار قبل الانتقال إلى الدفع." %}</p>
     </div>
   </section>
 
-  <section class="section cart-content" aria-label="محتوى سلة التسوق">
+  <section class="section cart-content" aria-label="{% translate "محتوى سلة التسوق" %}">
     <div class="container" data-cart-root aria-live="polite" aria-busy="false">
       {% if messages %}
         <div class="form-messages" role="status">
@@ -34,7 +35,7 @@
           <div class="cart-lines" data-cart-lines>
             {% for line in cart_lines %}
             <article class="cart-line" data-cart-line data-variant-id="{{ line.variant_id }}">
-              <a class="cart-line__media" href="{% url 'storefront:product' line.slug %}" data-cart-product-link aria-label="عرض {{ line.name }}">
+              <a class="cart-line__media" href="{% url 'storefront:product' line.slug %}" data-cart-product-link aria-label="{% blocktranslate with line_name=line.name %}عرض {{ line_name }}{% endblocktranslate %}">
                 <img src="{{ line.image_path }}" width="144" height="144" alt="{{ line.image_alt }}" data-cart-image>
               </a>
               <div class="cart-line__details">
@@ -46,18 +47,18 @@
                   {% csrf_token %}
                   <input type="hidden" name="variant" value="{{ line.variant_id }}">
                   <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                  <button class="cart-remove" type="submit" data-cart-remove>إزالة من السلة</button>
+                  <button class="cart-remove" type="submit" data-cart-remove>{% translate "إزالة من السلة" %}</button>
                 </form>
               </div>
-              <form class="cart-quantity" method="post" action="{% url 'storefront:cart-update' %}" role="group" aria-label="تعديل الكمية" data-cart-quantity-form>
+              <form class="cart-quantity" method="post" action="{% url 'storefront:cart-update' %}" role="group" aria-label="{% translate "تعديل الكمية" %}" data-cart-quantity-form>
                 {% csrf_token %}
                 <input type="hidden" name="variant" value="{{ line.variant_id }}">
                 <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                <button type="submit" name="quantity" value="{{ line.quantity|add:'-1' }}" data-cart-decrease aria-label="تقليل كمية {{ line.name }}">−</button>
+                <button type="submit" name="quantity" value="{{ line.quantity|add:'-1' }}" data-cart-decrease aria-label="{% blocktranslate with line_name=line.name %}تقليل كمية {{ line_name }}{% endblocktranslate %}">−</button>
                 <output data-cart-quantity aria-live="off">{{ line.quantity }}</output>
-                <button type="submit" name="quantity" value="{{ line.quantity|add:'1' }}" data-cart-increase aria-label="زيادة كمية {{ line.name }}">+</button>
+                <button type="submit" name="quantity" value="{{ line.quantity|add:'1' }}" data-cart-increase aria-label="{% blocktranslate with line_name=line.name %}زيادة كمية {{ line_name }}{% endblocktranslate %}">+</button>
               </form>
-              <p class="cart-line__price" data-cart-line-price>{{ line.total|floatformat:0 }} ج.م</p>
+              <p class="cart-line__price" data-cart-line-price>{% blocktranslate with value0=line.total|floatformat:0 %}{{ value0 }} ج.م{% endblocktranslate %}</p>
             </article>
             {% endfor %}
           </div>
@@ -66,42 +67,42 @@
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ request.get_full_path }}">
             <div>
-              <label for="coupon-code">كود الخصم</label>
-              <p>أدخل كود الخصم الخاص بك إن وُجد.</p>
+              <label for="coupon-code">{% translate "كود الخصم" %}</label>
+              <p>{% translate "أدخل كود الخصم الخاص بك إن وُجد." %}</p>
             </div>
             <div class="coupon-control">
-              <input id="coupon-code" name="coupon" type="text" autocomplete="off" maxlength="24" aria-describedby="coupon-status" placeholder="أدخل الكود" value="{{ cart_totals.coupon_code }}">
-              <button class="btn btn--outline" type="submit" data-coupon-submit>تطبيق</button>
+              <input id="coupon-code" name="coupon" type="text" autocomplete="off" maxlength="24" aria-describedby="coupon-status" placeholder="{% translate "أدخل الكود" %}" value="{{ cart_totals.coupon_code }}">
+              <button class="btn btn--outline" type="submit" data-coupon-submit>{% translate "تطبيق" %}</button>
             </div>
             <p class="coupon-status" id="coupon-status" data-coupon-status>
-              {% if cart_totals.coupon_code %}تم تطبيق الكود <bdi lang="en">{{ cart_totals.coupon_code }}</bdi>.{% else %}لم يتم تطبيق كود.{% endif %}
+              {% if cart_totals.coupon_code %}{% blocktranslate with code=cart_totals.coupon_code %}تم تطبيق الكود <bdi lang="en">{{ code }}</bdi>.{% endblocktranslate %}{% else %}{% translate "لم يتم تطبيق كود." %}{% endif %}
             </p>
           </form>
         </div>
 
         <aside class="cart-summary" aria-labelledby="cart-summary-heading">
-          <h2 id="cart-summary-heading">ملخص السلة</h2>
+          <h2 id="cart-summary-heading">{% translate "ملخص السلة" %}</h2>
           <dl>
-            <div><dt>المجموع الفرعي</dt><dd data-cart-subtotal>{{ cart_totals.subtotal|floatformat:0 }} ج.م</dd></div>
-            <div data-cart-discount-row {% if not cart_totals.discount_total %}hidden{% endif %}><dt>الخصم</dt><dd data-cart-discount>−{{ cart_totals.discount_total|floatformat:0 }} ج.م</dd></div>
-            <div><dt>الشحن</dt><dd data-cart-shipping>{% if cart_totals.free_shipping_qualified %}مجاني{% else %}يُحتسب عند الدفع{% endif %}</dd></div>
-            <div><dt>منها ضريبة قيمة مضافة {% widthratio site.vatRate 1 100 %}%</dt><dd data-cart-vat>{{ cart_totals.vat_amount|floatformat:0 }} ج.م</dd></div>
-            <div class="cart-summary__total"><dt>الإجمالي</dt><dd data-cart-total>{{ cart_totals.grand_total|floatformat:0 }} ج.م</dd></div>
+            <div><dt>{% translate "المجموع الفرعي" %}</dt><dd data-cart-subtotal>{% blocktranslate with value0=cart_totals.subtotal|floatformat:0 %}{{ value0 }} ج.م{% endblocktranslate %}</dd></div>
+            <div data-cart-discount-row {% if not cart_totals.discount_total %}hidden{% endif %}><dt>{% translate "الخصم" %}</dt><dd data-cart-discount>{% blocktranslate with value0=cart_totals.discount_total|floatformat:0 %}−{{ value0 }} ج.م{% endblocktranslate %}</dd></div>
+            <div><dt>{% translate "الشحن" %}</dt><dd data-cart-shipping>{% if cart_totals.free_shipping_qualified %}{% translate "مجاني" %}{% else %}{% translate "يُحتسب عند الدفع" %}{% endif %}</dd></div>
+            <div><dt>{% widthratio site.vatRate 1 100 as vat_percent %}{% blocktranslate with percent=vat_percent %}منها ضريبة قيمة مضافة {{ percent }}%{% endblocktranslate %}</dt><dd data-cart-vat>{% blocktranslate with value0=cart_totals.vat_amount|floatformat:0 %}{{ value0 }} ج.م{% endblocktranslate %}</dd></div>
+            <div class="cart-summary__total"><dt>{% translate "الإجمالي" %}</dt><dd data-cart-total>{% blocktranslate with value0=cart_totals.grand_total|floatformat:0 %}{{ value0 }} ج.م{% endblocktranslate %}</dd></div>
           </dl>
           <p class="shipping-progress" data-shipping-message>
-            {% if cart_totals.free_shipping_qualified %}طلبك مؤهل للشحن المجاني.{% else %}أضف {{ cart_totals.remaining_for_free_shipping|floatformat:0 }} ج.م للحصول على شحن مجاني.{% endif %}
+            {% if cart_totals.free_shipping_qualified %}{% translate "طلبك مؤهل للشحن المجاني." %}{% else %}{% blocktranslate with amount=cart_totals.remaining_for_free_shipping|floatformat:0 %}أضف {{ amount }} ج.م للحصول على شحن مجاني.{% endblocktranslate %}{% endif %}
           </p>
-          <a class="btn btn--gold" href="{% url 'storefront:checkout' %}">متابعة إلى الدفع</a>
-          <a class="btn btn--outline" href="{% url 'storefront:shop' %}">متابعة التسوق</a>
+          <a class="btn btn--gold" href="{% url 'storefront:checkout' %}">{% translate "متابعة إلى الدفع" %}</a>
+          <a class="btn btn--outline" href="{% url 'storefront:shop' %}">{% translate "متابعة التسوق" %}</a>
           <small>{{ site.prototypeNotice }}</small>
         </aside>
       </div>
       {% else %}
       <div class="commerce-empty" data-cart-empty>
         <span class="commerce-empty__icon">{% include "components/icon.html" with name="cart" %}</span>
-        <h2>سلتك فارغة حاليًا</h2>
-        <p>استكشف الأقفال الذكية وأضف المنتج المناسب لتظهر تفاصيله هنا.</p>
-        <a class="btn btn--primary" href="{% url 'storefront:shop' %}">تسوّق الآن</a>
+        <h2>{% translate "سلتك فارغة حاليًا" %}</h2>
+        <p>{% translate "استكشف الأقفال الذكية وأضف المنتج المناسب لتظهر تفاصيله هنا." %}</p>
+        <a class="btn btn--primary" href="{% url 'storefront:shop' %}">{% translate "تسوّق الآن" %}</a>
       </div>
       {% endif %}
     </div>

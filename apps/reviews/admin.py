@@ -3,13 +3,18 @@
 from __future__ import annotations
 
 from django.contrib import admin
+
+from import_export.admin import ExportMixin
+
+from apps.core.resources import ReviewResource
 from django.utils import timezone
 
 from .models import Review, ReviewStatus
 
 
 @admin.register(Review)
-class ReviewAdmin(admin.ModelAdmin):
+class ReviewAdmin(ExportMixin, admin.ModelAdmin):
+    resource_classes = (ReviewResource,)
     list_display = ("product", "author_name", "rating", "status", "is_verified_purchase", "created_at")
     list_filter = ("status", "rating", "is_verified_purchase")
     search_fields = ("product__name", "author_name", "body")

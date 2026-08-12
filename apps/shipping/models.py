@@ -16,14 +16,21 @@ from decimal import Decimal
 from django.core.validators import MinValueValidator
 from django.db import models
 
+from apps.core.i18n import TranslatableModel
+
 from apps.core.models import TimeStampedModel
 
 
-class Governorate(TimeStampedModel):
+class Governorate(TranslatableModel, TimeStampedModel):
     """One of the 27 Egyptian governorates."""
+
+    translatable_fields = ("name",)
 
     key = models.SlugField("المفتاح", max_length=40, unique=True)
     name = models.CharField("المحافظة", max_length=80)
+    name_en = models.CharField(
+        "المحافظة (إنجليزي)", max_length=80, blank=True, default=""
+    )
     position = models.PositiveSmallIntegerField("الترتيب", default=0)
     is_active = models.BooleanField("مفعّلة", default=True)
 
@@ -36,14 +43,19 @@ class Governorate(TimeStampedModel):
         return self.name
 
 
-class ServiceArea(TimeStampedModel):
+class ServiceArea(TranslatableModel, TimeStampedModel):
     """A named area inside a governorate, carrying service eligibility."""
+
+    translatable_fields = ("name",)
 
     key = models.SlugField("المفتاح", max_length=60, unique=True)
     governorate = models.ForeignKey(
         Governorate, on_delete=models.CASCADE, related_name="areas"
     )
     name = models.CharField("المنطقة", max_length=80)
+    name_en = models.CharField(
+        "المنطقة (إنجليزي)", max_length=80, blank=True, default=""
+    )
     same_day_eligible = models.BooleanField("يدعم التوصيل في اليوم نفسه", default=False)
     installation_eligible = models.BooleanField("يدعم التركيب", default=False)
     is_active = models.BooleanField("مفعّلة", default=True)
@@ -74,12 +86,20 @@ class ShippingZone(TimeStampedModel):
         return self.name
 
 
-class ShippingMethod(TimeStampedModel):
+class ShippingMethod(TranslatableModel, TimeStampedModel):
     """Mirrors the three approved storefront options by code."""
+
+    translatable_fields = ("label", "description",)
 
     code = models.SlugField("الكود", max_length=40, unique=True)
     label = models.CharField("الاسم", max_length=80)
+    label_en = models.CharField(
+        "الاسم (إنجليزي)", max_length=80, blank=True, default=""
+    )
     description = models.CharField("الوصف", max_length=200, blank=True, default="")
+    description_en = models.CharField(
+        "الوصف (إنجليزي)", max_length=200, blank=True, default=""
+    )
     icon_path = models.CharField("الأيقونة", max_length=200, blank=True, default="")
     requires_area_eligibility = models.BooleanField(
         "يتطلب منطقة مؤهلة",
@@ -169,10 +189,15 @@ class ShippingRate(TimeStampedModel):
         return f"{self.method.label} — {self.zone.name}"
 
 
-class InstallationService(TimeStampedModel):
+class InstallationService(TranslatableModel, TimeStampedModel):
     """Optional installation, offered only where eligible (FR-048)."""
 
+    translatable_fields = ("name",)
+
     name = models.CharField("اسم الخدمة", max_length=80, default="خدمة التركيب")
+    name_en = models.CharField(
+        "اسم الخدمة (إنجليزي)", max_length=80, blank=True, default=""
+    )
     fee = models.DecimalField(
         "الرسوم",
         max_digits=12,

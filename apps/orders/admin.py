@@ -13,7 +13,7 @@ from django.core.exceptions import ValidationError
 from import_export.admin import ExportMixin
 
 from apps.core.admin_mixins import AppendOnlyAdmin, NoDeleteAdmin, ReadOnlyInline
-from apps.core.resources import OrderResource
+from apps.core.resources import OrderLineResource, OrderResource
 
 from .models import (
     Order,
@@ -89,7 +89,10 @@ def _bulk_transition(modeladmin, request, queryset, target: str) -> None:
 class OrderAdmin(ExportMixin, NoDeleteAdmin):
     # Export only. An order is financial history; there is no legitimate reason
     # to write one from a spreadsheet (FR-104, INV-003).
-    resource_classes = (OrderResource,)
+    #
+    # Two shapes, chosen from the export dropdown: one row per order for
+    # revenue, and one row per line for "what actually sold".
+    resource_classes = (OrderResource, OrderLineResource)
     list_display = (
         "number",
         "email",

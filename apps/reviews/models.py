@@ -5,6 +5,8 @@ from __future__ import annotations
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
+from apps.core.i18n import TranslatableModel
+
 from apps.core.models import TimeStampedModel
 
 
@@ -19,7 +21,9 @@ class ReviewQuerySet(models.QuerySet):
         return self.filter(status=ReviewStatus.APPROVED)
 
 
-class Review(TimeStampedModel):
+class Review(TranslatableModel, TimeStampedModel):
+    translatable_fields = ("author_name", "title", "body",)
+
     legacy_id = models.CharField(max_length=64, blank=True, default="", db_index=True)
     product = models.ForeignKey(
         "catalog.Product", on_delete=models.CASCADE, related_name="reviews", verbose_name="المنتج"
@@ -33,11 +37,18 @@ class Review(TimeStampedModel):
         verbose_name="العميل",
     )
     author_name = models.CharField("اسم الكاتب", max_length=120)
+    author_name_en = models.CharField(
+        "اسم الكاتب (إنجليزي)", max_length=120, blank=True, default=""
+    )
     rating = models.PositiveSmallIntegerField(
         "التقييم", validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
     title = models.CharField("العنوان", max_length=160, blank=True, default="")
+    title_en = models.CharField(
+        "العنوان (إنجليزي)", max_length=160, blank=True, default=""
+    )
     body = models.TextField("النص")
+    body_en = models.TextField("النص (إنجليزي)", blank=True, default="")
     status = models.CharField(
         "الحالة", max_length=16, choices=ReviewStatus.choices, default=ReviewStatus.PENDING
     )

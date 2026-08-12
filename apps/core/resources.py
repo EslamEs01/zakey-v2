@@ -184,3 +184,276 @@ class PaymentResource(ExportOnlyResource):
 
         model = Payment
         fields = ("id", "order", "method", "state", "amount", "currency", "created_at")
+
+
+class OrderLineResource(ExportOnlyResource):
+    """Line-level order export.
+
+    ``OrderResource`` exports one row per order, which cannot answer "how many
+    of SKU X did we sell". This is the same history at line granularity: still
+    export-only, for the same reason.
+    """
+
+    class Meta:
+        from apps.orders.models import OrderLine
+
+        model = OrderLine
+        fields = (
+            "id",
+            "order__number",
+            "order__status",
+            "order__placed_at",
+            "sku",
+            "product_name",
+            "variant_label",
+            "unit_price",
+            "quantity",
+            "line_total",
+        )
+
+
+class RefundResource(ExportOnlyResource):
+    class Meta:
+        from apps.payments.models import Refund
+
+        model = Refund
+        fields = (
+            "id",
+            "payment__order__number",
+            "amount",
+            "reason",
+            "state",
+            "actor__email",
+            "created_at",
+        )
+
+
+# ---------------------------------------------------------------------------
+# Reference and content resources
+#
+# Everything below is catalogue or configuration rather than financial history,
+# so all of it both imports and exports: these are precisely the tables a shop
+# populates in bulk from a spreadsheet at launch, and re-exports to hand to a
+# translator (FR-104, FR-136).
+# ---------------------------------------------------------------------------
+
+
+class CategoryResource(AuditedResourceMixin, resources.ModelResource):
+    class Meta:
+        from apps.catalog.models import Category
+
+        model = Category
+        import_id_fields = ("slug",)
+        fields = (
+            "id", "slug", "name", "name_en", "description", "description_en",
+            "kind", "kind_en", "parent", "position", "status",
+            "seo_title", "seo_title_en", "seo_description", "seo_description_en",
+        )
+        skip_unchanged = True
+        report_skipped = True
+
+
+class BrandResource(AuditedResourceMixin, resources.ModelResource):
+    class Meta:
+        from apps.catalog.models import Brand
+
+        model = Brand
+        import_id_fields = ("slug",)
+        fields = ("id", "slug", "name", "name_en")
+        skip_unchanged = True
+        report_skipped = True
+
+
+class CollectionResource(AuditedResourceMixin, resources.ModelResource):
+    class Meta:
+        from apps.catalog.models import Collection
+
+        model = Collection
+        import_id_fields = ("slug",)
+        fields = (
+            "id", "slug", "name", "name_en", "description", "description_en",
+            "promotion_eyebrow", "promotion_eyebrow_en", "position", "status",
+        )
+        skip_unchanged = True
+        report_skipped = True
+
+
+class ProductFeatureResource(AuditedResourceMixin, resources.ModelResource):
+    class Meta:
+        from apps.catalog.models import ProductFeature
+
+        model = ProductFeature
+        fields = (
+            "id", "product", "key", "label", "label_en",
+            "description", "description_en", "position",
+        )
+        skip_unchanged = True
+        report_skipped = True
+
+
+class SpecificationItemResource(AuditedResourceMixin, resources.ModelResource):
+    class Meta:
+        from apps.catalog.models import SpecificationItem
+
+        model = SpecificationItem
+        fields = ("id", "group", "label", "label_en", "value", "value_en", "position")
+        skip_unchanged = True
+        report_skipped = True
+
+
+class FAQResource(AuditedResourceMixin, resources.ModelResource):
+    class Meta:
+        from apps.content.models import FAQ
+
+        model = FAQ
+        fields = (
+            "id", "legacy_id", "question", "question_en", "answer", "answer_en",
+            "page", "position", "is_active",
+        )
+        skip_unchanged = True
+        report_skipped = True
+
+
+class StaticPageResource(AuditedResourceMixin, resources.ModelResource):
+    class Meta:
+        from apps.content.models import StaticPage
+
+        model = StaticPage
+        import_id_fields = ("slug",)
+        fields = (
+            "id", "slug", "title", "title_en", "body", "body_en",
+            "seo_title", "seo_title_en", "seo_description", "seo_description_en",
+            "is_published",
+        )
+        skip_unchanged = True
+        report_skipped = True
+
+
+class NavigationItemResource(AuditedResourceMixin, resources.ModelResource):
+    class Meta:
+        from apps.content.models import NavigationItem
+
+        model = NavigationItem
+        fields = (
+            "id", "label", "label_en", "href", "route_name", "icon",
+            "group", "position", "is_active",
+        )
+        skip_unchanged = True
+        report_skipped = True
+
+
+class GovernorateResource(AuditedResourceMixin, resources.ModelResource):
+    class Meta:
+        from apps.shipping.models import Governorate
+
+        model = Governorate
+        import_id_fields = ("key",)
+        fields = ("id", "key", "name", "name_en", "position", "is_active")
+        skip_unchanged = True
+        report_skipped = True
+
+
+class ServiceAreaResource(AuditedResourceMixin, resources.ModelResource):
+    class Meta:
+        from apps.shipping.models import ServiceArea
+
+        model = ServiceArea
+        import_id_fields = ("key",)
+        fields = (
+            "id", "key", "name", "name_en", "governorate",
+            "same_day_eligible", "installation_eligible", "is_active",
+        )
+        skip_unchanged = True
+        report_skipped = True
+
+
+class ShippingRateResource(AuditedResourceMixin, resources.ModelResource):
+    """Rates import: this is the table a shop updates when prices change.
+
+    ``is_placeholder`` is exported so a spreadsheet round-trip cannot silently
+    promote a development placeholder into an approved commercial price
+    (ASM-004).
+    """
+
+    class Meta:
+        from apps.shipping.models import ShippingRate
+
+        model = ShippingRate
+        fields = ("id", "method", "zone", "price", "is_placeholder", "is_active")
+        skip_unchanged = True
+        report_skipped = True
+
+
+class ReviewResource(ExportOnlyResource):
+    """Customer-written content: exported for moderation review, never imported.
+
+    Importing would mean writing reviews on customers' behalf, which is the one
+    thing a review system must not offer (FR-091).
+    """
+
+    class Meta:
+        from apps.reviews.models import Review
+
+        model = Review
+        fields = (
+            "id", "product", "author_name", "rating", "title", "body",
+            "status", "is_verified_purchase", "created_at",
+        )
+
+
+class CustomerProfileResource(ExportOnlyResource):
+    """Export-only, and deliberately without the phone number.
+
+    Full contact detail is gated behind ``accounts.view_full_contact`` in the
+    admin (FR-112). An export that carried it would be a way around that check
+    for anyone who can reach the export button.
+    """
+
+    class Meta:
+        from apps.accounts.models import CustomerProfile
+
+        model = CustomerProfile
+        fields = (
+            "id", "full_name", "user__email", "email_verified",
+            "phone_verified", "accepts_marketing", "created_at",
+        )
+
+
+class NewsletterSubscriptionResource(ExportOnlyResource):
+    class Meta:
+        from apps.content.models import NewsletterSubscription
+
+        model = NewsletterSubscription
+        fields = ("id", "email", "source", "confirmed", "created_at")
+
+
+class ContactMessageResource(ExportOnlyResource):
+    class Meta:
+        from apps.content.models import ContactMessage
+
+        model = ContactMessage
+        fields = ("id", "name", "email", "phone", "subject", "message", "status", "created_at")
+
+
+class StockMovementResource(ExportOnlyResource):
+    """The stock ledger, for reconciliation. Append-only, so never importable."""
+
+    class Meta:
+        from apps.inventory.models import StockMovement
+
+        model = StockMovement
+        fields = (
+            "id", "stock_item__variant__sku", "delta", "reason",
+            "on_hand_after", "reserved_after", "actor__email", "created_at",
+        )
+
+
+class AuditLogResource(ExportOnlyResource):
+    class Meta:
+        from apps.audit.models import AuditLog
+
+        model = AuditLog
+        fields = (
+            "id", "created_at", "actor__email", "action", "content_type",
+            "object_id", "object_repr", "request_id",
+        )

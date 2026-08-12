@@ -21,6 +21,9 @@ urlpatterns = [
     path("errors/500/", views.server_error_preview, name="error-500"),
     # Mutating endpoints (T-1604). POST-only and CSRF-protected; they are not
     # new *pages*, so the 13-route public contract is unchanged.
+    # Language switch (FR-136). A cookie write, not a page: the thirteen public
+    # URLs stay exactly where they are, which is why this is not i18n_patterns.
+    path("set-language/", views.set_language, name="set-language"),
     path("cart/add/", views.cart_add, name="cart-add"),
     path("cart/update/", views.cart_update, name="cart-update"),
     path("cart/remove/", views.cart_remove, name="cart-remove"),

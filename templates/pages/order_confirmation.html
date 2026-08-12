@@ -1,25 +1,26 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}تم استلام طلبك | ZAKEY{% endblock %}
+{% block title %}{% translate "تم استلام طلبك | ZAKEY" %}{% endblock %}
 
 {% block content %}
 <div class="container">
-  <nav class="breadcrumb" aria-label="مسار التنقل">
-    <a href="{% url 'storefront:home' %}">الرئيسية</a>
+  <nav class="breadcrumb" aria-label="{% translate "مسار التنقل" %}">
+    <a href="{% url 'storefront:home' %}">{% translate "الرئيسية" %}</a>
     {% include "components/icon.html" with name="chevron" %}
-    <span aria-current="page">تأكيد الطلب</span>
+    <span aria-current="page">{% translate "تأكيد الطلب" %}</span>
   </nav>
 </div>
 
 <section class="commerce-heading" aria-labelledby="order-heading">
   <div class="container">
-    <p class="eyebrow">تم استلام طلبك</p>
-    <h1 id="order-heading" tabindex="-1">طلب رقم <bdi lang="en">{{ order.number }}</bdi></h1>
-    <p>سنتواصل معك لتأكيد موعد التسليم. احتفظ برقم الطلب للرجوع إليه.</p>
+    <p class="eyebrow">{% translate "تم استلام طلبك" %}</p>
+    <h1 id="order-heading" tabindex="-1">{% translate "طلب رقم" %} <bdi lang="en">{{ order.number }}</bdi></h1>
+    <p>{% translate "سنتواصل معك لتأكيد موعد التسليم. احتفظ برقم الطلب للرجوع إليه." %}</p>
   </div>
 </section>
 
-<section class="section" aria-label="تفاصيل الطلب">
+<section class="section" aria-label="{% translate "تفاصيل الطلب" %}">
   <div class="container">
     <div class="cart-layout">
       <div>
@@ -35,38 +36,38 @@
               <p><bdi lang="en">{{ line.sku }}</bdi></p>
             </div>
             <div class="cart-quantity"><output>{{ line.quantity }}</output></div>
-            <p class="cart-line__price">{{ line.line_total|floatformat:0 }} ج.م</p>
+            <p class="cart-line__price">{% blocktranslate with value0=line.line_total|floatformat:0 %}{{ value0 }} ج.م{% endblocktranslate %}</p>
           </article>
           {% endfor %}
         </div>
 
         <section class="checkout-review-sections" aria-labelledby="order-address-heading">
           <article>
-            <div class="checkout-review-title"><h3 id="order-address-heading">عنوان التوصيل</h3></div>
+            <div class="checkout-review-title"><h3 id="order-address-heading">{% translate "عنوان التوصيل" %}</h3></div>
             <dl>
-              <div><dt>الاسم</dt><dd>{{ order.address.full_name }}</dd></div>
-              <div><dt>الموبايل</dt><dd dir="ltr">{{ order.address.phone }}</dd></div>
-              <div><dt>المحافظة</dt><dd>{{ order.address.governorate_name }}</dd></div>
-              {% if order.address.area_name %}<div><dt>المنطقة</dt><dd>{{ order.address.area_name }}</dd></div>{% endif %}
-              <div><dt>المدينة</dt><dd>{{ order.address.city }}</dd></div>
-              <div><dt>العنوان</dt><dd>{{ order.address.street }}، مبنى {{ order.address.building }}{% if order.address.landmark %} — {{ order.address.landmark }}{% endif %}</dd></div>
+              <div><dt>{% translate "الاسم" %}</dt><dd>{{ order.address.full_name }}</dd></div>
+              <div><dt>{% translate "الموبايل" %}</dt><dd dir="ltr">{{ order.address.phone }}</dd></div>
+              <div><dt>{% translate "المحافظة" %}</dt><dd>{{ order.address.governorate_name }}</dd></div>
+              {% if order.address.area_name %}<div><dt>{% translate "المنطقة" %}</dt><dd>{{ order.address.area_name }}</dd></div>{% endif %}
+              <div><dt>{% translate "المدينة" %}</dt><dd>{{ order.address.city }}</dd></div>
+              <div><dt>{% translate "العنوان" %}</dt><dd>{% blocktranslate with street=order.address.street building=order.address.building %}{{ street }}، مبنى {{ building }}{% endblocktranslate %}{% if order.address.landmark %} — {{ order.address.landmark }}{% endif %}</dd></div>
             </dl>
           </article>
         </section>
       </div>
 
       <aside class="cart-summary" aria-labelledby="order-summary-heading">
-        <h2 id="order-summary-heading">ملخص الطلب</h2>
+        <h2 id="order-summary-heading">{% translate "ملخص الطلب" %}</h2>
         <dl>
-          <div><dt>المجموع الفرعي</dt><dd>{{ order.subtotal|floatformat:0 }} ج.م</dd></div>
-          {% if order.discount_total %}<div><dt>الخصم{% if order.coupon_code %} (<bdi lang="en">{{ order.coupon_code }}</bdi>){% endif %}</dt><dd>−{{ order.discount_total|floatformat:0 }} ج.م</dd></div>{% endif %}
-          <div><dt>الشحن{% if order.shipping_method_label %} — {{ order.shipping_method_label }}{% endif %}</dt><dd>{% if order.shipping_total %}{{ order.shipping_total|floatformat:0 }} ج.م{% else %}مجاني{% endif %}</dd></div>
-          {% if order.installation_requested %}<div><dt>التركيب</dt><dd>{{ order.installation_total|floatformat:0 }} ج.م</dd></div>{% endif %}
-          <div><dt>منها ضريبة قيمة مضافة {% widthratio site.vatRate 1 100 %}%</dt><dd>{{ order.vat_amount|floatformat:0 }} ج.م</dd></div>
-          <div class="cart-summary__total"><dt>الإجمالي</dt><dd>{{ order.grand_total|floatformat:0 }} ج.م</dd></div>
+          <div><dt>{% translate "المجموع الفرعي" %}</dt><dd>{% blocktranslate with value0=order.subtotal|floatformat:0 %}{{ value0 }} ج.م{% endblocktranslate %}</dd></div>
+          {% if order.discount_total %}<div><dt>{% translate "الخصم" %}{% if order.coupon_code %} (<bdi lang="en">{{ order.coupon_code }}</bdi>){% endif %}</dt><dd>{% blocktranslate with value0=order.discount_total|floatformat:0 %}−{{ value0 }} ج.م{% endblocktranslate %}</dd></div>{% endif %}
+          <div><dt>{% translate "الشحن" %}{% if order.shipping_method_label %} — {{ order.shipping_method_label }}{% endif %}</dt><dd>{% if order.shipping_total %}{% blocktranslate with amount=order.shipping_total|floatformat:0 %}{{ amount }} ج.م{% endblocktranslate %}{% else %}{% translate "مجاني" %}{% endif %}</dd></div>
+          {% if order.installation_requested %}<div><dt>{% translate "التركيب" %}</dt><dd>{% blocktranslate with value0=order.installation_total|floatformat:0 %}{{ value0 }} ج.م{% endblocktranslate %}</dd></div>{% endif %}
+          <div><dt>{% widthratio site.vatRate 1 100 as vat_percent %}{% blocktranslate with percent=vat_percent %}منها ضريبة قيمة مضافة {{ percent }}%{% endblocktranslate %}</dt><dd>{% blocktranslate with value0=order.vat_amount|floatformat:0 %}{{ value0 }} ج.م{% endblocktranslate %}</dd></div>
+          <div class="cart-summary__total"><dt>{% translate "الإجمالي" %}</dt><dd>{% blocktranslate with value0=order.grand_total|floatformat:0 %}{{ value0 }} ج.م{% endblocktranslate %}</dd></div>
         </dl>
-        <p>حالة الطلب: <strong>{{ order.get_status_display }}</strong></p>
-        <a class="btn btn--outline" href="{% url 'storefront:shop' %}">متابعة التسوق</a>
+        <p>{% translate "حالة الطلب:" %} <strong>{{ order.get_status_display }}</strong></p>
+        <a class="btn btn--outline" href="{% url 'storefront:shop' %}">{% translate "متابعة التسوق" %}</a>
       </aside>
     </div>
   </div>

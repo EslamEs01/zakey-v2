@@ -1,23 +1,24 @@
+{% load i18n %}
 <article class="product-card" data-product-card data-product-id="{{ product.id }}">
   <a class="product-card__media" href="{% url 'storefront:product' product.slug %}">
     {% if product.badge %}<span class="product-card__badge">{{ product.badge }}</span>{% endif %}
     <img src="{{ product.images.0.path }}" width="640" height="640" loading="lazy" alt="{{ product.images.0.alt }}">
   </a>
   <div class="product-card__body">
-    <p class="product-card__type">{{ product.typeLabel|default:"قفل ذكي" }}</p>
+    <p class="product-card__type">{{ product.typeLabel|default:_("قفل ذكي") }}</p>
     <h3 class="product-card__title"><a href="{% url 'storefront:product' product.slug %}">{{ product.name }}</a></h3>
     <div class="rating">
       {% include "components/icon.html" with name="shield" %}<span>{{ product.features.0.label }}</span>
     </div>
     <div class="product-card__footer">
-      <span class="price">{{ product.price|floatformat:0 }} <small>ج.م</small>{% if product.compareAtPrice %}<span class="old-price">{{ product.compareAtPrice|floatformat:0 }}</span>{% endif %}</span>
-      <a class="btn btn--primary card-action" href="{% url 'storefront:product' product.slug %}">عرض</a>
+      <span class="price">{{ product.price|floatformat:0 }} <small>{% translate "ج.م" %}</small>{% if product.compareAtPrice %}<span class="old-price">{{ product.compareAtPrice|floatformat:0 }}</span>{% endif %}</span>
+      <a class="btn btn--primary card-action" href="{% url 'storefront:product' product.slug %}">{% translate "عرض" %}</a>
     </div>
     <form method="post" action="{% url 'storefront:wishlist-toggle' %}" style="position:absolute;inset-block-start:12px;inset-inline-end:12px">
       {% csrf_token %}
       <input type="hidden" name="product" value="{{ product.pk }}">
       <input type="hidden" name="next" value="{{ request.get_full_path }}">
-      <button class="icon-btn" type="submit" data-wishlist-toggle="{{ product.id }}" aria-pressed="{% if product.pk in wishlist_product_ids %}true{% else %}false{% endif %}" aria-label="{% if product.pk in wishlist_product_ids %}إزالة {{ product.name }} من المفضلة{% else %}إضافة {{ product.name }} إلى المفضلة{% endif %}" style="background:#fff">
+      <button class="icon-btn" type="submit" data-wishlist-toggle="{{ product.id }}" aria-pressed="{% if product.pk in wishlist_product_ids %}true{% else %}false{% endif %}" aria-label="{% if product.pk in wishlist_product_ids %}{% blocktranslate with name=product.name %}إزالة {{ name }} من المفضلة{% endblocktranslate %}{% else %}{% blocktranslate with name=product.name %}إضافة {{ name }} إلى المفضلة{% endblocktranslate %}{% endif %}" style="background:#fff">
         {% include "components/icon.html" with name="heart" %}
       </button>
     </form>

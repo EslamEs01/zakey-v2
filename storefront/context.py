@@ -26,7 +26,42 @@ from __future__ import annotations
 from decimal import Decimal
 from typing import Any
 
+from django.utils import translation
+
+from apps.core.i18n import translated as tr
 from apps.core.models import PublicationStatus, SiteSetting
+
+
+# ---------------------------------------------------------------------------
+# Language (FR-136)
+# ---------------------------------------------------------------------------
+
+#: Everything the page needs to describe the active language to a browser.
+#: ``bidi`` drives ``dir`` on ``<html>``; ``locale`` is the BCP-47 tag used for
+#: number and date formatting, which is regional where the language is not.
+LANGUAGE_PROFILES = {
+    "ar": {"locale": "ar-EG", "direction": "rtl", "bidi": True, "label": "العربية"},
+    "en": {"locale": "en-GB", "direction": "ltr", "bidi": False, "label": "English"},
+}
+
+DEFAULT_LANGUAGE = "ar"
+
+
+def active_language() -> str:
+    """The active language narrowed to one this site actually ships.
+
+    ``get_language`` can return a regional tag (``ar-eg``) or ``None`` when
+    translations are deactivated. Both have to collapse onto a key that
+    :data:`LANGUAGE_PROFILES` contains, or every direction lookup downstream
+    silently falls back to Arabic on an English page.
+    """
+    code = translation.get_language() or DEFAULT_LANGUAGE
+    base = code.split("-")[0].lower()
+    return base if base in LANGUAGE_PROFILES else DEFAULT_LANGUAGE
+
+
+def language_profile() -> dict[str, Any]:
+    return LANGUAGE_PROFILES[active_language()]
 
 
 # ---------------------------------------------------------------------------
@@ -39,16 +74,16 @@ def _category_record(category) -> dict[str, Any]:
     record = {
         "id": category.legacy_id or category.slug,
         "slug": category.slug,
-        "name": category.name,
-        "description": category.description,
-        "kind": category.kind,
+        "name": tr(category, "name"),
+        "description": tr(category, "description"),
+        "kind": tr(category, "kind"),
     }
     if category.image_src:
         record["image"] = {
             "path": category.image_src,
             "width": category.image_width,
             "height": category.image_height,
-            "alt": category.image_alt,
+            "alt": tr(category, "image_alt"),
         }
     return record
 
@@ -69,9 +104,9 @@ def published_collections() -> list[dict[str, Any]]:
         {
             "id": collection.legacy_id or collection.slug,
             "slug": collection.slug,
-            "name": collection.name,
-            "description": collection.description,
-            "eyebrow": collection.promotion_eyebrow,
+            "name": tr(collection, "name"),
+            "description": tr(collection, "description"),
+            "eyebrow": tr(collection, "promotion_eyebrow"),
             "tone": collection.promotion_tone,
         }
         for collection in Collection.objects.filter(status=PublicationStatus.PUBLISHED)
@@ -91,7 +126,7 @@ def page_copy() -> dict[str, Any]:
     from apps.content.models import HomeSection
 
     return {
-        section.key: section.data or {}
+        section.key: section.resolved_data()
         for section in HomeSection.objects.filter(is_active=True)
     }
 
@@ -100,13 +135,13 @@ def site_settings_record(setting: SiteSetting) -> dict[str, Any]:
     return {
         "currency": {
             "code": setting.currency_code,
-            "label": setting.currency_label,
+            "label": tr(setting, "currency_label"),
             "decimalPlaces": setting.currency_decimal_places,
         },
         "vatRate": float(setting.vat_rate),
         "freeShippingThreshold": int(setting.free_shipping_threshold),
         "maxLineQuantity": setting.max_line_quantity,
-        "prototypeNotice": setting.prototype_notice,
+        "prototypeNotice": tr(setting, "prototype_notice"),
     }
 
 
@@ -118,8 +153,10 @@ def build_site(setting: SiteSetting, copy: dict[str, Any]) -> dict[str, Any]:
     """
     site = dict(copy)  # brand / announcement / home / about / contact / footer
     site.update(site_settings_record(setting))
-    site["locale"] = "ar-EG"
-    site["direction"] = "rtl"
+    profile = language_profile()
+    site["locale"] = profile["locale"]
+    site["direction"] = profile["direction"]
+    site["language"] = active_language()
     return site
 
 
@@ -141,7 +178,7 @@ def navigation() -> dict[str, list[dict[str, Any]]]:
         groups[key_for[item.group]].append(
             {
                 "id": item.pk,
-                "label": item.label,
+                "label": tr(item, "label"),
                 "href": item.href,
                 "routeName": item.route_name,
                 "icon": item.icon,
@@ -155,12 +192,12 @@ def partners() -> list[dict[str, Any]]:
 
     return [
         {
-            "name": partner.name,
+            "name": tr(partner, "name"),
             "mark": {
                 "path": partner.logo.url if partner.logo else partner.legacy_image_path,
                 "width": 160,
                 "height": 64,
-                "alt": partner.name,
+                "alt": tr(partner, "name"),
             },
         }
         for partner in Partner.objects.filter(is_active=True)
@@ -174,7 +211,7 @@ def team_members() -> list[dict[str, Any]]:
     section = HomeSection.objects.filter(key="team", is_active=True).first()
     if section is None:
         return []
-    return section.data.get("members", [])
+    return section.resolved_data().get("members", [])
 
 
 def faqs(page: str = "") -> list[dict[str, Any]]:
@@ -186,8 +223,8 @@ def faqs(page: str = "") -> list[dict[str, Any]]:
     return [
         {
             "id": faq.legacy_id or str(faq.pk),
-            "question": faq.question,
-            "answer": faq.answer,
+            "question": tr(faq, "question"),
+            "answer": tr(faq, "answer"),
             "page": faq.page,
         }
         for faq in queryset
@@ -198,7 +235,7 @@ def governorates() -> list[dict[str, Any]]:
     from apps.shipping.models import Governorate
 
     return [
-        {"key": gov.key, "name": gov.name}
+        {"key": gov.key, "name": tr(gov, "name")}
         for gov in Governorate.objects.filter(is_active=True)
     ]
 
@@ -211,9 +248,9 @@ def service_eligibility() -> dict[str, list[dict[str, Any]]]:
         "areas": [
             {
                 "key": area.key,
-                "name": area.name,
+                "name": tr(area, "name"),
                 "governorate": area.governorate.key,
-                "governorateName": area.governorate.name,
+                "governorateName": tr(area.governorate, "name"),
                 "sameDay": area.same_day_eligible,
                 "installation": area.installation_eligible,
             }
@@ -246,8 +283,8 @@ def shipping_options() -> list[dict[str, Any]]:
         {
             "id": method.code,
             "code": method.code,
-            "label": method.label,
-            "description": method.description,
+            "label": tr(method, "label"),
+            "description": tr(method, "description"),
             "icon": {"path": method.icon_path} if method.icon_path else None,
             "requiresAreaEligibility": method.requires_area_eligibility,
             "freeOverThreshold": method.free_over_threshold,
@@ -280,10 +317,10 @@ def payment_options() -> list[dict[str, Any]]:
         {
             "id": method.code,
             "code": method.code,
-            "label": method.label,
-            "description": method.description,
+            "label": tr(method, "label"),
+            "description": tr(method, "description"),
             "icon": {"path": method.icon_path} if method.icon_path else None,
-            "notice": method.notice,
+            "notice": tr(method, "notice"),
             "available": method.is_available_for_checkout,
         }
         for method in PaymentMethod.objects.filter(is_active=True)
@@ -307,11 +344,11 @@ def client_payload(setting: SiteSetting) -> dict[str, Any]:
     return {
         "currency": {
             "code": setting.currency_code,
-            "label": setting.currency_label,
+            "label": tr(setting, "currency_label"),
             "decimalPlaces": setting.currency_decimal_places,
         },
-        "locale": "ar-EG",
-        "direction": "rtl",
+        "locale": language_profile()["locale"],
+        "direction": language_profile()["direction"],
         "maxLineQuantity": setting.max_line_quantity,
     }
 

@@ -9,6 +9,8 @@ from __future__ import annotations
 from django.core.validators import MinLengthValidator
 from django.db import models
 
+from apps.core.i18n import TranslatableModel
+
 from apps.core.uploads import validate_document_upload, validate_image_upload
 from apps.core.models import TimeStampedModel
 
@@ -23,11 +25,20 @@ class NavigationGroup(models.TextChoices):
     FOOTER = "footer", "التذييل"
 
 
-class HomeSection(TimeStampedModel):
+class HomeSection(TranslatableModel, TimeStampedModel):
+    translatable_fields = ("heading", "eyebrow", "body",)
+
     key = models.SlugField("المفتاح", max_length=60, unique=True)
     heading = models.CharField("العنوان", max_length=160, blank=True, default="")
+    heading_en = models.CharField(
+        "العنوان (إنجليزي)", max_length=160, blank=True, default=""
+    )
     eyebrow = models.CharField("عنوان فرعي", max_length=120, blank=True, default="")
+    eyebrow_en = models.CharField(
+        "عنوان فرعي (إنجليزي)", max_length=120, blank=True, default=""
+    )
     body = models.TextField("النص", blank=True, default="")
+    body_en = models.TextField("النص (إنجليزي)", blank=True, default="")
     position = models.PositiveSmallIntegerField("الترتيب", default=0)
     is_active = models.BooleanField("مفعّل", default=True)
     #: Structured presentation copy for the section (hero blocks, trust strips,
@@ -36,6 +47,14 @@ class HomeSection(TimeStampedModel):
     #: what makes the page copy staff-editable. Layout and component boundaries
     #: are NOT stored here — only the words and the local asset paths.
     data = models.JSONField("المحتوى المنسّق", default=dict, blank=True)
+    #: The English copy for the same structure. Deliberately a *sparse* overlay
+    #: rather than a full second document: staff translate the keys that matter
+    #: and :meth:`resolved_data` deep-merges them over the Arabic, so a partly
+    #: translated section renders English where it has it and correct Arabic
+    #: everywhere else instead of collapsing into a half-empty page.
+    data_en = models.JSONField(
+        "المحتوى المنسّق (إنجليزي)", default=dict, blank=True
+    )
 
     class Meta:
         verbose_name = "قسم الصفحة الرئيسية"
@@ -45,9 +64,48 @@ class HomeSection(TimeStampedModel):
     def __str__(self) -> str:
         return self.heading or self.key
 
+    def resolved_data(self, language: str | None = None) -> dict:
+        """``data`` for the active language, with English overlaid where present."""
+        from apps.core.i18n import active_language
 
-class Banner(TimeStampedModel):
+        if (language or active_language()) == "ar" or not self.data_en:
+            return self.data or {}
+        return deep_merge(self.data or {}, self.data_en)
+
+
+def deep_merge(base, overlay):
+    """Overlay non-empty values from ``overlay`` onto ``base``, recursively.
+
+    Lists are merged element-wise so a translator can supply English for the
+    second card in a list of four without having to restate the other three.
+    A ``None`` or empty string in the overlay means "not translated", never
+    "blank it out".
+    """
+    if isinstance(base, dict) and isinstance(overlay, dict):
+        merged = dict(base)
+        for key, value in overlay.items():
+            merged[key] = deep_merge(base.get(key), value) if key in base else value
+        return merged
+    if isinstance(base, list) and isinstance(overlay, list):
+        merged = list(base)
+        for index, value in enumerate(overlay):
+            if index < len(merged):
+                merged[index] = deep_merge(merged[index], value)
+            else:
+                merged.append(value)
+        return merged
+    if overlay in (None, "", {}, []):
+        return base
+    return overlay
+
+
+class Banner(TranslatableModel, TimeStampedModel):
+    translatable_fields = ("title",)
+
     title = models.CharField("العنوان", max_length=160)
+    title_en = models.CharField(
+        "العنوان (إنجليزي)", max_length=160, blank=True, default=""
+    )
     image = models.ImageField(
         "الصورة", upload_to="banners/", blank=True, null=True,
         validators=[validate_image_upload],
@@ -68,8 +126,13 @@ class Banner(TimeStampedModel):
         return self.title
 
 
-class Partner(TimeStampedModel):
+class Partner(TranslatableModel, TimeStampedModel):
+    translatable_fields = ("name",)
+
     name = models.CharField("الاسم", max_length=120)
+    name_en = models.CharField(
+        "الاسم (إنجليزي)", max_length=120, blank=True, default=""
+    )
     logo = models.ImageField(
         "الشعار", upload_to="partners/", blank=True, null=True,
         validators=[validate_image_upload],
@@ -87,10 +150,16 @@ class Partner(TimeStampedModel):
         return self.name
 
 
-class FAQ(TimeStampedModel):
+class FAQ(TranslatableModel, TimeStampedModel):
+    translatable_fields = ("question", "answer",)
+
     legacy_id = models.CharField(max_length=64, blank=True, default="", db_index=True)
     question = models.CharField("السؤال", max_length=255)
+    question_en = models.CharField(
+        "السؤال (إنجليزي)", max_length=255, blank=True, default=""
+    )
     answer = models.TextField("الإجابة")
+    answer_en = models.TextField("الإجابة (إنجليزي)", blank=True, default="")
     page = models.CharField("الصفحة", max_length=40, blank=True, default="")
     products = models.ManyToManyField(
         "catalog.Product", blank=True, related_name="faqs", verbose_name="المنتجات"
@@ -107,12 +176,24 @@ class FAQ(TimeStampedModel):
         return self.question
 
 
-class StaticPage(TimeStampedModel):
+class StaticPage(TranslatableModel, TimeStampedModel):
+    translatable_fields = ("title", "body", "seo_title", "seo_description",)
+
     slug = models.SlugField("المعرف", max_length=80, unique=True)
     title = models.CharField("العنوان", max_length=160)
+    title_en = models.CharField(
+        "العنوان (إنجليزي)", max_length=160, blank=True, default=""
+    )
     body = models.TextField("المحتوى", blank=True, default="")
+    body_en = models.TextField("المحتوى (إنجليزي)", blank=True, default="")
     seo_title = models.CharField("عنوان SEO", max_length=160, blank=True, default="")
+    seo_title_en = models.CharField(
+        "عنوان SEO (إنجليزي)", max_length=160, blank=True, default=""
+    )
     seo_description = models.CharField("وصف SEO", max_length=255, blank=True, default="")
+    seo_description_en = models.CharField(
+        "وصف SEO (إنجليزي)", max_length=255, blank=True, default=""
+    )
     is_published = models.BooleanField("منشورة", default=True)
 
     class Meta:
@@ -124,7 +205,9 @@ class StaticPage(TimeStampedModel):
         return self.title
 
 
-class NavigationItem(TimeStampedModel):
+class NavigationItem(TranslatableModel, TimeStampedModel):
+    translatable_fields = ("label",)
+
     parent = models.ForeignKey(
         "self",
         on_delete=models.CASCADE,
@@ -134,6 +217,9 @@ class NavigationItem(TimeStampedModel):
         verbose_name="العنصر الأعلى",
     )
     label = models.CharField("النص", max_length=120)
+    label_en = models.CharField(
+        "النص (إنجليزي)", max_length=120, blank=True, default=""
+    )
     href = models.CharField("الرابط", max_length=255, blank=True, default="")
     route_name = models.CharField(
         "اسم المسار",

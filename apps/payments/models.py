@@ -18,6 +18,8 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
 
+from apps.core.i18n import TranslatableModel
+
 from apps.core.models import TimeStampedModel
 
 
@@ -63,16 +65,27 @@ class RefundState(models.TextChoices):
     FAILED = "failed", "فشل"
 
 
-class PaymentMethod(TimeStampedModel):
+class PaymentMethod(TranslatableModel, TimeStampedModel):
     """Mirrors the six storefront options by code (FR-072)."""
+
+    translatable_fields = ("label", "description", "notice",)
 
     code = models.SlugField("الكود", max_length=40, unique=True)
     label = models.CharField("الاسم", max_length=80)
+    label_en = models.CharField(
+        "الاسم (إنجليزي)", max_length=80, blank=True, default=""
+    )
     description = models.CharField("الوصف", max_length=200, blank=True, default="")
+    description_en = models.CharField(
+        "الوصف (إنجليزي)", max_length=200, blank=True, default=""
+    )
     icon_path = models.CharField("الأيقونة", max_length=200, blank=True, default="")
     notice = models.CharField(
         "تنويه", max_length=255, blank=True, default="",
         help_text="يُعرض عندما تكون الطريقة غير مفعّلة بعد.",
+    )
+    notice_en = models.CharField(
+        "تنويه (إنجليزي)", max_length=255, blank=True, default=""
     )
     is_active = models.BooleanField("معروضة", default=True)
     is_integrated = models.BooleanField(

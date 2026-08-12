@@ -1,0 +1,11 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h1>{{ title }}</h1>
+<p>الصور الحالية لهذا المنتج: {{ existing_count }}. تُضاف الصور الجديدة بعدها بالترتيب.</p>
+<p>يمر كل ملف بنفس فحوص الرفع المطبّقة في نموذج المنتج: تُقرأ بصمة الملف نفسه لا امتداده، وتُرفض صيغة SVG والصور الضخمة.</p>
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="default">رفع الصور</button>
+  <a class="button cancel-link" href="{% url 'admin:catalog_product_change' product.pk %}">إلغاء</a>
+</form>
+{% endblock %}

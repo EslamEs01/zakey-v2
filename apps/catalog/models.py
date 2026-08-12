@@ -15,6 +15,8 @@ from decimal import Decimal
 from django.core.validators import MinValueValidator
 from django.db import models
 
+from apps.core.i18n import TranslatableModel
+
 from apps.core.uploads import validate_document_upload, validate_image_upload
 from apps.core.models import (
     PublicationStatus,
@@ -36,7 +38,9 @@ class Availability(models.TextChoices):
     UNAVAILABLE = "unavailable", "غير متاح"
 
 
-class Category(PublishableModel):
+class Category(TranslatableModel, PublishableModel):
+    translatable_fields = ("name", "description", "kind", "image_alt", "seo_title", "seo_description",)
+
     parent = models.ForeignKey(
         "self",
         on_delete=models.PROTECT,
@@ -48,8 +52,15 @@ class Category(PublishableModel):
     legacy_id = models.CharField(max_length=64, blank=True, default="", db_index=True)
     slug = models.SlugField("المعرف", max_length=80, unique=True)
     name = models.CharField("الاسم", max_length=120)
+    name_en = models.CharField(
+        "الاسم (إنجليزي)", max_length=120, blank=True, default=""
+    )
     description = models.TextField("الوصف", blank=True, default="")
+    description_en = models.TextField("الوصف (إنجليزي)", blank=True, default="")
     kind = models.CharField("النوع", max_length=40, blank=True, default="")
+    kind_en = models.CharField(
+        "النوع (إنجليزي)", max_length=40, blank=True, default=""
+    )
     image = models.ImageField(
         "الصورة", upload_to="categories/", blank=True, null=True,
         validators=[validate_image_upload],
@@ -58,11 +69,20 @@ class Category(PublishableModel):
     # The category card renders a fixed-ratio image, so alt/width/height are
     # part of the rendering contract, not decoration (frontend-contract §3).
     image_alt = models.CharField("النص البديل", max_length=200, blank=True, default="")
+    image_alt_en = models.CharField(
+        "النص البديل (إنجليزي)", max_length=200, blank=True, default=""
+    )
     image_width = models.PositiveIntegerField("العرض", default=0)
     image_height = models.PositiveIntegerField("الارتفاع", default=0)
     position = models.PositiveSmallIntegerField("الترتيب", default=0)
     seo_title = models.CharField("عنوان SEO", max_length=160, blank=True, default="")
+    seo_title_en = models.CharField(
+        "عنوان SEO (إنجليزي)", max_length=160, blank=True, default=""
+    )
     seo_description = models.CharField("وصف SEO", max_length=255, blank=True, default="")
+    seo_description_en = models.CharField(
+        "وصف SEO (إنجليزي)", max_length=255, blank=True, default=""
+    )
 
     objects = PublishableQuerySet.as_manager()
 
@@ -82,9 +102,14 @@ class Category(PublishableModel):
         return self.legacy_image_path
 
 
-class Brand(TimeStampedModel):
+class Brand(TranslatableModel, TimeStampedModel):
+    translatable_fields = ("name",)
+
     slug = models.SlugField("المعرف", max_length=80, unique=True)
     name = models.CharField("الاسم", max_length=120)
+    name_en = models.CharField(
+        "الاسم (إنجليزي)", max_length=120, blank=True, default=""
+    )
     logo = models.ImageField(
         "الشعار", upload_to="brands/", blank=True, null=True,
         validators=[validate_image_upload],
@@ -99,12 +124,21 @@ class Brand(TimeStampedModel):
         return self.name
 
 
-class Collection(PublishableModel):
+class Collection(TranslatableModel, PublishableModel):
+    translatable_fields = ("name", "description", "promotion_eyebrow",)
+
     legacy_id = models.CharField(max_length=64, blank=True, default="", db_index=True)
     slug = models.SlugField("المعرف", max_length=80, unique=True)
     name = models.CharField("الاسم", max_length=120)
+    name_en = models.CharField(
+        "الاسم (إنجليزي)", max_length=120, blank=True, default=""
+    )
     description = models.TextField("الوصف", blank=True, default="")
+    description_en = models.TextField("الوصف (إنجليزي)", blank=True, default="")
     promotion_eyebrow = models.CharField("عنوان فرعي", max_length=80, blank=True, default="")
+    promotion_eyebrow_en = models.CharField(
+        "عنوان فرعي (إنجليزي)", max_length=80, blank=True, default=""
+    )
     promotion_tone = models.CharField("النغمة", max_length=40, blank=True, default="")
     position = models.PositiveSmallIntegerField("الترتيب", default=0)
     products = models.ManyToManyField(
@@ -158,12 +192,21 @@ class ProductQuerySet(PublishableQuerySet):
         )
 
 
-class Product(PublishableModel):
+class Product(TranslatableModel, PublishableModel):
+    translatable_fields = ("name", "short_description", "description", "badge", "instalment_message", "seo_title", "seo_description",)
+
     legacy_id = models.CharField(max_length=64, blank=True, default="", db_index=True)
     slug = models.SlugField("المعرف", max_length=120, unique=True)
     name = models.CharField("الاسم", max_length=160)
+    name_en = models.CharField(
+        "الاسم (إنجليزي)", max_length=160, blank=True, default=""
+    )
     short_description = models.CharField("وصف مختصر", max_length=255, blank=True, default="")
+    short_description_en = models.CharField(
+        "وصف مختصر (إنجليزي)", max_length=255, blank=True, default=""
+    )
     description = models.TextField("الوصف", blank=True, default="")
+    description_en = models.TextField("الوصف (إنجليزي)", blank=True, default="")
     category = models.ForeignKey(
         Category, on_delete=models.PROTECT, related_name="products", verbose_name="التصنيف"
     )
@@ -176,8 +219,14 @@ class Product(PublishableModel):
         verbose_name="العلامة التجارية",
     )
     badge = models.CharField("الشارة", max_length=60, blank=True, default="")
+    badge_en = models.CharField(
+        "الشارة (إنجليزي)", max_length=60, blank=True, default=""
+    )
     instalment_message = models.CharField(
         "رسالة التقسيط", max_length=255, blank=True, default=""
+    )
+    instalment_message_en = models.CharField(
+        "رسالة التقسيط (إنجليزي)", max_length=255, blank=True, default=""
     )
     same_day_supported = models.BooleanField("يدعم التوصيل في اليوم نفسه", default=False)
     installation_supported = models.BooleanField("يدعم التركيب", default=False)
@@ -189,7 +238,13 @@ class Product(PublishableModel):
     review_count = models.PositiveIntegerField("عدد التقييمات", default=0)
 
     seo_title = models.CharField("عنوان SEO", max_length=160, blank=True, default="")
+    seo_title_en = models.CharField(
+        "عنوان SEO (إنجليزي)", max_length=160, blank=True, default=""
+    )
     seo_description = models.CharField("وصف SEO", max_length=255, blank=True, default="")
+    seo_description_en = models.CharField(
+        "وصف SEO (إنجليزي)", max_length=255, blank=True, default=""
+    )
     position = models.PositiveSmallIntegerField("الترتيب", default=0)
 
     related_products = models.ManyToManyField(
@@ -278,7 +333,7 @@ class Product(PublishableModel):
         return self.is_published and self.availability != Availability.UNAVAILABLE
 
 
-class ProductVariant(TimeStampedModel):
+class ProductVariant(TranslatableModel, TimeStampedModel):
     """The finish axis (FR-017).
 
     The approved storefront has exactly one option dimension: ``finishes``
@@ -287,12 +342,17 @@ class ProductVariant(TimeStampedModel):
     without a schema change.
     """
 
+    translatable_fields = ("finish_label",)
+
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="variants", verbose_name="المنتج"
     )
     sku = models.CharField("SKU", max_length=64, unique=True)
     finish_id = models.CharField("معرف اللون", max_length=64, blank=True, default="")
     finish_label = models.CharField("اللون", max_length=80, blank=True, default="")
+    finish_label_en = models.CharField(
+        "اللون (إنجليزي)", max_length=80, blank=True, default=""
+    )
     swatch_hex = models.CharField("لون العينة", max_length=9, blank=True, default="")
     price = models.DecimalField(
         "السعر (شامل الضريبة)",
@@ -333,7 +393,9 @@ class ProductVariant(TimeStampedModel):
         return f"{self.product.name} — {self.finish_label or self.sku}"
 
 
-class ProductImage(TimeStampedModel):
+class ProductImage(TranslatableModel, TimeStampedModel):
+    translatable_fields = ("alt",)
+
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="images", verbose_name="المنتج"
     )
@@ -350,6 +412,9 @@ class ProductImage(TimeStampedModel):
         help_text="مسار الأصل داخل static؛ يحافظ على ثبات الاستيراد.",
     )
     alt = models.CharField("النص البديل", max_length=200)
+    alt_en = models.CharField(
+        "النص البديل (إنجليزي)", max_length=200, blank=True, default=""
+    )
     width = models.PositiveIntegerField("العرض", default=0)
     height = models.PositiveIntegerField("الارتفاع", default=0)
     position = models.PositiveSmallIntegerField("الترتيب", default=0)
@@ -370,13 +435,21 @@ class ProductImage(TimeStampedModel):
         return self.legacy_path
 
 
-class ProductFeature(TimeStampedModel):
+class ProductFeature(TranslatableModel, TimeStampedModel):
+    translatable_fields = ("label", "description",)
+
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="features", verbose_name="المنتج"
     )
     key = models.SlugField("المفتاح", max_length=60, db_index=True)
     label = models.CharField("الاسم", max_length=120)
+    label_en = models.CharField(
+        "الاسم (إنجليزي)", max_length=120, blank=True, default=""
+    )
     description = models.CharField("الوصف", max_length=255, blank=True, default="")
+    description_en = models.CharField(
+        "الوصف (إنجليزي)", max_length=255, blank=True, default=""
+    )
     position = models.PositiveSmallIntegerField("الترتيب", default=0)
 
     class Meta:
@@ -394,7 +467,9 @@ class ProductFeature(TimeStampedModel):
         return self.label
 
 
-class SpecificationGroup(TimeStampedModel):
+class SpecificationGroup(TranslatableModel, TimeStampedModel):
+    translatable_fields = ("label",)
+
     product = models.ForeignKey(
         Product,
         on_delete=models.CASCADE,
@@ -403,6 +478,9 @@ class SpecificationGroup(TimeStampedModel):
     )
     legacy_id = models.CharField(max_length=64, blank=True, default="")
     label = models.CharField("المجموعة", max_length=120)
+    label_en = models.CharField(
+        "المجموعة (إنجليزي)", max_length=120, blank=True, default=""
+    )
     position = models.PositiveSmallIntegerField("الترتيب", default=0)
 
     class Meta:
@@ -414,7 +492,9 @@ class SpecificationGroup(TimeStampedModel):
         return self.label
 
 
-class SpecificationItem(models.Model):
+class SpecificationItem(TranslatableModel, models.Model):
+    translatable_fields = ("label", "value",)
+
     group = models.ForeignKey(
         SpecificationGroup,
         on_delete=models.CASCADE,
@@ -422,7 +502,13 @@ class SpecificationItem(models.Model):
         verbose_name="المجموعة",
     )
     label = models.CharField("البند", max_length=120)
+    label_en = models.CharField(
+        "البند (إنجليزي)", max_length=120, blank=True, default=""
+    )
     value = models.CharField("القيمة", max_length=255)
+    value_en = models.CharField(
+        "القيمة (إنجليزي)", max_length=255, blank=True, default=""
+    )
     position = models.PositiveSmallIntegerField("الترتيب", default=0)
 
     class Meta:
@@ -434,12 +520,17 @@ class SpecificationItem(models.Model):
         return f"{self.label}: {self.value}"
 
 
-class ProductDocument(TimeStampedModel):
+class ProductDocument(TranslatableModel, TimeStampedModel):
+    translatable_fields = ("label", "notice",)
+
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="documents", verbose_name="المنتج"
     )
     legacy_id = models.CharField(max_length=64, blank=True, default="")
     label = models.CharField("الاسم", max_length=120)
+    label_en = models.CharField(
+        "الاسم (إنجليزي)", max_length=120, blank=True, default=""
+    )
     file = models.FileField(
         "الملف", upload_to="documents/", blank=True, null=True,
         validators=[validate_document_upload],
@@ -452,6 +543,9 @@ class ProductDocument(TimeStampedModel):
         blank=True,
         default="",
         help_text="سطر توضيحي يظهر أسفل اسم المستند في صفحة المنتج.",
+    )
+    notice_en = models.CharField(
+        "تنويه (إنجليزي)", max_length=255, blank=True, default=""
     )
     position = models.PositiveSmallIntegerField("الترتيب", default=0)
 

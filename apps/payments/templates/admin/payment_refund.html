@@ -1,0 +1,18 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h1>{{ title }}</h1>
+<p>يُنفَّذ الاسترجاع عبر الخدمة المعتمدة: يُتحقق من المتبقي القابل للاسترجاع، وتتحرك حالة الدفعة معه، ويُسجَّل حدث ومراجعة باسم المنفّذ.</p>
+<ul>
+  {% for payment in payments %}
+    <li>{{ payment.order.number }} — {{ payment.amount }} {{ payment.currency }} (المتبقي: {{ payment.refundable_amount }})</li>
+  {% endfor %}
+</ul>
+<form method="post">{% csrf_token %}
+  {{ form.as_p }}
+  {% for payment in payments %}
+    <input type="hidden" name="_selected_action" value="{{ payment.pk }}">
+  {% endfor %}
+  <input type="hidden" name="action" value="refund_payments">
+  <button type="submit" name="apply" class="default">تنفيذ الاسترجاع</button>
+</form>
+{% endblock %}

@@ -124,6 +124,16 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round
 .header-actions { display: flex; align-items: center; gap: 3px; }
 .header-cta { min-height: 44px; margin-inline-start: 8px; padding-inline: 20px; }
 .menu-toggle { display: none; }
+
+/* Language switcher (FR-136). Logical properties throughout, like the rest of
+   this sheet, so it needs no RTL/LTR variant of its own. */
+.language-switcher { display: inline-flex; align-items: center; gap: 2px; padding-inline: 6px; border: 1px solid var(--line); border-radius: 999px; background: var(--canvas); }
+.language-switcher__icon { display: grid; place-items: center; color: var(--muted); }
+.language-switcher__icon .icon { width: 18px; height: 18px; }
+.language-switcher__option { min-height: 32px; padding-inline: 9px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.language-switcher__option:hover { color: var(--navy); }
+.language-switcher__option.is-current { color: var(--navy); background: #fff; box-shadow: 0 1px 3px rgb(13 27 61 / 10%); }
+.mobile-language { padding: 12px 4px 4px; }
 .search-panel { background: #fff; border-bottom: 1px solid var(--line); }
 .search-form { display: flex; gap: 8px; padding-block: 10px; }
 .search-field { position: relative; flex: 1; }

@@ -5,6 +5,10 @@ from __future__ import annotations
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 
+from import_export.admin import ExportMixin
+
+from apps.core.resources import CustomerProfileResource
+
 from .models import Address, CustomerProfile, User
 
 
@@ -31,7 +35,8 @@ class UserAdmin(DjangoUserAdmin):
 
 
 @admin.register(CustomerProfile)
-class CustomerProfileAdmin(admin.ModelAdmin):
+class CustomerProfileAdmin(ExportMixin, admin.ModelAdmin):
+    resource_classes = (CustomerProfileResource,)
     list_display = ("full_name", "email", "phone_display", "email_verified", "phone_verified", "created_at")
     list_filter = ("email_verified", "phone_verified", "accepts_marketing")
     search_fields = ("full_name", "user__email", "phone")

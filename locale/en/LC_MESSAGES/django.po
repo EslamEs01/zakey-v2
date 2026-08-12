@@ -1,0 +1,1562 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ZAKEY v2\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+#: templates/pages/account.html
+msgid "%(address_street)s، مبنى %(address_building)s"
+msgstr "%(address_street)s, building %(address_building)s"
+
+#: templates/pages/order_confirmation.html
+msgid "%(amount)s ج.م"
+msgstr "EGP %(amount)s"
+
+#: templates/pages/product_detail.html
+msgid "%(download_format)s — تنزيل"
+msgstr "%(download_format)s — download"
+
+#: templates/pages/product_detail.html
+msgid "%(product_compareatprice)s ج.م"
+msgstr "EGP %(product_compareatprice)s"
+
+#: templates/pages/order_confirmation.html
+msgid "%(street)s، مبنى %(building)s"
+msgstr "%(street)s, building %(building)s"
+
+#: templates/pages/account.html
+#: templates/pages/cart.html
+#: templates/pages/checkout.html
+#: templates/pages/order_confirmation.html
+#: templates/pages/wishlist.html
+msgid "%(value0)s ج.م"
+msgstr "EGP %(value0)s"
+
+#: templates/pages/account.html
+msgid "%(value0)s — %(order_lines_count)s منتج"
+msgstr "%(value0)s — %(order_lines_count)s item(s)"
+
+#: templates/pages/account.html
+msgid "%(wishlist_count)s منتجات محفوظة"
+msgstr "%(wishlist_count)s saved item(s)"
+
+#: templates/base.html
+msgid "ZAKEY | أقفال ذكية بثقة أكبر"
+msgstr "ZAKEY | Smart locks you can trust"
+
+#: templates/pages/home.html
+msgid "ZAKEY | أقفال ذكية للبيت المصري"
+msgstr "ZAKEY | Smart locks for the Egyptian home"
+
+#: templates/pages/about.html
+msgid "ZAKEY في أرقام"
+msgstr "ZAKEY in numbers"
+
+#: templates/base.html
+msgid "ZAKEY لحلول الأقفال الذكية والدخول الآمن للمنزل المصري، مع خيارات تركيب ودعم باللغة العربية."
+msgstr "ZAKEY builds smart locks and secure entry for the Egyptian home, with installation options and Arabic-language support."
+
+#: templates/partials/footer.html
+#: templates/partials/header.html
+msgid "ZAKEY — الرئيسية"
+msgstr "ZAKEY — Home"
+
+#: templates/partials/footer.html
+msgid "© 2026 ZAKEY. جميع الحقوق محفوظة."
+msgstr "© 2026 ZAKEY. All rights reserved."
+
+#: templates/pages/cart.html
+msgid "أدخل الكود"
+msgstr "Enter the code"
+
+#: templates/pages/cart.html
+msgid "أدخل كود الخصم الخاص بك إن وُجد."
+msgstr "Enter your discount code, if you have one."
+
+#: templates/pages/account.html
+msgid "أرسل رابط إعادة التعيين"
+msgstr "Send reset link"
+
+#: templates/pages/account.html
+msgid "أرغب في تلقي أخبار ZAKEY"
+msgstr "I would like to receive ZAKEY news"
+
+#: templates/pages/checkout.html
+msgid "أرغب في طلب خدمة تركيب"
+msgstr "I would like to request installation"
+
+#: templates/pages/cart.html
+#: templates/pages/checkout.html
+msgid "أضف %(amount)s ج.م للحصول على شحن مجاني."
+msgstr "Add EGP %(amount)s more for free shipping."
+
+#: templates/pages/account.html
+msgid "أضف عنوانًا جديدًا"
+msgstr "Add a new address"
+
+#: templates/pages/checkout.html
+msgid "أضف منتجًا إلى السلة أولًا، ثم ارجع لإتمام بيانات الطلب."
+msgstr "Add a product to your cart first, then come back to complete your order details."
+
+#: templates/pages/contact.html
+msgid "أعد المحاولة"
+msgstr "Try again"
+
+#: templates/pages/500.html
+msgid "أعد تحميل الصفحة"
+msgstr "Reload the page"
+
+#: templates/pages/account.html
+msgid "أقسام الحساب"
+msgstr "Account sections"
+
+#: templates/pages/shop.html
+msgid "أقفال ZAKEY الذكية"
+msgstr "ZAKEY smart locks"
+
+#: templates/pages/shop.html
+msgid "أقفال ذكية"
+msgstr "Smart locks"
+
+#: templates/pages/home.html
+msgid "أمانًا"
+msgstr "secure"
+
+#: templates/pages/contact.html
+msgid "أو"
+msgstr "or"
+
+#: templates/pages/checkout.html
+msgid "أوافق على الشروط والأحكام"
+msgstr "I agree to the terms and conditions"
+
+#: templates/pages/checkout.html
+msgid "إتمام الطلب"
+msgstr "Checkout"
+
+#: templates/pages/checkout.html
+msgid "إتمام الطلب | ZAKEY"
+msgstr "Checkout | ZAKEY"
+
+#: templates/pages/contact.html
+msgid "إجابات مختصرة عن الشحن والتركيب والضمان والاسترجاع."
+msgstr "Short answers about shipping, installation, warranty and returns."
+
+#: templates/pages/account.html
+msgid "إدارة العناوين ووسائل الدفع بسهولة."
+msgstr "Manage addresses and payment methods easily."
+
+#: templates/pages/account.html
+msgid "إدارة حسابك"
+msgstr "Manage your account"
+
+#: templates/pages/wishlist.html
+msgid "إزالة"
+msgstr "Remove"
+
+#: templates/components/product_card.html
+msgid "إزالة %(name)s من المفضلة"
+msgstr "Remove %(name)s from your wishlist"
+
+#: templates/pages/cart.html
+msgid "إزالة من السلة"
+msgstr "Remove from cart"
+
+#: templates/components/product_card.html
+msgid "إضافة %(name)s إلى المفضلة"
+msgstr "Add %(name)s to your wishlist"
+
+#: templates/pages/product_detail.html
+#: templates/pages/wishlist.html
+msgid "إضافة إلى السلة"
+msgstr "Add to cart"
+
+#: templates/pages/shop.html
+msgid "إعادة المحاولة"
+msgstr "Try again"
+
+#: templates/partials/header.html
+msgid "إغلاق البحث"
+msgstr "Close search"
+
+#: templates/pages/shop.html
+msgid "إغلاق الفلاتر"
+msgstr "Close filters"
+
+#: templates/partials/header.html
+msgid "إغلاق القائمة"
+msgstr "Close menu"
+
+#: templates/components/catalogue_filters.html
+msgid "إلى"
+msgstr "to"
+
+#: templates/pages/account.html
+msgid "إنشاء الحساب"
+msgstr "Create account"
+
+#: templates/pages/account.html
+msgid "إنشاء حساب جديد"
+msgstr "Create a new account"
+
+#: templates/pages/404.html
+msgid "ابحث عمّا كنت تريده"
+msgstr "Search for what you were looking for"
+
+#: templates/pages/404.html
+#: templates/partials/header.html
+msgid "ابحث عن الأقفال والميزات..."
+msgstr "Search locks and features..."
+
+#: templates/pages/404.html
+#: templates/partials/header.html
+msgid "ابحث عن قفل أو ميزة"
+msgstr "Search for a lock or a feature"
+
+#: templates/pages/contact.html
+msgid "ابدأ استفسارك"
+msgstr "Start your enquiry"
+
+#: templates/pages/account.html
+msgid "ابدأ التسوق"
+msgstr "Start shopping"
+
+#: templates/components/newsletter.html
+msgid "ابقَ على اطلاع"
+msgstr "Stay in the loop"
+
+#: templates/pages/account.html
+msgid "اجعله العنوان الافتراضي"
+msgstr "Make this the default address"
+
+#: templates/pages/account.html
+#: templates/pages/checkout.html
+msgid "اختر المحافظة"
+msgstr "Choose a governorate"
+
+#: templates/pages/checkout.html
+msgid "اختر المنطقة إن كانت مدرجة"
+msgstr "Choose your area if it is listed"
+
+#: templates/pages/checkout.html
+msgid "اختر طريقة الدفع"
+msgstr "Choose a payment method"
+
+#: templates/pages/contact.html
+msgid "اختر موضوعًا"
+msgstr "Choose a subject"
+
+#: templates/pages/home.html
+msgid "اختيارات بارزة"
+msgstr "Featured picks"
+
+#: templates/pages/wishlist.html
+msgid "اختياراتك المفضلة"
+msgstr "Your saved picks"
+
+#: templates/pages/account.html
+#: templates/pages/checkout.html
+msgid "اختياري"
+msgstr "Optional"
+
+#: templates/pages/home.html
+msgid "ادخل عالمًا أكثر"
+msgstr "Step into a more"
+
+#: templates/pages/wishlist.html
+msgid "استخدم زر المفضلة في بطاقات المنتجات لتكوين قائمتك الخاصة."
+msgstr "Use the wishlist button on any product card to build your own list."
+
+#: templates/pages/account.html
+msgid "استخدم زر المفضلة في بطاقات المنتجات لتكوين قائمتك."
+msgstr "Use the wishlist button on any product card to build your list."
+
+#: templates/pages/contact.html
+msgid "استفسار عن منتج"
+msgstr "Product enquiry"
+
+#: templates/pages/cart.html
+msgid "استكشف الأقفال الذكية وأضف المنتج المناسب لتظهر تفاصيله هنا."
+msgstr "Explore the smart locks and add the right one to see its details here."
+
+#: templates/pages/home.html
+msgid "استكشف الحلول"
+msgstr "Explore solutions"
+
+#: templates/pages/home.html
+msgid "استكشف الفئة ←"
+msgstr "Explore category ←"
+
+#: templates/pages/wishlist.html
+msgid "استكشف المزيد"
+msgstr "Explore more"
+
+#: templates/pages/account.html
+#: templates/pages/checkout.html
+#: templates/pages/wishlist.html
+msgid "استكشف المنتجات"
+msgstr "Explore products"
+
+#: templates/pages/about.html
+msgid "استكشف مجموعة ZAKEY"
+msgstr "Explore the ZAKEY range"
+
+#: templates/pages/checkout.html
+msgid "اسم الشارع والعنوان التفصيلي"
+msgstr "Street name and full address"
+
+#: templates/pages/account.html
+msgid "اسم العنوان"
+msgstr "Address label"
+
+#: templates/pages/account.html
+msgid "اسم المستلم"
+msgstr "Recipient name"
+
+#: templates/components/newsletter.html
+msgid "اشترك"
+msgstr "Subscribe"
+
+#: templates/components/newsletter.html
+msgid "اشترك لتصلك أخبار المنتجات ونصائح اختيار القفل المناسب لمنزلك."
+msgstr "Subscribe for product news and advice on choosing the right lock for your home."
+
+#: templates/pages/product_detail.html
+msgid "اشترِ الآن"
+msgstr "Buy now"
+
+#: templates/pages/contact.html
+msgid "اكتب 20 حرفًا على الأقل حتى يظهر التحقق الناجح."
+msgstr "Write at least 20 characters for the check to pass."
+
+#: templates/pages/shop.html
+msgid "اكتب اسم منتج أو ميزة للبحث في مجموعة ZAKEY."
+msgstr "Type a product name or feature to search the ZAKEY range."
+
+#: templates/pages/checkout.html
+msgid "اكتب الاسم بالعربية كما سيظهر في بيانات المراجعة."
+msgstr "Write the name as it should appear on the order review."
+
+#: templates/pages/product_detail.html
+msgid "اكتشف الاستخدامات"
+msgstr "See how it is used"
+
+#: templates/pages/contact.html
+#: templates/pages/product_detail.html
+msgid "الأسئلة الشائعة"
+msgstr "FAQ"
+
+#: templates/pages/about.html
+msgid "الأسعار والتوافر وخيارات الشحن والتركيب المعروضة محتوى ما قبل الإطلاق، وتخضع للمراجعة قبل بدء التشغيل التجاري."
+msgstr "Prices, availability and the shipping and installation options shown are pre-launch content, subject to review before commercial operation begins."
+
+#: templates/pages/cart.html
+#: templates/pages/checkout.html
+#: templates/pages/order_confirmation.html
+msgid "الإجمالي"
+msgstr "Total"
+
+#: templates/pages/account.html
+msgid "الإعدادات"
+msgstr "Settings"
+
+#: templates/pages/product_detail.html
+msgid "الاستخدامات"
+msgstr "Use cases"
+
+#: templates/partials/footer.html
+msgid "الاسترجاع"
+msgstr "Returns"
+
+#: templates/pages/contact.html
+msgid "الاسترجاع والاستبدال"
+msgstr "Returns and exchanges"
+
+#: templates/pages/order_confirmation.html
+#: templates/pages/shop.html
+msgid "الاسم"
+msgstr "Name"
+
+#: templates/pages/account.html
+#: templates/pages/checkout.html
+msgid "الاسم بالكامل"
+msgstr "Full name"
+
+#: templates/pages/account.html
+msgid "الافتراضي"
+msgstr "Default"
+
+#: templates/pages/shop.html
+msgid "البحث"
+msgstr "Search"
+
+#: templates/components/newsletter.html
+#: templates/pages/account.html
+#: templates/pages/checkout.html
+msgid "البريد الإلكتروني"
+msgstr "Email"
+
+#: templates/pages/shop.html
+msgid "الترتيب"
+msgstr "Sort"
+
+#: templates/pages/order_confirmation.html
+msgid "التركيب"
+msgstr "Installation"
+
+#: templates/pages/product_detail.html
+msgid "التنزيلات"
+msgstr "Downloads"
+
+#: templates/partials/header.html
+msgid "التنقل الرئيسي"
+msgstr "Main navigation"
+
+#: templates/components/catalogue_filters.html
+msgid "التوافر"
+msgstr "Availability"
+
+#: templates/pages/checkout.html
+msgid "الحقول المعلّمة مطلوبة"
+msgstr "Marked fields are required"
+
+#: templates/pages/checkout.html
+msgid "الخدمة متاحة لعناوين القاهرة والجيزة والإسكندرية، وتُضاف رسومها إلى الإجمالي."
+msgstr "Available for addresses in Cairo, Giza and Alexandria; the fee is added to your total."
+
+#: templates/pages/cart.html
+#: templates/pages/checkout.html
+#: templates/pages/order_confirmation.html
+msgid "الخصم"
+msgstr "Discount"
+
+#: templates/partials/footer.html
+msgid "الخصوصية"
+msgstr "Privacy"
+
+#: templates/pages/checkout.html
+msgid "الخطوة الأولى"
+msgstr "Step one"
+
+#: templates/pages/checkout.html
+msgid "الخطوة الثالثة"
+msgstr "Step three"
+
+#: templates/pages/checkout.html
+msgid "الخطوة الثانية"
+msgstr "Step two"
+
+#: templates/partials/footer.html
+msgid "الدعم"
+msgstr "Support"
+
+#: templates/pages/checkout.html
+msgid "الدفع"
+msgstr "Payment"
+
+#: templates/pages/checkout.html
+msgid "الدفع الإلكتروني قيد التجهيز."
+msgstr "Online payment is being set up."
+
+#: templates/pages/cart.html
+#: templates/pages/order_confirmation.html
+#: templates/pages/product_detail.html
+#: templates/pages/shop.html
+#: templates/pages/wishlist.html
+#: templates/partials/header.html
+msgid "الرئيسية"
+msgstr "Home"
+
+#: templates/pages/404.html
+msgid "الرابط الذي فتحته غير موجود أو ربما تغيّر عنوانه. يمكنك العودة إلى المتجر ومتابعة التصفح."
+msgstr "The link you opened does not exist, or its address may have changed. You can go back to the shop and keep browsing."
+
+#: templates/partials/footer.html
+msgid "الروابط القانونية"
+msgstr "Legal links"
+
+#: templates/components/catalogue_filters.html
+msgid "السعر"
+msgstr "Price"
+
+#: templates/pages/product_detail.html
+msgid "السعر شامل ضريبة القيمة المضافة %(percent)s%%."
+msgstr "Price includes %(percent)s%% VAT."
+
+#: templates/pages/shop.html
+msgid "السعر: الأعلى أولًا"
+msgstr "Price: highest first"
+
+#: templates/pages/shop.html
+msgid "السعر: الأقل أولًا"
+msgstr "Price: lowest first"
+
+#: templates/pages/account.html
+msgid "الشارع والعنوان التفصيلي"
+msgstr "Street and full address"
+
+#: templates/pages/cart.html
+#: templates/pages/checkout.html
+#: templates/pages/order_confirmation.html
+msgid "الشحن"
+msgstr "Shipping"
+
+#: templates/pages/checkout.html
+#: templates/pages/contact.html
+#: templates/partials/footer.html
+msgid "الشحن والتركيب"
+msgstr "Shipping and installation"
+
+#: templates/components/newsletter.html
+#: templates/pages/contact.html
+#: templates/partials/footer.html
+msgid "الشركة"
+msgstr "Company"
+
+#: templates/pages/404.html
+msgid "الصفحة غير موجودة | ZAKEY"
+msgstr "Page not found | ZAKEY"
+
+#: templates/partials/footer.html
+msgid "الضمان"
+msgstr "Warranty"
+
+#: templates/pages/contact.html
+msgid "الضمان والدعم"
+msgstr "Warranty and support"
+
+#: templates/pages/checkout.html
+msgid "الطرق غير المتاحة معطّلة، ولن نطلب رقم بطاقة أو بيانات محفظة."
+msgstr "Unavailable methods are disabled, and we will never ask for a card number or wallet details."
+
+#: templates/pages/account.html
+msgid "الطلبات"
+msgstr "Orders"
+
+#: templates/pages/checkout.html
+msgid "العميل والعنوان"
+msgstr "Customer and address"
+
+#: templates/pages/account.html
+msgid "العناوين"
+msgstr "Addresses"
+
+#: templates/pages/order_confirmation.html
+msgid "العنوان"
+msgstr "Address"
+
+#: templates/pages/checkout.html
+msgid "العودة إلى الدفع"
+msgstr "Back to payment"
+
+#: templates/pages/404.html
+#: templates/pages/500.html
+msgid "العودة إلى الرئيسية"
+msgstr "Back to home"
+
+#: templates/pages/checkout.html
+msgid "العودة إلى الشحن"
+msgstr "Back to shipping"
+
+#: templates/components/catalogue_filters.html
+msgid "الفئة"
+msgstr "Category"
+
+#: templates/pages/shop.html
+msgid "الفلاتر"
+msgstr "Filters"
+
+#: templates/pages/shop.html
+msgid "الفلاتر النشطة"
+msgstr "Active filters"
+
+#: templates/partials/header.html
+msgid "القائمة"
+msgstr "Menu"
+
+#: templates/pages/product_detail.html
+msgid "الكمية"
+msgstr "Quantity"
+
+#: templates/admin/base_site.html
+#: templates/components/language_switcher.html
+msgid "اللغة"
+msgstr "Language"
+
+#: templates/pages/product_detail.html
+msgid "اللون"
+msgstr "Finish"
+
+#: templates/pages/500.html
+#: templates/pages/product_detail.html
+#: templates/pages/shop.html
+#: templates/partials/header.html
+msgid "المتجر"
+msgstr "Shop"
+
+#: templates/pages/cart.html
+#: templates/pages/checkout.html
+#: templates/pages/order_confirmation.html
+msgid "المجموع الفرعي"
+msgstr "Subtotal"
+
+#: templates/pages/shop.html
+msgid "المجموعة"
+msgstr "Collection"
+
+#: templates/pages/account.html
+#: templates/pages/checkout.html
+#: templates/pages/order_confirmation.html
+msgid "المحافظة"
+msgstr "Governorate"
+
+#: templates/pages/order_confirmation.html
+msgid "المدينة"
+msgstr "City"
+
+#: templates/pages/account.html
+#: templates/pages/checkout.html
+msgid "المدينة أو المركز"
+msgstr "City or district"
+
+#: templates/pages/checkout.html
+msgid "المراجعة"
+msgstr "Review"
+
+#: templates/components/catalogue_filters.html
+#: templates/pages/product_detail.html
+msgid "المزايا"
+msgstr "Features"
+
+#: templates/pages/404.html
+#: templates/pages/account.html
+#: templates/pages/product_detail.html
+#: templates/pages/wishlist.html
+#: templates/partials/footer.html
+#: templates/partials/header.html
+msgid "المفضلة"
+msgstr "Wishlist"
+
+#: templates/pages/wishlist.html
+msgid "المفضلة | ZAKEY"
+msgstr "Wishlist | ZAKEY"
+
+#: templates/partials/header.html
+msgid "المفضلة، %(wishlist_count)s عناصر"
+msgstr "Wishlist, %(wishlist_count)s item(s)"
+
+#: templates/pages/shop.html
+msgid "المميزة"
+msgstr "Featured"
+
+#: templates/partials/footer.html
+#: templates/partials/header.html
+msgid "المنتجات"
+msgstr "Products"
+
+#: templates/pages/account.html
+msgid "المنزل"
+msgstr "Home"
+
+#: templates/pages/order_confirmation.html
+msgid "المنطقة"
+msgstr "Area"
+
+#: templates/pages/checkout.html
+msgid "المنطقة المؤهلة للخدمات"
+msgstr "Service-eligible area"
+
+#: templates/pages/product_detail.html
+msgid "المواصفات"
+msgstr "Specifications"
+
+#: templates/pages/order_confirmation.html
+msgid "الموبايل"
+msgstr "Mobile"
+
+#: templates/pages/about.html
+msgid "الوضوح أولًا"
+msgstr "Clarity first"
+
+#: templates/pages/checkout.html
+msgid "بتأكيد الطلب أوافق على شروط البيع وسياسة الاسترجاع."
+msgstr "By confirming the order I agree to the terms of sale and the returns policy."
+
+#: templates/pages/404.html
+#: templates/partials/header.html
+msgid "بحث"
+msgstr "Search"
+
+#: templates/pages/checkout.html
+msgid "بيانات الشحن"
+msgstr "Shipping details"
+
+#: templates/pages/checkout.html
+msgid "بيانات العميل"
+msgstr "Customer details"
+
+#: templates/pages/checkout.html
+#: templates/pages/order_confirmation.html
+msgid "تأكيد الطلب"
+msgstr "Confirm order"
+
+#: templates/pages/account.html
+msgid "تأكيد كلمة المرور"
+msgstr "Confirm password"
+
+#: templates/pages/account.html
+msgid "تابع اختياراتك وعناوينك وطلباتك من مكان واحد."
+msgstr "Follow your picks, addresses and orders from one place."
+
+#: templates/pages/account.html
+msgid "تحديث بيانات الحساب من مكان واحد."
+msgstr "Update your account details from one place."
+
+#: templates/pages/about.html
+msgid "تخصصات متكاملة تعمل معًا لتقديم منتج مفهوم وخدمة يمكن الاعتماد عليها."
+msgstr "Complementary specialisms working together to deliver a product that makes sense and a service you can rely on."
+
+#: templates/base.html
+msgid "تخطي إلى المحتوى"
+msgstr "Skip to content"
+
+#: templates/pages/account.html
+msgid "تسجيل الخروج"
+msgstr "Sign out"
+
+#: templates/pages/account.html
+msgid "تسجيل الدخول"
+msgstr "Sign in"
+
+#: templates/pages/account.html
+msgid "تسجيل الدخول أو إنشاء حساب"
+msgstr "Sign in or create an account"
+
+#: templates/partials/header.html
+msgid "تسوق الآن"
+msgstr "Shop now"
+
+#: templates/pages/cart.html
+msgid "تسوّق الآن"
+msgstr "Shop now"
+
+#: templates/pages/home.html
+msgid "تسوّق حسب الفئة"
+msgstr "Shop by category"
+
+#: templates/pages/shop.html
+msgid "تصفية المنتجات"
+msgstr "Filter products"
+
+#: templates/components/catalogue_filters.html
+msgid "تصفية النتائج"
+msgstr "Filter results"
+
+#: templates/pages/about.html
+msgid "تصفّح الأقفال"
+msgstr "Browse locks"
+
+#: templates/pages/404.html
+msgid "تصفّح المتجر"
+msgstr "Browse the shop"
+
+#: templates/pages/account.html
+msgid "تصفّح المنتجات"
+msgstr "Browse products"
+
+#: templates/pages/contact.html
+msgid "تصفّح المنتجات لمعرفة التفاصيل الكاملة"
+msgstr "Browse the products for full details"
+
+#: templates/pages/cart.html
+msgid "تطبيق"
+msgstr "Apply"
+
+#: templates/pages/shop.html
+msgid "تطبيق الترتيب"
+msgstr "Apply sorting"
+
+#: templates/components/catalogue_filters.html
+msgid "تطبيق الفلاتر"
+msgstr "Apply filters"
+
+#: templates/pages/checkout.html
+msgid "تعديل"
+msgstr "Edit"
+
+#: templates/pages/checkout.html
+msgid "تعديل السلة"
+msgstr "Edit cart"
+
+#: templates/pages/checkout.html
+msgid "تعديل العنوان"
+msgstr "Edit address"
+
+#: templates/pages/cart.html
+msgid "تعديل الكمية"
+msgstr "Change quantity"
+
+#: templates/pages/shop.html
+msgid "تعذّر عرض النتائج"
+msgstr "Results could not be shown"
+
+#: templates/pages/500.html
+msgid "تعذّر عرض هذه الصفحة الآن. أعد المحاولة، أو انتقل إلى إحدى الصفحات المتاحة أدناه."
+msgstr "This page could not be shown right now. Try again, or go to one of the pages below."
+
+#: templates/pages/contact.html
+msgid "تعذّرت مراجعة البيانات. ما كتبته ما زال في الحقول ويمكنك المحاولة مجددًا."
+msgstr "We could not check your details. What you typed is still in the fields and you can try again."
+
+#: templates/pages/account.html
+msgid "تعيين كلمة مرور جديدة"
+msgstr "Set a new password"
+
+#: templates/pages/order_confirmation.html
+msgid "تفاصيل الطلب"
+msgstr "Order details"
+
+#: templates/pages/product_detail.html
+msgid "تفاصيل المنتج"
+msgstr "Product details"
+
+#: templates/pages/product_detail.html
+msgid "تقليل الكمية"
+msgstr "Decrease quantity"
+
+#: templates/pages/cart.html
+msgid "تقليل كمية %(line_name)s"
+msgstr "Decrease quantity of %(line_name)s"
+
+#: templates/pages/home.html
+msgid "تقنية دخول مرنة"
+msgstr "Flexible entry technology"
+
+#: templates/pages/order_confirmation.html
+msgid "تم استلام طلبك"
+msgstr "We have received your order"
+
+#: templates/pages/order_confirmation.html
+msgid "تم استلام طلبك | ZAKEY"
+msgstr "Order received | ZAKEY"
+
+#: templates/pages/cart.html
+msgid "تم تطبيق الكود <bdi lang=\"en\">%(code)s</bdi>."
+msgstr "Code <bdi lang=\"en\">%(code)s</bdi> applied."
+
+#: templates/partials/header.html
+msgid "تنقل الهاتف"
+msgstr "Mobile navigation"
+
+#: templates/pages/contact.html
+msgid "تواصل مع ZAKEY | المبيعات والتركيب والدعم"
+msgstr "Contact ZAKEY | Sales, installation and support"
+
+#: templates/pages/about.html
+msgid "تواصل مع الفريق"
+msgstr "Contact the team"
+
+#: templates/pages/404.html
+#: templates/pages/500.html
+#: templates/partials/footer.html
+#: templates/partials/header.html
+msgid "تواصل معنا"
+msgstr "Contact us"
+
+#: templates/components/product_card.html
+#: templates/pages/product_detail.html
+msgid "ج.م"
+msgstr "EGP"
+
+#: templates/pages/shop.html
+msgid "جار تحميل المنتجات"
+msgstr "Loading products"
+
+#: templates/pages/contact.html
+msgid "جارٍ التحقق..."
+msgstr "Checking..."
+
+#: templates/pages/contact.html
+msgid "جارٍ مراجعة البيانات في نسخة العرض. لن تُرسل الرسالة إلى أي خدمة."
+msgstr "Checking your details in the preview build. The message will not be sent to any service."
+
+#: templates/base.html
+msgid "جافاسكريبت مطلوب للعناصر التفاعلية في المتجر، مثل القوائم المنسدلة والنوافذ الحوارية. التصفح والشراء وإتمام الطلب تعمل بدونه."
+msgstr "JavaScript is required for interactive storefront features such as dropdown menus and dialogs. Browsing, shopping and checkout work without it."
+
+#: templates/pages/shop.html
+msgid "جرّب عبارة أقصر أو امسح بعض الاختيارات."
+msgstr "Try a shorter phrase, or clear some of your choices."
+
+#: templates/pages/500.html
+msgid "جرّب هذه الوجهات"
+msgstr "Try these destinations"
+
+#: templates/pages/order_confirmation.html
+msgid "حالة الطلب:"
+msgstr "Order status:"
+
+#: apps/catalog/selectors.py
+msgid "حتى %(amount)s ج.م"
+msgstr "up to EGP %(amount)s"
+
+#: templates/pages/500.html
+msgid "حدثت مشكلة مؤقتة"
+msgstr "Something went wrong temporarily"
+
+#: templates/pages/account.html
+msgid "حذف العنوان"
+msgstr "Delete address"
+
+#: templates/pages/500.html
+#: templates/pages/account.html
+#: templates/partials/footer.html
+#: templates/partials/header.html
+msgid "حسابي"
+msgstr "My account"
+
+#: templates/pages/account.html
+msgid "حسابي | ZAKEY"
+msgstr "My account | ZAKEY"
+
+#: templates/pages/home.html
+msgid "حضور نحيف."
+msgstr "slimmer presence."
+
+#: templates/pages/account.html
+msgid "حفظ التغييرات"
+msgstr "Save changes"
+
+#: templates/pages/account.html
+msgid "حفظ العنوان"
+msgstr "Save address"
+
+#: templates/pages/account.html
+msgid "حفظ كلمة المرور"
+msgstr "Save password"
+
+#: templates/pages/home.html
+msgid "حل مناسب لكل مدخل"
+msgstr "A fit for every entrance"
+
+#: templates/partials/footer.html
+msgid "حلول دخول ذكية تجمع بين الأمان العملي والتصميم الأنيق، مع دعم عربي يساعدك على اختيار الأنسب لبيتك."
+msgstr "Smart entry solutions that combine practical security with elegant design, backed by Arabic-language support to help you choose what suits your home."
+
+#: templates/pages/about.html
+msgid "خبرات ZAKEY"
+msgstr "ZAKEY expertise"
+
+#: templates/pages/checkout.html
+#: templates/pages/contact.html
+msgid "خدمة التركيب"
+msgstr "Installation service"
+
+#: templates/pages/product_detail.html
+msgid "خدمة التركيب متاحة للقاهرة والجيزة والإسكندرية"
+msgstr "Installation available in Cairo, Giza and Alexandria"
+
+#: templates/pages/checkout.html
+msgid "خطوات إتمام الطلب"
+msgstr "Checkout steps"
+
+#: templates/pages/account.html
+msgid "دخول"
+msgstr "Sign in"
+
+#: templates/pages/home.html
+msgid "دخول أسرع."
+msgstr "faster entry."
+
+#: templates/pages/contact.html
+msgid "دعم ما بعد البيع"
+msgstr "After-sales support"
+
+#: templates/pages/checkout.html
+msgid "راجع البيانات التالية"
+msgstr "Review the details below"
+
+#: templates/pages/account.html
+#: templates/pages/checkout.html
+msgid "رقم المبنى"
+msgstr "Building number"
+
+#: templates/pages/account.html
+msgid "رقم الموبايل"
+msgstr "Mobile number"
+
+#: templates/pages/checkout.html
+msgid "رقم الموبايل المصري"
+msgstr "Egyptian mobile number"
+
+#: templates/pages/500.html
+msgid "روابط استعادة"
+msgstr "Recovery links"
+
+#: templates/pages/404.html
+msgid "روابط مساعدة"
+msgstr "Helpful links"
+
+#: templates/pages/product_detail.html
+msgid "زيادة الكمية"
+msgstr "Increase quantity"
+
+#: templates/pages/cart.html
+msgid "زيادة كمية %(line_name)s"
+msgstr "Increase quantity of %(line_name)s"
+
+#: templates/pages/contact.html
+msgid "ستُنشر المدد والاستثناءات وخطوات طلب الاسترجاع عند اعتماد السياسة النهائية قبل الإطلاق."
+msgstr "Timeframes, exclusions and the steps to request a return will be published when the final policy is approved before launch."
+
+#: templates/pages/contact.html
+msgid "ستُنشر مدة الضمان وشروطه لكل منتج عند اعتماد سياسة ما بعد البيع قبل الإطلاق التجاري."
+msgstr "Warranty length and conditions for each product will be published when the after-sales policy is approved before commercial launch."
+
+#: templates/pages/404.html
+#: templates/pages/500.html
+#: templates/pages/cart.html
+#: templates/partials/header.html
+msgid "سلة التسوق"
+msgstr "Cart"
+
+#: templates/pages/cart.html
+msgid "سلة التسوق | ZAKEY"
+msgstr "Cart | ZAKEY"
+
+#: templates/partials/header.html
+msgid "سلة التسوق، %(cart_count)s عناصر"
+msgstr "Cart, %(cart_count)s item(s)"
+
+#: templates/pages/cart.html
+msgid "سلتك فارغة حاليًا"
+msgstr "Your cart is empty"
+
+#: templates/pages/order_confirmation.html
+msgid "سنتواصل معك لتأكيد موعد التسليم. احتفظ برقم الطلب للرجوع إليه."
+msgstr "We will contact you to confirm the delivery time. Keep your order number for reference."
+
+#: templates/pages/about.html
+msgid "سياسات الاستخدام والخصوصية"
+msgstr "Usage and privacy policies"
+
+#: templates/pages/about.html
+msgid "سياسة الخصوصية"
+msgstr "Privacy policy"
+
+#: templates/pages/home.html
+msgid "سيناريوهات استخدام"
+msgstr "Use cases"
+
+#: templates/pages/home.html
+msgid "شاهد الكل"
+msgstr "See all"
+
+#: templates/pages/home.html
+msgid "شاهد المجموعة"
+msgstr "See the collection"
+
+#: templates/pages/product_detail.html
+msgid "شحن مجاني فوق ١٬٥٠٠ ج.م"
+msgstr "Free shipping over EGP 1,500"
+
+#: templates/partials/header.html
+msgid "شحن مجاني للطلبات من <strong>١٬٥٠٠ ج.م</strong> — دليل واضح لاختيار القفل المناسب"
+msgstr "Free shipping on orders from <strong>EGP 1,500</strong> — a clear guide to choosing the right lock"
+
+#: templates/pages/about.html
+#: templates/partials/footer.html
+msgid "شروط الاستخدام"
+msgstr "Terms of use"
+
+#: templates/pages/shop.html
+msgid "صفحات النتائج"
+msgstr "Result pages"
+
+#: templates/pages/product_detail.html
+msgid "صور المنتج"
+msgstr "Product images"
+
+#: templates/pages/checkout.html
+msgid "طريقة الدفع"
+msgstr "Payment method"
+
+#: templates/pages/checkout.html
+msgid "طريقة الشحن"
+msgstr "Shipping method"
+
+#: templates/pages/order_confirmation.html
+msgid "طلب رقم"
+msgstr "Order number"
+
+#: templates/pages/account.html
+msgid "طلباتي"
+msgstr "My orders"
+
+#: templates/pages/cart.html
+msgid "طلبك مؤهل للشحن المجاني."
+msgstr "Your order qualifies for free shipping."
+
+#: templates/pages/cart.html
+msgid "عدّل الكميات وراجع ملخص الأسعار قبل الانتقال إلى الدفع."
+msgstr "Adjust quantities and review the price summary before going to payment."
+
+#: templates/components/product_card.html
+msgid "عرض"
+msgstr "View"
+
+#: templates/pages/cart.html
+msgid "عرض %(line_name)s"
+msgstr "View %(line_name)s"
+
+#: templates/pages/wishlist.html
+msgid "عرض %(product_name)s"
+msgstr "View %(product_name)s"
+
+#: templates/pages/checkout.html
+msgid "عرض السلة"
+msgstr "View cart"
+
+#: templates/pages/home.html
+msgid "عرض المتجر"
+msgstr "View the shop"
+
+#: templates/pages/account.html
+msgid "عرض المفضلة"
+msgstr "View wishlist"
+
+#: templates/pages/account.html
+msgid "عرض طرق الدفع عند الطلب"
+msgstr "Payment methods are shown at checkout"
+
+#: templates/pages/shop.html
+msgid "عرض كل المنتجات"
+msgstr "View all products"
+
+#: templates/pages/product_detail.html
+msgid "عرض: %(image_alt)s"
+msgstr "View: %(image_alt)s"
+
+#: templates/pages/account.html
+#: templates/pages/checkout.html
+msgid "علامة مميزة"
+msgstr "Distinctive mark"
+
+#: templates/pages/404.html
+#: templates/pages/500.html
+#: templates/partials/footer.html
+#: templates/partials/header.html
+msgid "عن ZAKEY"
+msgstr "About ZAKEY"
+
+#: templates/pages/about.html
+msgid "عن ZAKEY | رؤيتنا وخبراتنا"
+msgstr "About ZAKEY | Our vision and expertise"
+
+#: templates/admin/base_site.html
+msgid "عناصر تحتاج إجراء"
+msgstr "Items needing attention"
+
+#: templates/pages/account.html
+msgid "عند إتمام أول طلب ستجد تفاصيله هنا."
+msgstr "Once you complete your first order, its details will appear here."
+
+#: templates/pages/checkout.html
+#: templates/pages/order_confirmation.html
+msgid "عنوان التوصيل"
+msgstr "Delivery address"
+
+#: apps/catalog/selectors.py
+#: templates/components/catalogue_filters.html
+#: templates/pages/wishlist.html
+msgid "غير متاح"
+msgstr "Unavailable"
+
+#: templates/pages/product_detail.html
+msgid "غير متاح حاليًا"
+msgstr "Currently unavailable"
+
+#: templates/partials/header.html
+msgid "فتح البحث"
+msgstr "Open search"
+
+#: templates/partials/header.html
+msgid "فتح القائمة"
+msgstr "Open menu"
+
+#: templates/pages/shop.html
+msgid "فلاتر المنتجات"
+msgstr "Product filters"
+
+#: templates/pages/wishlist.html
+msgid "قائمة المفضلة"
+msgstr "Wishlist"
+
+#: templates/pages/account.html
+msgid "قائمة مفضلة تجمع المنتجات التي تهمك."
+msgstr "A wishlist that gathers the products you care about."
+
+#: templates/pages/wishlist.html
+msgid "قارن المنتجات التي حفظتها وانقل المتاح منها إلى سلة التسوق."
+msgstr "Compare the products you saved and move the available ones to your cart."
+
+#: templates/pages/shop.html
+msgid "قارن وسائل الدخول والتصميم والسعر واختر القفل الأنسب لاحتياجاتك."
+msgstr "Compare entry methods, design and price, and choose the lock that suits you best."
+
+#: templates/pages/product_detail.html
+msgid "قد يعجبك أيضًا"
+msgstr "You may also like"
+
+#: templates/components/product_card.html
+msgid "قفل ذكي"
+msgstr "Smart lock"
+
+#: templates/pages/product_detail.html
+#: templates/partials/footer.html
+msgid "كل المنتجات"
+msgstr "All products"
+
+#: templates/pages/account.html
+msgid "كل ما تحتاجه في حسابك"
+msgstr "Everything you need in your account"
+
+#: templates/pages/account.html
+msgid "كلمة المرور"
+msgstr "Password"
+
+#: templates/pages/account.html
+msgid "كلمة المرور الجديدة"
+msgstr "New password"
+
+#: templates/pages/product_detail.html
+msgid "كمية المنتج"
+msgstr "Product quantity"
+
+#: templates/pages/wishlist.html
+msgid "كمية محدودة"
+msgstr "Limited stock"
+
+#: templates/pages/cart.html
+msgid "كود الخصم"
+msgstr "Discount code"
+
+#: templates/pages/contact.html
+msgid "كيف يمكننا مساعدتك؟"
+msgstr "How can we help?"
+
+#: templates/pages/about.html
+msgid "لا ترسل نسخة العرض بيانات النماذج إلى خادم، ولا تنشئ حسابات عملاء أو طلبات فعلية. تحفظ السلة والمفضلة محليًا في متصفحك فقط."
+msgstr "The preview build does not send form data to a server, and does not create real customer accounts or orders. Cart and wishlist are stored locally in your browser only."
+
+#: templates/pages/about.html
+msgid "لا تستخدم نسخة العرض ملفات تتبع إعلانية. يُستخدم تخزين المتصفح فقط لتجربة السلة والمفضلة وحالة الحساب المعروضة."
+msgstr "The preview build uses no advertising trackers. Browser storage is used only for the cart, wishlist and the account state shown."
+
+#: templates/pages/product_detail.html
+msgid "لا توجد سيناريوهات استخدام لهذا المنتج."
+msgstr "There are no use cases for this product."
+
+#: templates/pages/account.html
+msgid "لا توجد طلبات بعد"
+msgstr "No orders yet"
+
+#: templates/pages/product_detail.html
+msgid "لا توجد مستندات متاحة لهذا المنتج حاليًا."
+msgstr "There are no documents available for this product yet."
+
+#: templates/pages/shop.html
+msgid "لا توجد منتجات بهذه الفلاتر"
+msgstr "No products match these filters"
+
+#: templates/pages/checkout.html
+msgid "لا توجد منتجات لمراجعتها"
+msgstr "There are no products to review"
+
+#: templates/pages/shop.html
+msgid "لا توجد نتائج لهذا البحث"
+msgstr "No results for this search"
+
+#: templates/pages/account.html
+msgid "لا نحتفظ ببيانات بطاقات. يتم اختيار طريقة الدفع عند إتمام كل طلب، والدفع عند الاستلام متاح الآن."
+msgstr "We do not store card details. The payment method is chosen at each checkout, and cash on delivery is available now."
+
+#: templates/pages/account.html
+msgid "لتغيير البريد الإلكتروني تواصل مع خدمة العملاء؛ التغيير يحتاج إلى تأكيد."
+msgstr "To change your email, contact customer service; the change needs confirmation."
+
+#: templates/pages/account.html
+#: templates/pages/wishlist.html
+msgid "لم تحفظ أي منتج بعد"
+msgstr "You have not saved any product yet"
+
+#: templates/pages/account.html
+msgid "لم تُضف عنوانًا بعد."
+msgstr "You have not added an address yet."
+
+#: templates/pages/404.html
+msgid "لم نجد هذه الصفحة"
+msgstr "We could not find that page"
+
+#: templates/pages/cart.html
+msgid "لم يتم تطبيق كود."
+msgstr "No code applied."
+
+#: templates/pages/account.html
+msgid "لوحة الحساب"
+msgstr "Account dashboard"
+
+#: templates/pages/cart.html
+msgid "متابعة إلى الدفع"
+msgstr "Continue to payment"
+
+#: templates/pages/cart.html
+#: templates/pages/order_confirmation.html
+msgid "متابعة التسوق"
+msgstr "Continue shopping"
+
+#: templates/pages/account.html
+msgid "متابعة حالة الطلبات ومراجعة تفاصيلها."
+msgstr "Track order status and review the details."
+
+#: apps/catalog/selectors.py
+#: templates/pages/product_detail.html
+#: templates/pages/wishlist.html
+msgid "متاح"
+msgstr "Available"
+
+#: templates/components/catalogue_filters.html
+msgid "متاح الآن"
+msgstr "Available now"
+
+#: templates/pages/shop.html
+msgid "متجر ZAKEY"
+msgstr "ZAKEY shop"
+
+#: templates/pages/checkout.html
+msgid "مثال: المنصورة"
+msgstr "For example: Mansoura"
+
+#: templates/pages/home.html
+msgid "مجالات الاستخدام"
+msgstr "Where it is used"
+
+#: templates/pages/cart.html
+#: templates/pages/checkout.html
+#: templates/pages/order_confirmation.html
+msgid "مجاني"
+msgstr "Free"
+
+#: templates/pages/shop.html
+msgid "مجموعة ZAKEY"
+msgstr "ZAKEY collection"
+
+#: templates/pages/shop.html
+msgid "مجموعة مختارة"
+msgstr "A curated collection"
+
+#: templates/pages/cart.html
+msgid "محتوى سلة التسوق"
+msgstr "Cart contents"
+
+#: templates/pages/shop.html
+msgid "محدد:"
+msgstr "Selected:"
+
+#: templates/pages/home.html
+msgid "مختارات ZAKEY"
+msgstr "ZAKEY picks"
+
+#: templates/pages/home.html
+msgid "مختاراتنا"
+msgstr "Our picks"
+
+#: templates/pages/cart.html
+msgid "مراجعة اختياراتك"
+msgstr "Review your choices"
+
+#: templates/pages/checkout.html
+msgid "مراجعة البيانات"
+msgstr "Review details"
+
+#: templates/partials/footer.html
+msgid "مركز المساعدة"
+msgstr "Help centre"
+
+#: templates/pages/home.html
+msgid "مزايا ZAKEY"
+msgstr "ZAKEY benefits"
+
+#: templates/pages/cart.html
+#: templates/pages/order_confirmation.html
+#: templates/pages/product_detail.html
+#: templates/pages/shop.html
+#: templates/pages/wishlist.html
+msgid "مسار التنقل"
+msgstr "Breadcrumb"
+
+#: templates/pages/contact.html
+msgid "مساعدة سريعة"
+msgstr "Quick help"
+
+#: templates/pages/contact.html
+msgid "مسح الحقول"
+msgstr "Clear fields"
+
+#: templates/components/catalogue_filters.html
+#: templates/pages/shop.html
+msgid "مسح الكل"
+msgstr "Clear all"
+
+#: templates/pages/product_detail.html
+msgid "مشاركة"
+msgstr "Share"
+
+#: templates/pages/500.html
+msgid "مشكلة مؤقتة | ZAKEY"
+msgstr "Temporary problem | ZAKEY"
+
+#: templates/pages/home.html
+msgid "مع"
+msgstr "with"
+
+#: templates/pages/cart.html
+msgid "ملخص السلة"
+msgstr "Cart summary"
+
+#: templates/pages/checkout.html
+#: templates/pages/order_confirmation.html
+msgid "ملخص الطلب"
+msgstr "Order summary"
+
+#: templates/pages/about.html
+msgid "ملخص واضح لنسخة العرض الحالية إلى حين اعتماد النصوص القانونية النهائية قبل الإطلاق."
+msgstr "A plain summary of the current preview build until the final legal texts are approved before launch."
+
+#: templates/partials/footer.html
+msgid "ملفات الارتباط"
+msgstr "Cookies"
+
+#: templates/pages/about.html
+msgid "ملفات الارتباط والتخزين"
+msgstr "Cookies and storage"
+
+#: templates/components/catalogue_filters.html
+msgid "من"
+msgstr "from"
+
+#: apps/catalog/selectors.py
+msgid "من %(amount)s ج.م"
+msgstr "from EGP %(amount)s"
+
+#: templates/pages/home.html
+msgid "من ٢٬١٩٠ ج.م"
+msgstr "from EGP 2,190"
+
+#: templates/pages/shop.html
+msgid "منتج"
+msgstr "product"
+
+#: templates/partials/footer.html
+msgid "منتجات ZAKEY"
+msgstr "ZAKEY products"
+
+#: templates/pages/wishlist.html
+msgid "منتجات المفضلة"
+msgstr "Wishlist products"
+
+#: templates/pages/wishlist.html
+msgid "منتجات محفوظة"
+msgstr "Saved products"
+
+#: templates/pages/home.html
+msgid "منتجات مميزة"
+msgstr "Featured products"
+
+#: templates/pages/cart.html
+#: templates/pages/checkout.html
+#: templates/pages/order_confirmation.html
+msgid "منها ضريبة قيمة مضافة %(percent)s%%"
+msgstr "including %(percent)s%% VAT"
+
+#: templates/pages/contact.html
+msgid "موضوع آخر"
+msgstr "Another subject"
+
+#: templates/pages/shop.html
+msgid "نتائج البحث"
+msgstr "Search results"
+
+#: templates/pages/shop.html
+msgid "نتائج البحث عن “%(term)s”"
+msgstr "Search results for “%(term)s”"
+
+#: templates/components/newsletter.html
+msgid "نرسل رسائل قليلة ومفيدة، ويمكنك إلغاء الاشتراك في أي وقت."
+msgstr "We send few, useful emails, and you can unsubscribe at any time."
+
+#: templates/pages/account.html
+msgid "نسيت كلمة المرور؟"
+msgstr "Forgot your password?"
+
+#: templates/pages/account.html
+msgid "وسائل الدفع"
+msgstr "Payment methods"
+
+#: templates/components/newsletter.html
+msgid "وصلك كل جديد من ZAKEY"
+msgstr "Everything new from ZAKEY"
+
+#: templates/pages/checkout.html
+msgid "يبدأ بـ010 أو 011 أو 012 أو 015."
+msgstr "Starts with 010, 011, 012 or 015."
+
+#: templates/pages/contact.html
+msgid "يتوفر الشحن إلى جميع المحافظات، وتظهر خدمة التركيب لعناوين القاهرة والجيزة والإسكندرية المؤهلة."
+msgstr "Shipping is available to every governorate, and installation appears for eligible addresses in Cairo, Giza and Alexandria."
+
+#: templates/pages/checkout.html
+msgid "يظهر التوصيل في اليوم نفسه للمناطق المؤهلة فقط."
+msgstr "Same-day delivery appears for eligible areas only."
+
+#: templates/pages/account.html
+msgid "يمكنك إتمام الطلب كزائر دون إنشاء حساب."
+msgstr "You can check out as a guest without creating an account."
+
+#: templates/pages/shop.html
+msgid "يمكنك إعادة المحاولة من دون فقد اختياراتك."
+msgstr "You can try again without losing your choices."
+
+#: templates/pages/cart.html
+msgid "يُحتسب عند الدفع"
+msgstr "Calculated at checkout"
+
+#: templates/pages/checkout.html
+msgid "يُحدد حسب الاختيار"
+msgstr "Set by your choice"
+
+#: templates/pages/checkout.html
+msgid "١"
+msgstr "1"
+
+#: templates/pages/checkout.html
+msgid "٢"
+msgstr "2"
+
+#: templates/pages/checkout.html
+msgid "٣"
+msgstr "3"
+
+#: templates/pages/account.html
+msgid "— %(value0)s ج.م"
+msgstr "— EGP %(value0)s"
+
+#: templates/pages/cart.html
+#: templates/pages/checkout.html
+#: templates/pages/order_confirmation.html
+msgid "−%(value0)s ج.م"
+msgstr "−EGP %(value0)s"

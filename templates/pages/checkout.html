@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}إتمام الطلب | ZAKEY{% endblock %}
+{% block title %}{% translate "إتمام الطلب | ZAKEY" %}{% endblock %}
 
 {% block content %}
 <div class="checkout-page" data-checkout-root data-initial-step="{{ checkout_step }}" data-qa-state="{{ page_state }}" aria-busy="false">
@@ -16,25 +17,25 @@
     The heading stays either way: `checkout-main` is labelled by it.
   {% endcomment %}
   <div class="container{% if cart_lines %} checkout-stepper-wrap{% endif %}">
-    <h1 class="sr-only" id="checkout-heading" tabindex="-1">إتمام الطلب</h1>
+    <h1 class="sr-only" id="checkout-heading" tabindex="-1">{% translate "إتمام الطلب" %}</h1>
     {% if cart_lines %}
-    <ol class="checkout-stepper" aria-label="خطوات إتمام الطلب">
+    <ol class="checkout-stepper" aria-label="{% translate "خطوات إتمام الطلب" %}">
       <li data-checkout-step-item="shipping">
         <button type="button" data-checkout-step="shipping" aria-controls="checkout-panel-shipping">
-          <span aria-hidden="true">١</span>
-          <b>الشحن</b>
+          <span aria-hidden="true">{% translate "١" %}</span>
+          <b>{% translate "الشحن" %}</b>
         </button>
       </li>
       <li data-checkout-step-item="payment">
         <button type="button" data-checkout-step="payment" aria-controls="checkout-panel-payment">
-          <span aria-hidden="true">٢</span>
-          <b>الدفع</b>
+          <span aria-hidden="true">{% translate "٢" %}</span>
+          <b>{% translate "الدفع" %}</b>
         </button>
       </li>
       <li data-checkout-step-item="review">
         <button type="button" data-checkout-step="review" aria-controls="checkout-panel-review">
-          <span aria-hidden="true">٣</span>
-          <b>المراجعة</b>
+          <span aria-hidden="true">{% translate "٣" %}</span>
+          <b>{% translate "المراجعة" %}</b>
         </button>
       </li>
     </ol>
@@ -46,11 +47,11 @@
       {% if not cart_lines %}
       <section class="state-panel checkout-empty" data-checkout-empty aria-labelledby="checkout-empty-heading">
         <span class="state-panel__icon" aria-hidden="true">{% include "components/icon.html" with name="cart" %}</span>
-        <h2 id="checkout-empty-heading">لا توجد منتجات لمراجعتها</h2>
-        <p>أضف منتجًا إلى السلة أولًا، ثم ارجع لإتمام بيانات الطلب.</p>
+        <h2 id="checkout-empty-heading">{% translate "لا توجد منتجات لمراجعتها" %}</h2>
+        <p>{% translate "أضف منتجًا إلى السلة أولًا، ثم ارجع لإتمام بيانات الطلب." %}</p>
         <div class="checkout-empty__actions">
-          <a class="btn btn--primary" href="{% url 'storefront:shop' %}">استكشف المنتجات</a>
-          <a class="btn btn--outline" href="{% url 'storefront:cart' %}">عرض السلة</a>
+          <a class="btn btn--primary" href="{% url 'storefront:shop' %}">{% translate "استكشف المنتجات" %}</a>
+          <a class="btn btn--outline" href="{% url 'storefront:cart' %}">{% translate "عرض السلة" %}</a>
         </div>
       </section>
       {% else %}
@@ -67,14 +68,14 @@
           <section class="checkout-panel" id="checkout-panel-shipping" data-checkout-panel="shipping" data-shipping-form aria-labelledby="shipping-heading">
             <div class="checkout-panel__heading">
               <div>
-                <p class="eyebrow">الخطوة الأولى</p>
-                <h2 id="shipping-heading" tabindex="-1">بيانات الشحن</h2>
+                <p class="eyebrow">{% translate "الخطوة الأولى" %}</p>
+                <h2 id="shipping-heading" tabindex="-1">{% translate "بيانات الشحن" %}</h2>
               </div>
-              <span>الحقول المعلّمة مطلوبة</span>
+              <span>{% translate "الحقول المعلّمة مطلوبة" %}</span>
             </div>
 
             <div class="checkout-error-summary" data-error-summary role="alert" tabindex="-1" {% if not checkout_form.errors %}hidden{% endif %}>
-              <h3>راجع البيانات التالية</h3>
+              <h3>{% translate "راجع البيانات التالية" %}</h3>
               <ul data-error-summary-list>
                 {% for field in checkout_form %}{% for error in field.errors %}<li><a href="#checkout-{{ field.name }}">{{ error }}</a></li>{% endfor %}{% endfor %}
                 {% for error in checkout_form.non_field_errors %}<li>{{ error }}</li>{% endfor %}
@@ -82,35 +83,35 @@
             </div>
 
               <fieldset class="checkout-fieldset">
-                <legend>بيانات العميل</legend>
+                <legend>{% translate "بيانات العميل" %}</legend>
                 <div class="checkout-form-grid">
                   <div class="field checkout-field--wide">
-                    <label for="checkout-fullName">الاسم بالكامل <span aria-hidden="true">*</span></label>
+                    <label for="checkout-fullName">{% translate "الاسم بالكامل" %} <span aria-hidden="true">*</span></label>
                     <input id="checkout-fullName" name="fullName" type="text" autocomplete="name" maxlength="80" value="{{ checkout_form.fullName.value|default:'' }}" aria-describedby="checkout-name-help checkout-fullName-error" {% if checkout_form.fullName.errors %}aria-invalid="true"{% endif %} required>
-                    <small id="checkout-name-help">اكتب الاسم بالعربية كما سيظهر في بيانات المراجعة.</small>
+                    <small id="checkout-name-help">{% translate "اكتب الاسم بالعربية كما سيظهر في بيانات المراجعة." %}</small>
                     <p class="field-error" id="checkout-fullName-error" {% if not checkout_form.fullName.errors %}hidden{% endif %}>{{ checkout_form.fullName.errors.0 }}</p>
                   </div>
                   <div class="field">
-                    <label for="checkout-email">البريد الإلكتروني <span aria-hidden="true">*</span></label>
+                    <label for="checkout-email">{% translate "البريد الإلكتروني" %} <span aria-hidden="true">*</span></label>
                     <input id="checkout-email" name="email" type="email" inputmode="email" autocomplete="email" dir="ltr" maxlength="120" value="{{ checkout_form.email.value|default:'' }}" aria-describedby="checkout-email-error" {% if checkout_form.email.errors %}aria-invalid="true"{% endif %} required>
                     <p class="field-error" id="checkout-email-error" {% if not checkout_form.email.errors %}hidden{% endif %}>{{ checkout_form.email.errors.0 }}</p>
                   </div>
                   <div class="field">
-                    <label for="checkout-mobile">رقم الموبايل المصري <span aria-hidden="true">*</span></label>
+                    <label for="checkout-mobile">{% translate "رقم الموبايل المصري" %} <span aria-hidden="true">*</span></label>
                     <input id="checkout-mobile" name="mobile" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" maxlength="18" placeholder="0100 000 0000" value="{{ checkout_form.mobile.value|default:'' }}" aria-describedby="checkout-mobile-help checkout-mobile-error" {% if checkout_form.mobile.errors %}aria-invalid="true"{% endif %} required>
-                    <small id="checkout-mobile-help">يبدأ بـ010 أو 011 أو 012 أو 015.</small>
+                    <small id="checkout-mobile-help">{% translate "يبدأ بـ010 أو 011 أو 012 أو 015." %}</small>
                     <p class="field-error" id="checkout-mobile-error" {% if not checkout_form.mobile.errors %}hidden{% endif %}>{{ checkout_form.mobile.errors.0 }}</p>
                   </div>
                 </div>
               </fieldset>
 
               <fieldset class="checkout-fieldset">
-                <legend>عنوان التوصيل</legend>
+                <legend>{% translate "عنوان التوصيل" %}</legend>
                 <div class="checkout-form-grid">
                   <div class="field">
-                    <label for="checkout-governorate">المحافظة <span aria-hidden="true">*</span></label>
+                    <label for="checkout-governorate">{% translate "المحافظة" %} <span aria-hidden="true">*</span></label>
                     <select id="checkout-governorate" name="governorate" autocomplete="address-level1" aria-describedby="checkout-governorate-error" {% if checkout_form.governorate.errors %}aria-invalid="true"{% endif %} required>
-                      <option value="">اختر المحافظة</option>
+                      <option value="">{% translate "اختر المحافظة" %}</option>
                       {% for governorate in governorates %}
                         <option value="{{ governorate.key }}" {% if checkout_form.governorate.value == governorate.key %}selected{% endif %}>{{ governorate.name }}</option>
                       {% endfor %}
@@ -118,39 +119,39 @@
                     <p class="field-error" id="checkout-governorate-error" {% if not checkout_form.governorate.errors %}hidden{% endif %}>{{ checkout_form.governorate.errors.0 }}</p>
                   </div>
                   <div class="field">
-                    <label for="checkout-city">المدينة أو المركز <span aria-hidden="true">*</span></label>
-                    <input id="checkout-city" name="city" type="text" autocomplete="address-level2" maxlength="80" placeholder="مثال: المنصورة" value="{{ checkout_form.city.value|default:'' }}" aria-describedby="checkout-city-error" {% if checkout_form.city.errors %}aria-invalid="true"{% endif %} required>
+                    <label for="checkout-city">{% translate "المدينة أو المركز" %} <span aria-hidden="true">*</span></label>
+                    <input id="checkout-city" name="city" type="text" autocomplete="address-level2" maxlength="80" placeholder="{% translate "مثال: المنصورة" %}" value="{{ checkout_form.city.value|default:'' }}" aria-describedby="checkout-city-error" {% if checkout_form.city.errors %}aria-invalid="true"{% endif %} required>
                     <p class="field-error" id="checkout-city-error" {% if not checkout_form.city.errors %}hidden{% endif %}>{{ checkout_form.city.errors.0 }}</p>
                   </div>
                   <div class="field checkout-field--wide" data-area-field>
-                    <label for="checkout-area">المنطقة المؤهلة للخدمات</label>
+                    <label for="checkout-area">{% translate "المنطقة المؤهلة للخدمات" %}</label>
                     <select id="checkout-area" name="areaKey" aria-describedby="checkout-area-help">
-                      <option value="">اختر المنطقة إن كانت مدرجة</option>
+                      <option value="">{% translate "اختر المنطقة إن كانت مدرجة" %}</option>
                       {% for area in service_eligibility.areas %}
                         <option value="{{ area.key }}" data-governorate="{{ area.governorate }}" data-same-day="{{ area.sameDay|yesno:'1,0' }}" {% if checkout_form.areaKey.value == area.key %}selected{% endif %}>{{ area.name }}</option>
                       {% endfor %}
                     </select>
-                    <small id="checkout-area-help">يظهر التوصيل في اليوم نفسه للمناطق المؤهلة فقط.</small>
+                    <small id="checkout-area-help">{% translate "يظهر التوصيل في اليوم نفسه للمناطق المؤهلة فقط." %}</small>
                   </div>
                   <div class="field checkout-field--wide">
-                    <label for="checkout-street">اسم الشارع والعنوان التفصيلي <span aria-hidden="true">*</span></label>
+                    <label for="checkout-street">{% translate "اسم الشارع والعنوان التفصيلي" %} <span aria-hidden="true">*</span></label>
                     <textarea id="checkout-street" name="street" autocomplete="street-address" maxlength="140" rows="3" aria-describedby="checkout-street-error" {% if checkout_form.street.errors %}aria-invalid="true"{% endif %} required>{{ checkout_form.street.value|default:'' }}</textarea>
                     <p class="field-error" id="checkout-street-error" {% if not checkout_form.street.errors %}hidden{% endif %}>{{ checkout_form.street.errors.0 }}</p>
                   </div>
                   <div class="field">
-                    <label for="checkout-building">رقم المبنى <span aria-hidden="true">*</span></label>
+                    <label for="checkout-building">{% translate "رقم المبنى" %} <span aria-hidden="true">*</span></label>
                     <input id="checkout-building" name="building" type="text" autocomplete="address-line2" maxlength="24" value="{{ checkout_form.building.value|default:'' }}" aria-describedby="checkout-building-error" {% if checkout_form.building.errors %}aria-invalid="true"{% endif %} required>
                     <p class="field-error" id="checkout-building-error" {% if not checkout_form.building.errors %}hidden{% endif %}>{{ checkout_form.building.errors.0 }}</p>
                   </div>
                   <div class="field">
-                    <label for="checkout-landmark">علامة مميزة</label>
-                    <input id="checkout-landmark" name="landmark" type="text" maxlength="100" placeholder="اختياري" value="{{ checkout_form.landmark.value|default:'' }}">
+                    <label for="checkout-landmark">{% translate "علامة مميزة" %}</label>
+                    <input id="checkout-landmark" name="landmark" type="text" maxlength="100" placeholder="{% translate "اختياري" %}" value="{{ checkout_form.landmark.value|default:'' }}">
                   </div>
                 </div>
               </fieldset>
 
               <fieldset class="checkout-fieldset checkout-choice-fieldset" data-shipping-options>
-                <legend>طريقة الشحن <span aria-hidden="true">*</span></legend>
+                <legend>{% translate "طريقة الشحن" %} <span aria-hidden="true">*</span></legend>
                 <div class="checkout-choice-grid checkout-choice-grid--shipping">
                   {% for option in shipping_options %}
                     <label class="checkout-choice" data-shipping-option="{{ option.id }}" {% if option.requiresAreaEligibility %}data-requires-area="1"{% endif %}>
@@ -174,10 +175,10 @@
               {% endcomment %}
               {% if installation_offered %}
               <fieldset class="checkout-fieldset checkout-installation" data-installation-fieldset>
-                <legend>خدمة التركيب</legend>
+                <legend>{% translate "خدمة التركيب" %}</legend>
                 <label class="checkout-check-row">
                   <input type="checkbox" name="installation" value="requested" {% if checkout_form.installation.value %}checked{% endif %}>
-                  <span><strong>أرغب في طلب خدمة تركيب</strong><small>الخدمة متاحة لعناوين القاهرة والجيزة والإسكندرية، وتُضاف رسومها إلى الإجمالي.</small></span>
+                  <span><strong>{% translate "أرغب في طلب خدمة تركيب" %}</strong><small>{% translate "الخدمة متاحة لعناوين القاهرة والجيزة والإسكندرية، وتُضاف رسومها إلى الإجمالي." %}</small></span>
                 </label>
                 <p class="field-error" id="checkout-installation-error" {% if not checkout_form.installation.errors %}hidden{% endif %}>{{ checkout_form.installation.errors.0 }}</p>
               </fieldset>
@@ -187,14 +188,14 @@
           <section class="checkout-panel" id="checkout-panel-payment" data-checkout-panel="payment" data-payment-form aria-labelledby="payment-heading">
             <div class="checkout-panel__heading">
               <div>
-                <p class="eyebrow">الخطوة الثانية</p>
-                <h2 id="payment-heading" tabindex="-1">طريقة الدفع</h2>
+                <p class="eyebrow">{% translate "الخطوة الثانية" %}</p>
+                <h2 id="payment-heading" tabindex="-1">{% translate "طريقة الدفع" %}</h2>
               </div>
-              <button class="checkout-edit" type="button" data-go-step="shipping">تعديل العنوان</button>
+              <button class="checkout-edit" type="button" data-go-step="shipping">{% translate "تعديل العنوان" %}</button>
             </div>
 
               <fieldset class="checkout-fieldset checkout-choice-fieldset">
-                <legend>اختر طريقة الدفع <span aria-hidden="true">*</span></legend>
+                <legend>{% translate "اختر طريقة الدفع" %} <span aria-hidden="true">*</span></legend>
                 <div class="checkout-choice-grid checkout-choice-grid--payment">
                   {% for option in payment_options %}
                     <label class="checkout-choice checkout-choice--payment">
@@ -212,72 +213,72 @@
 
               <div class="checkout-prototype-banner">
                 {% include "components/icon.html" with name="info" %}
-                <p><strong>الدفع الإلكتروني قيد التجهيز.</strong> الطرق غير المتاحة معطّلة، ولن نطلب رقم بطاقة أو بيانات محفظة.</p>
+                <p><strong>{% translate "الدفع الإلكتروني قيد التجهيز." %}</strong> {% translate "الطرق غير المتاحة معطّلة، ولن نطلب رقم بطاقة أو بيانات محفظة." %}</p>
               </div>
 
               <div class="checkout-actions">
-                <button class="btn btn--outline" type="button" data-go-step="shipping">العودة إلى الشحن</button>
-                <button class="btn btn--primary" type="button" data-go-step="review" data-to-payment data-checkout-next>مراجعة البيانات</button>
+                <button class="btn btn--outline" type="button" data-go-step="shipping">{% translate "العودة إلى الشحن" %}</button>
+                <button class="btn btn--primary" type="button" data-go-step="review" data-to-payment data-checkout-next>{% translate "مراجعة البيانات" %}</button>
               </div>
           </section>
 
           <section class="checkout-panel" id="checkout-panel-review" data-checkout-panel="review" aria-labelledby="review-heading">
             <div class="checkout-panel__heading">
               <div>
-                <p class="eyebrow">الخطوة الثالثة</p>
-                <h2 id="review-heading" tabindex="-1">مراجعة البيانات</h2>
+                <p class="eyebrow">{% translate "الخطوة الثالثة" %}</p>
+                <h2 id="review-heading" tabindex="-1">{% translate "مراجعة البيانات" %}</h2>
               </div>
             </div>
 
             <div class="checkout-review-sections">
               <article aria-labelledby="review-customer-heading">
-                <div class="checkout-review-title"><h3 id="review-customer-heading">العميل والعنوان</h3><button type="button" data-go-step="shipping">تعديل</button></div>
+                <div class="checkout-review-title"><h3 id="review-customer-heading">{% translate "العميل والعنوان" %}</h3><button type="button" data-go-step="shipping">{% translate "تعديل" %}</button></div>
                 <dl data-review-customer></dl>
               </article>
               <article aria-labelledby="review-delivery-heading">
-                <div class="checkout-review-title"><h3 id="review-delivery-heading">الشحن والتركيب</h3><button type="button" data-go-step="shipping">تعديل</button></div>
+                <div class="checkout-review-title"><h3 id="review-delivery-heading">{% translate "الشحن والتركيب" %}</h3><button type="button" data-go-step="shipping">{% translate "تعديل" %}</button></div>
                 <dl data-review-delivery></dl>
               </article>
               <article aria-labelledby="review-payment-heading">
-                <div class="checkout-review-title"><h3 id="review-payment-heading">طريقة الدفع</h3><button type="button" data-go-step="payment">تعديل</button></div>
+                <div class="checkout-review-title"><h3 id="review-payment-heading">{% translate "طريقة الدفع" %}</h3><button type="button" data-go-step="payment">{% translate "تعديل" %}</button></div>
                 <dl data-review-payment></dl>
               </article>
             </div>
 
             <label class="checkout-check-row checkout-acknowledgement">
               <input type="checkbox" id="checkout-acknowledgement" name="acknowledgement" value="accepted" {% if checkout_form.acknowledgement.value %}checked{% endif %} aria-describedby="checkout-acknowledgement-error" required>
-              <span><strong>أوافق على الشروط والأحكام <span aria-hidden="true">*</span></strong><small>بتأكيد الطلب أوافق على شروط البيع وسياسة الاسترجاع.</small></span>
+              <span><strong>{% translate "أوافق على الشروط والأحكام" %} <span aria-hidden="true">*</span></strong><small>{% translate "بتأكيد الطلب أوافق على شروط البيع وسياسة الاسترجاع." %}</small></span>
             </label>
             <p class="field-error" id="checkout-acknowledgement-error" {% if not checkout_form.acknowledgement.errors %}hidden{% endif %}>{{ checkout_form.acknowledgement.errors.0 }}</p>
 
             {% if messages %}<div class="checkout-final-state status-message" data-final-state role="status" tabindex="-1">{% for message in messages %}{{ message }}{% endfor %}</div>{% endif %}
             <div class="checkout-actions checkout-actions--review">
-              <button class="btn btn--outline" type="button" data-go-step="payment">العودة إلى الدفع</button>
-              <button class="btn btn--gold" type="submit" data-checkout-final>تأكيد الطلب</button>
+              <button class="btn btn--outline" type="button" data-go-step="payment">{% translate "العودة إلى الدفع" %}</button>
+              <button class="btn btn--gold" type="submit" data-checkout-final>{% translate "تأكيد الطلب" %}</button>
             </div>
           </section>
         </div>
 
         <aside class="checkout-summary" aria-labelledby="checkout-summary-heading">
-          <h2 id="checkout-summary-heading">ملخص الطلب</h2>
+          <h2 id="checkout-summary-heading">{% translate "ملخص الطلب" %}</h2>
           <div class="checkout-summary__lines" data-checkout-lines>
             {% for line in cart_lines %}
             <article class="checkout-summary-line">
               <img src="{{ line.image_path }}" width="72" height="72" alt="" data-checkout-line-image>
               <div><h3 data-checkout-line-name>{{ line.name }}</h3><p data-checkout-line-meta>{{ line.finish_label }} × {{ line.quantity }}</p></div>
-              <strong data-checkout-line-price>{{ line.total|floatformat:0 }} ج.م</strong>
+              <strong data-checkout-line-price>{% blocktranslate with value0=line.total|floatformat:0 %}{{ value0 }} ج.م{% endblocktranslate %}</strong>
             </article>
             {% endfor %}
           </div>
           <dl class="checkout-summary__totals">
-            <div><dt>المجموع الفرعي</dt><dd data-checkout-subtotal>{{ cart_totals.subtotal|floatformat:0 }} ج.م</dd></div>
-            <div data-checkout-discount-row {% if not cart_totals.discount_total %}hidden{% endif %}><dt>الخصم</dt><dd data-checkout-discount>−{{ cart_totals.discount_total|floatformat:0 }} ج.م</dd></div>
-            <div><dt>الشحن</dt><dd data-checkout-shipping>{% if cart_totals.free_shipping_qualified %}مجاني{% else %}يُحدد حسب الاختيار{% endif %}</dd></div>
-            <div><dt>منها ضريبة قيمة مضافة {% widthratio site.vatRate 1 100 %}%</dt><dd data-checkout-vat>{{ cart_totals.vat_amount|floatformat:0 }} ج.م</dd></div>
-            <div class="checkout-summary__total"><dt>الإجمالي</dt><dd data-checkout-total>{{ cart_totals.grand_total|floatformat:0 }} ج.م</dd></div>
+            <div><dt>{% translate "المجموع الفرعي" %}</dt><dd data-checkout-subtotal>{% blocktranslate with value0=cart_totals.subtotal|floatformat:0 %}{{ value0 }} ج.م{% endblocktranslate %}</dd></div>
+            <div data-checkout-discount-row {% if not cart_totals.discount_total %}hidden{% endif %}><dt>{% translate "الخصم" %}</dt><dd data-checkout-discount>{% blocktranslate with value0=cart_totals.discount_total|floatformat:0 %}−{{ value0 }} ج.م{% endblocktranslate %}</dd></div>
+            <div><dt>{% translate "الشحن" %}</dt><dd data-checkout-shipping>{% if cart_totals.free_shipping_qualified %}{% translate "مجاني" %}{% else %}{% translate "يُحدد حسب الاختيار" %}{% endif %}</dd></div>
+            <div><dt>{% widthratio site.vatRate 1 100 as vat_percent %}{% blocktranslate with percent=vat_percent %}منها ضريبة قيمة مضافة {{ percent }}%{% endblocktranslate %}</dt><dd data-checkout-vat>{% blocktranslate with value0=cart_totals.vat_amount|floatformat:0 %}{{ value0 }} ج.م{% endblocktranslate %}</dd></div>
+            <div class="checkout-summary__total"><dt>{% translate "الإجمالي" %}</dt><dd data-checkout-total>{% blocktranslate with value0=cart_totals.grand_total|floatformat:0 %}{{ value0 }} ج.م{% endblocktranslate %}</dd></div>
           </dl>
-          <p class="checkout-summary__shipping-note" data-checkout-shipping-note>{% if not cart_totals.free_shipping_qualified %}أضف {{ cart_totals.remaining_for_free_shipping|floatformat:0 }} ج.م للحصول على شحن مجاني.{% endif %}</p>
-          <a class="checkout-summary__cart-link" href="{% url 'storefront:cart' %}">تعديل السلة</a>
+          <p class="checkout-summary__shipping-note" data-checkout-shipping-note>{% if not cart_totals.free_shipping_qualified %}{% blocktranslate with amount=cart_totals.remaining_for_free_shipping|floatformat:0 %}أضف {{ amount }} ج.م للحصول على شحن مجاني.{% endblocktranslate %}{% endif %}</p>
+          <a class="checkout-summary__cart-link" href="{% url 'storefront:cart' %}">{% translate "تعديل السلة" %}</a>
         </aside>
       </div>
       </form>

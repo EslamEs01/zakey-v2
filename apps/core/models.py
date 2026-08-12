@@ -8,6 +8,8 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
 
+from apps.core.i18n import TranslatableModel
+
 
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField("أنشئ في", auto_now_add=True, db_index=True)
@@ -72,12 +74,14 @@ class SiteSettingManager(models.Manager):
         return obj
 
 
-class SiteSetting(TimeStampedModel):
+class SiteSetting(TranslatableModel, TimeStampedModel):
     """Singleton holding every commerce constant (FR-005).
 
     Values are duplicated nowhere else: not in views, not in templates, not in
     JavaScript. Defaults mirror the approved fixture ``site`` block exactly.
     """
+
+    translatable_fields = ("currency_label", "prototype_notice",)
 
     vat_rate = models.DecimalField(
         "نسبة ضريبة القيمة المضافة",
@@ -96,6 +100,9 @@ class SiteSetting(TimeStampedModel):
     )
     currency_code = models.CharField("رمز العملة", max_length=3, default="EGP")
     currency_label = models.CharField("رمز العرض", max_length=8, default="ج.م")
+    currency_label_en = models.CharField(
+        "رمز العرض (إنجليزي)", max_length=8, blank=True, default=""
+    )
     currency_decimal_places = models.PositiveSmallIntegerField("خانات عشرية", default=0)
 
     order_number_prefix = models.CharField("بادئة رقم الطلب", max_length=8, default="ZK")
@@ -111,6 +118,7 @@ class SiteSetting(TimeStampedModel):
     low_stock_threshold = models.PositiveIntegerField("حد المخزون المنخفض", default=5)
 
     prototype_notice = models.TextField("تنويه العرض", blank=True, default="")
+    prototype_notice_en = models.TextField("تنويه العرض (إنجليزي)", blank=True, default="")
 
     objects = SiteSettingManager()
 

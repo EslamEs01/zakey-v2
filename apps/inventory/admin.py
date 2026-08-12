@@ -13,10 +13,10 @@ from django.core.exceptions import ValidationError
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-from import_export.admin import ImportExportModelAdmin
+from import_export.admin import ExportMixin, ImportExportModelAdmin
 
 from apps.core.admin_mixins import AppendOnlyAdmin, AuditedImportExportMixin
-from apps.core.resources import StockItemResource
+from apps.core.resources import StockItemResource, StockMovementResource
 
 from .models import MovementReason, StockItem, StockMovement, StockReservation
 from .services import adjust
@@ -98,7 +98,8 @@ class StockItemAdmin(AuditedImportExportMixin, ImportExportModelAdmin):
 
 
 @admin.register(StockMovement)
-class StockMovementAdmin(AppendOnlyAdmin):
+class StockMovementAdmin(ExportMixin, AppendOnlyAdmin):
+    resource_classes = (StockMovementResource,)
     list_display = ("created_at", "sku", "delta", "reason", "on_hand_after", "reserved_after", "actor")
     list_filter = ("reason",)
     search_fields = ("stock_item__variant__sku",)

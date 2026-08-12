@@ -36,6 +36,11 @@ class ZakeyAdminSite(admin.AdminSite):
                 self.admin_view(alerts_json),
                 name="zakey_alerts",
             ),
+            path(
+                "set-language/",
+                self.admin_view(set_admin_language),
+                name="set_admin_language",
+            ),
         ] + super().get_urls()
 
     def index(self, request, extra_context=None):
@@ -51,6 +56,54 @@ class ZakeyAdminSite(admin.AdminSite):
             # admin entirely; the page degrades to Django's stock index.
             context["zakey_widgets"] = []
         return super().index(request, extra_context=context)
+
+
+def set_admin_language(request):
+    """Switch the staff console's language (FR-136).
+
+    Separate from the storefront's switcher only because the redirect target is
+    different — staff must land back on the admin page they were on, and that
+    URL must be validated against this host like any other ``next``.
+
+    Django ships its own Arabic and English admin catalogues, and Jazzmin's base
+    template already derives ``dir`` from ``LANGUAGE_BIDI``, so setting the
+    cookie is the whole of the change: labels, dates, and the entire layout
+    mirror with it.
+    """
+    from django.conf import settings
+    from django.shortcuts import redirect
+    from django.urls import reverse
+    from django.utils import translation
+    from django.utils.http import url_has_allowed_host_and_scheme
+    from django.views.decorators.http import require_POST
+
+    @require_POST
+    def _handle(request):
+        requested = (request.POST.get("language") or "").strip()
+        if requested not in {code for code, _ in settings.LANGUAGES}:
+            requested = settings.LANGUAGE_CODE
+
+        target = request.POST.get("next") or reverse("admin:index")
+        if not url_has_allowed_host_and_scheme(
+            target, allowed_hosts={request.get_host()}, require_https=request.is_secure()
+        ):
+            target = reverse("admin:index")
+
+        translation.activate(requested)
+        response = redirect(target)
+        response.set_cookie(
+            settings.LANGUAGE_COOKIE_NAME,
+            requested,
+            max_age=settings.LANGUAGE_COOKIE_AGE,
+            path=settings.LANGUAGE_COOKIE_PATH,
+            domain=settings.LANGUAGE_COOKIE_DOMAIN,
+            secure=settings.LANGUAGE_COOKIE_SECURE,
+            httponly=settings.LANGUAGE_COOKIE_HTTPONLY,
+            samesite=settings.LANGUAGE_COOKIE_SAMESITE,
+        )
+        return response
+
+    return _handle(request)
 
 
 def alerts_json(request):

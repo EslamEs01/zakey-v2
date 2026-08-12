@@ -30,10 +30,27 @@ uv run python manage.py runserver 127.0.0.1:8000
 
 Open <http://127.0.0.1:8000/>.
 
+## Languages
+
+The storefront and the staff admin are bilingual: Arabic (the source language,
+RTL) and English (LTR). A globe-icon switcher in the header writes a cookie —
+the public URLs are unchanged, so no link or bookmark moved.
+
+```bash
+uv run python manage.py sync_translations     # rebuild the message catalogue
+uv run python manage.py seed_english_demo     # English copy for the demo catalogue
+```
+
+Interface copy lives in `locale/en/LC_MESSAGES/django.po`; catalogue and content
+copy lives in `_en` columns edited in the admin. See
+[`docs/bilingual-and-admin.md`](docs/bilingual-and-admin.md) for how to add or
+change a translation, and for the admin upload, import and export notes.
+
 ## Validate
 
 ```bash
 uv run python manage.py test
+uv run python manage.py sync_translations --check
 npm run qa
 ```
 

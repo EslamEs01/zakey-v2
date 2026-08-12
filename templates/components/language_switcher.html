@@ -1,0 +1,27 @@
+{% load i18n %}
+{% comment %}
+Language switcher (FR-136).
+
+A form, not a link. Switching language writes a cookie, and a GET that changes
+stored state is exactly what a prefetching browser or a crawler will trigger
+without a human ever clicking it.
+
+It works with scripting off: without JS the buttons submit directly, so this is
+one <form> with one submit button per language rather than a JS-driven dropdown.
+`next` carries the current path so the visitor lands back where they were rather
+than on the home page.
+{% endcomment %}
+{% get_current_language as ACTIVE_LANGUAGE %}
+{% get_available_languages as SITE_LANGUAGES %}
+<form class="language-switcher" method="post" action="{% url 'storefront:set-language' %}"
+      aria-label="{% translate "اللغة" %}">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+  <span class="language-switcher__icon" aria-hidden="true">{% include "components/icon.html" with name="globe" %}</span>
+  {% for code, name in SITE_LANGUAGES %}
+    <button class="language-switcher__option{% if code == ACTIVE_LANGUAGE %} is-current{% endif %}"
+            type="submit" name="language" value="{{ code }}"
+            lang="{{ code }}"
+            {% if code == ACTIVE_LANGUAGE %}aria-current="true"{% endif %}>{{ name }}</button>
+  {% endfor %}
+</form>

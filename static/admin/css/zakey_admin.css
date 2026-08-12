@@ -37,6 +37,61 @@
   --zk-shadow: 0 6px 20px rgb(13 27 61 / 8%);
 }
 
+/* ── Language switcher ──────────────────────────────────────────────────────
+   Sits in the same always-present strip as the attention bar, so it is reachable
+   from every admin page rather than only from the dashboard. Logical properties
+   throughout: the same rules lay out correctly in the LTR English admin. */
+
+.zk-topstrip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.zk-topstrip .zk-alertbar { flex: 1 1 320px; }
+.zk-topstrip .zk-alertbar[hidden] { display: none; }
+
+.zk-langswitch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 1rem;
+  padding: 4px 8px;
+  background: var(--zk-surface);
+  border: 1px solid var(--zk-line);
+  border-radius: 999px;
+  box-shadow: var(--zk-shadow);
+}
+
+.zk-langswitch__label {
+  margin-inline-end: 4px;
+  color: var(--zk-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.zk-langswitch__option {
+  min-height: 28px;
+  padding-inline: 10px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--zk-muted);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.zk-langswitch__option:hover { color: var(--zk-navy); }
+
+.zk-langswitch__option.is-current {
+  color: var(--zk-navy);
+  background: var(--zk-gold-soft);
+}
+
 /* ── Attention bar ──────────────────────────────────────────────────────────
    Sits above page content on every admin page. It is deliberately a strip of
    links and not a panel of statistics: each chip is a door into an already

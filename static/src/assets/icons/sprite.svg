@@ -22,4 +22,5 @@
   <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="icon-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.7 6.6-4.2m-6.6 6.8 6.6 4.2"/></symbol>
   <symbol id="icon-box" viewBox="0 0 24 24"><path d="m12 3 8 4-8 4-8-4Z"/><path d="m4 7 8 4v10l-8-4Zm16 0-8 4v10l8-4Z"/></symbol>
+  <symbol id="icon-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></symbol>
 </svg>

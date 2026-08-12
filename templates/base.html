@@ -1,20 +1,24 @@
-{% load static %}
+{% load static i18n %}
+{# Resolved from the tag library, not from the i18n context processor: this template is also rendered directly in tests and by the static exporter, neither of which runs context processors, and a missing LANGUAGE_CODE inside a filter argument raises rather than falling back. #}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
 <!doctype html>
-<html lang="ar-EG" dir="rtl">
+{# lang and dir follow the active language, so one set of templates lays out RTL in Arabic and LTR in English. The stylesheet is written in logical properties throughout, so nothing else has to change (FR-136). #}
+<html lang="{{ site.locale|default:LANGUAGE_CODE }}" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0D1B3D">
-  <meta name="description" content="ZAKEY لحلول الأقفال الذكية والدخول الآمن للمنزل المصري، مع خيارات تركيب ودعم باللغة العربية.">
-  <title>{% block title %}ZAKEY | أقفال ذكية بثقة أكبر{% endblock %}</title>
+  <meta name="description" content="{% translate "ZAKEY لحلول الأقفال الذكية والدخول الآمن للمنزل المصري، مع خيارات تركيب ودعم باللغة العربية." %}">
+  <title>{% block title %}{% translate "ZAKEY | أقفال ذكية بثقة أكبر" %}{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'dist/css/app.css' %}">
   <link rel="icon" href="{% static 'dist/assets/images/brand/zakey-mark.svg' %}" type="image/svg+xml">
   {% block head %}{% endblock %}
 </head>
-<body data-page="{{ page_id }}" data-state="{{ page_state }}">
-  <a class="skip-link" href="#main-content">تخطي إلى المحتوى</a>
+<body data-page="{{ page_id }}" data-state="{{ page_state }}" data-language="{{ LANGUAGE_CODE }}" data-direction="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
+  <a class="skip-link" href="#main-content">{% translate "تخطي إلى المحتوى" %}</a>
   {# Shown only when scripting is off, so it never appears in a JS-enabled capture. Each language carries its own lang/dir so a screen reader switches voice and the Latin run is not mirrored by the RTL page (NFR-010, FR-136). #}
-  <noscript><p class="noscript-note"><span lang="ar" dir="rtl">جافاسكريبت مطلوب للعناصر التفاعلية في المتجر، مثل القوائم المنسدلة والنوافذ الحوارية. التصفح والشراء وإتمام الطلب تعمل بدونه.</span> <span lang="en" dir="ltr">JavaScript is required for interactive storefront features such as dropdown menus and dialogs. Browsing, shopping and checkout work without it.</span></p></noscript>
+  <noscript><p class="noscript-note"><span lang="ar" dir="rtl">{% translate "جافاسكريبت مطلوب للعناصر التفاعلية في المتجر، مثل القوائم المنسدلة والنوافذ الحوارية. التصفح والشراء وإتمام الطلب تعمل بدونه." %}</span> <span lang="en" dir="ltr">JavaScript is required for interactive storefront features such as dropdown menus and dialogs. Browsing, shopping and checkout work without it.</span></p></noscript>
   {% include "partials/header.html" %}
   <main id="main-content" tabindex="-1">
     {% block content %}{% endblock %}

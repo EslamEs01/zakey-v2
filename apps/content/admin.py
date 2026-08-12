@@ -4,6 +4,17 @@ from __future__ import annotations
 
 from django.contrib import admin
 
+from import_export.admin import ExportMixin, ImportExportModelAdmin
+
+from apps.core.admin_mixins import AuditedImportExportMixin
+from apps.core.resources import (
+    ContactMessageResource,
+    FAQResource,
+    NavigationItemResource,
+    NewsletterSubscriptionResource,
+    StaticPageResource,
+)
+
 from .models import (
     FAQ,
     Banner,
@@ -35,7 +46,8 @@ class PartnerAdmin(admin.ModelAdmin):
 
 
 @admin.register(FAQ)
-class FAQAdmin(admin.ModelAdmin):
+class FAQAdmin(AuditedImportExportMixin, ImportExportModelAdmin):
+    resource_classes = (FAQResource,)
     list_display = ("question", "page", "position", "is_active")
     list_filter = ("page", "is_active")
     search_fields = ("question", "answer")
@@ -43,21 +55,24 @@ class FAQAdmin(admin.ModelAdmin):
 
 
 @admin.register(StaticPage)
-class StaticPageAdmin(admin.ModelAdmin):
+class StaticPageAdmin(AuditedImportExportMixin, ImportExportModelAdmin):
+    resource_classes = (StaticPageResource,)
     list_display = ("title", "slug", "is_published")
     prepopulated_fields = {"slug": ("title",)}
     search_fields = ("title", "slug")
 
 
 @admin.register(NavigationItem)
-class NavigationItemAdmin(admin.ModelAdmin):
+class NavigationItemAdmin(AuditedImportExportMixin, ImportExportModelAdmin):
+    resource_classes = (NavigationItemResource,)
     list_display = ("label", "group", "href", "position", "is_active")
     list_filter = ("group", "is_active")
     list_editable = ("position", "is_active")
 
 
 @admin.register(NewsletterSubscription)
-class NewsletterSubscriptionAdmin(admin.ModelAdmin):
+class NewsletterSubscriptionAdmin(ExportMixin, admin.ModelAdmin):
+    resource_classes = (NewsletterSubscriptionResource,)
     list_display = ("email", "source", "confirmed", "created_at")
     list_filter = ("confirmed",)
     search_fields = ("email",)
@@ -68,7 +83,8 @@ class NewsletterSubscriptionAdmin(admin.ModelAdmin):
 
 
 @admin.register(ContactMessage)
-class ContactMessageAdmin(admin.ModelAdmin):
+class ContactMessageAdmin(ExportMixin, admin.ModelAdmin):
+    resource_classes = (ContactMessageResource,)
     list_display = ("subject", "name", "email", "status", "created_at")
     list_filter = ("status",)
     search_fields = ("name", "email", "subject", "message")

@@ -1,10 +1,11 @@
 {% extends "admin/base.html" %}
-{% load static %}
+{% load static i18n %}
 {% comment %}
 ZAKEY admin shell.
 
-Two additions to Jazzmin's base, and nothing else — the app list, changelists and
-change forms stay Jazzmin's, so upgrading it does not mean re-doing this file.
+Three additions to Jazzmin's base, and nothing else — the app list, changelists
+and change forms stay Jazzmin's, so upgrading it does not mean re-doing this
+file.
 
 1. The attention bar, injected through the `messages` block so it sits directly
    above page content on EVERY admin page. `block.super` is kept, so Django's
@@ -15,7 +16,12 @@ change forms stay Jazzmin's, so upgrading it does not mean re-doing this file.
    COUNT queries and pushed two changelists past their documented query budget
    (T-1310); fetching them afterwards keeps page rendering free.
 
-2. The stylesheet, which is additive: it restyles Jazzmin's existing classes and
+2. The language switcher, in the same always-present strip. Jazzmin's base
+   already flips `dir` from LANGUAGE_BIDI, and Django ships its own Arabic and
+   English admin catalogues, so switching the language is all that is needed to
+   get a fully mirrored English admin (FR-136).
+
+3. The stylesheet, which is additive: it restyles Jazzmin's existing classes and
    defines the `.zk-*` classes used here and on the dashboard.
 {% endcomment %}
 
@@ -24,9 +30,25 @@ change forms stay Jazzmin's, so upgrading it does not mean re-doing this file.
 {% endblock %}
 
 {% block messages %}
-  <section id="zk-alertbar" class="zk-alertbar" dir="rtl"
-           aria-label="عناصر تحتاج إجراء" aria-live="polite"
-           data-endpoint="{% url 'admin:zakey_alerts' %}" hidden></section>
+  <div class="zk-topstrip">
+    {# dir follows the language, not a pinned rtl: the bar uses logical properties, so one markup mirrors itself. #}
+    <section id="zk-alertbar" class="zk-alertbar"
+             dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}"
+             aria-label="{% translate "عناصر تحتاج إجراء" %}" aria-live="polite"
+             data-endpoint="{% url 'admin:zakey_alerts' %}" hidden></section>
+    <form class="zk-langswitch" method="post" action="{% url 'admin:set_admin_language' %}">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      {% get_current_language as CURRENT_LANGUAGE %}
+      {% get_available_languages as LANGUAGES %}
+      <span class="zk-langswitch__label">{% translate "اللغة" %}</span>
+      {% for code, name in LANGUAGES %}
+        <button type="submit" name="language" value="{{ code }}" lang="{{ code }}"
+                class="zk-langswitch__option{% if code == CURRENT_LANGUAGE %} is-current{% endif %}"
+                {% if code == CURRENT_LANGUAGE %}aria-current="true"{% endif %}>{{ name }}</button>
+      {% endfor %}
+    </form>
+  </div>
   {{ block.super }}
 {% endblock %}
 

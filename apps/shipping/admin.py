@@ -8,6 +8,15 @@ from __future__ import annotations
 
 from django.contrib import admin
 
+from import_export.admin import ImportExportModelAdmin
+
+from apps.core.admin_mixins import AuditedImportExportMixin
+from apps.core.resources import (
+    GovernorateResource,
+    ServiceAreaResource,
+    ShippingRateResource,
+)
+
 from .models import (
     Governorate,
     InstallationService,
@@ -19,14 +28,16 @@ from .models import (
 
 
 @admin.register(Governorate)
-class GovernorateAdmin(admin.ModelAdmin):
+class GovernorateAdmin(AuditedImportExportMixin, ImportExportModelAdmin):
+    resource_classes = (GovernorateResource,)
     list_display = ("name", "key", "position", "is_active")
     search_fields = ("name", "key")
     list_editable = ("position", "is_active")
 
 
 @admin.register(ServiceArea)
-class ServiceAreaAdmin(admin.ModelAdmin):
+class ServiceAreaAdmin(AuditedImportExportMixin, ImportExportModelAdmin):
+    resource_classes = (ServiceAreaResource,)
     list_display = ("name", "key", "governorate", "same_day_eligible", "installation_eligible", "is_active")
     list_filter = ("governorate", "same_day_eligible", "installation_eligible")
     search_fields = ("name", "key")
@@ -46,7 +57,8 @@ class ShippingMethodAdmin(admin.ModelAdmin):
 
 
 @admin.register(ShippingRate)
-class ShippingRateAdmin(admin.ModelAdmin):
+class ShippingRateAdmin(AuditedImportExportMixin, ImportExportModelAdmin):
+    resource_classes = (ShippingRateResource,)
     list_display = ("method", "zone", "price", "placeholder_warning", "is_active")
     list_filter = ("method", "zone", "is_placeholder", "is_active")
     list_editable = ("price", "is_active")

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}ZAKEY | أقفال ذكية للبيت المصري{% endblock %}
+{% block title %}{% translate "ZAKEY | أقفال ذكية للبيت المصري" %}{% endblock %}
 
 {% block content %}
 {% with home=site.home %}
@@ -8,27 +9,27 @@
   <div class="container hero-grid">
     <div class="hero-copy">
       <p class="eyebrow">{{ home.hero.eyebrow }}</p>
-      <h1 id="home-heading">ادخل عالمًا أكثر <em>أمانًا</em> مع <bdi lang="en">ZAKEY</bdi></h1>
+      <h1 id="home-heading">{% translate "ادخل عالمًا أكثر" %} <em>{% translate "أمانًا" %}</em> {% translate "مع" %} <bdi lang="en">ZAKEY</bdi></h1>
       <p>{{ home.hero.description }}</p>
       <div class="hero-actions">
         <a class="btn btn--gold" href="{{ home.hero.primaryAction.href }}">{{ home.hero.primaryAction.label }} {% include "components/icon.html" with name="arrow" %}</a>
         <a class="btn btn--outline" href="{{ home.hero.secondaryAction.href }}">{{ home.hero.secondaryAction.label }}</a>
       </div>
-      <div class="hero-metrics" role="group" aria-label="مزايا ZAKEY">
+      <div class="hero-metrics" role="group" aria-label="{% translate "مزايا ZAKEY" %}">
         {% for metric in home.hero.metrics %}
           <div class="hero-metric"><strong>{{ metric.value }}</strong><span>{{ metric.label }}</span></div>
         {% endfor %}
       </div>
     </div>
     <div class="hero-visual">
-      <span class="hero-chip hero-chip--top">تقنية دخول مرنة</span>
+      <span class="hero-chip hero-chip--top">{% translate "تقنية دخول مرنة" %}</span>
       <img src="{{ home.hero.image.path }}" width="{{ home.hero.image.width }}" height="{{ home.hero.image.height }}" alt="{{ home.hero.image.alt }}">
-      <span class="hero-chip hero-chip--price">من ٢٬١٩٠ ج.م</span>
+      <span class="hero-chip hero-chip--price">{% translate "من ٢٬١٩٠ ج.م" %}</span>
     </div>
   </div>
 </section>
 
-<section class="trust-strip" aria-label="مزايا ZAKEY">
+<section class="trust-strip" aria-label="{% translate "مزايا ZAKEY" %}">
   <div class="container trust-grid">
     {% for item in home.trustStrip %}
       <div class="trust-item">{% include "components/icon.html" with name="shield" %}<span>{{ item.title }}</span></div>
@@ -39,14 +40,14 @@
 <section class="section section--white" aria-labelledby="categories-heading">
   <div class="container">
     <div class="section-head">
-      <div><p class="eyebrow">تسوّق حسب الفئة</p><h2 class="section-heading" id="categories-heading">حل مناسب لكل مدخل</h2></div>
-      <a class="btn btn--outline" href="{% url 'storefront:shop' %}">عرض المتجر {% include "components/icon.html" with name="arrow" %}</a>
+      <div><p class="eyebrow">{% translate "تسوّق حسب الفئة" %}</p><h2 class="section-heading" id="categories-heading">{% translate "حل مناسب لكل مدخل" %}</h2></div>
+      <a class="btn btn--outline" href="{% url 'storefront:shop' %}">{% translate "عرض المتجر" %} {% include "components/icon.html" with name="arrow" %}</a>
     </div>
     <div class="grid grid--4 category-grid">
       {% for category in categories %}
         <a class="category-card" href="{% url 'storefront:shop' %}?category={{ category.slug }}">
           <img src="{{ category.image.path }}" width="{{ category.image.width }}" height="{{ category.image.height }}" alt="{{ category.image.alt }}" loading="lazy">
-          <div class="category-card__body"><h3>{{ category.name }}</h3><p>{{ category.description }}</p><span>استكشف الفئة ←</span></div>
+          <div class="category-card__body"><h3>{{ category.name }}</h3><p>{{ category.description }}</p><span>{% translate "استكشف الفئة ←" %}</span></div>
         </a>
       {% endfor %}
     </div>
@@ -56,8 +57,8 @@
 <section class="section" aria-labelledby="best-heading">
   <div class="container">
     <div class="section-head">
-      <div><p class="eyebrow">مختارات ZAKEY</p><h2 class="section-heading" id="best-heading">اختيارات بارزة</h2></div>
-      <a class="btn btn--outline" href="{% url 'storefront:collection' 'best-sellers' %}">شاهد الكل</a>
+      <div><p class="eyebrow">{% translate "مختارات ZAKEY" %}</p><h2 class="section-heading" id="best-heading">{% translate "اختيارات بارزة" %}</h2></div>
+      <a class="btn btn--outline" href="{% url 'storefront:collection' 'best-sellers' %}">{% translate "شاهد الكل" %}</a>
     </div>
     <div class="grid grid--4">{% for product in best_sellers %}{% include "components/product_card.html" %}{% endfor %}</div>
   </div>
@@ -65,7 +66,7 @@
 
 <section class="promo" aria-labelledby="promo-heading">
   <div class="container promo-grid">
-    <div class="promo-copy"><p class="eyebrow">{{ home.promotion.eyebrow }}</p><h2 id="promo-heading">حضور نحيف. <em>دخول أسرع.</em></h2><p>{{ home.promotion.description }}</p><a class="btn btn--gold" href="{{ home.promotion.action.href }}">{{ home.promotion.action.label }}</a></div>
+    <div class="promo-copy"><p class="eyebrow">{{ home.promotion.eyebrow }}</p><h2 id="promo-heading">{% translate "حضور نحيف." %} <em>{% translate "دخول أسرع." %}</em></h2><p>{{ home.promotion.description }}</p><a class="btn btn--gold" href="{{ home.promotion.action.href }}">{{ home.promotion.action.label }}</a></div>
     <div class="promo-media"><img src="{{ home.promotion.image.path }}" width="{{ home.promotion.image.width }}" height="{{ home.promotion.image.height }}" alt="{{ home.promotion.image.alt }}" loading="lazy"></div>
   </div>
 </section>
@@ -73,8 +74,8 @@
 <section class="section section--white" aria-labelledby="featured-heading">
   <div class="container">
     <div class="section-head">
-      <div><p class="eyebrow">مختاراتنا</p><h2 class="section-heading" id="featured-heading">منتجات مميزة</h2></div>
-      <a class="btn btn--outline" href="{% url 'storefront:collection' 'featured' %}">شاهد المجموعة</a>
+      <div><p class="eyebrow">{% translate "مختاراتنا" %}</p><h2 class="section-heading" id="featured-heading">{% translate "منتجات مميزة" %}</h2></div>
+      <a class="btn btn--outline" href="{% url 'storefront:collection' 'featured' %}">{% translate "شاهد المجموعة" %}</a>
     </div>
     <div class="grid grid--4">{% for product in featured %}{% include "components/product_card.html" %}{% endfor %}</div>
   </div>
@@ -97,14 +98,14 @@
     <div>
       <p class="eyebrow">{{ home.smartHome.eyebrow }}</p><h2 class="section-heading" id="smart-heading">{{ home.smartHome.heading }}</h2><p class="section-copy">{{ home.smartHome.description }}</p>
       <div class="platform-list">{% for use_case in home.smartHome.useCases %}<div class="platform-item"><span>{{ use_case.title }}</span>{% include "components/icon.html" with name="check" %}</div>{% endfor %}</div>
-      <a class="btn btn--primary" href="{% url 'storefront:collection' 'smart-home-solutions' %}">استكشف الحلول</a>
+      <a class="btn btn--primary" href="{% url 'storefront:collection' 'smart-home-solutions' %}">{% translate "استكشف الحلول" %}</a>
     </div>
   </div>
 </section>
 
 <section class="section section--navy" aria-labelledby="reviews-heading">
   <div class="container">
-    <div class="section-head"><div><p class="eyebrow">سيناريوهات استخدام</p><h2 class="section-heading section-heading--light" id="reviews-heading">{{ home.reviewsHeading }}</h2></div></div>
+    <div class="section-head"><div><p class="eyebrow">{% translate "سيناريوهات استخدام" %}</p><h2 class="section-heading section-heading--light" id="reviews-heading">{{ home.reviewsHeading }}</h2></div></div>
     <div class="grid grid--3">
       {% for review in home_reviews %}
         <article class="testimonial"><h3>{{ review.customerName }}</h3><p>{{ review.quote }}</p><small class="prototype-note">{{ review.prototypeAttribution }}</small></article>
@@ -114,7 +115,7 @@
 </section>
 
 <section class="section section--white" aria-labelledby="partners-heading">
-  <div class="container"><div class="section-head" style="justify-content:center;text-align:center"><div><p class="eyebrow">مجالات الاستخدام</p><h2 class="section-heading" id="partners-heading">{{ home.partnersHeading }}</h2></div></div><div class="partners">{% for partner in partners %}<div class="partner-mark"><img src="{{ partner.mark.path }}" width="{{ partner.mark.width }}" height="{{ partner.mark.height }}" alt="{{ partner.mark.alt }}"><span>{{ partner.name }}</span></div>{% endfor %}</div></div>
+  <div class="container"><div class="section-head" style="justify-content:center;text-align:center"><div><p class="eyebrow">{% translate "مجالات الاستخدام" %}</p><h2 class="section-heading" id="partners-heading">{{ home.partnersHeading }}</h2></div></div><div class="partners">{% for partner in partners %}<div class="partner-mark"><img src="{{ partner.mark.path }}" width="{{ partner.mark.width }}" height="{{ partner.mark.height }}" alt="{{ partner.mark.alt }}"><span>{{ partner.name }}</span></div>{% endfor %}</div></div>
 </section>
 {% endwith %}
 {% endblock %}

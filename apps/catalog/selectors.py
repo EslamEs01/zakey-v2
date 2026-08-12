@@ -15,6 +15,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from django.utils.translation import gettext as _
+
+from apps.core.i18n import translated as tr
 from apps.core.models import PublicationStatus
 
 from .models import (
@@ -164,8 +167,8 @@ def _catalogue_product(product: Product) -> dict:
         "pk": product.pk,
         "defaultVariantId": default_variant.pk if default_variant else None,
         "slug": product.slug,
-        "name": product.name,
-        "shortDescription": product.short_description,
+        "name": tr(product, "name"),
+        "shortDescription": tr(product, "short_description"),
         "categoryId": product.category.legacy_id or product.category.slug,
         "collectionIds": [
             m.collection.legacy_id or m.collection.slug for m in memberships
@@ -174,7 +177,7 @@ def _catalogue_product(product: Product) -> dict:
         "compareAtPrice": product.compare_at_price,
         # `or None`: a blank CharField and "no badge" are the same thing to the
         # storefront, and the approved contract spells that absence as null.
-        "badge": product.badge or None,
+        "badge": tr(product, "badge") or None,
         "rating": product.rating_average,
         "reviewCount": product.review_count,
         "availability": product.availability,
@@ -184,7 +187,7 @@ def _catalogue_product(product: Product) -> dict:
                 "path": img.src,
                 "width": img.width,
                 "height": img.height,
-                "alt": img.alt,
+                "alt": tr(img, "alt"),
             }
             for img in images
         ],
@@ -194,7 +197,7 @@ def _catalogue_product(product: Product) -> dict:
                 # The finish radio posts this, so choosing a finish selects the
                 # exact variant row the cart line will be keyed on.
                 "variantId": v.pk,
-                "label": v.finish_label,
+                "label": tr(v, "finish_label"),
                 "swatch": v.swatch_hex,
                 "available": bool(
                     getattr(v, "stock_item", None) and v.stock_item.available > 0
@@ -203,10 +206,10 @@ def _catalogue_product(product: Product) -> dict:
             for v in variants
         ],
         "features": [
-            {"key": f.key, "label": f.label, "description": f.description}
+            {"key": f.key, "label": tr(f, "label"), "description": tr(f, "description")}
             for f in features
         ],
-        "instalmentMessage": product.instalment_message,
+        "instalmentMessage": tr(product, "instalment_message"),
         "serviceFlags": {
             "sameDaySupported": product.same_day_supported,
             "installationSupported": product.installation_supported,
@@ -214,9 +217,9 @@ def _catalogue_product(product: Product) -> dict:
         "category": {
             "id": product.category.legacy_id or product.category.slug,
             "slug": product.category.slug,
-            "name": product.category.name,
-            "description": product.category.description,
-            "kind": product.category.kind,
+            "name": tr(product.category, "name"),
+            "description": tr(product.category, "description"),
+            "kind": tr(product.category, "kind"),
         },
     }
 
@@ -250,10 +253,20 @@ def get_catalogue(query, collection: str | None = None) -> dict:
         products = [p for p in products if p.category_id == category.pk]
     if criteria.q:
         needle = criteria.q.casefold()
+        # Searched in whichever language the visitor is reading, and in Arabic
+        # too: an English speaker typing a product's Arabic name still finds it.
         products = [
             p
             for p in products
-            if needle in " ".join([p.name, p.short_description or ""]).casefold()
+            if needle
+            in " ".join(
+                [
+                    p.name,
+                    p.short_description or "",
+                    p.name_en or "",
+                    p.short_description_en or "",
+                ]
+            ).casefold()
         ]
     if criteria.price_min is not None:
         products = [p for p in products if _price_sort_key(p) >= criteria.price_min]
@@ -280,7 +293,7 @@ def get_catalogue(query, collection: str | None = None) -> dict:
     elif criteria.sort == "price-desc":
         products.sort(key=lambda p: (-_price_sort_key(p), featured_order[p.pk]))
     elif criteria.sort == "name":
-        products.sort(key=lambda p: (p.name, featured_order[p.pk]))
+        products.sort(key=lambda p: (tr(p, "name"), featured_order[p.pk]))
     else:  # featured
         products.sort(key=lambda p: featured_order[p.pk])
 
@@ -326,7 +339,7 @@ def _filter_features() -> list[dict[str, str]]:
         product__status=PublicationStatus.PUBLISHED
     ).order_by("product__position", "position", "id")
     for feature in features:
-        seen.setdefault(feature.key, feature.label)
+        seen.setdefault(feature.key, tr(feature, "label"))
     return [{"key": key, "label": label} for key, label in seen.items()]
 
 
@@ -334,18 +347,24 @@ def _active_chips(criteria: CatalogueCriteria) -> list[dict[str, str]]:
     chips: list[dict[str, str]] = []
     if criteria.category:
         category = Category.objects.get(slug=criteria.category)
-        chips.append({"key": "category", "value": criteria.category, "label": category.name})
+        chips.append(
+            {"key": "category", "value": criteria.category, "label": tr(category, "name")}
+        )
     if criteria.collection:
         collection = Collection.objects.get(slug=criteria.collection)
         chips.append(
-            {"key": "collection", "value": criteria.collection, "label": collection.name}
+            {
+                "key": "collection",
+                "value": criteria.collection,
+                "label": tr(collection, "name"),
+            }
         )
     if criteria.price_min is not None:
         chips.append(
             {
                 "key": "priceMin",
                 "value": str(criteria.price_min),
-                "label": f"من {criteria.price_min} ج.م",
+                "label": _("من %(amount)s ج.م") % {"amount": criteria.price_min},
             }
         )
     if criteria.price_max is not None:
@@ -353,13 +372,15 @@ def _active_chips(criteria: CatalogueCriteria) -> list[dict[str, str]]:
             {
                 "key": "priceMax",
                 "value": str(criteria.price_max),
-                "label": f"حتى {criteria.price_max} ج.م",
+                "label": _("حتى %(amount)s ج.م") % {"amount": criteria.price_max},
             }
         )
     for feature in criteria.features:
         chips.append({"key": "feature", "value": feature, "label": feature})
     if criteria.availability:
-        label = "متاح" if criteria.availability == "available" else "غير متاح"
+        label = (
+            _("متاح") if criteria.availability == "available" else _("غير متاح")
+        )
         chips.append({"key": "availability", "value": criteria.availability, "label": label})
     return chips
 
@@ -380,9 +401,10 @@ def _detail_product(product: Product) -> dict:
     record["specificationGroups"] = [
         {
             "id": group.legacy_id or str(group.pk),
-            "label": group.label,
+            "label": tr(group, "label"),
             "items": [
-                {"label": item.label, "value": item.value} for item in group.items.all()
+                {"label": tr(item, "label"), "value": tr(item, "value")}
+                for item in group.items.all()
             ],
         }
         for group in product.specification_groups.all()
@@ -390,11 +412,11 @@ def _detail_product(product: Product) -> dict:
     record["downloads"] = [
         {
             "id": document.legacy_id or str(document.pk),
-            "label": document.label,
+            "label": tr(document, "label"),
             "path": document.src,
             "format": document.file_format,
             # Kept for template compatibility; staff can clear it per document.
-            "prototypeNotice": document.notice,
+            "prototypeNotice": tr(document, "notice"),
         }
         for document in product.documents.all()
     ]
@@ -404,10 +426,13 @@ def _detail_product(product: Product) -> dict:
 def _review_record(review) -> dict:
     return {
         "id": review.legacy_id or str(review.pk),
-        "customerName": review.author_name,
+        # Falls back to the language it was written in, which is the right
+        # default for customer-authored text: a review is only ever shown in
+        # English when a staff member has actually supplied that English.
+        "customerName": tr(review, "author_name"),
         "rating": review.rating,
-        "quote": review.body,
-        "prototypeAttribution": review.title,
+        "quote": tr(review, "body"),
+        "prototypeAttribution": tr(review, "title"),
         "isVerifiedPurchase": review.is_verified_purchase,
         "placement": review.placement or [],
     }
@@ -455,7 +480,11 @@ def get_product_detail(slug: str) -> dict | None:
         "relatedProducts": [_catalogue_product(item) for item in related],
         "reviews": [_review_record(review) for review in reviews],
         "faqs": [
-            {"id": faq.legacy_id or str(faq.pk), "question": faq.question, "answer": faq.answer}
+            {
+                "id": faq.legacy_id or str(faq.pk),
+                "question": tr(faq, "question"),
+                "answer": tr(faq, "answer"),
+            }
             for faq in faqs
         ],
         "selectedImageId": record["images"][0]["id"] if record["images"] else None,

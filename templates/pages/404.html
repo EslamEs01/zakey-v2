@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}الصفحة غير موجودة | ZAKEY{% endblock %}
+{% load i18n %}
+{% block title %}{% translate "الصفحة غير موجودة | ZAKEY" %}{% endblock %}
 
 {% block content %}
 <svg class="zk-icon-defs" width="0" height="0" aria-hidden="true" focusable="false">
@@ -16,33 +17,33 @@
         <svg class="icon" aria-hidden="true" focusable="false"><use href="#zk-compass"></use></svg>
       </span>
       <p class="errorpage__code"><bdi>404</bdi></p>
-      <h1 class="errorpage__title" id="error-404-title">لم نجد هذه الصفحة</h1>
+      <h1 class="errorpage__title" id="error-404-title">{% translate "لم نجد هذه الصفحة" %}</h1>
       <p class="errorpage__lede">
-        الرابط الذي فتحته غير موجود أو ربما تغيّر عنوانه. يمكنك العودة إلى المتجر ومتابعة التصفح.
+        {% translate "الرابط الذي فتحته غير موجود أو ربما تغيّر عنوانه. يمكنك العودة إلى المتجر ومتابعة التصفح." %}
       </p>
 
       <div class="errorpage__actions">
-        <a class="btn btn--primary" href="{% url 'storefront:home' %}">العودة إلى الرئيسية</a>
-        <a class="btn btn--outline" href="{% url 'storefront:shop' %}">تصفّح المتجر</a>
+        <a class="btn btn--primary" href="{% url 'storefront:home' %}">{% translate "العودة إلى الرئيسية" %}</a>
+        <a class="btn btn--outline" href="{% url 'storefront:shop' %}">{% translate "تصفّح المتجر" %}</a>
       </div>
 
       <div class="errorpage__search">
-        <h2 class="errorpage__subtitle" id="error-404-search-title">ابحث عمّا كنت تريده</h2>
+        <h2 class="errorpage__subtitle" id="error-404-search-title">{% translate "ابحث عمّا كنت تريده" %}</h2>
         <form class="errorpage-search-form" action="{% url 'storefront:search' %}" method="get" role="search"
               aria-labelledby="error-404-search-title">
           <div class="field">
-            <label class="sr-only" for="error-404-search">ابحث عن قفل أو ميزة</label>
-            <input id="error-404-search" name="q" type="search" autocomplete="off" placeholder="ابحث عن الأقفال والميزات...">
+            <label class="sr-only" for="error-404-search">{% translate "ابحث عن قفل أو ميزة" %}</label>
+            <input id="error-404-search" name="q" type="search" autocomplete="off" placeholder="{% translate "ابحث عن الأقفال والميزات..." %}">
           </div>
-          <button class="btn btn--primary" type="submit">بحث</button>
+          <button class="btn btn--primary" type="submit">{% translate "بحث" %}</button>
         </form>
       </div>
 
-      <nav class="errorpage__links" aria-label="روابط مساعدة">
-        <a href="{% url 'storefront:contact' %}">تواصل معنا</a>
-        <a href="{% url 'storefront:about' %}">عن ZAKEY</a>
-        <a href="{% url 'storefront:wishlist' %}">المفضلة</a>
-        <a href="{% url 'storefront:cart' %}">سلة التسوق</a>
+      <nav class="errorpage__links" aria-label="{% translate "روابط مساعدة" %}">
+        <a href="{% url 'storefront:contact' %}">{% translate "تواصل معنا" %}</a>
+        <a href="{% url 'storefront:about' %}">{% translate "عن ZAKEY" %}</a>
+        <a href="{% url 'storefront:wishlist' %}">{% translate "المفضلة" %}</a>
+        <a href="{% url 'storefront:cart' %}">{% translate "سلة التسوق" %}</a>
       </nav>
 
     </div>

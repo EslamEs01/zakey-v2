@@ -14,12 +14,12 @@ class SiteSettingAdmin(admin.ModelAdmin):
     fieldsets = (
         ("التجارة", {
             "fields": ("vat_rate", "free_shipping_threshold", "currency_code",
-                       "currency_label", "currency_decimal_places"),
+                       "currency_label", "currency_label_en", "currency_decimal_places"),
             "description": "أسعار الكتالوج شاملة الضريبة؛ تُستخرج الضريبة ولا تُضاف إليها.",
         }),
         ("الطلبات والسلة", {"fields": ("order_number_prefix", "max_line_quantity", "cart_ttl_days")}),
         ("المخزون", {"fields": ("reservation_ttl_minutes", "low_stock_threshold")}),
-        ("تنويهات", {"fields": ("prototype_notice",)}),
+        ("تنويهات", {"fields": ("prototype_notice", "prototype_notice_en")}),
     )
     readonly_fields = ("created_at", "updated_at")
 

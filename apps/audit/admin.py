@@ -4,13 +4,17 @@ from __future__ import annotations
 
 from django.contrib import admin
 
+from import_export.admin import ExportMixin
+
 from apps.core.admin_mixins import AppendOnlyAdmin
+from apps.core.resources import AuditLogResource
 
 from .models import AuditLog
 
 
 @admin.register(AuditLog)
-class AuditLogAdmin(AppendOnlyAdmin):
+class AuditLogAdmin(ExportMixin, AppendOnlyAdmin):
+    resource_classes = (AuditLogResource,)
     list_display = ("created_at", "actor", "action", "object_repr", "request_id")
     list_filter = ("action", "content_type")
     search_fields = ("object_repr", "object_id", "request_id", "actor__email")

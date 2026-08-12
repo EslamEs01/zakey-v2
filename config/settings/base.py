@@ -103,6 +103,10 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    # Between session and common: LocaleMiddleware reads the session and the
+    # language cookie, and CommonMiddleware's APPEND_SLASH redirect has to be
+    # built after the active language is known.
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -121,6 +125,7 @@ TEMPLATES = [
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.request",
+                "django.template.context_processors.i18n",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ]
@@ -159,12 +164,36 @@ LOGIN_URL = "storefront:account"
 LOGIN_REDIRECT_URL = "storefront:account"
 LOGOUT_REDIRECT_URL = "storefront:home"
 
-# --- Localisation (unchanged from the approved storefront) ------------------
+# --- Localisation (FR-136) --------------------------------------------------
+# Arabic is the source language and the default: the templates are written in
+# Arabic, so an Arabic string is the msgid and English is the translation of it.
+# That ordering matters — it means a missing translation degrades to correct
+# Arabic rather than to a bare key.
 
-LANGUAGE_CODE = "ar-eg"
+# ``ar``, not ``ar-eg``. Django resolves a locale by falling back from the
+# regional tag to the base language, so ``ar-eg`` would find the ``ar``
+# catalogue anyway — but ``LANGUAGE_CODE`` must name a language that is
+# actually in ``LANGUAGES`` or ``set_language`` cannot round-trip back to it.
+LANGUAGE_CODE = "ar"
+
+LANGUAGES = [
+    ("ar", "العربية"),
+    ("en", "English"),
+]
+
+LOCALE_PATHS = [BASE_DIR / "locale"]
+
 TIME_ZONE = "Africa/Cairo"
 USE_I18N = True
 USE_TZ = True
+
+# The switcher writes this cookie. A year, because a visitor's language is a
+# preference and not a session detail — being flipped back to Arabic on the
+# next visit is exactly the annoyance the switcher exists to remove.
+LANGUAGE_COOKIE_NAME = "zakey_language"
+LANGUAGE_COOKIE_AGE = 365 * 24 * 60 * 60
+LANGUAGE_COOKIE_SAMESITE = "Lax"
+LANGUAGE_COOKIE_HTTPONLY = False
 
 # --- Static and media -------------------------------------------------------
 
@@ -174,6 +203,14 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+# Created at import: an upload into a directory that does not exist raises
+# a PermissionError/FileNotFoundError from deep inside the storage backend,
+# which reaches staff as a bare 500 on "save product".
+MEDIA_ROOT.mkdir(parents=True, exist_ok=True)
+
+# Serve /media/ from Django. See config/urls.py for why this defaults on.
+# Set ZAKEY_SERVE_MEDIA=False once nginx is confirmed to serve the alias.
+ZAKEY_SERVE_MEDIA = env_bool("ZAKEY_SERVE_MEDIA", True)
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -181,7 +218,21 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
-DATA_UPLOAD_MAX_NUMBER_FIELDS = 1000
+
+# These two are not security limits; they are the point at which Django stops
+# parsing a request and raises SuspiciousOperation, which the client sees as a
+# bare 400 with no explanation of what went wrong.
+#
+# A product change form is six inline formsets deep. A well-stocked lock — a
+# dozen images, several finishes, a long feature list and a specification table
+# — renders several hundred inputs before staff have typed anything, and the
+# per-image bulk upload adds more. 1000 was close enough to that to be reachable
+# on a real product, and the failure mode is a 400 on save with the edit lost.
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
+
+# The bulk image upload accepts a whole folder in one go. Django's default of
+# 100 files is below what "select all" in a photo directory produces.
+DATA_UPLOAD_MAX_NUMBER_FILES = 500
 ZAKEY_MAX_IMAGE_UPLOAD_BYTES = 5 * 1024 * 1024
 ZAKEY_MAX_DOCUMENT_UPLOAD_BYTES = 10 * 1024 * 1024
 ZAKEY_ALLOWED_IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp"]

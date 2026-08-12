@@ -12,6 +12,8 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
 
+from apps.core.i18n import TranslatableModel
+
 from apps.core.models import TimeStampedModel
 
 
@@ -20,9 +22,14 @@ class DiscountType(models.TextChoices):
     FIXED = "fixed", "مبلغ ثابت"
 
 
-class Coupon(TimeStampedModel):
+class Coupon(TranslatableModel, TimeStampedModel):
+    translatable_fields = ("description",)
+
     code = models.CharField("الكود", max_length=32, unique=True)
     description = models.CharField("الوصف", max_length=200, blank=True, default="")
+    description_en = models.CharField(
+        "الوصف (إنجليزي)", max_length=200, blank=True, default=""
+    )
     discount_type = models.CharField(
         "نوع الخصم",
         max_length=16,

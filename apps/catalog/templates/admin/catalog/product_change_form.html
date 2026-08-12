@@ -1,0 +1,16 @@
+{% extends "admin/change_form.html" %}
+{% comment %}
+Adds one link to Jazzmin's change form and nothing else: the bulk image upload,
+which only makes sense once the product exists and therefore cannot live on the
+add form.
+{% endcomment %}
+{% block object-tools-items %}
+  {% if original %}
+    <li>
+      <a href="{% url 'admin:catalog_product_bulk_images' original.pk %}" class="historylink">
+        رفع صور متعددة
+      </a>
+    </li>
+  {% endif %}
+  {{ block.super }}
+{% endblock %}

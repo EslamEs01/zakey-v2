@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from uuid import uuid4
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -19,6 +20,7 @@ from django.core.exceptions import ValidationError
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.utils import translation
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
 
@@ -114,10 +116,9 @@ def contact(request: HttpRequest) -> HttpResponse:
         request,
         "pages/contact.html",
         "contact",
-        contact_faqs=[
-            {"question": faq.question, "answer": faq.answer}
-            for faq in FAQ.objects.filter(is_active=True, page="contact")
-        ],
+        # Built through ctx.faqs, which resolves the English columns; reading
+        # faq.question directly here served Arabic on the English page.
+        contact_faqs=ctx.faqs("contact"),
     )
 
 
@@ -306,6 +307,50 @@ def wishlist_toggle(request: HttpRequest) -> HttpResponse:
     ):
         target = reverse("storefront:wishlist")
     return redirect(target)
+
+
+@require_POST
+def set_language(request: HttpRequest) -> HttpResponse:
+    """Switch the interface language and return to the page it was used on (FR-136).
+
+    Deliberately not ``django.views.i18n.set_language`` and deliberately not
+    ``i18n_patterns``. Both are the usual answer, and both would move every
+    public URL under a ``/ar/`` or ``/en/`` prefix — the thirteen frozen
+    storefront URLs are half of the route contract (FR-131), so the language has
+    to live in a cookie instead of the path.
+
+    The redirect target is validated against this host for the same reason every
+    other ``next`` in this module is: a switcher is a perfectly ordinary open
+    redirect if it forwards to whatever it is handed.
+    """
+    requested = (request.POST.get("language") or "").strip()
+    supported = {code for code, _ in settings.LANGUAGES}
+    if requested not in supported:
+        requested = settings.LANGUAGE_CODE
+
+    target = request.POST.get("next") or reverse("storefront:home")
+    if not url_has_allowed_host_and_scheme(
+        target, allowed_hosts={request.get_host()}, require_https=request.is_secure()
+    ):
+        target = reverse("storefront:home")
+
+    translation.activate(requested)
+    response = redirect(target)
+    # The cookie is the whole mechanism. Django removed session-backed language
+    # selection in 4.0, and LocaleMiddleware reads only the cookie and the
+    # Accept-Language header — writing a session key here would look like it
+    # worked and change nothing.
+    response.set_cookie(
+        settings.LANGUAGE_COOKIE_NAME,
+        requested,
+        max_age=settings.LANGUAGE_COOKIE_AGE,
+        path=settings.LANGUAGE_COOKIE_PATH,
+        domain=settings.LANGUAGE_COOKIE_DOMAIN,
+        secure=settings.LANGUAGE_COOKIE_SECURE,
+        httponly=settings.LANGUAGE_COOKIE_HTTPONLY,
+        samesite=settings.LANGUAGE_COOKIE_SAMESITE,
+    )
+    return response
 
 
 @require_POST

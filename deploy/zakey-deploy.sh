@@ -58,6 +58,29 @@ deploy() {
   step "installing locked dependencies"
   run uv sync --frozen --no-dev
 
+  # `static/dist/` is a BUILD ARTEFACT and is git-ignored, so a fresh checkout
+  # has no compiled CSS, no JS bundle and no icon sprite at all. Nothing else in
+  # this script produces them, and `collectstatic` below happily collects an
+  # empty tree — the deploy "succeeds" and every page ships unstyled with broken
+  # icons. Building here is what makes the checkout self-sufficient.
+  step "frontend assets"
+  if [ "$DRY_RUN" = "1" ]; then
+    echo "    [dry-run] npm ci --omit=dev && npm run build"
+  else
+    command -v npm >/dev/null 2>&1 || die "npm is required to build static/dist (it is git-ignored)"
+    run npm ci
+    run npm run build
+    [ -f "${ZAKEY_ROOT}/static/dist/css/app.css" ] \
+      || die "static/dist/css/app.css missing after build; refusing to ship an unstyled site"
+  fi
+
+  # Compiles locale/*/LC_MESSAGES/*.po into the binary .mo gettext reads. Uses
+  # the project's own pure-Python implementation because the GNU gettext tools
+  # are not installed on this host, which is also why `compilemessages` is not
+  # used. Without this the English storefront silently renders Arabic.
+  step "translation catalogues"
+  run uv run python manage.py sync_translations
+
   step "database migrations"
   run uv run python manage.py migrate --noinput
 
